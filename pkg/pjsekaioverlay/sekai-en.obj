@@ -123,27 +123,28 @@ end
 @Score
 
 if PED_DATA and PED_DATA.version_status == "ok" then
-  obj.setoption("drawtarget", "tempbuffer", 372, 18)
+  -- -- bars
+  obj.setoption("drawtarget", "tempbuffer", 532, 24)
   obj.load("image", PED_DATA.path.."/score/bar.png")
   obj.draw(0, 0, 0, 1)
   obj.setoption("blend", "alpha_sub")
   obj.load("figure", "Background")
   obj.drawpoly(
-    372 * (PED_DATA.current.width - 0.5), -9, 0,
-    372, -9, 0,
-    372, 9, 0,
-    372 * (PED_DATA.current.width - 0.5), 9, 0
+    532 * (PED_DATA.current.width - 0.5), -12, 0,
+    532, -12, 0,
+    532, 12, 0,
+    532 * (PED_DATA.current.width - 0.5), 12, 0
   )
   obj.copybuffer("cache:score_bar", "tmp")
 
   obj.setoption("drawtarget", "tempbuffer", 99999, 95)
   obj.setoption("blend", 0)
   obj.load("image", PED_DATA.path.."/score/bg.png")
-  obj.draw(0, 0, 0, 0.9758)
+  obj.draw(0, 0, 0, 0.9758, 0)
 
-  -- -- 79, 35 / 357, 18
+  -- -- 79, 35 / 532, 24
   obj.copybuffer("obj", "cache:score_bar")
-  obj.draw(33.25, -3, 0, 0.9596)
+  obj.draw(33.25, -3, 0, 0.671)
 
   if PED_DATA.enUI then
     obj.load("image", PED_DATA.path.."/score/rank/txt/en/"..PED_DATA.current.rank..".png")
