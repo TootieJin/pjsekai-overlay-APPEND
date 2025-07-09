@@ -19,6 +19,7 @@ func Title() {
             https://github.com/sevenc-nanashi/pjsekai-overlay
         Forked by %sTootieJin%s
          -> https://github.com/TootieJin/pjsekai-overlay-APPEND %s(使用中/In use)%s
+            https://github.com/TootieJin/pjsekai-overlay-MULTI
 	
     %s[CAUTION] This tool is primary only for people with technical know-how and basic knowledge of AviUtl.%s 
     %sDO NOT open issues or request help about this. Refer to the README for how to set it up.%s
