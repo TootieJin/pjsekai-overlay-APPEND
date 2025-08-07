@@ -6,15 +6,19 @@ import (
 	"errors"
 	"fmt"
 	"image"
+	_ "image/gif"
 	_ "image/jpeg"
 	"image/png"
 	"io"
 	"net/http"
 	"os"
+	"os/exec"
 	"path"
+	"path/filepath"
 	"strings"
 
 	"golang.org/x/image/draw"
+	_ "golang.org/x/image/webp"
 
 	"github.com/TootieJin/pjsekai-overlay-APPEND/pkg/sonolus"
 )
@@ -24,19 +28,54 @@ type Source struct {
 	Name  string
 	Color int
 	Host  string
+	Dead  bool
+}
+
+func DetectLocalChartSource(chartId string) (Source, error) {
+	// ScoreSync（3939ポート）に接続を試行
+	resp, err := http.Get("http://localhost:3939/")
+	if err != nil {
+		return Source{}, errors.New("ScoreSyncに接続できませんでした。サーバーが起動していることを確認してください。(Could not connect to ScoreSync. Please make sure the server is up and running.)")
+	}
+	defer resp.Body.Close()
+
+	if resp.StatusCode != 200 {
+		return Source{}, errors.New("ScoreSyncからの応答が正常ではありません。(Invalid response from ScoreSync.)")
+	}
+
+	source := Source{
+		Id:    "local_server",
+		Name:  "Local Server",
+		Color: 0x00afc7,
+		Host:  "localhost:3939",
+		Dead:  false,
+	}
+	return source, nil
 }
 
 func FetchChart(source Source, chartId string) (sonolus.LevelInfo, error) {
-	var url = "https://" + source.Host + "/sonolus/levels/" + chartId
+	var url string
+	if source.Id == "local_server" {
+		// ローカルサーバーの場合はchartIdをタイトルとして使用 (ScoreSync wtf why)
+		url = "http://" + source.Host + "/sonolus/levels/" + chartId
+	} else {
+		url = "https://" + source.Host + "/sonolus/levels/" + chartId
+	}
 
 	resp, err := http.Get(url)
 
 	if err != nil {
+		if source.Id == "local_server" {
+			return sonolus.LevelInfo{}, errors.New("ScoreSyncに接続できませんでした。(Could not connect to ScoreSync.)")
+		}
 		return sonolus.LevelInfo{}, errors.New("サーバーに接続できませんでした。(Could not connect to server.)")
 	}
 	defer resp.Body.Close()
 
 	if resp.StatusCode != 200 {
+		if source.Id == "local_server" {
+			return sonolus.LevelInfo{}, errors.New("指定されたタイトルの譜面が見つかりませんでした。(Chart not found.)")
+		}
 		return sonolus.LevelInfo{}, errors.New("譜面が見つかりませんでした。(Unable to search chart.)")
 	}
 
@@ -70,7 +109,7 @@ func FetchAPIChart(source Source, chartId string) (sonolus.LevelAPIInfo, error) 
 	}
 }
 
-func DetectChartSource(chartId string) (Source, error) {
+func DetectChartSource(chartId string, chartInstance []string) (Source, error) {
 	var source Source
 	if strings.HasPrefix(chartId, "ptlv-") {
 		source = Source{
@@ -78,13 +117,25 @@ func DetectChartSource(chartId string) (Source, error) {
 			Name:  "Potato Leaves",
 			Color: 0x88cb7f,
 			Host:  "ptlv.sevenc7c.com",
+			Dead:  false,
 		}
 	} else if strings.HasPrefix(chartId, "chcy-") {
-		source = Source{
-			Id:    "chart_cyanvas",
-			Name:  "Chart Cyanvas",
-			Color: 0x83ccd2,
-			Host:  "cc.sevenc7c.com",
+		if chartInstance[0] == "0" {
+			source = Source{
+				Id:    "chart_cyanvas",
+				Name:  "Chart Cyanvas",
+				Color: 0x83ccd2,
+				Host:  "cc.sevenc7c.com",
+				Dead:  true,
+			}
+		} else {
+			source = Source{
+				Id:    "chart_cyanvas",
+				Name:  "Chart Cyanvas (" + chartInstance[0] + ")",
+				Color: 0x83ccd2,
+				Host:  chartInstance[0],
+				Dead:  false,
+			}
 		}
 	} else if strings.HasPrefix(chartId, "utsk-") {
 		source = Source{
@@ -92,6 +143,7 @@ func DetectChartSource(chartId string) (Source, error) {
 			Name:  "Untitled Sekai",
 			Color: 0x6a6a6a,
 			Host:  "us.pim4n-net.com",
+			Dead:  true,
 		}
 	}
 	if source.Id == "" {
@@ -100,13 +152,22 @@ func DetectChartSource(chartId string) (Source, error) {
 			Name:  "",
 			Color: 0,
 			Host:  "",
+			Dead:  false,
 		}, errors.New("unknown chart source")
 	}
 	return source, nil
 }
 
 func FetchLevelData(source Source, level sonolus.LevelInfo) (sonolus.LevelData, error) {
-	url, err := sonolus.JoinUrl("https://"+source.Host, level.Data.Url)
+	var url string
+	var err error
+
+	if source.Id == "local_server" {
+		url, err = sonolus.JoinUrl("http://"+source.Host, level.Data.Url)
+	} else {
+		url, err = sonolus.JoinUrl("https://"+source.Host, level.Data.Url)
+	}
+
 	if err != nil {
 		return sonolus.LevelData{}, fmt.Errorf("URLの解析に失敗しました。(URL parsing failed.) [%s]", err)
 	}
@@ -137,14 +198,22 @@ func FetchLevelData(source Source, level sonolus.LevelInfo) (sonolus.LevelData, 
 }
 
 func DownloadCover(source Source, level sonolus.LevelInfo, destPath string) error {
-	url, err := sonolus.JoinUrl("https://"+source.Host, level.Cover.Url)
+	var url string
+	var err error
+
+	if source.Id == "local_server" {
+		url, err = sonolus.JoinUrl("http://"+source.Host, level.Cover.Url)
+	} else {
+		url, err = sonolus.JoinUrl("https://"+source.Host, level.Cover.Url)
+	}
+
 	if err != nil {
 		return fmt.Errorf("URLの解析に失敗しました。(URL parsing failed.) [%s]", err)
 	}
 
 	resp, err := http.Get(url)
 	if err != nil {
-		return fmt.Errorf("サーバーに接続できませんでした。（%s）", err)
+		return fmt.Errorf("サーバーに接続できませんでした。(Could not connect to server.) [%s]", err)
 	}
 
 	defer resp.Body.Close()
@@ -159,8 +228,6 @@ func DownloadCover(source Source, level sonolus.LevelInfo, destPath string) erro
 	if err != nil {
 		return fmt.Errorf("ジャケットの読み込みに失敗しました。(Loading jacket failed.) [%s]", err)
 	}
-
-	// 画像のリサイズ
 
 	newImage := image.NewRGBA(image.Rect(0, 0, 512, 512))
 
@@ -183,53 +250,124 @@ func DownloadCover(source Source, level sonolus.LevelInfo, destPath string) erro
 	return nil
 }
 func DownloadBackground(source Source, level sonolus.LevelInfo, destPath string, chartId string) error {
-	backgroundUrl, err := sonolus.JoinUrl("https://"+source.Host, level.UseBackground.Item.Image.Url)
-	if err != nil {
-		return fmt.Errorf("URLの解析に失敗しました。(URL parsing failed.) [%s]", err)
-	}
+	if source.Id == "local_server" {
+		coverPath := path.Join(destPath, "cover.png")
+		if _, err := os.Stat(coverPath); os.IsNotExist(err) {
+			return fmt.Errorf("カバー画像が見つかりません。先にカバー画像をダウンロードしてください。(Jacket image not found. Download jacket image first.)")
+		}
 
-	resp, err := http.Get(backgroundUrl)
-	if err != nil {
-		return fmt.Errorf("サーバーに接続できませんでした。(Could not connect to server.) [%s]", err)
-	}
+		executablePath, err := os.Executable()
+		if err != nil {
+			return fmt.Errorf("実行ファイルパスの取得に失敗しました。(Failed to obtain execuable path.) [%s]", err)
+		}
+		backgroundGenPath := path.Join(path.Dir(executablePath), "pjsekai-background-gen.exe")
+		outputPath := path.Join(destPath, "background.png")
 
-	defer resp.Body.Close()
+		absBackgroundGenPath, err := filepath.Abs(backgroundGenPath)
+		if err != nil {
+			return fmt.Errorf("背景生成ツールのパス解決に失敗しました。(Background generator failed to resolve path.) [%s]", err)
+		}
 
-	if resp.StatusCode != 200 {
-		return fmt.Errorf("背景が見つかりませんでした。(Background not found.) [%d]", resp.StatusCode)
-	}
+		absCoverPath, err := filepath.Abs(coverPath)
+		if err != nil {
+			return fmt.Errorf("カバー画像のパス解決に失敗しました。(Failed to resolve path for jacket image.) [%s]", err)
+		}
 
-	var file *os.File
-	var filev1 *os.File
+		fmt.Printf("Debug: カバー画像を使用して背景を生成 (Generating background with jacket image): %s\n", absCoverPath)
 
-	if strings.Contains(chartId, "?c_background=1") && source.Id == "chart_cyanvas" {
-		filev1, err = os.Create(path.Join(destPath, "background-v1.png"))
-		file = nil
-	} else if source.Id == "potato_leaves" {
-		filev1, err = os.Create(path.Join(destPath, "background-v1.png"))
-		file = nil
+		cmd := exec.Command(absBackgroundGenPath, absCoverPath)
+		output, err := cmd.CombinedOutput()
+
+		if err != nil {
+			return fmt.Errorf("背景生成に失敗しました。(Failed to generate background.) [%s] 出力/Output: %s", err, string(output))
+		}
+
+		generatedBackgroundPath := path.Join(destPath, "cover-output.png")
+
+		if _, err := os.Stat(generatedBackgroundPath); os.IsNotExist(err) {
+			if _, err := os.Stat(absCoverPath); err == nil {
+				err = copyFile(absCoverPath, outputPath)
+				if err != nil {
+					return fmt.Errorf("背景ファイルのコピーに失敗しました。(Failed to copy background file.)[%s]", err)
+				}
+				return nil
+			}
+			return fmt.Errorf("背景ファイルが生成されませんでした (Failed to generate background): %s", generatedBackgroundPath)
+		}
+
+		// cover.output.pngをbackground.pngにリネーム
+		err = os.Rename(generatedBackgroundPath, outputPath)
+		if err != nil {
+			return fmt.Errorf("背景ファイルのリネームに失敗しました。(Failed to rename background file.) [%s]", err)
+		}
+
+		fmt.Printf("Debug: 背景生成完了(Background generated): %s\n", outputPath)
+
 	} else {
-		filev1 = nil
-		file, err = os.Create(path.Join(destPath, "background.png"))
-	}
+		backgroundUrl, err := sonolus.JoinUrl("https://"+source.Host, level.UseBackground.Item.Image.Url)
+		if err != nil {
+			return fmt.Errorf("URLの解析に失敗しました。(URL parsing failed.) [%s]", err)
+		}
 
-	if err != nil {
-		return fmt.Errorf("ファイルの作成に失敗しました。(Failed to create file.) [%s]", err)
-	}
+		resp, err := http.Get(backgroundUrl)
+		if err != nil {
+			return fmt.Errorf("サーバーに接続できませんでした。(Could not connect to server.) [%s]", err)
+		}
 
-	defer file.Close()
-	defer filev1.Close()
+		defer resp.Body.Close()
 
-	if file != nil {
-		if _, err := io.Copy(file, resp.Body); err != nil {
-			return fmt.Errorf("ファイルの書き込みに失敗しました。(Failed to write file.) [%s]", err)
+		if resp.StatusCode != 200 {
+			return fmt.Errorf("背景が見つかりませんでした。(Background not found.) [%d]", resp.StatusCode)
+		}
+
+		var file *os.File
+		var filev1 *os.File
+
+		if strings.Contains(chartId, "?c_background=v1") && source.Id == "chart_cyanvas" {
+			filev1, err = os.Create(path.Join(destPath, "background-v1.png"))
+			file = nil
+		} else if source.Id == "potato_leaves" {
+			filev1, err = os.Create(path.Join(destPath, "background-v1.png"))
+			file = nil
+		} else {
+			filev1 = nil
+			file, err = os.Create(path.Join(destPath, "background.png"))
+		}
+
+		if err != nil {
+			return fmt.Errorf("ファイルの作成に失敗しました。(Failed to create file.) [%s]", err)
+		}
+
+		defer file.Close()
+		defer filev1.Close()
+
+		if file != nil {
+			if _, err := io.Copy(file, resp.Body); err != nil {
+				return fmt.Errorf("ファイルの書き込みに失敗しました。(Failed to write file.) [%s]", err)
+			}
+		}
+		if filev1 != nil {
+			if _, err := io.Copy(filev1, resp.Body); err != nil {
+				return fmt.Errorf("v1ファイルの書き込みに失敗しました。(Failed to write v1 file.) [%s]", err)
+			}
 		}
 	}
-	if filev1 != nil {
-		if _, err := io.Copy(filev1, resp.Body); err != nil {
-			return fmt.Errorf("v1ファイルの書き込みに失敗しました。(Failed to write v1 file.) [%s]", err)
-		}
-	}
-
 	return nil
+}
+
+func copyFile(src, dst string) error {
+	sourceFile, err := os.Open(src)
+	if err != nil {
+		return err
+	}
+	defer sourceFile.Close()
+
+	destFile, err := os.Create(dst)
+	if err != nil {
+		return err
+	}
+	defer destFile.Close()
+
+	_, err = io.Copy(destFile, sourceFile)
+	return err
 }

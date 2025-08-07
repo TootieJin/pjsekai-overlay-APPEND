@@ -33,4 +33,3 @@ dist/*
 *.aup
 *.txt
 .update-check
-!pkg/pjsekaioverlay/*.exo

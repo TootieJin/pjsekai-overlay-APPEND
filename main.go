@@ -10,7 +10,6 @@ import (
 	"path/filepath"
 	"strconv"
 	"strings"
-	"time"
 
 	"github.com/TootieJin/pjsekai-overlay-APPEND/pkg/pjsekaioverlay"
 	"github.com/TootieJin/pjsekai-overlay-APPEND/pkg/sonolus"
@@ -20,51 +19,18 @@ import (
 	"golang.org/x/sys/windows"
 )
 
-func shouldCheckUpdate() bool {
-	executablePath, err := os.Executable()
-	if err != nil {
-		return false
-	}
-	updateCheckFile, err := os.OpenFile(filepath.Join(filepath.Dir(executablePath), ".update-check"), os.O_RDONLY, 0666)
-	if err != nil {
-		return os.IsNotExist(err)
-	}
-	defer updateCheckFile.Close()
-
-	scanner := bufio.NewScanner(updateCheckFile)
-	scanner.Scan()
-	lastCheckTime, err := strconv.ParseInt(scanner.Text(), 10, 64)
-	if err != nil {
-		return false
-	}
-
-	return time.Now().Unix()-lastCheckTime > 60*60*24
-}
-
-func checkUpdate() {
+func checkUpdate() []string {
 	githubClient := github.NewClient(nil)
 	release, _, err := githubClient.Repositories.GetLatestRelease(context.Background(), "TootieJin", "pjsekai-overlay-APPEND")
 	if err != nil {
-		return
+		return nil
 	}
-
-	executablePath, err := os.Executable()
-	if err != nil {
-		return
-	}
-	updateCheckFile, err := os.OpenFile(filepath.Join(filepath.Dir(executablePath), ".update-check"), os.O_WRONLY|os.O_CREATE|os.O_TRUNC, 0666)
-	if err != nil {
-		return
-	}
-	defer updateCheckFile.Close()
-	updateCheckFile.WriteString(strconv.FormatInt(time.Now().Unix(), 10))
 
 	latestVersion := strings.TrimPrefix(release.GetTagName(), "v")
-	if latestVersion == pjsekaioverlay.Version {
-		return
+	if latestVersion == pjsekaioverlay.Version || pjsekaioverlay.Version == "0.0.0" {
+		return nil
 	}
-	fmt.Printf(color.HiCyanString("新しいバージョンがリリースされています\nNew version released: v%s -> v%s\n"), pjsekaioverlay.Version, latestVersion)
-	fmt.Printf(color.HiCyanString("ダウンロード (Download Here) -> %s\n"), release.GetHTMLURL())
+	return []string{latestVersion, release.GetHTMLURL()}
 }
 
 func checkSubstrings(str []string, subs ...string) string {
@@ -106,8 +72,11 @@ func origMain(isOptionSpecified bool) {
 
 	flag.Parse()
 
-	if shouldCheckUpdate() {
-		checkUpdate()
+	if checkUpdate() != nil {
+		fmt.Printf(color.HiCyanString("新しいバージョンがリリースされています\nNew version released: v%s -> v%s\n"), pjsekaioverlay.Version, checkUpdate()[0])
+		fmt.Printf(color.HiCyanString("ダウンロード (Download Here) -> %s\n"), checkUpdate()[1])
+		fmt.Println(color.RedString("\nFAIL: pjsekai-overlay-APPENDを最新バージョンに更新してください。\nUpdate pjsekai-overlay-APPEND to the latest version."))
+		return
 	}
 
 	if !skipAviutlInstall {
@@ -122,19 +91,45 @@ func origMain(isOptionSpecified bool) {
 		chartId = flag.Arg(0)
 		fmt.Printf("譜面ID (Chart ID): %s\n", color.GreenString(chartId))
 	} else {
-		fmt.Print("\n譜面IDを接頭辞込みで入力して下さい。\nEnter the chart ID including the prefix.\n\n'chcy-': Chart Cyanvas (cc.sevenc7c.com)\n'ptlv-': Potato Leaves (ptlv.sevenc7c.com)\n'utsk-': Untitled Sekai (us.pim4n-net.com)\n> ")
+		fmt.Print("譜面IDを接頭辞込みで入力して下さい。\nEnter the chart ID including the prefix.\n\n'chcy-': Chart Cyanvas (cc.sevenc7c.com)\n'ptlv-': Potato Leaves (ptlv.sevenc7c.com)\n'utsk-': Untitled Sekai (us.pim4n-net.com)\n'local': Local Server (ScoreSync)\n> ")
 		fmt.Scanln(&chartId)
 		fmt.Printf("\033[A\033[2K\r> %s\n", color.GreenString(chartId))
 	}
 
-	chartSource, err := pjsekaioverlay.DetectChartSource(chartId)
-	if err != nil {
-		fmt.Println(color.RedString("FAIL: 譜面が見つかりません。接頭辞も込め、正しい譜面IDを入力して下さい。\nChart not found. Please enter the correct chart ID including the prefix."))
-		return
+	var chartInstance []string
+	if strings.HasPrefix(chartId, "chcy-") {
+		fmt.Printf("\nChart Cyanvasインスタンスを選択してください。(Please choose Chart Cyanvas instance.)\n%s\n\n[インスタンス一覧 - List of instance(s)]\n'0': オリジナル/Original - cc.sevenc7c.com\n> ", color.HiYellowString("(!) 別のインスタンスを持っていますか？URLドメインを入力してください。(Do you have a different instance? Input the URL domain.)"))
+		var chartInput string
+		fmt.Scanln(&chartInput)
+		chartInput = strings.TrimPrefix(chartInput, "http://")
+		chartInput = strings.TrimPrefix(chartInput, "https://")
+		chartInstance = strings.Split(chartInput, "/")
+		fmt.Printf("\033[A\033[2K\r> %s\n", color.GreenString(chartInput))
 	}
+
+	var chartSource pjsekaioverlay.Source
+	var err error
+	if strings.HasPrefix(chartId, "local") {
+		chartSource, err = pjsekaioverlay.DetectLocalChartSource("")
+		if err != nil {
+			fmt.Println(color.RedString(fmt.Sprintf("FAIL: %s", err.Error())))
+			return
+		}
+	} else {
+		chartSource, err = pjsekaioverlay.DetectChartSource(chartId, chartInstance)
+		if err != nil {
+			fmt.Println(color.RedString("FAIL: 譜面が見つかりません。接頭辞も込め、正しい譜面IDを入力して下さい。\nChart not found. Please enter the correct chart ID including the prefix."))
+			return
+		}
+		if chartSource.Dead {
+			fmt.Printf(color.RedString("FAIL: %sはサポートされなくなりました。ご利用ありがとうございました。\n%s is no longer supported. Thank you for using the service.\n"), chartSource.Name, chartSource.Name)
+			return
+		}
+	}
+
 	fmt.Printf("- 譜面を取得中 (Getting chart): %s%s%s ", RgbColorEscape(chartSource.Color), chartSource.Name, ResetEscape())
 	chart, err := pjsekaioverlay.FetchChart(chartSource, chartId)
-	chartv1, errv1 := pjsekaioverlay.FetchChart(chartSource, chartId+"?c_background=1")
+	chartv1, errv1 := pjsekaioverlay.FetchChart(chartSource, chartId+"?c_background=v1")
 
 	var chart_api sonolus.LevelAPIInfo
 	if chartSource.Id == "chart_cyanvas" {
@@ -208,7 +203,7 @@ func origMain(isOptionSpecified bool) {
 		fmt.Println(color.RedString(fmt.Sprintf("FAIL: %s", err.Error())))
 		return
 	}
-	err = pjsekaioverlay.DownloadBackground(chartSource, chartv1, formattedOutDir, chartId+"?c_background=1")
+	err = pjsekaioverlay.DownloadBackground(chartSource, chartv1, formattedOutDir, chartId+"?c_background=v1")
 	if err != nil {
 		fmt.Println(color.RedString(fmt.Sprintf("FAIL: %s", err.Error())))
 		return
