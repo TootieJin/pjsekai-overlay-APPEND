@@ -49,7 +49,6 @@ This is a forked version of pjsekai-overlay with additional features originally 
 PJSekai-style video creation tool:
 - Forked ver. by TootieJin (https://tootiejin.com)
    https://github.com/TootieJin/pjsekai-overlay-APPEND
-   https://github.com/TootieJin/pjsekai-overlay-MULTI (Multilive ver.)
 - Original by 名無し｡ (https://sevenc7c.com) 
    https://github.com/sevenc-nanashi/pjsekai-overlay
 ```
@@ -59,7 +58,6 @@ PJSekai-style video creation tool:
 プロセカ風動画作成補助ツール：
 - TootieJin (https://tootiejin.com) フォーク版
    https://github.com/TootieJin/pjsekai-overlay-APPEND
-   https://github.com/TootieJin/pjsekai-overlay-MULTI (マルチライブver.)
 - 名無し｡ (https://sevenc7c.com) オリジナル版
    https://github.com/sevenc-nanashi/pjsekai-overlay
 ```
@@ -103,9 +101,11 @@ PJSekai-style video creation tool:
    - **Note: You must open AviUtl before opening pjsekai-overlay-APPEND to install objects.**
 5. Open `pjsekai-overlay-APPEND.exe`
 6. Input the chart ID including the prefix.
-   - `chcy-`: Chart Cyanvas (cc.sevenc7c.com)
+   - `chcy-`: Chart Cyanvas
+      - ~~`0`: Original (cc.sevenc7c.com)~~
+      - `Others (URL domain)`: Different Cyanvas instance
    - `ptlv-`: Potato Leaves (ptlv.sevenc7c.com)
-   - `utsk-`: Untitled Sekai (us.pim4n-net.com)
+   - ~~`utsk-`: Untitled Sekai (us.pim4n-net.com)~~
 7. Import specified exo file by navigating to your `pjsekai-overlay/dist/[chart ID]` directory:
    - **For phone users:** main_en_16-9_1920x1080.exo
    - **For iPad users:** main_en_4-3_1440x1080.exo
@@ -140,7 +140,6 @@ pjsekai-overlay(-APPEND) は、プロセカの創作譜面をプロセカ風の�
 PJSekai-style video creation tool:
 - Forked ver. by TootieJin (https://tootiejin.com)
    https://github.com/TootieJin/pjsekai-overlay-APPEND
-   https://github.com/TootieJin/pjsekai-overlay-MULTI (Multilive ver.)
 - Original by 名無し｡ (https://sevenc7c.com) 
    https://github.com/sevenc-nanashi/pjsekai-overlay
 ```
@@ -150,7 +149,6 @@ PJSekai-style video creation tool:
 プロセカ風動画作成補助ツール：
 - TootieJin (https://tootiejin.com) フォーク版
    https://github.com/TootieJin/pjsekai-overlay-APPEND
-   https://github.com/TootieJin/pjsekai-overlay-MULTI (マルチライブver.)
 - 名無し｡ (https://sevenc7c.com) オリジナル版
    https://github.com/sevenc-nanashi/pjsekai-overlay
 ```
@@ -192,9 +190,11 @@ PJSekai-style video creation tool:
    - **pjsekai-overlay が起動する前に AviUtl を起動するとオブジェクトのインストールが行われます。**
 5. `pjsekai-overlay-APPEND.exe` を起動する
 6. 譜面IDを接頭辞込みで入力して下さい
-   - `chcy-`: Chart Cyanvas (cc.sevenc7c.com)
+   - `chcy-`: Chart Cyanvas
+      - ~~`0`: Original (cc.sevenc7c.com)~~
+      - `Others (URLドメイン)`: 異なるCyanvasインスタンス
    - `ptlv-`: Potato Leaves (ptlv.sevenc7c.com)
-   - `utsk-`: Untitled Sekai (us.pim4n-net.com)
+   - ~~`utsk-`: Untitled Sekai (us.pim4n-net.com)~~
 7. `pjsekai-overlay/dist/[譜面ID]`ディレクトリに移動して、指定したexoファイルをインポートします：
    - **スマホ向け:** main_jp_16-9_1920x1080.exo
    - **iPad向け:** main_jp_4-3_1440x1080.exo
