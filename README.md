@@ -106,7 +106,7 @@ PJSekai-style video creation tool:
       - `Others (URL domain)`: Different Cyanvas instance
    - `ptlv-`: Potato Leaves (ptlv.sevenc7c.com)
    - ~~`utsk-`: Untitled Sekai (us.pim4n-net.com)~~
-   - `local`: Local Server ([ScoreSync](https://github.com/Piliman22/ScoreSync))
+   - `local-`: Local Server ([ScoreSync](https://github.com/Piliman22/ScoreSync))
 7. Import specified exo file by navigating to your `pjsekai-overlay/dist/[chart ID]` directory:
    - **For phone users:** main_en_16-9_1920x1080.exo
    - **For iPad users:** main_en_4-3_1440x1080.exo
@@ -196,7 +196,7 @@ PJSekai-style video creation tool:
       - `Others (URLドメイン)`: 異なるCyanvasインスタンス
    - `ptlv-`: Potato Leaves (ptlv.sevenc7c.com)
    - ~~`utsk-`: Untitled Sekai (us.pim4n-net.com)~~
-   - `local`: ローカルサーバー([ScoreSync](https://github.com/Piliman22/ScoreSync))
+   - `local-`: ローカルサーバー([ScoreSync](https://github.com/Piliman22/ScoreSync))
 7. `pjsekai-overlay/dist/[譜面ID]`ディレクトリに移動して、指定したexoファイルをインポートします：
    - **スマホ向け:** main_jp_16-9_1920x1080.exo
    - **iPad向け:** main_jp_4-3_1440x1080.exo
