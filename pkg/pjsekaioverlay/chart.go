@@ -249,6 +249,38 @@ func DownloadCover(source Source, level sonolus.LevelInfo, destPath string) erro
 
 	return nil
 }
+
+func copyFile(src, dst string) error {
+	in, err := os.Open(src)
+	if err != nil {
+		return err
+	}
+	defer in.Close()
+
+	out, err := os.Create(dst)
+	if err != nil {
+		return err
+	}
+	defer func() {
+		cerr := out.Close()
+		if err == nil {
+			err = cerr
+		}
+	}()
+
+	_, err = io.Copy(out, in)
+	if err != nil {
+		return err
+	}
+
+	err = out.Sync()
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
 func DownloadBackground(source Source, level sonolus.LevelInfo, destPath string, chartId string) error {
 	if source.Id == "local_server" {
 		coverPath := path.Join(destPath, "cover.png")
@@ -262,6 +294,16 @@ func DownloadBackground(source Source, level sonolus.LevelInfo, destPath string,
 		}
 		backgroundGenPath := path.Join(path.Dir(executablePath), "pjsekai-background-gen.exe")
 		outputPath := path.Join(destPath, "background.png")
+
+		// pjsekai-background-gen.exeが存在しない場合はダウンロード
+		if _, err := os.Stat(backgroundGenPath); os.IsNotExist(err) {
+			fmt.Printf("背景生成ツールが見つかりません。ダウンロード中... (Background generator not found. Downloading...)\n")
+			err = downloadBackgroundGenerator(backgroundGenPath)
+			if err != nil {
+				return fmt.Errorf("背景生成ツールのダウンロードに失敗しました。(Failed to download background generator.) [%s]", err)
+			}
+			fmt.Printf("背景生成ツールのダウンロードが完了しました。(Background generator downloaded successfully.)\n")
+		}
 
 		absBackgroundGenPath, err := filepath.Abs(backgroundGenPath)
 		if err != nil {
@@ -282,7 +324,7 @@ func DownloadBackground(source Source, level sonolus.LevelInfo, destPath string,
 			return fmt.Errorf("背景生成に失敗しました。(Failed to generate background.) [%s] 出力/Output: %s", err, string(output))
 		}
 
-		generatedBackgroundPath := path.Join(destPath, "cover-output.png")
+		generatedBackgroundPath := path.Join(destPath, "cover.output.png")
 
 		if _, err := os.Stat(generatedBackgroundPath); os.IsNotExist(err) {
 			if _, err := os.Stat(absCoverPath); err == nil {
@@ -355,19 +397,29 @@ func DownloadBackground(source Source, level sonolus.LevelInfo, destPath string,
 	return nil
 }
 
-func copyFile(src, dst string) error {
-	sourceFile, err := os.Open(src)
-	if err != nil {
-		return err
-	}
-	defer sourceFile.Close()
+func downloadBackgroundGenerator(destPath string) error {
+	const downloadURL = "https://github.com/sevenc-nanashi/pjsekai-background-gen-rust/releases/download/v0.1.0/pjsekai-background-gen.exe"
 
-	destFile, err := os.Create(dst)
+	resp, err := http.Get(downloadURL)
 	if err != nil {
-		return err
+		return fmt.Errorf("ダウンロードサーバーに接続できませんでした。(Could not connect to download server.) [%s]", err)
 	}
-	defer destFile.Close()
+	defer resp.Body.Close()
 
-	_, err = io.Copy(destFile, sourceFile)
-	return err
+	if resp.StatusCode != 200 {
+		return fmt.Errorf("ファイルのダウンロードに失敗しました。(Failed to download file.) [%d]", resp.StatusCode)
+	}
+
+	file, err := os.Create(destPath)
+	if err != nil {
+		return fmt.Errorf("ファイルの作成に失敗しました。(Failed to create file.) [%s]", err)
+	}
+	defer file.Close()
+
+	_, err = io.Copy(file, resp.Body)
+	if err != nil {
+		return fmt.Errorf("ファイルの書き込みに失敗しました。(Failed to write file.) [%s]", err)
+	}
+
+	return nil
 }
