@@ -31,7 +31,7 @@ type Source struct {
 	Dead  bool
 }
 
-func DetectLocalChartSource(chartId string) (Source, error) {
+func DetectLocalChartSource() (Source, error) {
 	// ScoreSync（3939ポート）に接続を試行
 	resp, err := http.Get("http://localhost:3939/")
 	if err != nil {
@@ -56,7 +56,7 @@ func DetectLocalChartSource(chartId string) (Source, error) {
 func FetchChart(source Source, chartId string) (sonolus.LevelInfo, error) {
 	var url string
 	if source.Id == "local_server" {
-		// ローカルサーバーの場合はchartIdをタイトルとして使用 (ScoreSync wtf why)
+		// ローカルサーバーの場合はchartIdをタイトルとして使用
 		url = "http://" + source.Host + "/sonolus/levels/" + chartId
 	} else {
 		url = "https://" + source.Host + "/sonolus/levels/" + chartId
@@ -344,7 +344,6 @@ func DownloadBackground(source Source, level sonolus.LevelInfo, destPath string,
 		}
 
 		fmt.Printf("Debug: 背景生成完了(Background generated): %s\n", outputPath)
-
 	} else {
 		backgroundUrl, err := sonolus.JoinUrl("https://"+source.Host, level.UseBackground.Item.Image.Url)
 		if err != nil {

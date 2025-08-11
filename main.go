@@ -110,7 +110,7 @@ func origMain(isOptionSpecified bool) {
 	var chartSource pjsekaioverlay.Source
 	var err error
 	if strings.HasPrefix(chartId, "local") {
-		chartSource, err = pjsekaioverlay.DetectLocalChartSource("")
+		chartSource, err = pjsekaioverlay.DetectLocalChartSource()
 		if err != nil {
 			fmt.Println(color.RedString(fmt.Sprintf("FAIL: %s", err.Error())))
 			return
@@ -121,7 +121,7 @@ func origMain(isOptionSpecified bool) {
 				chartId = parts[1]
 			}
 		} else {
-			fmt.Print("ローカルサーバーの譜面タイトルを入力してください: ")
+			fmt.Print("ローカルサーバーの譜面タイトルを入力してください(Enter chart title for the local server): ")
 			fmt.Scanln(&chartId)
 		}
 	} else {
