@@ -422,9 +422,16 @@ if PED_DATA and PED_DATA.version_status == "ok" then
   if auto_alpha < 0 then
     auto_alpha = 0
   end
-  if obj.time - 1.6 >= 0 then
-    obj.load("image", PED_DATA.path.."/autolive.png")
-    obj.draw(0, 0, 0, 1, auto_alpha)
+  if PED_DATA.enUI then
+    if obj.time - 1.6 >= 0 then
+      obj.load("image", PED_DATA.path.."/autolive-en.png")
+      obj.draw(0, 0, 0, 1, auto_alpha)
+    end
+  else
+    if obj.time - 1.6 >= 0 then
+      obj.load("image", PED_DATA.path.."/autolive.png")
+      obj.draw(0, 0, 0, 1, auto_alpha)
+    end
   end
   obj.setoption("antialias", 1)
 end
