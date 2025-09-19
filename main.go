@@ -36,7 +36,7 @@ func checkUpdate() []string {
 func checkSubstrings(str []string, subs ...string) string {
 	for _, s := range str {
 		for _, sub := range subs {
-			if strings.EqualFold(s, sub) {
+			if strings.Contains(s, sub) {
 				return sub
 			}
 		}
@@ -82,23 +82,25 @@ func origMain(isOptionSpecified bool) {
 	if !skipAviutlInstall {
 		success := pjsekaioverlay.TryInstallObject()
 		if success {
-			fmt.Println(color.GreenString("AviUtlオブジェクトのインストールに成功しました。(AviUtl object successfully installed.)"))
+			fmt.Println(color.GreenString("AviUtlオブジェクトのインストールに成功しました。(AviUtl object successfully installed.)\n"))
 		}
 	}
+
+	Tips()
 
 	var chartId string
 	if flag.Arg(0) != "" {
 		chartId = flag.Arg(0)
 		fmt.Printf("譜面ID (Chart ID): %s\n", color.GreenString(chartId))
 	} else {
-		fmt.Print("譜面IDを接頭辞込みで入力して下さい。\nEnter the chart ID including the prefix.\n\n'chcy-': Chart Cyanvas (cc.sevenc7c.com)\n'ptlv-': Potato Leaves (ptlv.sevenc7c.com)\n'utsk-': Untitled Sekai (us.pim4n-net.com)\n'local-': Local Server (ScoreSync)\n> ")
+		fmt.Print("譜面IDを接頭辞込みで入力して下さい。\nEnter the chart ID including the prefix.\n\n'chcy-': Chart Cyanvas\n'ptlv-': Potato Leaves (ptlv.sevenc7c.com)\n'utsk-': Untitled Sekai (us.pim4n-net.com)\n'UnCh-': UntitledCharts (untitledcharts.com)\n'coconut-next-sekai-': Next SEKAI (coconut.sonolus.com/next-sekai)\n'sync-': Local Server (ScoreSync)\n> ")
 		fmt.Scanln(&chartId)
 		fmt.Printf("\033[A\033[2K\r> %s\n", color.GreenString(chartId))
 	}
 
 	var chartInstance []string
 	if strings.HasPrefix(chartId, "chcy-") {
-		fmt.Printf("\nChart Cyanvasインスタンスを選択してください。(Please choose Chart Cyanvas instance.)\n%s\n\n[インスタンス一覧 - List of instance(s)]\n'0': オリジナル/Original - cc.sevenc7c.com\n> ", color.HiYellowString("(!) 別のインスタンスを持っていますか？URLドメインを入力してください。(Do you have a different instance? Input the URL domain.)"))
+		fmt.Printf("\nChart Cyanvasインスタンスを選択してください。(Please choose Chart Cyanvas instance.)\n%s\n\n[インスタンス一覧 - List of instance(s)]\n'0': アーカイブ/Archive - cc.sevenc7c.com\n'1': 分岐サーバー/Offshoot server - chart-cyanvas.com\n> ", color.YellowString("(!) 別のインスタンスを持っていますか？URLドメインを入力してください。(Do you have a different instance? Input the URL domain.)"))
 		var chartInput string
 		fmt.Scanln(&chartInput)
 		chartInput = strings.TrimPrefix(chartInput, "http://")
@@ -109,7 +111,7 @@ func origMain(isOptionSpecified bool) {
 
 	var chartSource pjsekaioverlay.Source
 	var err error
-	if strings.HasPrefix(chartId, "local") {
+	if strings.HasPrefix(chartId, "sync") {
 		chartSource, err = pjsekaioverlay.DetectLocalChartSource()
 		if err != nil {
 			fmt.Println(color.RedString(fmt.Sprintf("FAIL: %s", err.Error())))
@@ -121,7 +123,7 @@ func origMain(isOptionSpecified bool) {
 				chartId = parts[1]
 			}
 		} else {
-			fmt.Print("ローカルサーバーの譜面タイトルを入力してください(Enter chart title for the local server): ")
+			fmt.Print("ローカルサーバーの譜面タイトルを入力してください。(Enter chart title for the local server.)\n> ")
 			fmt.Scanln(&chartId)
 		}
 	} else {
@@ -130,31 +132,18 @@ func origMain(isOptionSpecified bool) {
 			fmt.Println(color.RedString("FAIL: 譜面が見つかりません。接頭辞も込め、正しい譜面IDを入力して下さい。\nChart not found. Please enter the correct chart ID including the prefix."))
 			return
 		}
-		if chartSource.Dead {
+		if chartSource.Status == 1 {
 			fmt.Printf(color.RedString("FAIL: %sはサポートされなくなりました。ご利用ありがとうございました。\n%s is no longer supported. Thank you for using the service.\n"), chartSource.Name, chartSource.Name)
 			return
+		}
+		if chartSource.Status == 2 {
+			fmt.Printf(color.HiYellowString("WARN: %sは現在開発中であり、正常に動作しない可能性があります。\n%s is currently in development and may not work.\n"), chartSource.Name, chartSource.Name)
 		}
 	}
 
 	fmt.Printf("- 譜面を取得中 (Getting chart): %s%s%s ", RgbColorEscape(chartSource.Color), chartSource.Name, ResetEscape())
 	chart, err := pjsekaioverlay.FetchChart(chartSource, chartId)
 	chartv1, errv1 := pjsekaioverlay.FetchChart(chartSource, chartId+"?c_background=v1")
-
-	var chart_api sonolus.LevelAPIInfo
-	if chartSource.Id == "chart_cyanvas" {
-		chart_api, err = pjsekaioverlay.FetchAPIChart(chartSource, chartId[5:])
-		if err != nil {
-			fmt.Println(color.RedString(fmt.Sprintf("FAIL: %s", err.Error())))
-			return
-		}
-	}
-	if chartSource.Id == "untitled_sekai" {
-		chart_api, err = pjsekaioverlay.FetchAPIChart(chartSource, chartId)
-		if err != nil {
-			fmt.Println(color.RedString(fmt.Sprintf("FAIL: %s", err.Error())))
-			return
-		}
-	}
 
 	if err != nil {
 		fmt.Println(color.RedString(fmt.Sprintf("FAIL: %s", err.Error())))
@@ -195,7 +184,7 @@ func origMain(isOptionSpecified bool) {
 	}
 
 	formattedOutDir := filepath.Join(cwd, strings.Replace(outDir, "_chartId_", chartId, -1))
-	fmt.Printf("- 出力先ディレクトリ (Output path): %s\n", color.CyanString(filepath.Dir(formattedOutDir)))
+	fmt.Printf("- 出力先ディレクトリ (Output path): %s\n", color.CyanString(filepath.Dir(formattedOutDir)+"\\"+chartId))
 
 	fmt.Print("- ジャケットをダウンロード中 (Downloading jacket)... ")
 	err = pjsekaioverlay.DownloadCover(chartSource, chart, formattedOutDir)
@@ -264,7 +253,7 @@ func origMain(isOptionSpecified bool) {
 		}
 		if teamPower >= math.Abs(1e+33) {
 			fmt.Printf("\033[A\033[2K\r> %s\n", color.YellowString(tmpTeamPower))
-			fmt.Println(color.YellowString("WARNING: スコアは大きすぎると精度が落ちる可能性がある。Score may decrease precision if it's too large.\n"))
+			fmt.Println(color.HiYellowString("WARN: スコアは大きすぎると精度が落ちる可能性がある。Score may decrease precision if it's too large.\n"))
 		} else {
 			fmt.Printf("\033[A\033[2K\r> %s\n", color.GreenString(tmpTeamPower))
 		}
@@ -326,12 +315,21 @@ func origMain(isOptionSpecified bool) {
 
 	var difficulty string
 	difficultyStrings := []string{"EASY", "NORMAL", "HARD", "EXPERT", "MASTER", "APPEND", "ETERNAL"}
-	if tags := checkSubstrings(chart_api.Tags, difficultyStrings...); tags != "" {
-		difficulty = tags
-	} else if title := checkSubstrings(strings.Fields(chart.Title), difficultyStrings...); title != "" {
-		difficulty = title
-	} else {
-		difficulty = "APPEND"
+
+	for i := range chart.Tags {
+		tags := checkSubstrings([]string{strings.ToUpper(chart.Tags[i].Title)}, difficultyStrings...)
+		if tags != "" {
+			difficulty = tags
+			break
+		}
+	}
+
+	if difficulty == "" {
+		if title := checkSubstrings(strings.Fields(strings.ToUpper(chart.Title)), difficultyStrings...); title != "" {
+			difficulty = title
+		} else {
+			difficulty = "APPEND"
+		}
 	}
 
 	composerAndVocals := []string{chart.Artists, "-"}
@@ -340,7 +338,7 @@ func origMain(isOptionSpecified bool) {
 	}
 
 	charter := []string{chart.Author, "-"}
-	if charterTag := strings.Split(chart.Author, "#"); (chartSource.Id == "chart_cyanvas" || chartSource.Id == "untitled_sekai") && len(charterTag) <= 2 {
+	if charterTag := strings.Split(chart.Author, "#"); (chartSource.Id == "chart_cyanvas" || chartSource.Id == "untitled_sekai" || chartSource.Id == "untitledcharts") && len(charterTag) <= 2 {
 		charter = charterTag
 	}
 

@@ -485,7 +485,7 @@ overlay=1
 camera=0
 [19.0]
 _name=カスタムオブジェクト
-track0=0.00
+track0=1.00
 track1=0.00
 track2=0.00
 track3=0.00
@@ -549,10 +549,10 @@ camera=0
 [21.0]
 _name=カスタムオブジェクト
 track0={ap}
-track1=0.00
-track2=0.00
+track1=1.00
+track2=1.00
 track3=0.00
-check0=0
+check0=1
 type=0
 filter=0
 name=コンボ@pjsekai-overlay
@@ -594,7 +594,7 @@ camera=0
 [23.0]
 _name=カスタムオブジェクト
 track0=0.00
-track1=0.00
+track1=1.00
 track2=0.00
 track3=0.00
 check0=0

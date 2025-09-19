@@ -24,11 +24,11 @@ import (
 )
 
 type Source struct {
-	Id    string
-	Name  string
-	Color int
-	Host  string
-	Dead  bool
+	Id     string
+	Name   string
+	Color  int
+	Host   string
+	Status int
 }
 
 func DetectLocalChartSource() (Source, error) {
@@ -44,11 +44,11 @@ func DetectLocalChartSource() (Source, error) {
 	}
 
 	source := Source{
-		Id:    "local_server",
-		Name:  "Local Server",
-		Color: 0x00afc7,
-		Host:  "localhost:3939",
-		Dead:  false,
+		Id:     "local_server",
+		Name:   "Local Server",
+		Color:  0x00afc7,
+		Host:   "localhost:3939",
+		Status: 0,
 	}
 	return source, nil
 }
@@ -85,74 +85,75 @@ func FetchChart(source Source, chartId string) (sonolus.LevelInfo, error) {
 	return chart.Item, nil
 }
 
-func FetchAPIChart(source Source, chartId string) (sonolus.LevelAPIInfo, error) {
-	var url = "https://" + source.Host + "/api/charts/" + chartId
-
-	resp, err := http.Get(url)
-
-	if err != nil {
-		return sonolus.LevelAPIInfo{}, errors.New("APIサーバーに接続できませんでした。(Could not connect to API server.)")
-	}
-	defer resp.Body.Close()
-
-	if resp.StatusCode != 200 {
-		return sonolus.LevelAPIInfo{}, errors.New("API譜面が見つかりませんでした。(Unable to search API chart.)")
-	}
-
-	var chart sonolus.InfoAPIResponse[sonolus.LevelAPIInfo]
-	json.NewDecoder(resp.Body).Decode(&chart)
-
-	if source.Id == "untitled_sekai" {
-		return chart.Data, nil
-	} else {
-		return chart.Chart, nil
-	}
-}
-
 func DetectChartSource(chartId string, chartInstance []string) (Source, error) {
 	var source Source
 	if strings.HasPrefix(chartId, "ptlv-") {
 		source = Source{
-			Id:    "potato_leaves",
-			Name:  "Potato Leaves",
-			Color: 0x88cb7f,
-			Host:  "ptlv.sevenc7c.com",
-			Dead:  false,
+			Id:     "potato_leaves",
+			Name:   "Potato Leaves",
+			Color:  0x88cb7f,
+			Host:   "ptlv.sevenc7c.com",
+			Status: 0,
 		}
 	} else if strings.HasPrefix(chartId, "chcy-") {
-		if chartInstance[0] == "0" {
+		switch chartInstance[0] {
+		case "0":
 			source = Source{
-				Id:    "chart_cyanvas",
-				Name:  "Chart Cyanvas",
-				Color: 0x83ccd2,
-				Host:  "cc.sevenc7c.com",
-				Dead:  true,
+				Id:     "chart_cyanvas",
+				Name:   "Chart Cyanvas Archive",
+				Color:  0x83ccd2,
+				Host:   "cc.sevenc7c.com",
+				Status: 0,
 			}
-		} else {
+		case "1":
 			source = Source{
-				Id:    "chart_cyanvas",
-				Name:  "Chart Cyanvas (" + chartInstance[0] + ")",
-				Color: 0x83ccd2,
-				Host:  chartInstance[0],
-				Dead:  false,
+				Id:     "chart_cyanvas",
+				Name:   "Chart Cyanvas Offshoot Server",
+				Color:  0x83ccd2,
+				Host:   "chart-cyanvas.com",
+				Status: 0,
+			}
+		default:
+			source = Source{
+				Id:     "chart_cyanvas",
+				Name:   "Chart Cyanvas (" + chartInstance[0] + ")",
+				Color:  0x83ccd2,
+				Host:   chartInstance[0],
+				Status: 0,
 			}
 		}
 	} else if strings.HasPrefix(chartId, "utsk-") {
 		source = Source{
-			Id:    "untitled_sekai",
-			Name:  "Untitled Sekai",
-			Color: 0x6a6a6a,
-			Host:  "us.pim4n-net.com",
-			Dead:  true,
+			Id:     "untitled_sekai",
+			Name:   "Untitled Sekai",
+			Color:  0x6a6a6a,
+			Host:   "us.pim4n-net.com",
+			Status: 1,
+		}
+	} else if strings.HasPrefix(chartId, "UnCh-") {
+		source = Source{
+			Id:     "untitledcharts",
+			Name:   "UntitledCharts",
+			Color:  0x404464,
+			Host:   "untitledcharts.com",
+			Status: 2,
+		}
+	} else if strings.HasPrefix(chartId, "coconut-next-sekai-") {
+		source = Source{
+			Id:     "next_sekai",
+			Name:   "Next SEKAI",
+			Color:  0x5b5c7c,
+			Host:   "coconut.sonolus.com/next-sekai",
+			Status: 2,
 		}
 	}
 	if source.Id == "" {
 		return Source{
-			Id:    chartId,
-			Name:  "",
-			Color: 0,
-			Host:  "",
-			Dead:  false,
+			Id:     chartId,
+			Name:   "",
+			Color:  0,
+			Host:   "",
+			Status: 0,
 		}, errors.New("unknown chart source")
 	}
 	return source, nil
@@ -250,7 +251,7 @@ func DownloadCover(source Source, level sonolus.LevelInfo, destPath string) erro
 	return nil
 }
 
-func copyFile(src, dst string) error {
+func CopyFile(src, dst string) error {
 	in, err := os.Open(src)
 	if err != nil {
 		return err
@@ -298,7 +299,7 @@ func DownloadBackground(source Source, level sonolus.LevelInfo, destPath string,
 		// pjsekai-background-gen.exeが存在しない場合はダウンロード
 		if _, err := os.Stat(backgroundGenPath); os.IsNotExist(err) {
 			fmt.Printf("背景生成ツールが見つかりません。ダウンロード中... (Background generator not found. Downloading...)\n")
-			err = downloadBackgroundGenerator(backgroundGenPath)
+			err = DownloadBackgroundGenerator(backgroundGenPath)
 			if err != nil {
 				return fmt.Errorf("背景生成ツールのダウンロードに失敗しました。(Failed to download background generator.) [%s]", err)
 			}
@@ -328,7 +329,7 @@ func DownloadBackground(source Source, level sonolus.LevelInfo, destPath string,
 
 		if _, err := os.Stat(generatedBackgroundPath); os.IsNotExist(err) {
 			if _, err := os.Stat(absCoverPath); err == nil {
-				err = copyFile(absCoverPath, outputPath)
+				err = CopyFile(absCoverPath, outputPath)
 				if err != nil {
 					return fmt.Errorf("背景ファイルのコピーに失敗しました。(Failed to copy background file.)[%s]", err)
 				}
@@ -345,7 +346,15 @@ func DownloadBackground(source Source, level sonolus.LevelInfo, destPath string,
 
 		fmt.Printf("Debug: 背景生成完了(Background generated): %s\n", outputPath)
 	} else {
-		backgroundUrl, err := sonolus.JoinUrl("https://"+source.Host, level.UseBackground.Item.Image.Url)
+		var backgroundUrl string
+		var err error
+
+		if source.Id == "next_sekai" { // default BG
+			backgroundUrl, err = sonolus.JoinUrl("https://"+source.Host, level.Engine.Background.Image.Url)
+		} else {
+			backgroundUrl, err = sonolus.JoinUrl("https://"+source.Host, level.UseBackground.Item.Image.Url)
+		}
+
 		if err != nil {
 			return fmt.Errorf("URLの解析に失敗しました。(URL parsing failed.) [%s]", err)
 		}
@@ -364,7 +373,7 @@ func DownloadBackground(source Source, level sonolus.LevelInfo, destPath string,
 		var file *os.File
 		var filev1 *os.File
 
-		if strings.Contains(chartId, "?c_background=v1") && source.Id == "chart_cyanvas" {
+		if strings.Contains(chartId, "?c_background=v1") && source.Id == "chart_cyanvas" { // v1 BG
 			filev1, err = os.Create(path.Join(destPath, "background-v1.png"))
 			file = nil
 		} else if source.Id == "potato_leaves" {
@@ -396,7 +405,7 @@ func DownloadBackground(source Source, level sonolus.LevelInfo, destPath string,
 	return nil
 }
 
-func downloadBackgroundGenerator(destPath string) error {
+func DownloadBackgroundGenerator(destPath string) error {
 	const downloadURL = "https://github.com/sevenc-nanashi/pjsekai-background-gen-rust/releases/download/v0.1.0/pjsekai-background-gen.exe"
 
 	resp, err := http.Get(downloadURL)

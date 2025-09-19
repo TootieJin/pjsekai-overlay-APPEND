@@ -33,6 +33,4 @@ dist/*
 *.aup
 *.txt
 .update-check
-!dependencies
-
-dist
+!dependencies/*

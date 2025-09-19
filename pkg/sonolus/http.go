@@ -16,11 +16,11 @@ type LevelInfo struct {
 	Data          SRL                     `json:"data"`
 	UseBackground UseItem[BackgroundInfo] `json:"useBackground"`
 	Engine        EngineInfo              `json:"engine"`
+	Tags          []TagInfo               `json:"tags"`
 }
 
-type LevelAPIInfo struct {
-	Title string   `json:"title"`
-	Tags  []string `json:"tags"`
+type TagInfo struct {
+	Title string `json:"title"`
 }
 
 type BackgroundInfo struct {
@@ -28,7 +28,8 @@ type BackgroundInfo struct {
 }
 
 type EngineInfo struct {
-	Version int `json:"version"`
+	Version    int            `json:"version"`
+	Background BackgroundInfo `json:"background"`
 }
 
 type SRL struct {
@@ -38,11 +39,6 @@ type SRL struct {
 
 type InfoResponse[T any] struct {
 	Item T `json:"item"`
-}
-
-type InfoAPIResponse[T any] struct {
-	Chart T `json:"chart"`
-	Data  T `json:"data"`
 }
 
 type UseItem[T any] struct {

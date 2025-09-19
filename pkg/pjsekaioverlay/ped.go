@@ -23,6 +23,7 @@ type BpmChange struct {
 }
 
 var WEIGHT_MAP = map[string]float64{
+	// Nanashi's Archetype
 	"#BPM_CHANGE":    0,
 	"Initialization": 0,
 	"InputManager":   0,
@@ -86,6 +87,82 @@ var WEIGHT_MAP = map[string]float64{
 
 	"TimeScaleGroup":  0,
 	"TimeScaleChange": 0,
+
+	// Next SEKAI's Archetype
+	"#TIMESCALE_CHANGE": 0,
+	"#TIMESCALE_GROUP":  0,
+	"_InputManager":     0,
+	"SlideManager":      0,
+	"Connector":         0,
+	"SlowGlowEffect":    0,
+	"SlowEffect":        0,
+
+	"NormalHeadTapNote":          1,
+	"CriticalHeadTapNote":        2,
+	"NormalHeadFlickNote":        1,
+	"CriticalHeadFlickNote":      3,
+	"NormalHeadTraceNote":        0.1,
+	"CriticalHeadTraceNote":      0.2,
+	"NormalHeadTraceFlickNote":   1,
+	"CriticalHeadTraceFlickNote": 3,
+	"NormalHeadReleaseNote":      1,
+	"CriticalHeadReleaseNote":    2,
+
+	"NormalTailTapNote":          1,
+	"CriticalTailTapNote":        2,
+	"NormalTailFlickNote":        1,
+	"CriticalTailFlickNote":      3,
+	"NormalTailTraceNote":        0.1,
+	"CriticalTailTraceNote":      0.2,
+	"NormalTailTraceFlickNote":   1,
+	"CriticalTailTraceFlickNote": 3,
+	"NormalTailReleaseNote":      1,
+	"CriticalTailReleaseNote":    2,
+
+	"TransientHiddenTickNote": 0.1,
+	"NormalTickNote":          0.1,
+	"CriticalTickNote":        0.2,
+	"AnchorNote":              0,
+
+	"FakeNormalTapNote":          0,
+	"FakeCriticalTapNote":        0,
+	"FakeNormalFlickNote":        0,
+	"FakeCriticalFlickNote":      0,
+	"FakeNormalTraceNote":        0,
+	"FakeCriticalTraceNote":      0,
+	"FakeNormalTraceFlickNote":   0,
+	"FakeCriticalTraceFlickNote": 0,
+	"FakeNormalReleaseNote":      0,
+	"FakeCriticalReleaseNote":    0,
+
+	"FakeNormalHeadTapNote":          0,
+	"FakeCriticalHeadTapNote":        0,
+	"FakeNormalHeadFlickNote":        0,
+	"FakeCriticalHeadFlickNote":      0,
+	"FakeNormalHeadTraceNote":        0,
+	"FakeCriticalHeadTraceNote":      0,
+	"FakeNormalHeadTraceFlickNote":   0,
+	"FakeCriticalHeadTraceFlickNote": 0,
+	"FakeNormalHeadReleaseNote":      0,
+	"FakeCriticalHeadReleaseNote":    0,
+
+	"FakeNormalTailTapNote":          0,
+	"FakeCriticalTailTapNote":        0,
+	"FakeNormalTailFlickNote":        0,
+	"FakeCriticalTailFlickNote":      0,
+	"FakeNormalTailTraceNote":        0,
+	"FakeCriticalTailTraceNote":      0,
+	"FakeNormalTailTraceFlickNote":   0,
+	"FakeCriticalTailTraceFlickNote": 0,
+	"FakeNormalTailReleaseNote":      0,
+	"FakeCriticalTailReleaseNote":    0,
+
+	"FakeTransientHiddenTickNote": 0,
+	"FakeNormalTickNote":          0,
+	"FakeCriticalTickNote":        0,
+	"FakeAnchorNote":              0,
+
+	"FakeDamageNote": 0,
 }
 
 func getValueFromData(data []sonolus.LevelDataEntityValue, name string) (float64, error) {

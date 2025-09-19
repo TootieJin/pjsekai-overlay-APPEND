@@ -121,6 +121,7 @@ if obj.check0 and PED_DATA.version_status == "ok" then
 end
 ----------------------------------------------------------------
 @スコア
+--track0:アニメ,0,1,1,1
 
 if PED_DATA and PED_DATA.version_status == "ok" then
   obj.setoption("drawtarget", "tempbuffer", obj.screen_w, obj.screen_h)
@@ -246,6 +247,12 @@ if PED_DATA and PED_DATA.version_status == "ok" then
     local diff_alpha = 1.3 * (1 - (0.9 ^ (progress * 12)))
     local c_minus = 0
 
+    if obj.track0 == 0 then
+      diff_x = -396
+      diff_y = -290
+      diff_alpha = 1.3
+    end
+
     if PED_DATA.current.offset >= 0 and PED_DATA.current.offset2 >= 0 then
       obj.load("image", PED_DATA.path.."/score/b_p.png")
       obj.draw(0 + diff_x, diff_y, 0, 0.42, diff_alpha)
@@ -286,86 +293,93 @@ end
 ----------------------------------------------------------------
 @コンボ
 --track0:APコンボ,0,1,0,1
+--track1:コンボタグ,0,1,1,1
+--track2:アニメ,0,1,1,1
+--check0:最後の4桁のみを表示,1
 if PED_DATA and PED_DATA.version_status == "ok" then
-  local ap_alpha = (math.sin(obj.time * math.pi) + 1) * (1 / 2)
+  local ap_alpha = (math.sin(obj.time * math.pi * 4/3) + 1) * (1 / 2)
   if ap_alpha > 1 then
     ap_alpha = 1
   end
   if PED_DATA.current.combo > 0 then
     obj.setoption("drawtarget", "tempbuffer", obj.screen_w / 2, 200)
 
-    if obj.track0 == 1 then
-      obj.load("image", PED_DATA.path.."/combo/b_c.png")
-      obj.draw(0, -70, 0, 0.67, ap_alpha)
+    if obj.track1 == 0 then
+      if obj.track0 == 1 then
+        obj.load("image", PED_DATA.path.."/combo/b_c.png")
+        obj.draw(0, -70, 0, 0.67, ap_alpha)
+      end
+      if obj.track0 == 1 then
+        obj.load("image", PED_DATA.path.."/combo/p_c.png")
+      else
+        obj.load("image", PED_DATA.path.."/combo/n_c.png")
+      end
+      obj.draw(0, -67, 0, 0.67)
     end
-    if obj.track0 == 1 then
-      obj.load("image", PED_DATA.path.."/combo/p_c.png")
-    else
-      obj.load("image", PED_DATA.path.."/combo/n_c.png")
-    end
-    obj.draw(0, -67, 0, 0.67)
 
     local combo_str
     combo_str = tostring(PED_DATA.current.combo)
 
     local progress = (obj.frame - OFFSET) - (PED_DATA.current.time * obj.framerate)
     for i = 1, #combo_str do
-      local digit = combo_str:sub(i, i)
-      local shift = -(#combo_str / 2) + i - 0.5
-      local shift_fax = 0
-      local ap_alpha = (math.sin(obj.time * math.pi) + 1) * (1 / 2)
-
-      if progress > 8 then
-        shift_fax = 1
-      else
-        shift_fax = (progress / 8) * 0.5 + 0.5
-      end
-
-      if obj.track0 == 1 then
-        obj.load("image", PED_DATA.path.."/combo/b_"..digit..".png")
-        obj.setoption("blend", 0)
-        obj.draw(shift * 72 * shift_fax, 0, 0, 0.70 * shift_fax, ap_alpha)
-        obj.load("image", PED_DATA.path.."/combo/p_"..digit..".png")
-      else
-        obj.load("image", PED_DATA.path.."/combo/n_"..digit..".png")
-      end
-      obj.draw(shift * 72 * shift_fax, 0, 0, 0.70 * shift_fax)
-    end
-    obj.setoption("blend", 1)
-    if progress < 14 then
-      for i = 1, #combo_str do
+      if not obj.check0 or #combo_str - 4 < i then
         local digit = combo_str:sub(i, i)
         local shift = -(#combo_str / 2) + i - 0.5
-        local shift_fax = (progress / 8) * 0.5 + 0.5
-        local alpha = (progress / 14) * -1 + 1
-        local ap_alpha = (math.sin(obj.time * math.pi) + 1) * (1 / 2)
+        local shift_fax = 0
+
+        if progress > 8 or obj.track2 == 0 then
+          shift_fax = 1
+        else
+          shift_fax = (progress / 8) * 0.5 + 0.5
+        end
 
         if obj.track0 == 1 then
           obj.load("image", PED_DATA.path.."/combo/b_"..digit..".png")
           obj.setoption("blend", 0)
-          obj.draw(shift * 72 * shift_fax, 0, 0, 0.70 * shift_fax, ap_alpha * alpha)
+          obj.draw(shift * 72 * shift_fax, 0, 0, 0.70 * shift_fax, ap_alpha)
           obj.load("image", PED_DATA.path.."/combo/p_"..digit..".png")
-          if progress > 8 and progress < 11 then
-            obj.effect("グロー", "強さ",  progress, "ぼかし", 5)
-            obj.effect("ライト", "強さ",  progress * 6.5, "逆光", 1)
-          elseif progress >= 11 and progress < 14 then
-            obj.effect("グロー", "強さ",  2.5 * (1 - (progress - 13) / 0.5), "ぼかし", 5)
-            obj.effect("ライト", "強さ",  15 * (1 - (progress - 13) / 0.5), "逆光", 1)
-          end
         else
-          obj.load("image", PED_DATA.path.."/combo/b_"..digit..".png")
-          obj.setoption("blend", 0)
-          obj.draw(shift * 72 * shift_fax, 0, 0, 0.70 * shift_fax, 0)
           obj.load("image", PED_DATA.path.."/combo/n_"..digit..".png")
-          if progress > 8 and progress < 11 then
-            obj.effect("グロー", "強さ",  progress, "ぼかし", 5)
-            obj.effect("ライト", "強さ",  progress * 6.5, "逆光", 1)
-          elseif progress >= 11 and progress < 14 then
-            obj.effect("グロー", "強さ",  2.5 * (1 - (progress - 13) / 0.5), "ぼかし", 5)
-            obj.effect("ライト", "強さ",  15 * (1 - (progress - 13) / 0.5), "逆光", 1)
-          end
         end
-        obj.draw(shift * 72 * shift_fax, 0, 0, 0.70 * shift_fax, alpha)
+        obj.draw(shift * 72 * shift_fax, 0, 0, 0.70 * shift_fax)
+      end
+    end
+    obj.setoption("blend", 1)
+    if progress < 14 and obj.track2 == 1 then
+      for i = 1, #combo_str do
+        if not obj.check0 or #combo_str - 4 < i then
+          local digit = combo_str:sub(i, i)
+          local shift = -(#combo_str / 2) + i - 0.5
+          local shift_fax = (progress / 8) * 0.5 + 0.5
+          local alpha = (progress / 14) * -1 + 1
+
+          if obj.track0 == 1 then
+            obj.load("image", PED_DATA.path.."/combo/b_"..digit..".png")
+            obj.setoption("blend", 0)
+            obj.draw(shift * 72 * shift_fax, 0, 0, 0.70 * shift_fax, ap_alpha * alpha)
+            obj.load("image", PED_DATA.path.."/combo/p_"..digit..".png")
+            if progress > 8 and progress < 11 then
+              obj.effect("グロー", "強さ",  progress, "ぼかし", 5)
+              obj.effect("ライト", "強さ",  progress * 6.5, "逆光", 1)
+            elseif progress >= 11 and progress < 14 then
+              obj.effect("グロー", "強さ",  2.5 * (1 - (progress - 13) / 0.5), "ぼかし", 5)
+              obj.effect("ライト", "強さ",  15 * (1 - (progress - 13) / 0.5), "逆光", 1)
+            end
+          else
+            obj.load("image", PED_DATA.path.."/combo/b_"..digit..".png")
+            obj.setoption("blend", 0)
+            obj.draw(shift * 72 * shift_fax, 0, 0, 0.70 * shift_fax, 0)
+            obj.load("image", PED_DATA.path.."/combo/n_"..digit..".png")
+            if progress > 8 and progress < 11 then
+              obj.effect("グロー", "強さ",  progress, "ぼかし", 5)
+              obj.effect("ライト", "強さ",  progress * 6.5, "逆光", 1)
+            elseif progress >= 11 and progress < 14 then
+              obj.effect("グロー", "強さ",  2.5 * (1 - (progress - 13) / 0.5), "ぼかし", 5)
+              obj.effect("ライト", "強さ",  15 * (1 - (progress - 13) / 0.5), "逆光", 1)
+            end
+          end
+          obj.draw(shift * 72 * shift_fax, 0, 0, 0.70 * shift_fax, alpha)
+        end
       end
     end
     obj.setoption("blend", 0)
@@ -376,6 +390,7 @@ end
 ----------------------------------------------------------------
 @判定
 --track0:判定タイプ,0,5,0,1
+--track1:アニメ,0,1,1,1
 if PED_DATA and PED_DATA.version_status == "ok" then
   if PED_DATA.current.time > 0 then
     local progress = ((obj.frame - OFFSET) - (PED_DATA.current.time * obj.framerate))
@@ -393,15 +408,21 @@ if PED_DATA and PED_DATA.version_status == "ok" then
     elseif obj.track0 == 5 then
       judge = "auto"
     end
-    if progress < 2 then
-      obj.load("image", PED_DATA.path.."/judge/v1/"..judge..".png")
-      obj.draw(0, 0, 0, 0, 0)
-    elseif progress < 5 then
-      obj.load("image", PED_DATA.path.."/judge/v1/"..judge..".png")
-      obj.draw(0, 0, 0, 0.7 - (-1.45 + (progress / 4)) ^ 4 * 0.7)
-    elseif progress < 20 then
+
+    if obj.track1 == 0 and progress < 20 then
       obj.load("image", PED_DATA.path.."/judge/v1/"..judge..".png")
       obj.draw(0, 0, 0, 0.7)
+    else
+      if progress < 2 then
+        obj.load("image", PED_DATA.path.."/judge/v1/"..judge..".png")
+        obj.draw(0, 0, 0, 0, 0)
+      elseif progress < 5 then
+        obj.load("image", PED_DATA.path.."/judge/v1/"..judge..".png")
+        obj.draw(0, 0, 0, 0.7 - (-1.45 + (progress / 4)) ^ 4 * 0.7)
+      elseif progress < 20 then
+        obj.load("image", PED_DATA.path.."/judge/v1/"..judge..".png")
+        obj.draw(0, 0, 0, 0.7)
+      end
     end
     obj.setoption("antialias", 1)
   end
