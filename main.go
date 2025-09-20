@@ -195,16 +195,62 @@ func origMain(isOptionSpecified bool) {
 
 	fmt.Println(color.GreenString("OK"))
 
-	fmt.Print("- 背景をダウンロード中 (Downloading background)... ")
-	err = pjsekaioverlay.DownloadBackground(chartSource, chart, formattedOutDir, chartId)
-	if err != nil {
-		fmt.Println(color.RedString(fmt.Sprintf("FAIL: %s", err.Error())))
-		return
+	customBG := false
+	if !isOptionSpecified && chartSource.Id == "untitledcharts" {
+		fmt.Print("\nカスタム背景を使用しますか？（『n』が追加されていない場合）[y/n]\nUse custom background? ('n' if not added) [y/n]\n> ")
+		before, _ := rawmode.Enable()
+		tmpCustomBGByte, _ := bufio.NewReader(os.Stdin).ReadByte()
+		tmpCustomBG := string(tmpCustomBGByte)
+		rawmode.Restore(before)
+		if tmpCustomBG == "Y" || tmpCustomBG == "y" {
+			customBG = true
+			fmt.Printf("\n\033[A\033[2K\r> %s\n", color.GreenString(tmpCustomBG))
+			fmt.Println(color.GreenString("TOGGLE: ON"))
+		} else {
+			customBG = false
+			fmt.Printf("\n\033[A\033[2K\r> %s\n", color.RedString(tmpCustomBG))
+			fmt.Println(color.RedString("TOGGLE: OFF"))
+		}
 	}
-	err = pjsekaioverlay.DownloadBackground(chartSource, chartv1, formattedOutDir, chartId+"?c_background=v1")
-	if err != nil {
-		fmt.Println(color.RedString(fmt.Sprintf("FAIL: %s", err.Error())))
-		return
+
+	fmt.Print("- 背景をダウンロード中 (Downloading background)... ")
+	if chartSource.Id == "chart_cyanvas" {
+		err = pjsekaioverlay.DownloadBackground(chartSource, chartv1, formattedOutDir, chartId+"?c_background=v1")
+		if err != nil {
+			fmt.Println(color.RedString(fmt.Sprintf("FAIL: %s", err.Error())))
+			return
+		}
+	}
+	if customBG {
+		err = pjsekaioverlay.DownloadBackground(chartSource, chart, formattedOutDir, chartId)
+		if err != nil {
+			fmt.Println(color.RedString(fmt.Sprintf("FAIL: %s", err.Error())))
+			return
+		}
+
+		err = pjsekaioverlay.DownloadBackground(chartSource, chartv1, formattedOutDir, chartId+"?levelbg=default_or_v1")
+		if err != nil {
+			fmt.Println(color.RedString(fmt.Sprintf("FAIL: %s", err.Error())))
+			return
+		}
+	} else if chartSource.Id == "untitledcharts" {
+		err = pjsekaioverlay.DownloadBackground(chartSource, chart, formattedOutDir, chartId+"?levelbg=v3")
+		if err != nil {
+			fmt.Println(color.RedString(fmt.Sprintf("FAIL: %s", err.Error())))
+			return
+		}
+
+		err = pjsekaioverlay.DownloadBackground(chartSource, chartv1, formattedOutDir, chartId+"?levelbg=v1")
+		if err != nil {
+			fmt.Println(color.RedString(fmt.Sprintf("FAIL: %s", err.Error())))
+			return
+		}
+	} else {
+		err = pjsekaioverlay.DownloadBackground(chartSource, chart, formattedOutDir, chartId)
+		if err != nil {
+			fmt.Println(color.RedString(fmt.Sprintf("FAIL: %s", err.Error())))
+			return
+		}
 	}
 
 	fmt.Println(color.GreenString("OK"))
@@ -220,7 +266,7 @@ func origMain(isOptionSpecified bool) {
 	fmt.Println(color.GreenString("OK"))
 
 	if !isOptionSpecified {
-		fmt.Print("\n大会モードを有効にするか？ (PERFECT = +3点)\nEnable Tournament Mode? (PERFECT = +3pts) [y/n]\n> ")
+		fmt.Print("\n大会モードを有効にするか？（PERFECT = +3点）[y/n]\nEnable Tournament Mode? (PERFECT = +3pts) [y/n]\n> ")
 		before, _ := rawmode.Enable()
 		tmpEnableEXScoreByte, _ := bufio.NewReader(os.Stdin).ReadByte()
 		tmpEnableEXScore := string(tmpEnableEXScoreByte)
@@ -264,7 +310,7 @@ func origMain(isOptionSpecified bool) {
 
 	fmt.Println(color.GreenString("OK"))
 	if !isOptionSpecified {
-		fmt.Print("\n英語版を使う？(イントロ + v3 UI) - Use English version? (Intro + v3 UI) [y/n]\n> ")
+		fmt.Print("\n英語版を使う？（イントロ + v3 UI）- Use English version? (Intro + v3 UI) [y/n]\n> ")
 		before, _ := rawmode.Enable()
 		tmpEnableENByte, _ := bufio.NewReader(os.Stdin).ReadByte()
 		tmpEnableEN := string(tmpEnableENByte)
@@ -281,7 +327,7 @@ func origMain(isOptionSpecified bool) {
 	}
 
 	if !isOptionSpecified {
-		fmt.Print("\nコンボのAP表示を有効にしますか？(これは後でAviUtlで変更できます)\nEnable AP indicator for combo? (You can change this later in AviUtl) [y/n]\n> ")
+		fmt.Print("\nコンボのAP表示を有効にしますか？（これは後でAviUtlで変更できます）[y/n]\nEnable AP indicator for combo? (You can change this later in AviUtl) [y/n]\n> ")
 		before, _ := rawmode.Enable()
 		tmpEnableComboApByte, _ := bufio.NewReader(os.Stdin).ReadByte()
 		tmpEnableComboAp := string(tmpEnableComboApByte)

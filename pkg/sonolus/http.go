@@ -56,5 +56,4 @@ func JoinUrl(base string, path string) (string, error) {
 	}
 	u.Path = path
 	return u.String(), nil
-
 }
