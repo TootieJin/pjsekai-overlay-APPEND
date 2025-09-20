@@ -114,6 +114,7 @@ PJSekai-style video creation tool:
 > This issue is seen for these servers:
 > - `coconut-next-sekai-`: Next SEKAI
 > - `UnCh-`: UntitledCharts
+> 
 > **Please be aware of this before using pjsekai-overlay-APPEND in your charts.**
 7. Import specified exo file by navigating to your `pjsekai-overlay/dist/[chart ID]` directory:
    - **For phone users:** main_en_16-9_1920x1080.exo
@@ -212,6 +213,7 @@ PJSekai-style video creation tool:
 > この問題は以下のサーバーで確認されています：
 > - `coconut-next-sekai-`: Next SEKAI
 > - `UnCh-`: UntitledCharts
+> 
 > **譜面でpjsekai-overlay-APPENDを使用する前に、この点にご注意ください。**
 7. `pjsekai-overlay/dist/[譜面ID]`ディレクトリに移動して、指定したexoファイルをインポートします：
    - **スマホ向け:** main_jp_16-9_1920x1080.exo
