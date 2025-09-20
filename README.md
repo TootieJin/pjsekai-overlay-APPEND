@@ -102,13 +102,19 @@ PJSekai-style video creation tool:
 6. Input the chart ID including the prefix.
    - `chcy-`: Chart Cyanvas
       - `0`: Archive ([cc.sevenc7c.com](https://cc.sevenc7c.com))
-      - `1`: Offshoot server ([chart-cyanvas.com](https://chart-cyanvas.com))
+      - ~~`1`: Offshoot server ([chart-cyanvas.com](https://chart-cyanvas.com))~~ **[BROKEN]**
       - `Others (URL domain)`: Different Cyanvas instance
    - `ptlv-`: Potato Leaves ([ptlv.sevenc7c.com](https://ptlv.sevenc7c.com))
    - ~~`utsk-`: Untitled Sekai ([us.pim4n-net.com](https://us.pim4n-net.com))~~
-   - ~~`UnCh-`: UntitledCharts ([untitledcharts.com](https://untitledcharts.com))~~ **[IN DEVELOPMENT]**
-   - `coconut-next-sekai-`: Next SEKAI ([coconut.sonolus.com/next-sekai](https://coconut.sonolus.com/next-sekai)) **[IN DEVELOPMENT]**
+   - `UnCh-`: UntitledCharts ([untitledcharts.com](https://untitledcharts.com)) **[IN DEVELOPMENT]**
+   - ~~`coconut-next-sekai-`: Next SEKAI ([coconut.sonolus.com/next-sekai](https://coconut.sonolus.com/next-sekai))~~ **[IN DEVELOPMENT]**
    - `sync-`: Local Server ([ScoreSync](https://github.com/Piliman22/ScoreSync))
+> [!CAUTION]
+> Charts that are uploaded using **`LevelData`** *(not `.sus` or `.usc`)* **MAY NOT WORK.**\
+> This issue is seen for these servers:
+> - `coconut-next-sekai-`: Next SEKAI
+> - `UnCh-`: UntitledCharts
+> **Please be aware of this before using pjsekai-overlay-APPEND in your charts.**
 7. Import specified exo file by navigating to your `pjsekai-overlay/dist/[chart ID]` directory:
    - **For phone users:** main_en_16-9_1920x1080.exo
    - **For iPad users:** main_en_4-3_1440x1080.exo
@@ -194,13 +200,19 @@ PJSekai-style video creation tool:
 6. 譜面IDを接頭辞込みで入力して下さい
    - `chcy-`: Chart Cyanvas
       - `0`: アーカイブ([cc.sevenc7c.com](https://cc.sevenc7c.com))
-      - `1`: 分岐サーバー([chart-cyanvas.com](https://chart-cyanvas.com))
+      - ~~`1`: 分岐サーバー([chart-cyanvas.com](https://chart-cyanvas.com))~~ **[壊れた]**
       - `その他(URLドメイン)`: 異なるCyanvasインスタンス
    - `ptlv-`: Potato Leaves ([ptlv.sevenc7c.com](https://ptlv.sevenc7c.com))
    - ~~`utsk-`: Untitled Sekai ([us.pim4n-net.com](https://us.pim4n-net.com))~~
-   - ~~`UnCh-`: UntitledCharts ([untitledcharts.com](https://untitledcharts.com))~~ **[作業中]**
-   - `coconut-next-sekai-`: Next SEKAI ([coconut.sonolus.com/next-sekai](https://coconut.sonolus.com/next-sekai)) **[作業中]**
+   - `UnCh-`: UntitledCharts ([untitledcharts.com](https://untitledcharts.com)) **[作業中]**
+   - ~~`coconut-next-sekai-`: Next SEKAI ([coconut.sonolus.com/next-sekai](https://coconut.sonolus.com/next-sekai))~~ **[作業中]**
    - `sync-`: ローカルサーバー([ScoreSync](https://github.com/Piliman22/ScoreSync))
+> [!WARNING]
+> **`LevelData`** を使用してアップロードされた譜面（`.sus` や `.usc` ではない）は、**正常に動作しない可能性があります。**\
+> この問題は以下のサーバーで確認されています：
+> - `coconut-next-sekai-`: Next SEKAI
+> - `UnCh-`: UntitledCharts
+> **譜面でpjsekai-overlay-APPENDを使用する前に、この点にご注意ください。**
 7. `pjsekai-overlay/dist/[譜面ID]`ディレクトリに移動して、指定したexoファイルをインポートします：
    - **スマホ向け:** main_jp_16-9_1920x1080.exo
    - **iPad向け:** main_jp_4-3_1440x1080.exo

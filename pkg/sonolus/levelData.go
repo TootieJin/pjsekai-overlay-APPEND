@@ -8,6 +8,7 @@ type LevelData struct {
 type LevelDataEntity struct {
 	Archetype string                 `json:"archetype"`
 	Data      []LevelDataEntityValue `json:"data"`
+	Name      string                 `json:"name"`
 }
 
 type LevelDataEntityValue struct {

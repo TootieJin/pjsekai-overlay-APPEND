@@ -111,7 +111,7 @@ func DetectChartSource(chartId string, chartInstance []string) (Source, error) {
 				Name:   "Chart Cyanvas Offshoot Server",
 				Color:  0x83ccd2,
 				Host:   "chart-cyanvas.com",
-				Status: 0,
+				Status: 2,
 			}
 		default:
 			source = Source{

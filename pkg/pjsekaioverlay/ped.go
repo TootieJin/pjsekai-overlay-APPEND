@@ -5,7 +5,7 @@ import (
 	"io"
 	"math"
 	"os"
-	"sort"
+	"slices"
 	"strconv"
 	"time"
 
@@ -94,8 +94,8 @@ var WEIGHT_MAP = map[string]float64{
 	"_InputManager":     0,
 	"SlideManager":      0,
 	"Connector":         0,
-	"SlowGlowEffect":    0,
-	"SlowEffect":        0,
+	"SlotGlowEffect":    0,
+	"SlotEffect":        0,
 
 	"NormalHeadTapNote":          1,
 	"CriticalHeadTapNote":        2,
@@ -234,11 +234,23 @@ func CalculateScore(levelInfo sonolus.LevelInfo, levelData sonolus.LevelData, po
 			})
 		}
 	}
-	sort.SliceStable(noteEntities, func(i, j int) bool {
-		return noteEntities[i].Data[0].Value < noteEntities[j].Data[0].Value
+	slices.SortStableFunc(noteEntities, func(a, b sonolus.LevelDataEntity) int {
+		if a.Data[0].Value < b.Data[0].Value {
+			return -1
+		}
+		if a.Data[0].Value > b.Data[0].Value {
+			return 1
+		}
+		return 0
 	})
-	sort.SliceStable(bpmChanges, func(i, j int) bool {
-		return bpmChanges[i].Beat < bpmChanges[j].Beat
+	slices.SortStableFunc(bpmChanges, func(a, b BpmChange) int {
+		if a.Beat < b.Beat {
+			return -1
+		}
+		if a.Beat > b.Beat {
+			return 1
+		}
+		return 0
 	})
 	for _, entity := range noteEntities {
 		weight := WEIGHT_MAP[entity.Archetype]
