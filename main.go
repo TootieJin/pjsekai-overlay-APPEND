@@ -143,14 +143,29 @@ func origMain(isOptionSpecified bool) {
 
 	fmt.Printf("- 譜面を取得中 (Getting chart): %s%s%s ", RgbColorEscape(chartSource.Color), chartSource.Name, ResetEscape())
 	chart, err := pjsekaioverlay.FetchChart(chartSource, chartId)
-	chartv1, errv1 := pjsekaioverlay.FetchChart(chartSource, chartId+"?c_background=v1")
+	chartCCv1, errCCv1 := pjsekaioverlay.FetchChart(chartSource, chartId+"?c_background=v1")
+	chartUNv3, errUNv3 := pjsekaioverlay.FetchChart(chartSource, chartId+"?levelbg=v3")
+	chartUNv1, errUNv1 := pjsekaioverlay.FetchChart(chartSource, chartId+"?levelbg=v1")
+	chartUNv1def, errUNv1def := pjsekaioverlay.FetchChart(chartSource, chartId+"?levelbg=default_or_v1")
 
 	if err != nil {
 		fmt.Println(color.RedString(fmt.Sprintf("FAIL: %s", err.Error())))
 		return
 	}
-	if errv1 != nil {
-		fmt.Println(color.RedString(fmt.Sprintf("FAIL: %s", errv1.Error())))
+	if errCCv1 != nil {
+		fmt.Println(color.RedString(fmt.Sprintf("FAIL: %s", errCCv1.Error())))
+		return
+	}
+	if errUNv3 != nil {
+		fmt.Println(color.RedString(fmt.Sprintf("FAIL: %s", errUNv3.Error())))
+		return
+	}
+	if errUNv1 != nil {
+		fmt.Println(color.RedString(fmt.Sprintf("FAIL: %s", errUNv1.Error())))
+		return
+	}
+	if errUNv1def != nil {
+		fmt.Println(color.RedString(fmt.Sprintf("FAIL: %s", errUNv1def.Error())))
 		return
 	}
 
@@ -197,7 +212,7 @@ func origMain(isOptionSpecified bool) {
 
 	customBG := false
 	if !isOptionSpecified && chartSource.Id == "untitledcharts" {
-		fmt.Print("\nカスタム背景を使用しますか？（『n』が追加されていない場合）[y/n]\nUse custom background? ('n' if not added) [y/n]\n> ")
+		fmt.Print("\nカスタム背景を使用しますか？（デフォルトを使用するには「n」）[y/n]\nUse custom background? ('n' to use default) [y/n]\n> ")
 		before, _ := rawmode.Enable()
 		tmpCustomBGByte, _ := bufio.NewReader(os.Stdin).ReadByte()
 		tmpCustomBG := string(tmpCustomBGByte)
@@ -215,7 +230,7 @@ func origMain(isOptionSpecified bool) {
 
 	fmt.Print("- 背景をダウンロード中 (Downloading background)... ")
 	if chartSource.Id == "chart_cyanvas" {
-		err = pjsekaioverlay.DownloadBackground(chartSource, chartv1, formattedOutDir, chartId+"?c_background=v1")
+		err = pjsekaioverlay.DownloadBackground(chartSource, chartCCv1, formattedOutDir, chartId+"?c_background=v1")
 		if err != nil {
 			fmt.Println(color.RedString(fmt.Sprintf("FAIL: %s", err.Error())))
 			return
@@ -228,19 +243,19 @@ func origMain(isOptionSpecified bool) {
 			return
 		}
 
-		err = pjsekaioverlay.DownloadBackground(chartSource, chartv1, formattedOutDir, chartId+"?levelbg=default_or_v1")
+		err = pjsekaioverlay.DownloadBackground(chartSource, chartUNv1def, formattedOutDir, chartId+"?levelbg=default_or_v1")
 		if err != nil {
 			fmt.Println(color.RedString(fmt.Sprintf("FAIL: %s", err.Error())))
 			return
 		}
 	} else if chartSource.Id == "untitledcharts" {
-		err = pjsekaioverlay.DownloadBackground(chartSource, chart, formattedOutDir, chartId+"?levelbg=v3")
+		err = pjsekaioverlay.DownloadBackground(chartSource, chartUNv3, formattedOutDir, chartId+"?levelbg=v3")
 		if err != nil {
 			fmt.Println(color.RedString(fmt.Sprintf("FAIL: %s", err.Error())))
 			return
 		}
 
-		err = pjsekaioverlay.DownloadBackground(chartSource, chartv1, formattedOutDir, chartId+"?levelbg=v1")
+		err = pjsekaioverlay.DownloadBackground(chartSource, chartUNv1, formattedOutDir, chartId+"?levelbg=v1")
 		if err != nil {
 			fmt.Println(color.RedString(fmt.Sprintf("FAIL: %s", err.Error())))
 			return
