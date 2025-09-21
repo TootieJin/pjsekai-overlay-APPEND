@@ -102,7 +102,7 @@ PJSekai-style video creation tool:
 6. Input the chart ID including the prefix.
    - `chcy-`: Chart Cyanvas
       - `0`: Archive ([cc.sevenc7c.com](https://cc.sevenc7c.com))
-      - ~~`1`: Offshoot server ([chart-cyanvas.com](https://chart-cyanvas.com))~~ **[BROKEN]**
+      - `1`: Offshoot server ([chart-cyanvas.com](https://chart-cyanvas.com))
       - `Others (URL domain)`: Different Cyanvas instance
    - `ptlv-`: Potato Leaves ([ptlv.sevenc7c.com](https://ptlv.sevenc7c.com))
    - ~~`utsk-`: Untitled Sekai ([us.pim4n-net.com](https://us.pim4n-net.com))~~
@@ -201,7 +201,7 @@ PJSekai-style video creation tool:
 6. 譜面IDを接頭辞込みで入力して下さい
    - `chcy-`: Chart Cyanvas
       - `0`: アーカイブ([cc.sevenc7c.com](https://cc.sevenc7c.com))
-      - ~~`1`: 分岐サーバー([chart-cyanvas.com](https://chart-cyanvas.com))~~ **[壊れた]**
+      - `1`: 分岐サーバー([chart-cyanvas.com](https://chart-cyanvas.com))
       - `その他(URLドメイン)`: 異なるCyanvasインスタンス
    - `ptlv-`: Potato Leaves ([ptlv.sevenc7c.com](https://ptlv.sevenc7c.com))
    - ~~`utsk-`: Untitled Sekai ([us.pim4n-net.com](https://us.pim4n-net.com))~~
