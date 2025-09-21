@@ -107,7 +107,7 @@ PJSekai-style video creation tool:
    - `ptlv-`: Potato Leaves ([ptlv.sevenc7c.com](https://ptlv.sevenc7c.com))
    - ~~`utsk-`: Untitled Sekai ([us.pim4n-net.com](https://us.pim4n-net.com))~~
    - `UnCh-`: UntitledCharts ([untitledcharts.com](https://untitledcharts.com)) **[IN DEVELOPMENT]**
-   - ~~`coconut-next-sekai-`: Next SEKAI ([coconut.sonolus.com/next-sekai](https://coconut.sonolus.com/next-sekai))~~ **[IN DEVELOPMENT]**
+   - `coconut-next-sekai-`: Next SEKAI ([coconut.sonolus.com/next-sekai](https://coconut.sonolus.com/next-sekai)) **[IN DEVELOPMENT]**
    - `sync-`: Local Server ([ScoreSync](https://github.com/Piliman22/ScoreSync))
 > [!CAUTION]
 > Charts that are uploaded using **`LevelData`** *(not `.sus` or `.usc`)* **MAY NOT WORK.**\
@@ -206,7 +206,7 @@ PJSekai-style video creation tool:
    - `ptlv-`: Potato Leaves ([ptlv.sevenc7c.com](https://ptlv.sevenc7c.com))
    - ~~`utsk-`: Untitled Sekai ([us.pim4n-net.com](https://us.pim4n-net.com))~~
    - `UnCh-`: UntitledCharts ([untitledcharts.com](https://untitledcharts.com)) **[作業中]**
-   - ~~`coconut-next-sekai-`: Next SEKAI ([coconut.sonolus.com/next-sekai](https://coconut.sonolus.com/next-sekai))~~ **[作業中]**
+   - `coconut-next-sekai-`: Next SEKAI ([coconut.sonolus.com/next-sekai](https://coconut.sonolus.com/next-sekai)) **[作業中]**
    - `sync-`: ローカルサーバー([ScoreSync](https://github.com/Piliman22/ScoreSync))
 > [!CAUTION]
 > **`LevelData`** を使用してアップロードされた譜面（`.sus` や `.usc` ではない）は、**正常に動作しない可能性があります。**\
