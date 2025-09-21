@@ -208,7 +208,7 @@ PJSekai-style video creation tool:
    - `UnCh-`: UntitledCharts ([untitledcharts.com](https://untitledcharts.com)) **[作業中]**
    - ~~`coconut-next-sekai-`: Next SEKAI ([coconut.sonolus.com/next-sekai](https://coconut.sonolus.com/next-sekai))~~ **[作業中]**
    - `sync-`: ローカルサーバー([ScoreSync](https://github.com/Piliman22/ScoreSync))
-> [!WARNING]
+> [!CAUTION]
 > **`LevelData`** を使用してアップロードされた譜面（`.sus` や `.usc` ではない）は、**正常に動作しない可能性があります。**\
 > この問題は以下のサーバーで確認されています：
 > - `coconut-next-sekai-`: Next SEKAI
