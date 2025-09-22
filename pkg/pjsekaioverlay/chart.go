@@ -136,7 +136,7 @@ func DetectChartSource(chartId string, chartInstance []string) (Source, error) {
 			Name:   "UntitledCharts",
 			Color:  0x404464,
 			Host:   "untitledcharts.com",
-			Status: 2,
+			Status: 0,
 		}
 	} else if strings.HasPrefix(chartId, "coconut-next-sekai-") {
 		source = Source{
@@ -144,7 +144,15 @@ func DetectChartSource(chartId string, chartInstance []string) (Source, error) {
 			Name:   "Next SEKAI",
 			Color:  0x5b5c7c,
 			Host:   "coconut.sonolus.com/next-sekai",
-			Status: 2,
+			Status: 0,
+		}
+	} else if strings.HasPrefix(chartId, "lalo-") {
+		source = Source{
+			Id:     "laoloser",
+			Name:   "laoloser's server",
+			Color:  0xccd1df,
+			Host:   "sonolus.laoloser.com",
+			Status: 0,
 		}
 	}
 	if source.Id == "" {
@@ -348,8 +356,9 @@ func DownloadBackground(source Source, level sonolus.LevelInfo, destPath string,
 	} else {
 		var backgroundUrl string
 		var err error
+		useDefault := level.UseBackground.UseDefault
 
-		if source.Id == "next_sekai" { // default BG
+		if useDefault {
 			backgroundUrl, err = sonolus.JoinUrl("https://"+source.Host, level.Engine.Background.Image.Url)
 		} else {
 			backgroundUrl, err = sonolus.JoinUrl("https://"+source.Host, level.UseBackground.Item.Image.Url)

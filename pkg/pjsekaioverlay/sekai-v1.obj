@@ -122,6 +122,7 @@ end
 ----------------------------------------------------------------
 @スコア
 --track0:アニメ,0,1,1,1
+--track1:最小桁数,1,17,8,1
 
 if PED_DATA and PED_DATA.version_status == "ok" then
   obj.setoption("drawtarget", "tempbuffer", obj.screen_w, obj.screen_h)
@@ -158,15 +159,19 @@ if PED_DATA and PED_DATA.version_status == "ok" then
   -- -559, 27, +24
   local score_str = ""
   local score_str2 = ""
+  local minusDigits = obj.track1 - 1
+  if minusDigits < 1 then
+    minusDigits = 1
+  end
   if math.floor(math.abs(PED_DATA.current.score2)) > 0 then
     score_str = string.format("%17.0f", PED_DATA.current.score):gsub(" ", "0")
     score_str2 = string.format("%.0f", PED_DATA.current.score2)
   else
-    score_str = string.format("%8.0f", PED_DATA.current.score):gsub(" ", "n")
+    score_str = string.format("%"..obj.track1..".0f", PED_DATA.current.score):gsub(" ", "n")
   end
 
   if PED_DATA.current.score < 0 then
-    score_str = "-" .. string.format("%7.0f", math.abs(PED_DATA.current.score)):gsub(" ", "n")
+    score_str = "-" .. string.format("%"..minusDigits..".0f", math.abs(PED_DATA.current.score)):gsub(" ", "n")
   end
 
   local score_len = string.len(score_str)

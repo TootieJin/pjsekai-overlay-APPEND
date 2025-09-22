@@ -517,7 +517,7 @@ camera=0
 [21.0]
 _name=Custom object
 track0=1.00
-track1=0.00
+track1=8.00
 track2=0.00
 track3=0.00
 check0=0

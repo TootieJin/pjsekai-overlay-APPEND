@@ -50,6 +50,9 @@ func origMain(isOptionSpecified bool) {
 	var skipAviutlInstall bool
 	flag.BoolVar(&skipAviutlInstall, "no-aviutl-install", false, "AviUtlオブジェクトのインストールをスキップします。(AviUtl object installation is skipped.)")
 
+	var skipAviutlScriptInstall bool
+	flag.BoolVar(&skipAviutlInstall, "no-aviutl-script-install", false, "AviUtlスクリプトのインストールをスキップします。(AviUtl script installation is skipped.)")
+
 	var outDir string
 	flag.StringVar(&outDir, "out-dir", "./dist/_chartId_", "出力先ディレクトリを指定します。_chartId_ は譜面IDに置き換えられます。\nEnter the output path. _chartId_ will be replaced with the chart ID.")
 
@@ -82,7 +85,14 @@ func origMain(isOptionSpecified bool) {
 	if !skipAviutlInstall {
 		success := pjsekaioverlay.TryInstallObject()
 		if success {
-			fmt.Println(color.GreenString("AviUtlオブジェクトのインストールに成功しました。(AviUtl object successfully installed.)\n"))
+			fmt.Println(color.GreenString("AviUtlオブジェクトのインストールに成功しました。(AviUtl object successfully installed.)"))
+		}
+	}
+
+	if !skipAviutlScriptInstall {
+		success := pjsekaioverlay.TryInstallScript()
+		if success {
+			fmt.Println(color.GreenString("AviUtl依存関係スクリプトのインストールに成功しました。(AviUtl dependency scripts successfully installed.)"))
 		}
 	}
 
@@ -93,7 +103,7 @@ func origMain(isOptionSpecified bool) {
 		chartId = flag.Arg(0)
 		fmt.Printf("譜面ID (Chart ID): %s\n", color.GreenString(chartId))
 	} else {
-		fmt.Print("譜面IDを接頭辞込みで入力して下さい。\nEnter the chart ID including the prefix.\n\n'chcy-': Chart Cyanvas\n'ptlv-': Potato Leaves (ptlv.sevenc7c.com)\n'utsk-': Untitled Sekai (us.pim4n-net.com)\n'UnCh-': UntitledCharts (untitledcharts.com)\n'coconut-next-sekai-': Next SEKAI (coconut.sonolus.com/next-sekai)\n'sync-': Local Server (ScoreSync)\n> ")
+		fmt.Print("譜面IDを接頭辞込みで入力して下さい。\nEnter the chart ID including the prefix.\n\n'chcy-': Chart Cyanvas\n'ptlv-': Potato Leaves (ptlv.sevenc7c.com)\n'utsk-': Untitled Sekai (us.pim4n-net.com)\n'UnCh-': UntitledCharts (untitledcharts.com)\n'coconut-next-sekai-': Next SEKAI (coconut.sonolus.com/next-sekai)\n'lalo-': laoloser's server (sonolus.laoloser.com)\n'sync-': Local Server (ScoreSync)\n> ")
 		fmt.Scanln(&chartId)
 		fmt.Printf("\033[A\033[2K\r> %s\n", color.GreenString(chartId))
 	}
@@ -142,32 +152,24 @@ func origMain(isOptionSpecified bool) {
 	}
 
 	fmt.Printf("- 譜面を取得中 (Getting chart): %s%s%s ", RgbColorEscape(chartSource.Color), chartSource.Name, ResetEscape())
-	chart, err := pjsekaioverlay.FetchChart(chartSource, chartId)
-	chartCCv1, errCCv1 := pjsekaioverlay.FetchChart(chartSource, chartId+"?c_background=v1")
-	chartUNv3, errUNv3 := pjsekaioverlay.FetchChart(chartSource, chartId+"?levelbg=v3")
-	chartUNv1, errUNv1 := pjsekaioverlay.FetchChart(chartSource, chartId+"?levelbg=v1")
-	chartUNv1def, errUNv1def := pjsekaioverlay.FetchChart(chartSource, chartId+"?levelbg=default_or_v1")
+
+	var chart sonolus.LevelInfo
+	if strings.HasPrefix(chartId, "lalo-") {
+		chart, err = pjsekaioverlay.FetchChart(chartSource, chartId[5:])
+	} else {
+		chart, err = pjsekaioverlay.FetchChart(chartSource, chartId)
+	}
 
 	if err != nil {
 		fmt.Println(color.RedString(fmt.Sprintf("FAIL: %s", err.Error())))
 		return
 	}
-	if errCCv1 != nil {
-		fmt.Println(color.RedString(fmt.Sprintf("FAIL: %s", errCCv1.Error())))
-		return
-	}
-	if errUNv3 != nil {
-		fmt.Println(color.RedString(fmt.Sprintf("FAIL: %s", errUNv3.Error())))
-		return
-	}
-	if errUNv1 != nil {
-		fmt.Println(color.RedString(fmt.Sprintf("FAIL: %s", errUNv1.Error())))
-		return
-	}
-	if errUNv1def != nil {
-		fmt.Println(color.RedString(fmt.Sprintf("FAIL: %s", errUNv1def.Error())))
-		return
-	}
+
+	// Additional BG
+	chartCCv1, _ := pjsekaioverlay.FetchChart(chartSource, chartId+"?c_background=v1")
+	chartUNv3, _ := pjsekaioverlay.FetchChart(chartSource, chartId+"?levelbg=v3")
+	chartUNv1, _ := pjsekaioverlay.FetchChart(chartSource, chartId+"?levelbg=v1")
+	chartUNv1def, _ := pjsekaioverlay.FetchChart(chartSource, chartId+"?levelbg=default_or_v1")
 
 	if chart.Engine.Version != 13 {
 		fmt.Println(color.RedString(fmt.Sprintf("FAIL (ver.%d):エンジンのバージョンが古い。pjsekai-overlay-APPENDを最新版に更新してください。\nUnsupported engine version. Please update pjsekai-overlay-APPEND to latest version.", chart.Engine.Version)))
@@ -304,13 +306,8 @@ func origMain(isOptionSpecified bool) {
 		fmt.Scanln(&tmpTeamPower)
 		teamPower, err = strconv.ParseFloat(tmpTeamPower, 64)
 		if err != nil {
-			if numErr, ok := err.(*strconv.NumError); ok && numErr.Err == strconv.ErrRange {
-				fmt.Println(color.RedString("FAIL: あなたのPCがその総合力で計算できないのは残念だ。説明書を読んで再実行してください。\nToo bad your PC can't calculate with that team power. Read the instructions and rerun it."))
-				return
-			} else {
-				fmt.Println(color.RedString(fmt.Sprintf("FAIL: %s", err.Error())))
-				return
-			}
+			fmt.Println(color.RedString(fmt.Sprintf("FAIL: %s", err.Error())))
+			return
 		}
 		if teamPower >= math.Abs(1e+33) {
 			fmt.Printf("\033[A\033[2K\r> %s\n", color.YellowString(tmpTeamPower))

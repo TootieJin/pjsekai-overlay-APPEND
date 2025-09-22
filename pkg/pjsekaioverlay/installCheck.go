@@ -153,3 +153,78 @@ func TryInstallObject() bool {
 	).Replace(string(sekaiObjEnv1))).WriteTo(sekaiObjWriterEnv1)
 	return true
 }
+
+func TryInstallScript() bool {
+	processes, _ := wapi.ProcessList()
+	var aviutlProcess *so.Process
+	for _, process := range processes {
+		if process.Executable == "aviutl.exe" {
+			aviutlProcess = &process
+			break
+		}
+	}
+	if aviutlProcess == nil {
+		return false
+	}
+	aviutlPath := filepath.Dir(aviutlProcess.Fullpath)
+	var exeditRoot string
+	if _, err := os.Stat(filepath.Join(aviutlPath, "exedit.auf")); err == nil {
+		exeditRoot = filepath.Join(aviutlPath)
+	} else if _, err := os.Stat(filepath.Join(aviutlPath, "Plugins", "exedit.auf")); err == nil {
+		exeditRoot = filepath.Join(aviutlPath, "Plugins")
+	} else {
+		return false
+	}
+
+	scriptDest := filepath.Join(exeditRoot, "script")
+	err := os.MkdirAll(scriptDest, 0755)
+	if err != nil {
+		return false
+	}
+
+	depScriptDir := filepath.Join("dependencies", "aviutl script")
+
+	var copyDir func(src, dest string) error
+	copyDir = func(src, dest string) error {
+		entries, err := os.ReadDir(src)
+		if err != nil {
+			return err
+		}
+		if err := os.MkdirAll(dest, 0755); err != nil {
+			return err
+		}
+		for _, entry := range entries {
+			srcPath := filepath.Join(src, entry.Name())
+			destPath := filepath.Join(dest, entry.Name())
+			if entry.IsDir() {
+				if err := copyDir(srcPath, destPath); err != nil {
+					continue
+				}
+			} else {
+				srcFile, err := os.Open(srcPath)
+				if err != nil {
+					continue
+				}
+				defer srcFile.Close()
+
+				destFile, err := os.Create(destPath)
+				if err != nil {
+					srcFile.Close()
+					continue
+				}
+				defer destFile.Close()
+
+				_, err = io.Copy(destFile, srcFile)
+				if err != nil {
+					continue
+				}
+			}
+		}
+		return nil
+	}
+
+	if err := copyDir(depScriptDir, scriptDest); err != nil {
+		return false
+	}
+	return true
+}

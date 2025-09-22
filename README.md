@@ -35,7 +35,9 @@ This is a forked version of pjsekai-overlay with additional features originally 
   - v1 UI skin (Full support)
   - Automatically changes chart difficulty to generate in AviUtl based on chart tag _(or title)_
   - Additional support for more servers
-  - Increased score limit to infinity (?)
+  - Various customization to scoring
+    - Increased score limit to infinity (?)
+    - Show various digits to your liking
   [![image](https://github.com/user-attachments/assets/baceaf22-fdcb-4b48-8fb7-54b08e6d3086)]()
   [![pjsekai-overlay-APPEND_minint](https://github.com/user-attachments/assets/80eb8fc1-6602-4c26-ac47-4e8e07fb99c2)]()
   [![pjsekai-overlay-APPEND_maxint](https://github.com/user-attachments/assets/45a49c19-7883-402c-b016-58f02f72f0b6)]()
@@ -89,34 +91,21 @@ PJSekai-style video creation tool:
 
 1. Download the latest version of pjsekai-overlay-APPEND [here](https://github.com/TootieJin/pjsekai-overlay-APPEND/releases/latest/).
 2. Unzip the file
-3. Import ALL files & folders in the [`depenencies/aviutl script`](./depenencies/aviutl%20script) folder into here:
-```
-   aviutl
-      ⌞Plugins
-         ⌞script
-```
-   - *If a folder is missing, make a new folder with said name.*
-4. Open AviUtl
+3. Open AviUtl
    - **Note: You must open AviUtl before opening pjsekai-overlay-APPEND to install objects.**
-5. Open `pjsekai-overlay-APPEND.exe`
-6. Input the chart ID including the prefix.
+4. Open `pjsekai-overlay-APPEND.exe`
+5. Input the chart ID including the prefix.
    - `chcy-`: Chart Cyanvas
       - `0`: Archive ([cc.sevenc7c.com](https://cc.sevenc7c.com))
       - `1`: Offshoot server ([chart-cyanvas.com](https://chart-cyanvas.com))
       - `Others (URL domain)`: Different Cyanvas instance
    - `ptlv-`: Potato Leaves ([ptlv.sevenc7c.com](https://ptlv.sevenc7c.com))
    - ~~`utsk-`: Untitled Sekai ([us.pim4n-net.com](https://us.pim4n-net.com))~~
-   - `UnCh-`: UntitledCharts ([untitledcharts.com](https://untitledcharts.com)) **[IN DEVELOPMENT]**
-   - `coconut-next-sekai-`: Next SEKAI ([coconut.sonolus.com/next-sekai](https://coconut.sonolus.com/next-sekai)) **[IN DEVELOPMENT]**
+   - `UnCh-`: UntitledCharts ([untitledcharts.com](https://untitledcharts.com))
+   - `coconut-next-sekai-`: Next SEKAI ([coconut.sonolus.com/next-sekai](https://coconut.sonolus.com/next-sekai))
+   - `lalo-`: [laoloser](https://www.youtube.com/@laoloserr)'s server ([sonolus.laoloser.com](https://laoloser.com/sonolus))
    - `sync-`: Local Server ([ScoreSync](https://github.com/Piliman22/ScoreSync))
-> [!CAUTION]
-> Charts that are uploaded using **`LevelData`** *(not `.sus` or `.usc`)* **MAY NOT WORK.**\
-> This issue is seen for these servers:
-> - `coconut-next-sekai-`: Next SEKAI
-> - `UnCh-`: UntitledCharts
-> 
-> **Please be aware of this before using pjsekai-overlay-APPEND in your charts.**
-7. Import specified exo file by navigating to your `pjsekai-overlay/dist/[chart ID]` directory:
+6. Import specified exo file by navigating to your `pjsekai-overlay/dist/[chart ID]` directory:
    - **For phone users:** main_en_16-9_1920x1080.exo
    - **For iPad users:** main_en_4-3_1440x1080.exo
 
@@ -136,7 +125,9 @@ pjsekai-overlay(-APPEND) は、プロセカの創作譜面をプロセカ風の�
   - v1 UIスキン（フル対応）
   - 譜面のタグ _（またはタイトル）_ に基づいて、AviUtlで生成される譜面の難易度を自動的に変更する
   - 追加サーバーのサポート
-  - スコアの上限を無限大（？）
+  - スコアの各種カスタマイズ
+    - スコアの上限を無限大（？）
+    - 好みに応じて様々な桁数を表示
   [![image](https://github.com/user-attachments/assets/baceaf22-fdcb-4b48-8fb7-54b08e6d3086)]()
   [![pjsekai-overlay-APPEND_minint](https://github.com/user-attachments/assets/80eb8fc1-6602-4c26-ac47-4e8e07fb99c2)]()
   [![pjsekai-overlay-APPEND_maxint](https://github.com/user-attachments/assets/45a49c19-7883-402c-b016-58f02f72f0b6)]()
@@ -188,33 +179,20 @@ PJSekai-style video creation tool:
 
 1. 右の Releases から最新のバージョンの zip をダウンロードする
 2. zip を解凍する
-3. [`depenencies/aviutl script`](./depenencies/aviutl%20script)フォルダ内のすべてのファイルとフォルダをここにインポートします：
-```
-   aviutl
-      ⌞Plugins
-         ⌞script
-```
-   - *フォルダがない場合は、その名前で新しいフォルダを作ってください。*
-4. AviUtl を起動する
+3. AviUtl を起動する
    - **pjsekai-overlay が起動する前に AviUtl を起動するとオブジェクトのインストールが行われます。**
-5. `pjsekai-overlay-APPEND.exe` を起動する
-6. 譜面IDを接頭辞込みで入力して下さい
+4. `pjsekai-overlay-APPEND.exe` を起動する
+5. 譜面IDを接頭辞込みで入力して下さい
    - `chcy-`: Chart Cyanvas
       - `0`: アーカイブ([cc.sevenc7c.com](https://cc.sevenc7c.com))
       - `1`: 分岐サーバー([chart-cyanvas.com](https://chart-cyanvas.com))
       - `その他(URLドメイン)`: 異なるCyanvasインスタンス
    - `ptlv-`: Potato Leaves ([ptlv.sevenc7c.com](https://ptlv.sevenc7c.com))
    - ~~`utsk-`: Untitled Sekai ([us.pim4n-net.com](https://us.pim4n-net.com))~~
-   - `UnCh-`: UntitledCharts ([untitledcharts.com](https://untitledcharts.com)) **[作業中]**
-   - `coconut-next-sekai-`: Next SEKAI ([coconut.sonolus.com/next-sekai](https://coconut.sonolus.com/next-sekai)) **[作業中]**
+   - `UnCh-`: UntitledCharts ([untitledcharts.com](https://untitledcharts.com))
+   - `coconut-next-sekai-`: Next SEKAI ([coconut.sonolus.com/next-sekai](https://coconut.sonolus.com/next-sekai))
+   - `lalo-`: [laoloser](https://www.youtube.com/@laoloserr)のサーバー([sonolus.laoloser.com](https://laoloser.com/sonolus))
    - `sync-`: ローカルサーバー([ScoreSync](https://github.com/Piliman22/ScoreSync))
-> [!CAUTION]
-> **`LevelData`** を使用してアップロードされた譜面（`.sus` や `.usc` ではない）は、**正常に動作しない可能性があります。**\
-> この問題は以下のサーバーで確認されています：
-> - `coconut-next-sekai-`: Next SEKAI
-> - `UnCh-`: UntitledCharts
-> 
-> **譜面でpjsekai-overlay-APPENDを使用する前に、この点にご注意ください。**
-7. `pjsekai-overlay/dist/[譜面ID]`ディレクトリに移動して、指定したexoファイルをインポートします：
+6. `pjsekai-overlay/dist/[譜面ID]`ディレクトリに移動して、指定したexoファイルをインポートします：
    - **スマホ向け:** main_jp_16-9_1920x1080.exo
    - **iPad向け:** main_jp_4-3_1440x1080.exo

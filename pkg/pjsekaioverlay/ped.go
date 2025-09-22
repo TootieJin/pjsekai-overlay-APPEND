@@ -235,10 +235,12 @@ func CalculateScore(levelInfo sonolus.LevelInfo, levelData sonolus.LevelData, po
 		}
 	}
 	slices.SortStableFunc(noteEntities, func(a, b sonolus.LevelDataEntity) int {
-		if a.Data[0].Value < b.Data[0].Value {
+		aBeat, _ := getValueFromData(a.Data, "#BEAT")
+		bBeat, _ := getValueFromData(b.Data, "#BEAT")
+		if aBeat < bBeat {
 			return -1
 		}
-		if a.Data[0].Value > b.Data[0].Value {
+		if aBeat > bBeat {
 			return 1
 		}
 		return 0
@@ -279,7 +281,7 @@ func CalculateScore(levelInfo sonolus.LevelInfo, levelData sonolus.LevelData, po
 			continue
 		}
 		frames = append(frames, PedFrame{
-			Time:  getTimeFromBpmChanges(bpmChanges, beat) + levelData.BgmOffset,
+			Time:  getTimeFromBpmChanges(bpmChanges, beat),
 			Score: score,
 		})
 	}
@@ -380,7 +382,7 @@ func WritePedFile(frames []PedFrame, assets string, path string, levelInfo sonol
 			scoreXv1 = 1
 		} else if score >= rankS {
 			rank = "s"
-			scoreX = (float64((score-rankS))/float64((rankBorder-rankS)))*36 + 335
+			scoreX = (float64((score-rankS))/float64((rankBorder-rankS)))*37 + 335
 			scoreXv1 = (float64((score-rankS))/float64((rankBorder-rankS)))*0.110 + 0.890
 		} else if score >= rankA {
 			rank = "a"
@@ -396,7 +398,7 @@ func WritePedFile(frames []PedFrame, assets string, path string, levelInfo sonol
 			scoreXv1 = (float64((score-rankC))/float64((rankB-rankC)))*0.144 + 0.447
 		} else {
 			rank = "d"
-			scoreX = (float64(score) / float64(rankC)) * 168
+			scoreX = (float64(score) / float64(rankC)) * 170
 			scoreXv1 = (float64(score) / float64(rankC)) * 0.447
 		}
 

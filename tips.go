@@ -154,6 +154,15 @@ func Tips() {
 
 		"README を読む前に、使えないことに怒らないでください。本当です。読んでください。",
 		"Read README before being mad that you can't use it. No, really. Read it.",
+
+		"CC分岐サーバー（chart-cyanvas.com）は2025年9月13日に作成された。今日に至るまで、誰がサイトをホストしているのか誰も知らなかった。",
+		"Chart Cyanvas Offshoot Server (chart-cyanvas.com) was made in September 13th, 2025. To this day, nobody knew who hosted the site.",
+
+		"v1のUIが懐かしい…",
+		"I miss v1 UI...",
+
+		"1 .",
+		"█   .     3.....",
 	}
 
 	// これを見て何か追加したいTipsがあれば、PRを送ってください
