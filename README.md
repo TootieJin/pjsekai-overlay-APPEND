@@ -41,7 +41,7 @@ This is a forked version of pjsekai-overlay with additional features originally 
   [![image](https://github.com/user-attachments/assets/baceaf22-fdcb-4b48-8fb7-54b08e6d3086)]()
   [![pjsekai-overlay-APPEND_minint](https://github.com/user-attachments/assets/80eb8fc1-6602-4c26-ac47-4e8e07fb99c2)]()
   [![pjsekai-overlay-APPEND_maxint](https://github.com/user-attachments/assets/45a49c19-7883-402c-b016-58f02f72f0b6)]()
-
+  [![min-digits](https://github.com/user-attachments/assets/25183ac0-8836-4c30-b2aa-f34848e404d0)]()
 
 ## Terms of Use
 
@@ -131,7 +131,7 @@ pjsekai-overlay(-APPEND) は、プロセカの創作譜面をプロセカ風の�
   [![image](https://github.com/user-attachments/assets/baceaf22-fdcb-4b48-8fb7-54b08e6d3086)]()
   [![pjsekai-overlay-APPEND_minint](https://github.com/user-attachments/assets/80eb8fc1-6602-4c26-ac47-4e8e07fb99c2)]()
   [![pjsekai-overlay-APPEND_maxint](https://github.com/user-attachments/assets/45a49c19-7883-402c-b016-58f02f72f0b6)]()
-
+  [![min-digits](https://github.com/user-attachments/assets/25183ac0-8836-4c30-b2aa-f34848e404d0)]()
 
 ## 利用規約
 
