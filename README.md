@@ -1,6 +1,7 @@
-[**日本語セクション**](#pjsekai-overlay-append--フォークプロセカ風動画作成補助ツール-日本語)
+[**English Section**](#pjsekai-overlay-append--forked-pjsekai-style-video-creation-tool-english) | [**日本語セクション**](#pjsekai-overlay-append--フォークプロセカ風動画作成補助ツール-日本語)
 
 [![Releases](https://img.shields.io/github/downloads/TootieJin/pjsekai-overlay-APPEND/total.svg)](https://gitHub.com/TootieJin/pjsekai-overlay-APPEND/releases/)
+[![pjsekai-overlay-APPEND thumbnail](https://github.com/user-attachments/assets/dcc037f7-1c2b-4b83-b17b-b3c5155d670c)]()
 # pjsekai-overlay-APPEND / Forked PJSekai-style video creation tool (English)
 Fork of [pjsekai-overlay](https://github.com/sevenc-nanashi/pjsekai-overlay) by [TootieJin](https://tootiejin.com), an open-sourced tool to make Project Sekai Fanmade (custom chart) videos.
 
