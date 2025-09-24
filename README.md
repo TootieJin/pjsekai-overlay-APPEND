@@ -70,23 +70,25 @@ PJSekai-style video creation tool:
 
 ## Requirements
 
-- [AviUtl](http://spring-fragrance.mints.ne.jp/aviutl/) + [Advanced Editing plug-in](http://spring-fragrance.mints.ne.jp/aviutl/) + [L-SMASH Works](https://github.com/Mr-Ojii/L-SMASH-Works-Auto-Builds/releases/latest)
-  - (Recommended: [patch.aul](https://scrapbox.io/ePi5131/patch.aul))
+- [AviUtl](http://spring-fragrance.mints.ne.jp/aviutl/) + [Advanced Editing plug-in](http://spring-fragrance.mints.ne.jp/aviutl/) + [L-SMASH Works](https://github.com/Mr-Ojii/L-SMASH-Works-Auto-Builds/releases/latest) ([JP Installation Guide](https://aviutl.info/dl-innsuto-ru/))
+  - (Recommended: [AviUtl Extra Pack (EN)](https://www.videohelp.com/download/AviUtl_setup_1.14.exe))
 - [Unmult](https://github.com/mes51/AVIUtl_Unmult)
 - Basic knowledge of AviUtl
 
-*- Refer to this [English guide](https://github.com/Khronophobia/pjsekai-overlay-english/wiki/Usage-Guide) on how to use AviUtl EN.*
+*- Refer to this [English guide](https://forum.videohelp.com/threads/360967-AviUtl-video-tutorial#post2288628) for using AviUtl EN, and this [guide](https://github.com/Khronophobia/pjsekai-overlay-english/wiki/Usage-Guide) on using pjsekai-overlay for AviUtl EN.*
 > [!IMPORTANT]
 > **REMEMBER TO GO TO `File > ENVIRONMENT SETTINGS > SYSTEM SETTINGS` AND SET THE `Max image size` TO 4000x3000 (or bigger)!!!!!!!!**
 
 ## Video Guide
 
-1. [Make your chart first.](https://cc.sevenc7c.com)
+1. [Make your chart first.](https://wiki.purplepalette.net/create-charts)
 2. Go to [Sonolus](https://sonolus.com/) to find your chart.
 3. Screen record the video with **BLACK Background**, **「Stage」OFF** and **「Hide UI」ON**
 4. Transfer the video file to your computer.
    - Download the [ffmpeg](https://www.ffmpeg.org/) encoder if you haven't.
-5. Once done, refer to the usage guide below.
+5. Use the FFmpeg encoder (`ffmpeg -i source.mp4 output.mp4`)
+   - **This step is required so that the video file doesn't shift speed.**
+6. Once done, refer to the usage guide below.
 
 ## Usage Guide
 
@@ -119,8 +121,8 @@ PJSekai-style video creation tool:
    - `lalo-`: [laoloser](https://www.youtube.com/@laoloserr)'s server ([sonolus.laoloser.com](https://laoloser.com/sonolus))
    - `sync-`: Local Server ([ScoreSync](https://github.com/Piliman22/ScoreSync))
 7. Import specified exo file by navigating to your `pjsekai-overlay/dist/[chart ID]` directory:
-   - **For phone users:** main_en_16-9_1920x1080.exo
-   - **For iPad users:** main_en_4-3_1440x1080.exo
+   - **For phone users:** `main_en_16-9_1920x1080.exo`
+   - **For iPad users:** `main_en_4-3_1440x1080.exo`
 
 ---------------------------------------------------------------------------------------
 
@@ -172,7 +174,7 @@ PJSekai-style video creation tool:
 
 ## 必須事項
 
-- [AviUtl](http://spring-fragrance.mints.ne.jp/aviutl/) + [拡張編集プラグイン](http://spring-fragrance.mints.ne.jp/aviutl/) （[導入方法](https://aviutl.info/dl-innsuto-ru/)）
+- [AviUtl](http://spring-fragrance.mints.ne.jp/aviutl/) + [拡張編集プラグイン](http://spring-fragrance.mints.ne.jp/aviutl/) + [L-SMASH Works](https://github.com/Mr-Ojii/L-SMASH-Works-Auto-Builds/releases/latest)（[導入方法](https://aviutl.info/dl-innsuto-ru/)）
   - (強く推奨：[patch.aul](https://scrapbox.io/ePi5131/patch.aul))
 - [Unmult](https://github.com/mes51/AVIUtl_Unmult)
 - AviUtlの基本的な知識
@@ -183,14 +185,14 @@ PJSekai-style video creation tool:
 2. [Sonolus](https://sonolus.com/)で譜面を撮影する
 3. **背景を黒**にし、**「Stage」をOFF**と **「Hide UI」をON**「Hide UI」ONにして、動画をスクリーン録画します。
 4. 撮影したプレイ動画のファイルをパソコンに転送する
-   - Google Drive など
-5. [ffmpeg](https://www.ffmpeg.org/)で再エンコードする
-   - AviUtl で読み込むため
+   - まだダウンロードしていない場合は、[ffmpeg](https://www.ffmpeg.org/) エンコーダーをダウンロードする
+5. FFmpegエンコーダーを使用する（`ffmpeg -i source.mp4 output.mp4`）
+   - **この手順は、動画ファイルの速度がずれないようにするために必要です。**
 6. 下の利用方法に従って UI を後付けする
 
 ## 利用方法
 
-1. 右の Releases から最新のバージョンの zip をダウンロードする
+1. 右の Releases から最新のバージョンの zip を[ダウンロード](https://github.com/TootieJin/pjsekai-overlay-APPEND/releases/latest/)する
 2. zip を解凍する
 3. `aviutl.exe`ファイルの場所へ移動し、ここに新しいフォルダ`script`を作成する
 ```
@@ -219,5 +221,5 @@ PJSekai-style video creation tool:
    - `lalo-`: [laoloser](https://www.youtube.com/@laoloserr)のサーバー([sonolus.laoloser.com](https://laoloser.com/sonolus))
    - `sync-`: ローカルサーバー([ScoreSync](https://github.com/Piliman22/ScoreSync))
 7. `pjsekai-overlay/dist/[譜面ID]`ディレクトリに移動して、指定したexoファイルをインポートします：
-   - **スマホ向け:** main_jp_16-9_1920x1080.exo
-   - **iPad向け:** main_jp_4-3_1440x1080.exo
+   - **スマホ向け:** `main_jp_16-9_1920x1080.exo`
+   - **iPad向け:** `main_jp_4-3_1440x1080.exo`
