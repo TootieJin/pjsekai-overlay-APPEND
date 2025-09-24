@@ -66,7 +66,7 @@ PJSekai-style video creation tool:
 
 > [!NOTE]
 > **(optional)** You can remove watermark by check/unchecking `Watermark` in the `Root@pjsekai-overlay-en` element.\
-> ![image](https://github.com/user-attachments/assets/48a636da-8ec0-443b-9cf4-b73fd93c47df)
+> [![image](https://github.com/user-attachments/assets/48a636da-8ec0-443b-9cf4-b73fd93c47df)]()
 
 ## Requirements
 
@@ -92,10 +92,22 @@ PJSekai-style video creation tool:
 
 1. Download the latest version of pjsekai-overlay-APPEND [here](https://github.com/TootieJin/pjsekai-overlay-APPEND/releases/latest/).
 2. Unzip the file
-3. Open AviUtl
+3. Go to `aviutl.exe` file location and make a new folder `script` in this directory
+```
+   aviutl
+      ⌞Plugins
+         ⌞script
+```
+   - *If a folder is missing, make a new folder with said name.*
+4. Open AviUtl
    - **Note: You must open AviUtl before opening pjsekai-overlay-APPEND to install objects.**
-4. Open `pjsekai-overlay-APPEND.exe`
-5. Input the chart ID including the prefix.
+5. Open `pjsekai-overlay-APPEND.exe`
+   - If followed correctly, you'll be able to see 2 green lines in your console:
+     ```
+     AviUtlオブジェクトのインストールに成功しました。(AviUtl object successfully installed.)
+     AviUtl依存関係スクリプトのインストールに成功しました。(AviUtl dependency scripts successfully installed.)
+     ```
+6. Input the chart ID including the prefix.
    - `chcy-`: Chart Cyanvas
       - `0`: Archive ([cc.sevenc7c.com](https://cc.sevenc7c.com))
       - `1`: Offshoot server ([chart-cyanvas.com](https://chart-cyanvas.com))
@@ -106,7 +118,7 @@ PJSekai-style video creation tool:
    - `coconut-next-sekai-`: Next SEKAI ([coconut.sonolus.com/next-sekai](https://coconut.sonolus.com/next-sekai))
    - `lalo-`: [laoloser](https://www.youtube.com/@laoloserr)'s server ([sonolus.laoloser.com](https://laoloser.com/sonolus))
    - `sync-`: Local Server ([ScoreSync](https://github.com/Piliman22/ScoreSync))
-6. Import specified exo file by navigating to your `pjsekai-overlay/dist/[chart ID]` directory:
+7. Import specified exo file by navigating to your `pjsekai-overlay/dist/[chart ID]` directory:
    - **For phone users:** main_en_16-9_1920x1080.exo
    - **For iPad users:** main_en_4-3_1440x1080.exo
 
@@ -156,7 +168,7 @@ PJSekai-style video creation tool:
 
 > [!NOTE]
 > **(任意)** `設定@pjsekai-overlay`要素でチェック/チェックを外すことで、`透かし`を消すことができます。\
-> ![image](https://github.com/user-attachments/assets/05cc6e7d-0e62-4729-a4df-c8d8634b0a10)
+> [![image](https://github.com/user-attachments/assets/05cc6e7d-0e62-4729-a4df-c8d8634b0a10)]()
 
 ## 必須事項
 
@@ -180,10 +192,22 @@ PJSekai-style video creation tool:
 
 1. 右の Releases から最新のバージョンの zip をダウンロードする
 2. zip を解凍する
-3. AviUtl を起動する
+3. `aviutl.exe`ファイルの場所へ移動し、ここに新しいフォルダ`script`を作成する
+```
+   aviutl
+      ⌞Plugins
+         ⌞script
+```
+   - *フォルダがない場合は、その名前で新しいフォルダを作ってください。*
+4. AviUtl を起動する
    - **pjsekai-overlay が起動する前に AviUtl を起動するとオブジェクトのインストールが行われます。**
-4. `pjsekai-overlay-APPEND.exe` を起動する
-5. 譜面IDを接頭辞込みで入力して下さい
+5. `pjsekai-overlay-APPEND.exe` を起動する
+   - 正しく実行すれば、コンソールに2本の緑色の線が表示されます：
+     ```
+     AviUtlオブジェクトのインストールに成功しました。(AviUtl object successfully installed.)
+     AviUtl依存関係スクリプトのインストールに成功しました。(AviUtl dependency scripts successfully installed.)
+     ```
+6. 譜面IDを接頭辞込みで入力して下さい
    - `chcy-`: Chart Cyanvas
       - `0`: アーカイブ([cc.sevenc7c.com](https://cc.sevenc7c.com))
       - `1`: 分岐サーバー([chart-cyanvas.com](https://chart-cyanvas.com))
@@ -194,6 +218,6 @@ PJSekai-style video creation tool:
    - `coconut-next-sekai-`: Next SEKAI ([coconut.sonolus.com/next-sekai](https://coconut.sonolus.com/next-sekai))
    - `lalo-`: [laoloser](https://www.youtube.com/@laoloserr)のサーバー([sonolus.laoloser.com](https://laoloser.com/sonolus))
    - `sync-`: ローカルサーバー([ScoreSync](https://github.com/Piliman22/ScoreSync))
-6. `pjsekai-overlay/dist/[譜面ID]`ディレクトリに移動して、指定したexoファイルをインポートします：
+7. `pjsekai-overlay/dist/[譜面ID]`ディレクトリに移動して、指定したexoファイルをインポートします：
    - **スマホ向け:** main_jp_16-9_1920x1080.exo
    - **iPad向け:** main_jp_4-3_1440x1080.exo
