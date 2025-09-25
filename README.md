@@ -186,7 +186,7 @@ PJSekai-style video creation tool:
 
 1. [譜面を作る](https://wiki.purplepalette.net/create-charts)
 2. [Sonolus](https://sonolus.com/)で譜面を撮影する
-3. **背景を黒**にし、**「Stage」をOFF**と **「Hide UI」をON**「Hide UI」ONにして、動画をスクリーン録画します。
+3. **背景を黒**にし、**「Stage」OFF**と **「Hide UI」ON**にして、動画をスクリーン録画します。
 4. 撮影したプレイ動画のファイルをパソコンに転送する
    - まだダウンロードしていない場合は、[ffmpeg](https://www.ffmpeg.org/) エンコーダーをダウンロードする
 5. FFmpegエンコーダーを使用する（`ffmpeg -i source.mp4 output.mp4`）
