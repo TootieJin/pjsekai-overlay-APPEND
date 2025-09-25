@@ -71,13 +71,13 @@ PJSekai-style video creation tool:
 ## Requirements
 
 - [AviUtl](http://spring-fragrance.mints.ne.jp/aviutl/) + [Advanced Editing plug-in](http://spring-fragrance.mints.ne.jp/aviutl/) + [L-SMASH Works](https://github.com/Mr-Ojii/L-SMASH-Works-Auto-Builds/releases/latest) ([JP Installation Guide](https://aviutl.info/dl-innsuto-ru/))
-  - (Recommended: [AviUtl JP Installer Script](https://github.com/menndouyukkuri/aviutl-installer-script) OR [AviUtl Extra Pack (EN)](https://www.videohelp.com/download/AviUtl_setup_1.14.exe))
+  - (**Recommended:** [AviUtl JP Installer Script](https://github.com/menndouyukkuri/aviutl-installer-script) OR [AviUtl EN Extra Pack](https://www.videohelp.com/download/AviUtl_setup_1.14.exe))
 - [Unmult](https://github.com/mes51/AVIUtl_Unmult)
 - Basic knowledge of AviUtl
 
-*- Refer to this [English guide](https://forum.videohelp.com/threads/360967-AviUtl-video-tutorial#post2288628) for using AviUtl EN, and this [guide](https://github.com/Khronophobia/pjsekai-overlay-english/wiki/Usage-Guide) on using pjsekai-overlay for AviUtl EN.*
+*- Refer to this [English guide](https://forum.videohelp.com/threads/360967-AviUtl-video-tutorial#post2288628) for using AviUtl EN*
 > [!IMPORTANT]
-> **REMEMBER TO GO TO `File > ENVIRONMENT SETTINGS > SYSTEM SETTINGS` AND SET THE `Max image size` TO 4000x3000 (or bigger)!!!!!!!!**
+> **REMEMBER TO GO TO `File > SETTINGS > SYSTEM` AND SET THE `Max resolution` TO 4000x4000 (or bigger)!!!!!!!!**
 
 ## Video Guide
 
@@ -91,7 +91,7 @@ PJSekai-style video creation tool:
 6. Once done, refer to the usage guide below.
 
 ## Usage Guide
-
+0. Install AviUtl (**Recommended:** [AviUtl JP Installer Script](https://github.com/menndouyukkuri/aviutl-installer-script) OR [AviUtl EN Extra Pack](https://www.videohelp.com/download/AviUtl_setup_1.14.exe))
 1. Download the latest version of pjsekai-overlay-APPEND [here](https://github.com/TootieJin/pjsekai-overlay-APPEND/releases/latest/).
 2. Unzip the file
 3. Go to `aviutl.exe` file location and make a new folder `script` in this directory
@@ -175,9 +175,12 @@ PJSekai-style video creation tool:
 ## 必須事項
 
 - [AviUtl](http://spring-fragrance.mints.ne.jp/aviutl/) + [拡張編集プラグイン](http://spring-fragrance.mints.ne.jp/aviutl/) + [L-SMASH Works](https://github.com/Mr-Ojii/L-SMASH-Works-Auto-Builds/releases/latest)（[導入方法](https://aviutl.info/dl-innsuto-ru/)）
-  - (強く推奨：[AviUtl インストーラースクリプト](https://github.com/menndouyukkuri/aviutl-installer-script))
+  - (**強く推奨：** [AviUtl インストーラースクリプト](https://github.com/menndouyukkuri/aviutl-installer-script))
 - [Unmult](https://github.com/mes51/AVIUtl_Unmult)
 - AviUtlの基本的な知識
+
+> [!IMPORTANT]
+> **必ず`ファイル > 設定 > システム`に移動し、`最大画像サイズ`を4000x4000（またはそれ以上）に設定してください!!!!!!!!**
 
 ## 動画の作り方
 
@@ -191,7 +194,7 @@ PJSekai-style video creation tool:
 6. 下の利用方法に従って UI を後付けする
 
 ## 利用方法
-
+0. AviUtlをインストールする(**強く推奨：** [AviUtl インストーラースクリプト](https://github.com/menndouyukkuri/aviutl-installer-script))
 1. 右の Releases から最新のバージョンの zip を[ダウンロード](https://github.com/TootieJin/pjsekai-overlay-APPEND/releases/latest/)する
 2. zip を解凍する
 3. `aviutl.exe`ファイルの場所へ移動し、ここに新しいフォルダ`script`を作成する
