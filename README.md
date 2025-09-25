@@ -71,7 +71,7 @@ PJSekai-style video creation tool:
 ## Requirements
 
 - [AviUtl](http://spring-fragrance.mints.ne.jp/aviutl/) + [Advanced Editing plug-in](http://spring-fragrance.mints.ne.jp/aviutl/) + [L-SMASH Works](https://github.com/Mr-Ojii/L-SMASH-Works-Auto-Builds/releases/latest) ([JP Installation Guide](https://aviutl.info/dl-innsuto-ru/))
-  - (Recommended: [AviUtl Extra Pack (EN)](https://www.videohelp.com/download/AviUtl_setup_1.14.exe))
+  - (Recommended: [AviUtl JP Installer Script](https://github.com/menndouyukkuri/aviutl-installer-script) OR [AviUtl Extra Pack (EN)](https://www.videohelp.com/download/AviUtl_setup_1.14.exe))
 - [Unmult](https://github.com/mes51/AVIUtl_Unmult)
 - Basic knowledge of AviUtl
 
@@ -141,7 +141,7 @@ pjsekai-overlay(-APPEND) は、プロセカの創作譜面をプロセカ風の�
   - 譜面のタグ _（またはタイトル）_ に基づいて、AviUtlで生成される譜面の難易度を自動的に変更する
   - 追加サーバーのサポート
   - スコアの各種カスタマイズ
-    - スコアの上限を無限大（？）
+    - スコアの上限を無限大 (?)
     - 好みに応じて様々な桁数を表示
   [![image](https://github.com/user-attachments/assets/baceaf22-fdcb-4b48-8fb7-54b08e6d3086)]()
   [![pjsekai-overlay-APPEND_minint](https://github.com/user-attachments/assets/80eb8fc1-6602-4c26-ac47-4e8e07fb99c2)]()
@@ -175,7 +175,7 @@ PJSekai-style video creation tool:
 ## 必須事項
 
 - [AviUtl](http://spring-fragrance.mints.ne.jp/aviutl/) + [拡張編集プラグイン](http://spring-fragrance.mints.ne.jp/aviutl/) + [L-SMASH Works](https://github.com/Mr-Ojii/L-SMASH-Works-Auto-Builds/releases/latest)（[導入方法](https://aviutl.info/dl-innsuto-ru/)）
-  - (強く推奨：[patch.aul](https://scrapbox.io/ePi5131/patch.aul))
+  - (強く推奨：[AviUtl インストーラースクリプト](https://github.com/menndouyukkuri/aviutl-installer-script))
 - [Unmult](https://github.com/mes51/AVIUtl_Unmult)
 - AviUtlの基本的な知識
 
