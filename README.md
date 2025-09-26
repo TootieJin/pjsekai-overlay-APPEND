@@ -123,7 +123,8 @@ PJSekai-style video creation tool:
 7. Import specified exo file by navigating to your `pjsekai-overlay/dist/[chart ID]` directory:
    - **For phone users:** `main_en_16-9_1920x1080.exo`
    - **For iPad users:** `main_en_4-3_1440x1080.exo`
-
+8. Once finished, export your video as mp4: `File > Export with plugins > Adv. x264 Export(GUI) Ex`
+   - For easier use, you can download [easymp4](https://aoytsk.blog.jp/aviutl/easymp4.zip) and import the file to the `Plugins` folder
 ---------------------------------------------------------------------------------------
 
 # pjsekai-overlay-APPEND / フォークプロセカ風動画作成補助ツール (日本語)
@@ -226,3 +227,5 @@ PJSekai-style video creation tool:
 7. `pjsekai-overlay/dist/[譜面ID]`ディレクトリに移動して、指定したexoファイルをインポートします：
    - **スマホ向け:** `main_jp_16-9_1920x1080.exo`
    - **iPad向け:** `main_jp_4-3_1440x1080.exo`
+8. 完了後、動画をmp4形式で出力します：`ファイル > プラグイン出力 > 拡張 x264 出力(GUI) Ex`
+   - 使いやすくするため、[easymp4](https://aoytsk.blog.jp/aviutl/easymp4.zip)をダウンロードし、ファイルを`Plugins`フォルダにインポートできます
