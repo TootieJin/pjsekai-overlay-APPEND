@@ -75,7 +75,7 @@ PJSekai-style video creation tool:
 - [Unmult](https://github.com/mes51/AVIUtl_Unmult)
 - Basic knowledge of AviUtl
 
-*- Refer to this [English guide](https://forum.videohelp.com/threads/360967-AviUtl-video-tutorial#post2288628) for using AviUtl EN*
+*- Refer to this [English guide](https://forum.videohelp.com/threads/360967-AviUtl-video-tutorial#post2288628) for using AviUtl EN, and [setup guide (partially outdated)](https://github.com/Khronophobia/pjsekai-overlay-english/wiki) for pjsekai-overlay.*
 > [!IMPORTANT]
 > **REMEMBER TO GO TO `File > SETTINGS > SYSTEM` AND SET THE `Max resolution` TO 4000x4000 (or bigger)!!!!!!!!**
 
