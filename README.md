@@ -51,17 +51,17 @@ This is a forked version of pjsekai-overlay with additional features originally 
 **EN**
 ```
 PJSekai-style video creation tool:
+- Forked ver. by TootieJin (https://tootiejin.com) & ぴぃまん (https://pim4n-net.com)
+- Original by 名無し｡ (https://sevenc7c.com) 
    https://github.com/TootieJin/pjsekai-overlay-APPEND
-   - Forked ver. by TootieJin (https://tootiejin.com) & ぴぃまん (https://pim4n-net.com)
-   - Original by 名無し｡ (https://sevenc7c.com) 
 ```
 
 **JP**
 ```
 プロセカ風動画作成補助ツール：
+- フォーク：TootieJin様(https://tootiejin.com) & ぴぃまん様(https://pim4n-net.com)
+- 作成：名無し｡様（https://sevenc7c.com）
    https://github.com/TootieJin/pjsekai-overlay-APPEND
-   - フォーク：TootieJin様(https://tootiejin.com) & ぴぃまん様(https://pim4n-net.com)
-   - 作成：名無し｡（https://sevenc7c.com）
 ```
 
 > [!NOTE]
@@ -156,17 +156,17 @@ pjsekai-overlay(-APPEND) は、プロセカの創作譜面をプロセカ風の�
 **EN**
 ```
 PJSekai-style video creation tool:
+- Forked ver. by TootieJin (https://tootiejin.com) & ぴぃまん (https://pim4n-net.com)
+- Original by 名無し｡ (https://sevenc7c.com) 
    https://github.com/TootieJin/pjsekai-overlay-APPEND
-   - Forked ver. by TootieJin (https://tootiejin.com) & ぴぃまん (https://pim4n-net.com)
-   - Original by 名無し｡ (https://sevenc7c.com) 
 ```
 
 **JP**
 ```
 プロセカ風動画作成補助ツール：
+- フォーク：TootieJin様(https://tootiejin.com) & ぴぃまん様(https://pim4n-net.com)
+- 作成：名無し｡様（https://sevenc7c.com）
    https://github.com/TootieJin/pjsekai-overlay-APPEND
-   - フォーク：TootieJin様(https://tootiejin.com) & ぴぃまん様(https://pim4n-net.com)
-   - 作成：名無し｡（https://sevenc7c.com）
 ```
 
 > [!NOTE]
