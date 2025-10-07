@@ -57,7 +57,7 @@ var rawBaseExoENv1 []byte
 //go:embed v1-skin_en_4-3_1440x1080.exo
 var rawBaseExoEN43v1 []byte
 
-func WriteExoFiles(assets string, destDir string, title string, description string, descriptionv1 string, difficulty string, extra string, exFile string, exFileOpacity string, ap string) error {
+func WriteExoFiles(assets string, destDir string, title string, description []string, descriptionv1 []string, difficulty string, extra string, exFile string, exFileOpacity string, ap string) error {
 	baseExoJP := string(rawBaseExoJP)
 	baseExoJP43 := string(rawBaseExoJP43)
 	baseExoEN := string(rawBaseExoEN)
@@ -73,7 +73,8 @@ func WriteExoFiles(assets string, destDir string, title string, description stri
 		"{text:difficulty}", encodeString(difficulty),
 		"{text:extra}", encodeString(extra),
 		"{text:title}", encodeString(title),
-		"{text:description}", encodeString(description),
+		"{text:description-1}", encodeString(description[0]),
+		"{text:description-2}", encodeString(description[1]),
 		"{image:tournament}", exFile,
 		"{opacity}", exFileOpacity,
 		"{difficulty}", strings.ToLower(difficulty),
@@ -86,7 +87,8 @@ func WriteExoFiles(assets string, destDir string, title string, description stri
 		"{text:difficulty}", encodeString(difficulty),
 		"{text:extra}", encodeString(extra),
 		"{text:title}", encodeString(title),
-		"{text:description}", encodeString(descriptionv1),
+		"{text:description-1}", encodeString(descriptionv1[0]),
+		"{text:description-2}", encodeString(descriptionv1[1]),
 		"{image:tournament}", exFile,
 		"{opacity}", exFileOpacity,
 		"{difficulty}", strings.ToLower(difficulty),

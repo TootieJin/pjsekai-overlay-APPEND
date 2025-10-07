@@ -56,8 +56,8 @@ func origMain(isOptionSpecified bool) {
 	var outDir string
 	flag.StringVar(&outDir, "out-dir", "./dist/_chartId_", "出力先ディレクトリを指定します。_chartId_ は譜面IDに置き換えられます。\nEnter the output path. _chartId_ will be replaced with the chart ID.")
 
-	var exScore bool
-	flag.BoolVar(&exScore, "ex-score", false, "大会モードを有効にします。 (Enable Tournament Mode.)")
+	var scoreMode int
+	flag.IntVar(&scoreMode, "score-mode", 1, "採点モードを指定します。(Specify scoring mode.)")
 
 	var teamPower float64
 	flag.Float64Var(&teamPower, "team-power", 250000, "総合力を指定します。(Enter the team's power.)")
@@ -133,7 +133,7 @@ func origMain(isOptionSpecified bool) {
 				chartId = parts[1]
 			}
 		} else {
-			fmt.Print("ローカルサーバーの譜面タイトルを入力してください。(Enter chart title for the local server.)\n> ")
+			fmt.Print("ローカルサーバーの譜面を入力してください。(Enter chart ID for the local server.)\n> ")
 			fmt.Scanln(&chartId)
 		}
 	} else {
@@ -166,7 +166,6 @@ func origMain(isOptionSpecified bool) {
 	}
 
 	// Additional BG
-	chartCCv1, _ := pjsekaioverlay.FetchChart(chartSource, chartId+"?c_background=v1")
 	chartUNv3, _ := pjsekaioverlay.FetchChart(chartSource, chartId+"?levelbg=v3")
 	chartUNv1, _ := pjsekaioverlay.FetchChart(chartSource, chartId+"?levelbg=v1")
 	chartUNv1def, _ := pjsekaioverlay.FetchChart(chartSource, chartId+"?levelbg=default_or_v1")
@@ -231,13 +230,6 @@ func origMain(isOptionSpecified bool) {
 	}
 
 	fmt.Print("- 背景をダウンロード中 (Downloading background)... ")
-	if chartSource.Id == "chart_cyanvas" {
-		err = pjsekaioverlay.DownloadBackground(chartSource, chartCCv1, formattedOutDir, chartId+"?c_background=v1")
-		if err != nil {
-			fmt.Println(color.RedString(fmt.Sprintf("FAIL: %s", err.Error())))
-			return
-		}
-	}
 	if customBG {
 		err = pjsekaioverlay.DownloadBackground(chartSource, chart, formattedOutDir, chartId)
 		if err != nil {
@@ -283,32 +275,35 @@ func origMain(isOptionSpecified bool) {
 	fmt.Println(color.GreenString("OK"))
 
 	if !isOptionSpecified {
-		fmt.Print("\n大会モードを有効にするか？（PERFECT = +3点）[y/n]\nEnable Tournament Mode? (PERFECT = +3pts) [y/n]\n> ")
+		fmt.Print("\n採点モードを選択してください。(Select scoring mode.)\n'1': デフォルト/Default\n'2': 大会モード/Tournament Mode (PERFECT = +3)\n'3': Sonolusスコア/Arcade Score (MAX: 1000000)\n> ")
 		before, _ := rawmode.Enable()
-		tmpEnableEXScoreByte, _ := bufio.NewReader(os.Stdin).ReadByte()
-		tmpEnableEXScore := string(tmpEnableEXScoreByte)
+		tmpScoreModeByte, _ := bufio.NewReader(os.Stdin).ReadByte()
+		tmpScoreMode := string(tmpScoreModeByte)
 		rawmode.Restore(before)
-		if tmpEnableEXScore == "Y" || tmpEnableEXScore == "y" {
-			exScore = true
-			teamPower = 0.0
-			fmt.Printf("\n\033[A\033[2K\r> %s\n", color.GreenString(tmpEnableEXScore))
-			fmt.Println(color.GreenString("TOGGLE: ON"))
-		} else {
-			exScore = false
-			fmt.Printf("\n\033[A\033[2K\r> %s\n", color.RedString(tmpEnableEXScore))
-			fmt.Println(color.RedString("TOGGLE: OFF"))
+		switch tmpScoreMode {
+		default:
+			scoreMode = 1 // default
+		case "2":
+			scoreMode = 2 // tournament
+		case "3":
+			scoreMode = 3 // arcade
 		}
+		fmt.Printf("\n\033[A\033[2K\r> %s\n", color.GreenString(tmpScoreMode))
 	}
 
-	if !isOptionSpecified && !exScore {
+	if !isOptionSpecified && scoreMode == 1 {
 		fmt.Print("\n総合力を指定してください。 (Input your team power.)\n\n- 小数と科学的記数法が使える (Accepts decimals & scientific notation)\n- おすすめ (Recommended): 250000 - 300000\n- 制限 (Limit): ???\n> ")
 		var tmpTeamPower string
 		fmt.Scanln(&tmpTeamPower)
+		if tmpTeamPower == "" {
+			tmpTeamPower = "250000"
+		}
 		teamPower, err = strconv.ParseFloat(tmpTeamPower, 64)
 		if err != nil {
 			fmt.Println(color.RedString(fmt.Sprintf("FAIL: %s", err.Error())))
 			return
 		}
+
 		if teamPower >= math.Abs(1e+33) {
 			fmt.Printf("\033[A\033[2K\r> %s\n", color.YellowString(tmpTeamPower))
 			fmt.Println(color.HiYellowString("WARN: スコアは大きすぎると精度が落ちる可能性がある。Score may decrease precision if it's too large.\n"))
@@ -318,7 +313,7 @@ func origMain(isOptionSpecified bool) {
 	}
 
 	fmt.Print("- スコアを計算中 (Calculating score)... ")
-	scoreData := pjsekaioverlay.CalculateScore(chart, levelData, teamPower, exScore)
+	scoreData := pjsekaioverlay.CalculateScore(chart, levelData, teamPower, scoreMode)
 
 	fmt.Println(color.GreenString("OK"))
 	if !isOptionSpecified {
@@ -345,7 +340,7 @@ func origMain(isOptionSpecified bool) {
 		tmpEnableComboAp := string(tmpEnableComboApByte)
 		rawmode.Restore(before)
 
-		if tmpEnableComboAp == "Y" || tmpEnableComboAp == "y" || tmpEnableComboAp == "" {
+		if tmpEnableComboAp == "Y" || tmpEnableComboAp == "y" {
 			apCombo = true
 			fmt.Printf("\n\033[A\033[2K\r> %s\n", color.GreenString(tmpEnableComboAp))
 			fmt.Println(color.GreenString("TOGGLE: ON"))
@@ -360,7 +355,7 @@ func origMain(isOptionSpecified bool) {
 
 	fmt.Print("\n- pedファイルを生成中 (Generating ped file)... ")
 
-	err = pjsekaioverlay.WritePedFile(scoreData, assets, filepath.Join(formattedOutDir, "data.ped"), sonolus.LevelInfo{Rating: chart.Rating}, levelData, exScore, enUI)
+	err = pjsekaioverlay.WritePedFile(scoreData, assets, filepath.Join(formattedOutDir, "data.ped"), sonolus.LevelInfo{Rating: chart.Rating}, levelData, scoreMode, enUI)
 
 	if err != nil {
 		fmt.Println(color.RedString(fmt.Sprintf("FAIL: %s", err.Error())))
@@ -396,24 +391,24 @@ func origMain(isOptionSpecified bool) {
 	}
 
 	charter := []string{chart.Author, "-"}
-	if charterTag := strings.Split(chart.Author, "#"); (chartSource.Id == "chart_cyanvas" || chartSource.Id == "untitled_sekai" || chartSource.Id == "untitledcharts") && len(charterTag) <= 2 {
+	if charterTag := strings.Split(chart.Author, "#"); len(charterTag) <= 2 {
 		charter = charterTag
 	}
 
-	description := fmt.Sprintf("作詞：-    作曲：%s    編曲：-\r\nVo：%s    譜面作成：%s", composerAndVocals[0], composerAndVocals[1], charter[0])
-	descriptionv1 := fmt.Sprintf("作詞：-   作曲：%s   編曲：-\r\n歌：%s   譜面作成：%s", composerAndVocals[0], composerAndVocals[1], charter[0])
+	description := []string{fmt.Sprintf("作詞：-    作曲：%s    編曲：-", composerAndVocals[0]), fmt.Sprintf("Vo：%s    譜面作成：%s", composerAndVocals[1], charter[0])}
+	descriptionv1 := []string{fmt.Sprintf("作詞：-    作曲：%s    編曲：-", composerAndVocals[0]), fmt.Sprintf("歌：%s    譜面作成：%s", composerAndVocals[1], charter[0])}
 	extra := "[追加情報]"
 	exFile := "tournament-mode.png"
 	exFileOpacity := "100.0"
 	ap := "0.00"
 
 	if enUI {
-		description = fmt.Sprintf("Lyrics: -    Music: %s    Arrangement: -\r\nVo: %s    Chart Design: %s", composerAndVocals[0], composerAndVocals[1], charter[0])
-		descriptionv1 = fmt.Sprintf("Lyrics: -   Music: %s   Arrangement: -\r\n歌：%s   Chart Design: %s", composerAndVocals[0], composerAndVocals[1], charter[0])
+		description = []string{fmt.Sprintf("Lyrics: -    Music: %s    Arrangement: -", composerAndVocals[0]), fmt.Sprintf("Vo: %s    Chart Design: %s", composerAndVocals[1], charter[0])}
+		descriptionv1 = []string{fmt.Sprintf("Lyrics: -    Music: %s    Arrangement: -", composerAndVocals[0]), fmt.Sprintf("Vocals: %s    Chart Design: %s", composerAndVocals[1], charter[0])}
 		extra = "[Additional Info]"
 		exFile = "tournament-mode-en.png"
 	}
-	if exScore {
+	if scoreMode == 2 {
 		exFileOpacity = "0.0"
 	}
 	if apCombo {
@@ -430,6 +425,7 @@ func origMain(isOptionSpecified bool) {
 	fmt.Println(color.GreenString("OK"))
 
 	fmt.Println(color.GreenString("\n全ての処理が完了しました。READMEの規約を確認した上で、exoファイルをAviUtlにインポートして下さい。\nExecution complete! Please import the exo file into AviUtl after reviewing the README Terms of Use."))
+	fmt.Printf("%s\n", color.GreenString("- 出力先ディレクトリ (Output path): "+filepath.Dir(formattedOutDir)+"\\"+chartId))
 }
 
 func main() {

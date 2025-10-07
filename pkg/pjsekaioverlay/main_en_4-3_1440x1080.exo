@@ -22,7 +22,7 @@ X=0.0
 Y=0.0
 Rotation=0.00
 Size=2000
-rAspect=-55.0
+rAspect=-41.7
 Blur=0
 Invert mask=1
 Match with original size=0
@@ -53,8 +53,8 @@ _name=Standard drawing
 X=0.0
 Y=0.0
 Z=0.0
-Zoom%=100.00
-Clearness=0.0
+Zoom%=80.00
+Clearness=27.5
 Rotation=0.00
 blend=0
 [2]
@@ -74,7 +74,7 @@ Y-Spin=0.00
 Z-Spin=0.00
 Affected by the upper group control=0
 Apply to objects in the same group=1
-range=13
+range=14
 [3]
 start=301
 end=396
@@ -208,7 +208,7 @@ Y-Spin=0.00
 Z-Spin=0.00
 Affected by the upper group control=0
 Apply to objects in the same group=0
-range=10
+range=11
 [9.1]
 _name=Clearness
 Clearness=0.0,100.0,1
@@ -368,6 +368,17 @@ color2=000000
 font=FOT-ロダンNTLG Pro EB
 text={text:difficulty}
 [15.1]
+_name=Animation effect
+track0=390.00
+track1=1080.00
+track2=0.00
+track3=0.00
+check0=0
+type=0
+filter=0
+name=テキスト枠サイズ指定@テキスト自動リサイズ
+param=mode_enablex=1;mode_enabley=1;
+[15.2]
 _name=Standard drawing
 X=-855.0
 Y=486.0
@@ -393,7 +404,7 @@ Y-Spin=0.00
 Z-Spin=0.00
 Affected by the upper group control=0
 Apply to objects in the same group=1
-range=7
+range=8
 [17]
 start=301
 end=4001
@@ -460,8 +471,16 @@ group=3
 overlay=1
 camera=0
 [19.0]
-_name=Image file
-file={assets}\life.png
+_name=Custom object
+track0=1000.00
+track1=0.00
+track2=0.00
+track3=0.00
+check0=0
+type=0
+filter=0
+name=Life@pjsekai-overlay-en
+param=
 [19.1]
 _name=Standard drawing
 X=532.0
@@ -499,6 +518,17 @@ color2=000000
 font=FOT-ロダンNTLG Pro DB
 text={text:extra}
 [20.1]
+_name=Animation effect
+track0=1300.00
+track1=1080.00
+track2=0.00
+track3=0.00
+check0=0
+type=0
+filter=0
+name=テキスト枠サイズ指定@テキスト自動リサイズ
+param=mode_enablex=1;mode_enabley=1;
+[20.2]
 _name=Standard drawing
 X=-380.0
 Y=200.0
@@ -562,6 +592,17 @@ color2=000000
 font=FOT-ロダンNTLG Pro EB
 text={text:title}
 [22.1]
+_name=Animation effect
+track0=1300.00
+track1=1080.00
+track2=0.00
+track3=0.00
+check0=0
+type=0
+filter=0
+name=テキスト枠サイズ指定@テキスト自動リサイズ
+param=mode_enablex=1;mode_enabley=1;
+[22.2]
 _name=Standard drawing
 X=-378.5
 Y=324.0
@@ -623,8 +664,19 @@ precision=1
 color=ffffff
 color2=000000
 font=FOT-ロダンNTLG Pro DB
-text={text:description}
+text={text:description-1}
 [24.1]
+_name=Animation effect
+track0=1300.00
+track1=1080.00
+track2=0.00
+track3=0.00
+check0=0
+type=0
+filter=0
+name=テキスト枠サイズ指定@テキスト自動リサイズ
+param=mode_enablex=1;mode_enabley=1;
+[24.2]
 _name=Standard drawing
 X=-380.0
 Y=364.5
@@ -667,14 +719,43 @@ layer=14
 overlay=1
 camera=0
 [26.0]
-_name=Image file
-file={dist}\cover.png
+_name=Text
+Size=72
+vDisplay=0.0
+1char1obj=0
+Show on motion coordinate=0
+Automatic scrolling=0
+B=0
+I=0
+type=0
+autoadjust=0
+soft=1
+monospace=0
+align=0
+spacing_x=0
+spacing_y=40
+precision=1
+color=ffffff
+color2=000000
+font=FOT-ロダンNTLG Pro DB
+text={text:description-2}
 [26.1]
+_name=Animation effect
+track0=1300.00
+track1=1080.00
+track2=0.00
+track3=0.00
+check0=0
+type=0
+filter=0
+name=テキスト枠サイズ指定@テキスト自動リサイズ
+param=mode_enablex=1;mode_enabley=1;
+[26.2]
 _name=Standard drawing
-X=-618.0
-Y=245.0
+X=-380.0
+Y=413.5
 Z=0.0
-Zoom%=78.75
+Zoom%=37.50
 Clearness=0.0
 Rotation=0.00
 blend=0
@@ -706,26 +787,23 @@ Clearness=0.0
 Rotation=0.00
 blend=0
 [28]
-start=61
-end=91
+start=1
+end=300
 layer=15
 overlay=1
-camera=1
+camera=0
 [28.0]
-_name=Group control
-X=0.0
-Y=135.0
-Z=0.0
-Zoom%=75.00
-X-Spin=0.00
-Y-Spin=0.00
-Z-Spin=0.00
-Affected by the upper group control=0
-Apply to objects in the same group=0
-range=1
+_name=Image file
+file={dist}\cover.png
 [28.1]
-_name=Clearness
-Clearness=100.0,0.0,1
+_name=Standard drawing
+X=-618.0
+Y=245.0
+Z=0.0
+Zoom%=78.75
+Clearness=0.0
+Rotation=0.00
+blend=0
 [29]
 start=3621
 end=4001
@@ -751,62 +829,41 @@ Clearness=50.0,50.0,1
 Rotation=0.00
 blend=0
 [30]
-start=1
-end=60
-layer=16
-group=5
-overlay=1
-camera=0
-[30.0]
-_name=Graphic
-Size=100
-rAspect=0.0
-Line width=4000
-type=0
-color=ffffff
-name=
-[30.1]
-_name=Standard drawing
-X=0.0
-Y=0.0
-Z=0.0
-Zoom%=200.00
-Clearness=0.0,100.0,1
-Rotation=0.00
-blend=0
-[31]
 start=61
-end=300
+end=91
 layer=16
 overlay=1
-camera=0
-[31.0]
-_name=Image file
-file={assets}\{image:tournament}
-[31.1]
-_name=Standard drawing
-X=-740.0
-Y=13.0
+camera=1
+[30.0]
+_name=Group control
+X=0.0
+Y=135.0
 Z=0.0
-Zoom%=70.00
-Clearness={opacity}
-Rotation=0.00
-blend=0
-[32]
+Zoom%=75.00
+X-Spin=0.00
+Y-Spin=0.00
+Z-Spin=0.00
+Affected by the upper group control=0
+Apply to objects in the same group=0
+range=1
+[30.1]
+_name=Clearness
+Clearness=100.0,0.0,1
+[31]
 start=3621
 end=4001
 layer=16
 group=4
 overlay=1
 camera=0
-[32.0]
+[31.0]
 _name=Video file
 Playback position=1
 vPlay=100.0
 Loop playback=0
 Import alpha channel=0
 file={assets}\ap_43.mp4
-[32.1]
+[31.1]
 _name=Animation effect
 track0=0.00
 track1=0.00
@@ -817,7 +874,7 @@ type=0
 filter=0
 name=unmult
 param=
-[32.2]
+[31.2]
 _name=Standard drawing
 X=0.0
 Y=0.0
@@ -826,32 +883,74 @@ Zoom%=100.00
 Clearness=0.0
 Rotation=0.00
 blend=0
+[32]
+start=1
+end=60
+layer=17
+group=5
+overlay=1
+camera=0
+[32.0]
+_name=Graphic
+Size=100
+rAspect=0.0
+Line width=4000
+type=0
+color=ffffff
+name=
+[32.1]
+_name=Standard drawing
+X=0.0
+Y=0.0
+Z=0.0
+Zoom%=200.00
+Clearness=0.0,100.0,1
+Rotation=0.00
+blend=0
 [33]
+start=61
+end=300
+layer=17
+overlay=1
+camera=0
+[33.0]
+_name=Image file
+file={assets}\{image:tournament}
+[33.1]
+_name=Standard drawing
+X=-740.0
+Y=13.0
+Z=0.0
+Zoom%=70.00
+Clearness={opacity}
+Rotation=0.00
+blend=0
+[34]
 start=3621
 end=4001
 layer=17
 group=4
 overlay=1
 audio=1
-[33.0]
+[34.0]
 _name=Audio file
 Playback position=0.00
 vPlay=100.0
 Loop playback=0
 Sync with video files=1
 file={assets}\ap_43.mp4
-[33.1]
+[34.1]
 _name=Standard playback
-Volume=300.0
+Volume=100.0
 Left-Right=0.0
-[34]
+[35]
 start=3892
 end=3936
 layer=18
 group=4
 overlay=1
 camera=1
-[34.0]
+[35.0]
 _name=Group control
 X=0.0
 Y=0.0
@@ -863,17 +962,17 @@ Z-Spin=0.00
 Affected by the upper group control=1
 Apply to objects in the same group=0
 range=1
-[34.1]
+[35.1]
 _name=Clearness
 Clearness=100.0,0.0,1
-[35]
+[36]
 start=3892
 end=4001
 layer=19
 group=4
 overlay=1
 camera=0
-[35.0]
+[36.0]
 _name=Graphic
 Size=100
 rAspect=0.0
@@ -881,7 +980,7 @@ Line width=4000
 type=0
 color=000000
 name=
-[35.1]
+[36.1]
 _name=Standard drawing
 X=0.0
 Y=0.0

@@ -20,8 +20,8 @@ _name=Standard drawing
 X=0.0
 Y=0.0
 Z=0.0
-Zoom%=150.00
-Clearness=0.0
+Zoom%=110.00
+Clearness=27.5
 Rotation=0.00
 blend=0
 [1]
@@ -324,7 +324,7 @@ _name=Standard drawing
 X=0.0
 Y=0.0
 Z=0.0
-Zoom%=150.00
+Zoom%=100.00
 Clearness=0.0
 Rotation=0.00
 blend=0
@@ -571,7 +571,7 @@ Y-Spin=0.00
 Z-Spin=0.00
 Affected by the upper group control=0
 Apply to objects in the same group=1
-range=7
+range=8
 [25.1]
 _name=Clearness
 Clearness=0.0,100.0,1
@@ -735,7 +735,7 @@ text={text:extra}
 [31.1]
 _name=Standard drawing
 X=-266.0
-Y=-404.0
+Y=-406.0
 Z=0.0
 Zoom%=38.75
 Clearness=0.0
@@ -793,6 +793,17 @@ color2=000000
 font=FOT-ロダンNTLG Pro DB
 text={text:title}
 [33.1]
+_name=Animation effect
+track0=1920.00
+track1=1080.00
+track2=0.00
+track3=0.00
+check0=0
+type=0
+filter=0
+name=テキスト枠サイズ指定@テキスト自動リサイズ
+param=mode_enablex=1;mode_enabley=1;
+[33.2]
 _name=Standard drawing
 X=0.0
 Y=253.0
@@ -861,7 +872,7 @@ precision=1
 color=ffffff
 color2=000000
 font=FOT-ロダンNTLG Pro DB
-text={text:description}
+text={text:description-1}
 [35.1]
 _name=Standard drawing
 X=0.0
@@ -887,29 +898,44 @@ Sync with video files=1
 file={assets}\ap-v1.mp4
 [36.1]
 _name=Standard playback
-Volume=300.0
+Volume=100.0
 Left-Right=0.0
 [37]
-start=61
-end=91
+start=1
+end=300
 layer=17
 overlay=1
-camera=1
+camera=0
 [37.0]
-_name=Group control
-X=0.0
-Y=0.0
-Z=0.0
-Zoom%=100.00
-X-Spin=0.00
-Y-Spin=0.00
-Z-Spin=0.00
-Affected by the upper group control=0
-Apply to objects in the same group=1
-range=1
+_name=Text
+Size=72
+vDisplay=0.0
+1char1obj=0
+Show on motion coordinate=0
+Automatic scrolling=0
+B=0
+I=0
+type=0
+autoadjust=0
+soft=1
+monospace=0
+align=1
+spacing_x=0
+spacing_y=51
+precision=1
+color=ffffff
+color2=000000
+font=FOT-ロダンNTLG Pro DB
+text={text:description-2}
 [37.1]
-_name=Clearness
-Clearness=100.0,0.0,1
+_name=Standard drawing
+X=0.0
+Y=397.0
+Z=0.0
+Zoom%=38.75
+Clearness=0.0
+Rotation=0.00
+blend=0
 [38]
 start=3892
 end=3936
@@ -933,52 +959,55 @@ range=1
 _name=Clearness
 Clearness=100.0,0.0,1
 [39]
-start=1
-end=60
+start=61
+end=91
 layer=18
-group=4
+overlay=1
+camera=1
+[39.0]
+_name=Group control
+X=0.0
+Y=0.0
+Z=0.0
+Zoom%=100.00
+X-Spin=0.00
+Y-Spin=0.00
+Z-Spin=0.00
+Affected by the upper group control=0
+Apply to objects in the same group=1
+range=1
+[39.1]
+_name=Clearness
+Clearness=100.0,0.0,1
+[40]
+start=3892
+end=4001
+layer=18
+group=3
 overlay=1
 camera=0
-[39.0]
+[40.0]
 _name=Graphic
 Size=100
 rAspect=0.0
 Line width=4000
 type=0
-color=ffffff
+color=000000
 name=
-[39.1]
+[40.1]
 _name=Standard drawing
 X=0.0
 Y=-2.0
 Z=0.0
 Zoom%=200.00
-Clearness=0.0,100.0,1
-Rotation=0.00
-blend=0
-[40]
-start=61
-end=300
-layer=18
-overlay=1
-camera=0
-[40.0]
-_name=Image file
-file={assets}\{image:tournament}
-[40.1]
-_name=Standard drawing
-X=197.0
-Y=211.0
-Z=0.0
-Zoom%=70.00
-Clearness={opacity}
+Clearness=0.0
 Rotation=0.00
 blend=0
 [41]
-start=3892
-end=4001
-layer=18
-group=3
+start=1
+end=60
+layer=19
+group=4
 overlay=1
 camera=0
 [41.0]
@@ -987,7 +1016,7 @@ Size=100
 rAspect=0.0
 Line width=4000
 type=0
-color=000000
+color=ffffff
 name=
 [41.1]
 _name=Standard drawing
@@ -995,6 +1024,24 @@ X=0.0
 Y=-2.0
 Z=0.0
 Zoom%=200.00
-Clearness=0.0
+Clearness=0.0,100.0,1
+Rotation=0.00
+blend=0
+[42]
+start=61
+end=300
+layer=19
+overlay=1
+camera=0
+[42.0]
+_name=Image file
+file={assets}\{image:tournament}
+[42.1]
+_name=Standard drawing
+X=197.0
+Y=211.0
+Z=0.0
+Zoom%=70.00
+Clearness={opacity}
 Rotation=0.00
 blend=0

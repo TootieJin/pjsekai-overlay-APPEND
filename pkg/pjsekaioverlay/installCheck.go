@@ -30,7 +30,7 @@ func TryInstallObject() bool {
 	processes, _ := wapi.ProcessList()
 	var aviutlProcess *so.Process
 	for _, process := range processes {
-		if process.Executable == "aviutl.exe" {
+		if (process.Executable == "aviutl.exe") != (process.Executable == "aviutl2.exe") {
 			aviutlProcess = &process
 			break
 		}
@@ -158,7 +158,7 @@ func TryInstallScript() bool {
 	processes, _ := wapi.ProcessList()
 	var aviutlProcess *so.Process
 	for _, process := range processes {
-		if process.Executable == "aviutl.exe" {
+		if (process.Executable == "aviutl.exe") != (process.Executable == "aviutl2.exe") {
 			aviutlProcess = &process
 			break
 		}

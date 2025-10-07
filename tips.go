@@ -44,10 +44,10 @@ func Tips() {
 		"このTipはDeepLを使用して翻訳されています。",
 		"The tip above uses DeepL to translate this tip.",
 
-		"画像が切り取られていますか？「ファイル > 環境設定 > システム設定」で「最大画像サイズ」を調整する必要があるかもしれません。",
-		"Image cropped? You might need to adjust \"Max image size\" in \"File > ENVIRONMENT SETTINGS > SYSTEM SETTINGS\".",
+		"画像が切り取られていますか？「ファイル > 設定 > システム」で「最大画像サイズ」を設定する必要があります。",
+		"Image cropped? You need to adjust \"Max resolution\" in \"File > SETTINGS > SYSTEM\".",
 
-		"どれくらいの「Tips」が実際に役立つと思いますか？",
+		"どれくらいのTipsが実際に役立つと思いますか？",
 		"Guess how many Tips are literally useful?",
 
 		"この2年半、Chart Cyanvasをご利用いただき、誠にありがとうございました。",

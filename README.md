@@ -28,21 +28,20 @@ https://github.com/user-attachments/assets/3efab743-246a-4da7-8d80-a02b2f09f5b3
 [![【Project Sekai Fanmade? (v3→v1)】Hello, SEKAI - DECO*27【ETERNAL Lv32】](https://img.youtube.com/vi/BHVNuwxA1ek/maxresdefault.jpg)](https://youtu.be/BHVNuwxA1ek)
 
 This is a forked version of pjsekai-overlay with additional features originally not in the main repo, including:
-  - [Extra assets](./assets/extra%20assets) (thank you [ReiyuN](https://discordid.netlify.app/?id=383636820409188374), [Gaven](https://github.com/gaven1880) and [YumYummity](https://github.com/YumYummity) for the contribution!)
+  - [Extra assets](./assets/extra%20assets) (thank you [ReiyuN](https://github.com/Reiyunkun), [Gaven](https://github.com/gaven1880) and [YumYummity](https://github.com/YumYummity) for the contribution!)
   - Added/adjusted elements to look identical to the official photography
   - Quickly make 1080p videos
   - iPad (4:3) video support
   - Ability to use the English AviUtl
   - v1 UI skin (Full support)
-  - Automatically changes chart difficulty to generate in AviUtl based on chart tag _(or title)_
+  - Automatically changes chart difficulty to generate in AviUtl based on chart tag (or title)
   - Additional support for more servers
-  - Various customization to scoring
-    - Increased score limit to infinity (?)
-    - Show various digits to your liking
-  [![image](https://github.com/user-attachments/assets/baceaf22-fdcb-4b48-8fb7-54b08e6d3086)]()
-  [![pjsekai-overlay-APPEND_minint](https://github.com/user-attachments/assets/80eb8fc1-6602-4c26-ac47-4e8e07fb99c2)]()
-  [![pjsekai-overlay-APPEND_maxint](https://github.com/user-attachments/assets/45a49c19-7883-402c-b016-58f02f72f0b6)]()
-  [![min-digits](https://github.com/user-attachments/assets/25183ac0-8836-4c30-b2aa-f34848e404d0)]()
+  - Various UI customization
+    - Animated Scoring
+    - Toggle on/off animation in different elements
+    - Interchangable AP Combo
+    - Interchangable judgement type (PERFECT/GREAT/GOOD/etc.)
+    - Interchangable LIFE value (v3 only)
 
 ## Terms of Use
 
@@ -73,6 +72,7 @@ PJSekai-style video creation tool:
 - [AviUtl](http://spring-fragrance.mints.ne.jp/aviutl/) + [Advanced Editing plug-in](http://spring-fragrance.mints.ne.jp/aviutl/) + [L-SMASH Works](https://github.com/Mr-Ojii/L-SMASH-Works-Auto-Builds/releases/latest) ([JP Installation Guide](https://aviutl.info/dl-innsuto-ru/))
   - (**Recommended:** [AviUtl JP Installer Script](https://github.com/menndouyukkuri/aviutl-installer-script) OR [AviUtl EN Extra Pack](https://www.videohelp.com/download/AviUtl_setup_1.14.exe))
 - [Unmult](https://github.com/mes51/AVIUtl_Unmult)
+- **Fonts:** RodinNTLG [DB](https://en.fontworks.co.jp/fontsearch/rodinntlgpro-db/) + [EB](https://en.fontworks.co.jp/fontsearch/rodinntlgpro-eb/)
 - Basic knowledge of AviUtl
 
 *- Refer to this [English guide](https://forum.videohelp.com/threads/360967-AviUtl-video-tutorial#post2288628) for using AviUtl EN, and [setup guide (partially outdated)](https://github.com/Khronophobia/pjsekai-overlay-english/wiki) for pjsekai-overlay.*
@@ -133,21 +133,20 @@ PJSekai-style video creation tool:
 pjsekai-overlay(-APPEND) は、プロセカの創作譜面をプロセカ風の動画にするためのオープンソースのツールです。
 
 これはpjsekai-overlayのフォーク版で、元々メインレポにはない以下のような追加機能があります：
-  - [追加アセット](./assets/extra%20assets/) ([ReiyuN](https://discordid.netlify.app/?id=383636820409188374)さん、[Gaven](https://github.com/gaven1880)さんと[YumYummity](https://github.com/YumYummity)さん、ご寄稿ありがとうございました。)
+  - [追加アセット](./assets/extra%20assets/) ([ReiyuN](hhttps://github.com/Reiyunkun)さん、[Gaven](https://github.com/gaven1880)さんと[YumYummity](https://github.com/YumYummity)さん、ご寄稿ありがとうございました。)
   - 本家撮影と同じように見えるように要素を追加/調整
   - 1080p動画を素早く作成
   - iPad（4:3）動画対応
   - 英語版AviUtlの使用機能
   - v1 UIスキン（フル対応）
-  - 譜面のタグ _（またはタイトル）_ に基づいて、AviUtlで生成される譜面の難易度を自動的に変更する
+  - 譜面のタグ（またはタイトル）に基づいて、AviUtlで生成される譜面の難易度を自動的に変更する
   - 追加サーバーのサポート
-  - スコアの各種カスタマイズ
-    - スコアの上限を無限大 (?)
-    - 好みに応じて様々な桁数を表示
-  [![image](https://github.com/user-attachments/assets/baceaf22-fdcb-4b48-8fb7-54b08e6d3086)]()
-  [![pjsekai-overlay-APPEND_minint](https://github.com/user-attachments/assets/80eb8fc1-6602-4c26-ac47-4e8e07fb99c2)]()
-  [![pjsekai-overlay-APPEND_maxint](https://github.com/user-attachments/assets/45a49c19-7883-402c-b016-58f02f72f0b6)]()
-  [![min-digits](https://github.com/user-attachments/assets/25183ac0-8836-4c30-b2aa-f34848e404d0)]()
+  - 各種UIカスタマイズ
+    - アニメーション付きスコア表示
+    - 各要素のアニメーションON/OFF切り替え
+    - 交換可能なAPコンボ
+    - 交換可能な判定タイプ（PERFECT/GREAT/GOODなど）
+    - 交換可能なライフ値（v3のみ）
 
 ## 利用規約
 
@@ -178,6 +177,7 @@ PJSekai-style video creation tool:
 - [AviUtl](http://spring-fragrance.mints.ne.jp/aviutl/) + [拡張編集プラグイン](http://spring-fragrance.mints.ne.jp/aviutl/) + [L-SMASH Works](https://github.com/Mr-Ojii/L-SMASH-Works-Auto-Builds/releases/latest)（[導入方法](https://aviutl.info/dl-innsuto-ru/)）
   - (**強く推奨：** [AviUtl インストーラースクリプト](https://github.com/menndouyukkuri/aviutl-installer-script))
 - [Unmult](https://github.com/mes51/AVIUtl_Unmult)
+- **フォント：** ロダンNTLG [DB](https://en.fontworks.co.jp/fontsearch/rodinntlgpro-db/) + [EB](https://en.fontworks.co.jp/fontsearch/rodinntlgpro-eb/)
 - AviUtlの基本的な知識
 
 > [!IMPORTANT]

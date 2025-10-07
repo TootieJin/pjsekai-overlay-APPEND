@@ -4,6 +4,7 @@
 --file:
 --track0:オフセット,-99999.9,99999.9,0,0.1
 --track1:キャッシュ,0,1,1,1
+--track2:フォント種類,0,1,0,1
 --check0:透かし,1
 
 if obj.track1 ~= 1 or not PED_DATA or PED_DATA.file ~= file then
@@ -26,7 +27,7 @@ if obj.track1 ~= 1 or not PED_DATA or PED_DATA.file ~= file then
       if header ~= nil then
         PED_DATA.loaded = "ok"
         if header == "s" then
-          local nmatch = {string.match(data, "([%-0-9.]+):([%-0-9.]+):([%-0-9.]+):([%-0-9.]+):([%-0-9.]+):([%-0-9.]+):([%-0-9.]+):([abcds]+):([%-0-9.]+)")}
+          local nmatch = {string.match(data, "([%-0-9.]+):([%-0-9.]+):([%-0-9.]+):([%-0-9.]+):([%-0-9.]+):([%-0-9.]+):([%-0-9.]+):([a-z]+):([%-0-9.]+)")}
           PED_DATA.frames[#PED_DATA.frames + 1] = {
             time = tonumber(nmatch[1]),
             score2 = tonumber(nmatch[2]),
@@ -38,7 +39,7 @@ if obj.track1 ~= 1 or not PED_DATA or PED_DATA.file ~= file then
             rank = nmatch[8],
             combo = tonumber(nmatch[9])
           }
-        elseif header == "p" then -- Pass
+        elseif header == "p" then -- Path
           PED_DATA.path = data
         elseif header == "e" then -- English UI
           PED_DATA.enUI = data == "true"
@@ -110,60 +111,139 @@ else
   PED_DATA.version_status = "ng"
 end
 if obj.check0 and PED_DATA.version_status == "ok" then
-  obj.setfont("FOT-ロダンNTLG Pro EB", 100)
-  obj.load(
-      "text",
-      "<s100,FOT-ロダンNTLG Pro EB>※TootieJinの「pjsekai-overlay-APPEND」を使用\n"..
-      "※Made with「pjsekai-overlay-APPEND」by TootieJin\n"..
-      "............................................................................<s>"
+  if obj.track2 == 0 then
+    obj.setfont("メイリオ", 32)
+    obj.load(
+        "text",
+        "<s32,メイリオ,B>※TootieJinの「pjsekai-overlay-APPEND」を使用\n"..
+        "※Made with「pjsekai-overlay-APPEND」by TootieJin\n"..
+        "............................................................................<s>"
+    )
+    obj.draw(-(obj.screen_w - ((1920 - obj.screen_w) / (16/9))) / 3.15, (obj.screen_h - ((1080 - obj.screen_h) / (16/9))) / 2.1, 0, 0.75, 0.5)
+  else
+    obj.setfont("FOT-ロダンNTLG Pro EB", 100)
+    obj.load(
+        "text",
+        "<s100,FOT-ロダンNTLG Pro EB,B>※TootieJinの「pjsekai-overlay-APPEND」を使用\n"..
+        "※Made with「pjsekai-overlay-APPEND」by TootieJin\n"..
+        "............................................................................<s>"
+    )
+    obj.draw(-(obj.screen_w - ((1920 - obj.screen_w) / (16/9))) / 3.15, (obj.screen_h - ((1080 - obj.screen_h) / (16/9))) / 2.1, 0, 0.24, 0.5)
+  end
+end
+----------------------------------------------------------------
+@ライフ
+--track0:ライフ,0,2000,1000,1
+if PED_DATA and PED_DATA.version_status == "ok" then
+  -- 378, 1910 / -902, 630
+  obj.setoption("drawtarget", "tempbuffer", 2560, 300)
+  if obj.track0 <= 200 then
+    obj.load("image", PED_DATA.path.."/life/red.png")
+  else
+    obj.load("image", PED_DATA.path.."/life/green.png")
+  end
+  obj.draw(0, 0, 0, 1)
+  obj.setoption("blend", "alpha_sub")
+  obj.load("figure", "背景")
+  obj.drawpoly(
+    -902 + 1532 * (obj.track0 / 1000), -150, 0,
+    630, -150, 0,
+    630, 150, 0,
+    -902 + 1532 * (obj.track0 / 1000), 150, 0
   )
-  obj.draw(-(obj.screen_w - ((1920 - obj.screen_w) / (16/9))) / 3.15, (obj.screen_h - ((1080 - obj.screen_h) / (16/9))) / 2.1, 0, 0.24, 0.5)
+  obj.copybuffer("cache:life_bar", "tmp")
+
+  obj.setoption("drawtarget", "tempbuffer", 99999, 600)
+  obj.setoption("blend", 0)
+  obj.load("image", PED_DATA.path.."/life/bg.png")
+  obj.draw(0, 0, 0, 1)
+
+  obj.copybuffer("obj", "cache:life_bar")
+  obj.draw(0, 0, 0, 1)
+
+  -- 563, -145, -125 (last digit)
+  local life_str = string.format("%4d", obj.track0)
+  local life_len = string.len(life_str)
+
+  for c = 1, life_len do
+    local digit = life_str:sub(c, c)
+    obj.load("image", PED_DATA.path.."/life/digit/s"..digit..".png")
+
+    obj.draw(56 + 127 * c, -145, 0, 0.147)
+  end
+  for c = 1, life_len do
+    local digit = life_str:sub(c, c)
+    obj.load("image", PED_DATA.path.."/life/digit/s"..digit..".png")
+
+    obj.draw(56 + 127 * c, -145, 0, 0.147)
+  end
+  for c = 1, life_len do
+    local digit = life_str:sub(c, c)
+    obj.load("image", PED_DATA.path.."/life/digit/"..digit..".png")
+
+    obj.draw(56 + 127 * c, -145, 0, 0.147)
+  end
+  for c = 1, life_len do
+    local digit = life_str:sub(c, c)
+    obj.load("image", PED_DATA.path.."/life/digit/"..digit..".png")
+
+    obj.draw(56 + 127 * c, -145, 0, 0.147)
+  end
+
+  obj.setoption("antialias", 1)
+  obj.copybuffer("obj", "tmp")
 end
 ----------------------------------------------------------------
 @スコア
 --track0:アニメ,0,1,1,1
 --track1:最小桁数,1,17,8,1
+--check0:アニメーション採点,0
 
 if PED_DATA and PED_DATA.version_status == "ok" then
   -- -- bars
-  obj.setoption("drawtarget", "tempbuffer", 532, 24)
+  obj.setoption("drawtarget", "tempbuffer", 1650, 76)
   obj.load("image", PED_DATA.path.."/score/bar.png")
   obj.draw(0, 0, 0, 1)
   obj.setoption("blend", "alpha_sub")
   obj.load("figure", "背景")
   obj.drawpoly(
-    532 * (PED_DATA.current.width - 0.5), -12, 0,
-    532, -12, 0,
-    532, 12, 0,
-    532 * (PED_DATA.current.width - 0.5), 12, 0
+    1650 * (PED_DATA.current.width - 0.5), -38, 0,
+    1650, -38, 0,
+    1650, 38, 0,
+    1650 * (PED_DATA.current.width - 0.5), 38, 0
   )
   obj.copybuffer("cache:score_bar", "tmp")
 
-  obj.setoption("drawtarget", "tempbuffer", 99999, 95)
+  obj.setoption("drawtarget", "tempbuffer", 99999, 446)
   obj.setoption("blend", 0)
   obj.load("image", PED_DATA.path.."/score/bg.png")
-  obj.draw(0, 0, 0, 0.9758)
+  obj.draw(0, 0, 0, 0.2145)
 
   -- -- 79, 35 / 532, 24
   obj.copybuffer("obj", "cache:score_bar")
-  obj.draw(33.25, -3, 0, 0.671)
+  obj.draw(34, -3, 0, 0.2145)
 
   if PED_DATA.enUI then
     obj.load("image", PED_DATA.path.."/score/rank/txt/en/"..PED_DATA.current.rank..".png")
-    obj.draw(-187, 35, 0, 0.33)
+    obj.draw(-187, 35, 0, 0.34 * (22/130))
   else
     obj.load("image", PED_DATA.path.."/score/rank/txt/jp/"..PED_DATA.current.rank..".png")
-    obj.draw(-187, 35, 0, 0.34)
+    obj.draw(-187, 35, 0, 0.34 * (22/130))
   end
-  
+
   if PED_DATA.current.time ~= 0 then
     obj.load("image", PED_DATA.path.."/score/rank/chr/"..PED_DATA.current.rank..".png")
     obj.draw(-188, -6, 0, 0.22)
   end
 
   obj.load("image", PED_DATA.path.."/score/fg.png")
-  obj.draw(0, 0, 0, 1)
+  obj.draw(0, 0, 0, 0.2145)
 
+  local progress_frame = ((obj.frame - OFFSET) - (PED_DATA.current.time * obj.framerate))
+  local progress_offset = (progress_frame / 30)
+  if progress_offset > 1 then
+      progress_offset = 1
+  end
 
   -- -127, 27, +22
   local score_str = ""
@@ -172,15 +252,26 @@ if PED_DATA and PED_DATA.version_status == "ok" then
   if minusDigits < 1 then
     minusDigits = 1
   end
-  if math.floor(math.abs(PED_DATA.current.score2)) > 0 then
-    score_str = string.format("%17.0f", PED_DATA.current.score):gsub(" ", "0")
-    score_str2 = string.format("%.0f", PED_DATA.current.score2)
+  if obj.check0 then
+    if math.floor(math.abs(PED_DATA.current.score2)) > 0 then
+      score_str = string.format("%17.0f", PED_DATA.current.score - PED_DATA.current.offset * (1 - progress_offset)^3):gsub(" ", "0")
+      score_str2 = string.format("%.0f", PED_DATA.current.score2 - PED_DATA.current.offset2 * (1 - progress_offset)^3)
+    else
+      score_str = string.format("%"..obj.track1..".0f", PED_DATA.current.score - PED_DATA.current.offset * (1 - progress_offset)^3):gsub(" ", "n")
+    end
+    if PED_DATA.current.score < 0 then
+      score_str = "-" .. string.format("%"..minusDigits..".0f", math.abs(PED_DATA.current.score - PED_DATA.current.offset * (1 - progress_offset)^3)):gsub(" ", "n")
+    end
   else
-    score_str = string.format("%"..obj.track1..".0f", PED_DATA.current.score):gsub(" ", "n")
-  end
-
-  if PED_DATA.current.score < 0 then
-    score_str = "-" .. string.format("%"..minusDigits..".0f", math.abs(PED_DATA.current.score)):gsub(" ", "n")
+    if math.floor(math.abs(PED_DATA.current.score2)) > 0 then
+      score_str = string.format("%17.0f", PED_DATA.current.score):gsub(" ", "0")
+      score_str2 = string.format("%.0f", PED_DATA.current.score2)
+    else
+      score_str = string.format("%"..obj.track1..".0f", PED_DATA.current.score):gsub(" ", "n")
+    end
+    if PED_DATA.current.score < 0 then
+      score_str = "-" .. string.format("%"..minusDigits..".0f", math.abs(PED_DATA.current.score)):gsub(" ", "n")
+    end
   end
 
   local score_len = string.len(score_str)
@@ -236,7 +327,6 @@ if PED_DATA and PED_DATA.version_status == "ok" then
     obj.draw(-127 + 22 * (c - 1 + score_len2), 26, 0, 0.65)
   end
 
-  local progress_frame = ((obj.frame - OFFSET) - (PED_DATA.current.time * obj.framerate))
   if (PED_DATA.current.offset ~= 0 or PED_DATA.current.offset2 ~= 0) and progress_frame <= 31 then
     local progress = (progress_frame / 12)
 
@@ -262,7 +352,7 @@ if PED_DATA and PED_DATA.version_status == "ok" then
     local c_minus = 0
 
     if obj.track0 == 0 then
-      diff_x = 47
+      diff_x = 47 + 22 * (score_len + score_len2 - 8)
       diff_y = 34
       diff_alpha = 1.3
     end
@@ -315,7 +405,7 @@ if PED_DATA and PED_DATA.version_status == "ok" then
   if ap_alpha > 1 then
     ap_alpha = 1
   end
-  if PED_DATA.current.combo > 0 then
+  if PED_DATA.current.time > 0 then
     obj.setoption("drawtarget", "tempbuffer", obj.screen_w / 2, 200)
 
     if obj.track1 == 1 then
