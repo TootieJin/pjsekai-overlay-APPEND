@@ -36,7 +36,7 @@ This is a forked version of pjsekai-overlay with additional features originally 
   - v1 UI skin (Full support)
   - Automatically changes chart difficulty to generate in AviUtl based on chart tag (or title)
   - Additional support for more servers
-  - Various UI customization
+  - **[Various UI customization](#ui-customization-specifications)**
     - Animated Scoring
     - Toggle on/off animation in different elements
     - Interchangable AP Combo
@@ -65,7 +65,7 @@ PJSekai-style video creation tool:
 
 > [!NOTE]
 > **(optional)** You can remove watermark by check/unchecking `Watermark` in the `Root@pjsekai-overlay-en` element.\
-> [![image](https://github.com/user-attachments/assets/48a636da-8ec0-443b-9cf4-b73fd93c47df)]()
+> <img width=50% height=50% alt="image" src="https://github.com/user-attachments/assets/48a636da-8ec0-443b-9cf4-b73fd93c47df" />
 
 ## Requirements
 
@@ -85,14 +85,15 @@ PJSekai-style video creation tool:
 2. Go to [Sonolus](https://sonolus.com/) to find your chart.
 3. Screen record the video with **BLACK Background**, **「Stage」OFF** and **「Hide UI」ON**
 4. Transfer the video file to your computer.
-   - Download the [ffmpeg](https://www.ffmpeg.org/) encoder if you haven't.
-5. Use the FFmpeg encoder (`ffmpeg -i source.mp4 output.mp4`)
+5. Download the [FFmpeg](https://www.ffmpeg.org/) encoder and use it (`ffmpeg -i source.mp4 output.mp4`)
    - **This step is required so that the video file doesn't shift speed.**
+   - Alternatively, you can use your video editor to export it.
 6. Once done, refer to the usage guide below.
 
 ## Usage Guide
 0. Install AviUtl (**Recommended:** [AviUtl JP Installer Script](https://github.com/menndouyukkuri/aviutl-installer-script) OR [AviUtl EN Extra Pack](https://www.videohelp.com/download/AviUtl_setup_1.14.exe))
 1. Download the latest version of pjsekai-overlay-APPEND [here](https://github.com/TootieJin/pjsekai-overlay-APPEND/releases/latest/).
+   - **(optional)** You can download `extra-assets.zip` for  use of non-essential assets.
 2. Unzip the file
 3. Go to `aviutl.exe` file location and make a new folder `script` in this directory
 ```
@@ -126,18 +127,18 @@ PJSekai-style video creation tool:
 8. Once finished, export your video as mp4: `File > Export with plugins > Adv. x264 Export(GUI) Ex`
    - For easier use, you can download [easymp4](https://aoytsk.blog.jp/aviutl/easymp4.zip) and import the file to the `Plugins` folder
 
-## UI Customization Options
+## UI Customization Specifications
 ### Root@pjsekai-overlay-en
 <img width="383" height="79" alt="image" src="https://github.com/user-attachments/assets/76da6c77-f6a7-4480-b279-b5d53f3e583f" />
 
 | **Name**      	|   Type   	| Description                                                                                                	| Default 	|        Range       	|
 |---------------	|:--------:	|------------------------------------------------------------------------------------------------------------	|:-------:	|:------------------:	|
 | **Offset**    	| `track0` 	| Number of frames to shift events<br>- Increase to shift timing later<br>- Decrease to shift timing earlier 	|  216.0  	| -99999.9 ~ 99999.9 	|
-| **Cache**     	| `track1` 	| When cache is set to 0, any change in the `data.ped` is observed immediately                               	|    1    	|        0 ~ 1       	|
+| **Cache**     	| `track1` 	| When cache is set to 0, any change in the `data.ped` takes effect immediately                               	|    1    	|        0 ~ 1       	|
 | **Font type** 	| `track2` 	| Set font type configuration for the watermark text<br>(`0` - メイリオ, `1` - RodinNTLG EB)                 	|    0    	|        0 ~ 1       	|
 | **Watermark** 	| `check0` 	| Enable watermark text at the bottom-left corner                                                            	|   true  	|          X         	|
 
-### Life@pjsekai-overlay-en
+### Life@pjsekai-overlay-en (v3 only)
 <img width="125" height="125" alt="LifeUP" src="https://github.com/user-attachments/assets/6f7a7db8-50bb-43cf-9463-5f46325c862e" /> <img width=50% height=50% alt="life" src="https://github.com/user-attachments/assets/7aab3534-66cf-4dad-936e-3d423ecce615" />
 
 | **Name** 	|   Type   	| Description                                                                         	| Default 	|   Range  	|
@@ -186,7 +187,7 @@ pjsekai-overlay(-APPEND) は、プロセカの創作譜面をプロセカ風の�
   - v1 UIスキン（フル対応）
   - 譜面のタグ（またはタイトル）に基づいて、AviUtlで生成される譜面の難易度を自動的に変更する
   - 追加サーバーのサポート
-  - 各種UIカスタマイズ
+  - **[各種UIカスタマイズ](#uiカスタマイズ仕様書)**
     - アニメーション付きスコア表示
     - 各要素のアニメーションON/OFF切り替え
     - 交換可能なAPコンボ
@@ -215,7 +216,7 @@ PJSekai-style video creation tool:
 
 > [!NOTE]
 > **(任意)** `設定@pjsekai-overlay`要素でチェック/チェックを外すことで、`透かし`を消すことができます。\
-> [![image](https://github.com/user-attachments/assets/05cc6e7d-0e62-4729-a4df-c8d8634b0a10)]()
+> <img width=50% height=50% alt="image" src="https://github.com/user-attachments/assets/05cc6e7d-0e62-4729-a4df-c8d8634b0a10" />
 
 ## 必須事項
 
@@ -235,15 +236,17 @@ PJSekai-style video creation tool:
 3. **背景を黒**にし、**「Stage」OFF**と **「Hide UI」ON**にして、動画をスクリーン録画します。
 4. 撮影したプレイ動画のファイルをパソコンに転送する
    - まだダウンロードしていない場合は、[ffmpeg](https://www.ffmpeg.org/) エンコーダーをダウンロードする
-5. FFmpegエンコーダーを使用する（`ffmpeg -i source.mp4 output.mp4`）
+5. [FFmpeg](https://www.ffmpeg.org/) エンコーダーをダウンロードして使用します（`ffmpeg -i source.mp4 output.mp4`）。
    - **この手順は、動画ファイルの速度がずれないようにするために必要です。**
+   - 代わりに、動画編集ソフトでエクスポートすることもできます。
 6. 下の利用方法に従って UI を後付けする
 
 ## 利用方法
 0. AviUtlをインストールする(**強く推奨：** [AviUtl インストーラースクリプト](https://github.com/menndouyukkuri/aviutl-installer-script))
-1. 右の Releases から最新のバージョンの zip を[ダウンロード](https://github.com/TootieJin/pjsekai-overlay-APPEND/releases/latest/)する
-2. zip を解凍する
-3. `aviutl.exe`ファイルの場所へ移動し、ここに新しいフォルダ`script`を作成する
+1. 右のReleasesから最新のバージョンのzipを[ダウンロード](https://github.com/TootieJin/pjsekai-overlay-APPEND/releases/latest/)する
+   - - **(任意)** 必須ではないアセットを使用する場合は、`extra-assets.zip` をダウンロードできます。
+3. zip を解凍する
+4. `aviutl.exe`ファイルの場所へ移動し、ここに新しいフォルダ`script`を作成する
 ```
    aviutl
       ⌞Plugins
@@ -274,3 +277,48 @@ PJSekai-style video creation tool:
    - **iPad向け:** `main_jp_4-3_1440x1080.exo`
 8. 完了後、動画をmp4形式で出力します：`ファイル > プラグイン出力 > 拡張 x264 出力(GUI) Ex`
    - 使いやすくするため、[easymp4](https://aoytsk.blog.jp/aviutl/easymp4.zip)をダウンロードし、ファイルを`Plugins`フォルダにインポートできます
+
+## UIカスタマイズ仕様書
+### 設定@pjsekai-overlay
+<img width="383" height="79" alt="image" src="https://github.com/user-attachments/assets/76da6c77-f6a7-4480-b279-b5d53f3e583f" />
+
+| **名前**         |   タイプ       | 説明                                                                                                    | デフォルト     |        範囲           |
+|---------------   |:--------:	|------------------------------------------------------------------------------------------------------------	|:-------:	|:------------------:	|
+| **オフセット**    | `track0` 	| タイミングをシフトするフレーム数<br>- 増加するとタイミングが遅くなる<br>- 減少するとタイミングが早くなる 	|  216.0  	| -99999.9 ~ 99999.9 	|
+| **キャッシュ**   	| `track1` 	| キャッシュが0に設定されている場合、`data.ped`の変更は即時反映されます                               	|    1    	|        0 ~ 1       	|
+| **フォント種類**  | `track2` 	| 透かしテキストのフォント種類設定を設定する<br>(`0` - メイリオ, `1` - RodinNTLG EB)                 	|    0    	|        0 ~ 1       	|
+| **透かし** 	   | `check0` 	| 左下隅に透かしテキストを表示する                                                            	|   true  	|          X         	|
+
+### ライフ@pjsekai-overlay (v3のみ)
+<img width="125" height="125" alt="LifeUP" src="https://github.com/user-attachments/assets/6f7a7db8-50bb-43cf-9463-5f46325c862e" /> <img width=50% height=50% alt="life" src="https://github.com/user-attachments/assets/7aab3534-66cf-4dad-936e-3d423ecce615" />
+
+| **名前**         |   タイプ       | 説明                                                                                                    | デフォルト     |        範囲           |
+|----------	|:--------:	|-------------------------------------------------------------------------------------	|:-------:	|:--------:	|
+| **ライフ** 	| `track0` 	| LIFEの値（自明）<br>- 値が変化すると、LIFEバーも変化します 	|   1000  	| 0 ~ 2000 	|
+
+### スコア@pjsekai-overlay
+<img width="125" height="125" alt="ScoreUP" src="https://github.com/user-attachments/assets/a5a8b0f0-035c-4951-8ae3-d2038945d86c" /> <img width=50% height=50% alt="bg" src="https://github.com/user-attachments/assets/3db93b3e-2280-46e1-a08f-00e50a5e5e8c" />
+
+| **名前**         |   タイプ       | 説明                                                                                                    | デフォルト     |        範囲           |
+|----------------------	|:--------:	|------------------------------------------------	|:-------:	|:------:	|
+| **アニメ**        	| `track0` 	| 追加されたスコアのアニメーションを切り替える           	|    1    	|  0 ~ 1 	|
+| **最小桁数**        	| `track1` 	| スコアの桁数を最小限に表示する   	|    8    	| 1 ~ 17 	|
+| **アニメーション採点** 	| `check0` 	| 一気にではなく、段階的に増やす 	|  false  	|    X   	|
+
+### コンボ@pjsekai-overlay
+<img width="148" height="49" alt="pt" src="https://github.com/user-attachments/assets/9db50558-cf81-4ed8-a2bd-1d4bbd22e156" /> <img width="145" height="45" alt="nt" src="https://github.com/user-attachments/assets/3ca0f65e-8ce6-40c9-8ff4-53a8ee9d2f81" />
+
+| **名前**         |   タイプ       | 説明                                                                                                    | デフォルト     |        範囲           |
+|-----------------------------------	|:--------:	|----------------------------------------	|:-------:	|:-----:	|
+| **APコンボ**                      	| `track0` 	| APコンボ状態を切り替える                 	|    1    	| 0 ~ 1 	|
+| **コンボタグ**                     	| `track1` 	| コンボタグの表示切り替え             	|    1    	| 0 ~ 1 	|
+| **アニメ**                     	| `track2` 	| コンボ数のアニメーションを切り替える 	|    1    	| 0 ~ 1 	|
+| **最後の4桁のみを表示** 	| `check0` 	| 12345 -> /2345                         	|   true  	|   X   	|
+
+### 判定@pjsekai-overlay
+<img width="125" height="125" alt="SkillUP" src="https://github.com/user-attachments/assets/e29f426d-71ae-4de5-912a-a5c7375f538d" />
+
+| **名前**         |   タイプ       | 説明                                                                                                    | デフォルト     |        範囲           |
+|----------------	|:--------:	|-------------------------------------------------------------------------------	|:-------:	|:-----:	|
+| **判定タイプ** 	| `track0` 	| `0`: <img width=25% height=25% alt="perfect" src="https://github.com/user-attachments/assets/28950e9e-0dac-49d9-81d3-70bdaa2d6f0c" /><br>`1`: <img width=25% height=25% alt="great" src="https://github.com/user-attachments/assets/ccf333a7-795d-43ad-8002-a9d2220e18a6" /><br>`2`: <img width=25% height=25% alt="good" src="https://github.com/user-attachments/assets/9d0a26bb-c8e7-47d0-9a3d-717b4ad0e0fa" /><br>`3`: <img width=25% height=25% alt="bad" src="https://github.com/user-attachments/assets/5b757195-8bd4-4beb-9f77-808000f1d865" /><br>`4`: <img width=25% height=25% alt="miss" src="https://github.com/user-attachments/assets/734ead15-491b-4bdb-9017-f2b30ab32223" /><br>`5`: <img width=25% height=25% alt="auto" src="https://github.com/user-attachments/assets/b9d674cf-1b69-478e-b2be-53691109b12d" /> 	|    0    	| 0 ~ 5 	|
+| **アニメ**  	| `track1` 	| 判定のアニメーションを切り替える                                                    	|    1    	| 0 ~ 1 	|
