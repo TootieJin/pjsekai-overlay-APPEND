@@ -125,6 +125,51 @@ PJSekai-style video creation tool:
    - **For iPad users:** `main_en_4-3_1440x1080.exo`
 8. Once finished, export your video as mp4: `File > Export with plugins > Adv. x264 Export(GUI) Ex`
    - For easier use, you can download [easymp4](https://aoytsk.blog.jp/aviutl/easymp4.zip) and import the file to the `Plugins` folder
+
+## UI Customization Options
+### Root@pjsekai-overlay-en
+<img width="383" height="79" alt="image" src="https://github.com/user-attachments/assets/76da6c77-f6a7-4480-b279-b5d53f3e583f" />
+
+| **Name**      	|   Type   	| Description                                                                                                	| Default 	|        Range       	|
+|---------------	|:--------:	|------------------------------------------------------------------------------------------------------------	|:-------:	|:------------------:	|
+| **Offset**    	| `track0` 	| Number of frames to shift events<br>- Increase to shift timing later<br>- Decrease to shift timing earlier 	|  216.0  	| -99999.9 ~ 99999.9 	|
+| **Cache**     	| `track1` 	| When cache is set to 0, any change in the `data.ped` is observed immediately                               	|    1    	|        0 ~ 1       	|
+| **Font type** 	| `track2` 	| Set font type configuration for the watermark text<br>(`0` - メイリオ, `1` - RodinNTLG EB)                 	|    0    	|        0 ~ 1       	|
+| **Watermark** 	| `check0` 	| Enable watermark text at the bottom-left corner                                                            	|   true  	|          X         	|
+
+### Life@pjsekai-overlay-en
+<img width="125" height="125" alt="LifeUP" src="https://github.com/user-attachments/assets/6f7a7db8-50bb-43cf-9463-5f46325c862e" /> <img width=50% height=50% alt="life" src="https://github.com/user-attachments/assets/7aab3534-66cf-4dad-936e-3d423ecce615" />
+
+| **Name** 	|   Type   	| Description                                                                         	| Default 	|   Range  	|
+|----------	|:--------:	|-------------------------------------------------------------------------------------	|:-------:	|:--------:	|
+| **LIFE** 	| `track0` 	| LIFE value (self-explanatory)<br>- When value changes, the LIFE bar changes as well 	|   1000  	| 0 ~ 2000 	|
+
+### Score@pjsekai-overlay-en
+<img width="125" height="125" alt="ScoreUP" src="https://github.com/user-attachments/assets/a5a8b0f0-035c-4951-8ae3-d2038945d86c" /> <img width=50% height=50% alt="bg" src="https://github.com/user-attachments/assets/3db93b3e-2280-46e1-a08f-00e50a5e5e8c" />
+
+| **Name**             	|   Type   	| Description                                    	| Default 	|  Range 	|
+|----------------------	|:--------:	|------------------------------------------------	|:-------:	|:------:	|
+| **Animation**        	| `track0` 	| Toggle animation for the added score           	|    1    	|  0 ~ 1 	|
+| **Min Digit**        	| `track1` 	| Render the minimum amount of digits in score   	|    8    	| 1 ~ 17 	|
+| **Animated Scoring** 	| `check0` 	| Increase incrementally rather than all at once 	|  false  	|    X   	|
+
+### Combo@pjsekai-overlay-en
+<img width="148" height="49" alt="pt" src="https://github.com/user-attachments/assets/9db50558-cf81-4ed8-a2bd-1d4bbd22e156" /> <img width="145" height="45" alt="nt" src="https://github.com/user-attachments/assets/3ca0f65e-8ce6-40c9-8ff4-53a8ee9d2f81" />
+
+| **Name**                          	|   Type   	| Description                            	| Default 	| Range 	|
+|-----------------------------------	|:--------:	|----------------------------------------	|:-------:	|:-----:	|
+| **AP Combo**                      	| `track0` 	| Toggle AP Combo status                 	|    1    	| 0 ~ 1 	|
+| **Combo Tag**                     	| `track1` 	| Toggle rendering combo tag             	|    1    	| 0 ~ 1 	|
+| **Animation**                     	| `track2` 	| Toggle animation for the combo numbers 	|    1    	| 0 ~ 1 	|
+| **Render only the last 4 digits** 	| `check0` 	| 12345 -> /2345                         	|   true  	|   X   	|
+
+### Judgement@pjsekai-overlay-en
+<img width="125" height="125" alt="SkillUP" src="https://github.com/user-attachments/assets/e29f426d-71ae-4de5-912a-a5c7375f538d" />
+
+| **Name**       	|   Type   	| Description                                                                   	| Default 	| Range 	|
+|----------------	|:--------:	|-------------------------------------------------------------------------------	|:-------:	|:-----:	|
+| **Judge Type** 	| `track0` 	| `0`: <img width=25% height=25% alt="perfect" src="https://github.com/user-attachments/assets/28950e9e-0dac-49d9-81d3-70bdaa2d6f0c" /><br>`1`: <img width=25% height=25% alt="great" src="https://github.com/user-attachments/assets/ccf333a7-795d-43ad-8002-a9d2220e18a6" /><br>`2`: <img width=25% height=25% alt="good" src="https://github.com/user-attachments/assets/9d0a26bb-c8e7-47d0-9a3d-717b4ad0e0fa" /><br>`3`: <img width=25% height=25% alt="bad" src="https://github.com/user-attachments/assets/5b757195-8bd4-4beb-9f77-808000f1d865" /><br>`4`: <img width=25% height=25% alt="miss" src="https://github.com/user-attachments/assets/734ead15-491b-4bdb-9017-f2b30ab32223" /><br>`5`: <img width=25% height=25% alt="auto" src="https://github.com/user-attachments/assets/b9d674cf-1b69-478e-b2be-53691109b12d" /> 	|    0    	| 0 ~ 5 	|
+| **Animation**  	| `track1` 	| Toggle judgement animation                                                    	|    1    	| 0 ~ 1 	|
 ---------------------------------------------------------------------------------------
 
 # pjsekai-overlay-APPEND / フォークプロセカ風動画作成補助ツール (日本語)
