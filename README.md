@@ -65,7 +65,7 @@ PJSekai-style video creation tool:
 
 > [!NOTE]
 > **(optional)** You can remove watermark by check/unchecking `Watermark` in the `Root@pjsekai-overlay-en` element.\
-> <img width=50% height=50% alt="image" src="https://github.com/user-attachments/assets/48a636da-8ec0-443b-9cf4-b73fd93c47df" />
+> <img width=80% height=80% alt="image" src="https://github.com/user-attachments/assets/48a636da-8ec0-443b-9cf4-b73fd93c47df" />
 
 ## Requirements
 
@@ -216,7 +216,7 @@ PJSekai-style video creation tool:
 
 > [!NOTE]
 > **(任意)** `設定@pjsekai-overlay`要素でチェック/チェックを外すことで、`透かし`を消すことができます。\
-> <img width=50% height=50% alt="image" src="https://github.com/user-attachments/assets/05cc6e7d-0e62-4729-a4df-c8d8634b0a10" />
+> <img width=80% height=80% alt="image" src="https://github.com/user-attachments/assets/05cc6e7d-0e62-4729-a4df-c8d8634b0a10" />
 
 ## 必須事項
 
