@@ -7,7 +7,7 @@ Fork of [pjsekai-overlay](https://github.com/sevenc-nanashi/pjsekai-overlay) by 
 
 > [!CAUTION]
 > **For English users:** This tool is primary only for people with technical know-how and basic knowledge of AviUtl.\
-> Only use this tool if you can figure it out yourself. **DO NOT open issues, DM me, or request help about this**.\
+> Only use this tool if you can figure it out yourself. **DO NOT open issues, DM me, or request help about this**.
 > 
 > *Also, to a certain someone with the mindset of `"Just switch to a different editing software since I don’t even know how to install aviutl"`: I suggest you **make your own pjsekai-overlay that supports your desired editing software.** (if you can even find a video editor that is as versatile and extensible as AviUtl, that is).*
 
@@ -129,7 +129,7 @@ PJSekai-style video creation tool:
 
 ## UI Customization Specifications
 > [!TIP]
-> You can change default values in `default.ini`, **reducing the need to change values in AviUtl.**\
+> You can change default values in `default.ini`, **reducing the need to change values in AviUtl.**
 > 
 > <img width=70% height=70% alt="image" src="https://github.com/user-attachments/assets/bd2151ad-2045-46ef-96c2-cbbb426a68d9" />
 
@@ -256,7 +256,7 @@ PJSekai-style video creation tool:
 ## 利用方法
 0. AviUtlをインストールする(**強く推奨：** [AviUtl インストーラースクリプト](https://github.com/menndouyukkuri/aviutl-installer-script))
 1. 右のReleasesから最新のバージョンのzipを[ダウンロード](https://github.com/TootieJin/pjsekai-overlay-APPEND/releases/latest/)する
-   - - **(任意)** 必須ではないアセットを使用する場合は、`extra-assets.zip` をダウンロードできます。
+   - **(任意)** 必須ではないアセットを使用する場合は、`extra-assets.zip` をダウンロードできます。
 3. zip を解凍する
 4. `aviutl.exe`ファイルの場所へ移動し、ここに新しいフォルダ`script`を作成する
 ```
@@ -293,7 +293,7 @@ PJSekai-style video creation tool:
 
 ## UIカスタマイズ仕様書
 > [!TIP]
-> `default.ini`でデフォルト値を変更できます。**これによりAviUtlで値を変更する必要が軽減されます。**\
+> `default.ini`でデフォルト値を変更できます。**これによりAviUtlで値を変更する必要が軽減されます。**
 > 
 > <img width=70% height=70% alt="image" src="https://github.com/user-attachments/assets/bd2151ad-2045-46ef-96c2-cbbb426a68d9" />
 
