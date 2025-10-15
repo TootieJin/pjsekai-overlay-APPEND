@@ -157,7 +157,7 @@ PJSekai-style video creation tool:
 | **Name**             	|   Type   	| Description                                    	| Default 	|  Range 	|
 |----------------------	|:--------:	|------------------------------------------------	|:-------:	|:------:	|
 | **Min Digit**<br>`min_digit`        	| `track0` 	| Render the minimum amount of digits in score   	|    8    	| 1 ~ 17 	|
-| **Animated Scoring**<br>`anim_score` 	| `check0` 	| Increase incrementally rather than all at once 	|  false  	|    X   	|
+| **Animated Scoring**<br>`anim_score` 	| `check0` 	| Increase incrementally rather than all at once 	|  0(OFF)  	|    X   	|
 | **Animation Speed**<br>`speed`   | `dialog` 	| Adjust animation speed                       	   |   1.00     |    X 	   |
 
 ### Combo@pjsekai-overlay-en
@@ -321,7 +321,7 @@ PJSekai-style video creation tool:
 | **名前**         |   タイプ       | 説明                                                                                                    | デフォルト     |        範囲           |
 |----------------------	|:--------:	|------------------------------------------------	|:-------:	|:------:	|
 | **最小桁数**<br>`min_digit`        	| `track0` 	| スコアの桁数を最小限に表示する   	|    8    	| 1 ~ 17 	|
-| **アニメーション採点**<br>`anim_score` 	| `check0` 	| 一気にではなく、段階的に増やす 	|  false  	|    X   	|
+| **アニメーション採点**<br>`anim_score` 	| `check0` 	| 一気にではなく、段階的に増やす 	|  0(OFF)  	|    X   	|
 | **アニメーション速度**<br>`speed`	| `dialog` 	| アニメーション速度を調整する 	|    1.00    	|   X 	|
 
 ### コンボ@pjsekai-overlay
