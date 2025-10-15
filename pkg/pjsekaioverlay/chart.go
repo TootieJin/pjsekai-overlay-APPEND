@@ -46,7 +46,7 @@ func DetectLocalChartSource() (Source, error) {
 	source := Source{
 		Id:     "local_server",
 		Name:   "Local Server (ScoreSync)",
-		Color:  0x00afc7,
+		Color:  0xa9cd6a,
 		Host:   "localhost:3939",
 		Status: 0,
 	}

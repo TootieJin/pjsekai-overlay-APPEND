@@ -57,7 +57,7 @@ var rawBaseExoENv1 []byte
 //go:embed v1-skin_en_4-3_1440x1080.exo
 var rawBaseExoEN43v1 []byte
 
-func WriteExoFiles(assets string, destDir string, title string, description []string, descriptionv1 []string, difficulty string, extra string, exFile string, exFileOpacity string, ap string) error {
+func WriteExoFiles(assets string, destDir string, title string, description []string, descriptionv1 []string, difficulty string, extra string, exFile string, exFileOpacity string, mappingExo []string) error {
 	baseExoJP := string(rawBaseExoJP)
 	baseExoJP43 := string(rawBaseExoJP43)
 	baseExoEN := string(rawBaseExoEN)
@@ -78,7 +78,26 @@ func WriteExoFiles(assets string, destDir string, title string, description []st
 		"{image:tournament}", exFile,
 		"{opacity}", exFileOpacity,
 		"{difficulty}", strings.ToLower(difficulty),
-		"{ap}", ap,
+		// Root
+		"{offset}", mappingExo[0], // track0
+		"{cache}", mappingExo[1], // track1
+		"{font_type}", mappingExo[2], // track2
+		"{watermark}", mappingExo[3], // check0
+		// Life
+		"{life}", mappingExo[4], // track0
+		"{overflow}", mappingExo[5], // check0
+		// Score
+		"{min_digit}", mappingExo[6], // track0
+		"{anim_score}", mappingExo[7], // check0
+		"{score_speed}", mappingExo[8], // dialog: speed=
+		// Combo
+		"{ap}", mappingExo[9], // track0
+		"{tag}", mappingExo[10], // track1
+		"{last_digit}", mappingExo[11], // dialog: digits=
+		"{combo_speed}", mappingExo[12], // dialog: speed=
+		// Judgement
+		"{judge}", mappingExo[13], // track0
+		"{judge_speed}", mappingExo[14], // dialog: speed=
 	}
 
 	mappingv1 := []string{
@@ -92,7 +111,23 @@ func WriteExoFiles(assets string, destDir string, title string, description []st
 		"{image:tournament}", exFile,
 		"{opacity}", exFileOpacity,
 		"{difficulty}", strings.ToLower(difficulty),
-		"{ap}", ap,
+		// Root
+		"{offset}", mappingExo[0], // track0
+		"{cache}", mappingExo[1], // track1
+		"{font_type}", mappingExo[2], // track2
+		"{watermark}", mappingExo[3], // check0
+		// Score
+		"{min_digit}", mappingExo[6], // track0
+		"{anim_score}", mappingExo[7], // check0
+		"{score_speed}", mappingExo[8], // dialog: speed=
+		// Combo
+		"{ap}", mappingExo[9], // track0
+		"{tag}", mappingExo[10], // track1
+		"{last_digit}", mappingExo[11], // dialog: digits=
+		"{combo_speed}", mappingExo[12], // dialog: speed=
+		// Judgement
+		"{judge}", mappingExo[13], // track0
+		"{judge_speed}", mappingExo[14], // dialog: speed=
 	}
 	for i := range mapping {
 		if i%2 == 0 {
@@ -119,16 +154,16 @@ func WriteExoFiles(assets string, destDir string, title string, description []st
 		if i%2 == 0 {
 			continue
 		}
-		if !strings.Contains(baseExoJPv1, mapping[i-1]) {
+		if !strings.Contains(baseExoJPv1, mappingv1[i-1]) {
 			panic(fmt.Sprintf("exoファイルの生成に失敗しました (Failed to generate v1 exo file) [Missing: %s]", mappingv1[i-1]))
 		}
-		if !strings.Contains(baseExoJP43v1, mapping[i-1]) {
+		if !strings.Contains(baseExoJP43v1, mappingv1[i-1]) {
 			panic(fmt.Sprintf("exoファイルの生成に失敗しました (Failed to generate v1 exo file) [Missing: %s]", mappingv1[i-1]))
 		}
-		if !strings.Contains(baseExoENv1, mapping[i-1]) {
+		if !strings.Contains(baseExoENv1, mappingv1[i-1]) {
 			panic(fmt.Sprintf("exoファイルの生成に失敗しました (Failed to generate v1 exo file) [Missing: %s]", mappingv1[i-1]))
 		}
-		if !strings.Contains(baseExoEN43v1, mapping[i-1]) {
+		if !strings.Contains(baseExoEN43v1, mappingv1[i-1]) {
 			panic(fmt.Sprintf("exoファイルの生成に失敗しました (Failed to generate v1 exo file) [Missing: %s]", mappingv1[i-1]))
 		}
 		baseExoJPv1 = strings.ReplaceAll(baseExoJPv1, mappingv1[i-1], mappingv1[i])

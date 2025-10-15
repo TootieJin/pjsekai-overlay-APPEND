@@ -5,6 +5,7 @@ import (
 	"context"
 	"flag"
 	"fmt"
+	"io"
 	"math"
 	"os"
 	"path/filepath"
@@ -17,20 +18,22 @@ import (
 	"github.com/google/go-github/v57/github"
 	"github.com/srinathh/gokilo/rawmode"
 	"golang.org/x/sys/windows"
+	"golang.org/x/text/encoding/japanese"
+	"golang.org/x/text/transform"
 )
 
-func checkUpdate() []string {
+func checkUpdate() (string, string) {
 	githubClient := github.NewClient(nil)
 	release, _, err := githubClient.Repositories.GetLatestRelease(context.Background(), "TootieJin", "pjsekai-overlay-APPEND")
 	if err != nil {
-		return nil
+		return "", ""
 	}
 
 	latestVersion := strings.TrimPrefix(release.GetTagName(), "v")
 	if latestVersion == pjsekaioverlay.Version || pjsekaioverlay.Version == "0.0.0" {
-		return nil
+		return "", ""
 	}
-	return []string{latestVersion, release.GetHTMLURL()}
+	return latestVersion, release.GetHTMLURL()
 }
 
 func checkSubstrings(str []string, subs ...string) string {
@@ -46,6 +49,9 @@ func checkSubstrings(str []string, subs ...string) string {
 
 func origMain(isOptionSpecified bool) {
 	Title()
+
+	var skipAviutlModConfig bool
+	flag.BoolVar(&skipAviutlModConfig, "no-aviutl-mod-config", false, "AviUtlの設定変更はスキップされます。(AviUtl configurations modifications is skipped.)")
 
 	var skipAviutlInstall bool
 	flag.BoolVar(&skipAviutlInstall, "no-aviutl-install", false, "AviUtlオブジェクトのインストールをスキップします。(AviUtl object installation is skipped.)")
@@ -75,22 +81,32 @@ func origMain(isOptionSpecified bool) {
 
 	flag.Parse()
 
-	if checkUpdate() != nil {
-		fmt.Printf(color.HiCyanString("新しいバージョンがリリースされています\nNew version released: v%s -> v%s\n"), pjsekaioverlay.Version, checkUpdate()[0])
-		fmt.Printf(color.HiCyanString("ダウンロード (Download Here) -> %s\n"), checkUpdate()[1])
+	latestVer, releaseURL := checkUpdate()
+	if latestVer != "" {
+		fmt.Printf(color.HiCyanString("新しいバージョンがリリースされています\nNew version released: v%s -> v%s\n"), pjsekaioverlay.Version, latestVer)
+		fmt.Printf(color.HiCyanString("ダウンロード (Download Here) -> %s\n"), releaseURL)
 		fmt.Println(color.RedString("\nFAIL: pjsekai-overlay-APPENDを最新バージョンに更新してください。\nUpdate pjsekai-overlay-APPEND to the latest version."))
 		return
 	}
 
+	aviutlPath, _ := pjsekaioverlay.DetectAviUtl() // aviutl2 soon?
+
+	if !skipAviutlModConfig {
+		success := pjsekaioverlay.ModifyAviUtlConfig(aviutlPath)
+		if success {
+			fmt.Println(color.GreenString("AviUtlの設定変更が正常に完了しました。(AviUtl configurations successfully modified.)"))
+		}
+	}
+
 	if !skipAviutlInstall {
-		success := pjsekaioverlay.TryInstallObject()
+		success := pjsekaioverlay.TryInstallObject(aviutlPath)
 		if success {
 			fmt.Println(color.GreenString("AviUtlオブジェクトのインストールに成功しました。(AviUtl object successfully installed.)"))
 		}
 	}
 
 	if !skipAviutlScriptInstall {
-		success := pjsekaioverlay.TryInstallScript()
+		success := pjsekaioverlay.TryInstallScript(aviutlPath)
 		if success {
 			fmt.Println(color.GreenString("AviUtl依存関係スクリプトのインストールに成功しました。(AviUtl dependency scripts successfully installed.)"))
 		}
@@ -199,8 +215,13 @@ func origMain(isOptionSpecified bool) {
 		return
 	}
 
-	formattedOutDir := filepath.Join(cwd, strings.Replace(outDir, "_chartId_", chartId, -1))
-	fmt.Printf("- 出力先ディレクトリ (Output path): %s\n", color.CyanString(filepath.Dir(formattedOutDir)+"\\"+chartId))
+	formattedOutDir := filepath.Join(cwd, strings.ReplaceAll(outDir, "_chartId_", chartId+" ("+chart.Title+")"))
+	resultDir := filepath.Dir(formattedOutDir) + "\\" + chartId + " (" + chart.Title + ")"
+	if _, err := io.ReadAll(transform.NewReader(strings.NewReader(formattedOutDir), japanese.ShiftJIS.NewEncoder())); err != nil {
+		formattedOutDir = filepath.Join(cwd, strings.ReplaceAll(outDir, "_chartId_", chartId))
+		resultDir = filepath.Dir(formattedOutDir) + "\\" + chartId
+	}
+	fmt.Printf("- 出力先ディレクトリ (Output path): %s\n", color.CyanString(resultDir))
 
 	fmt.Print("- ジャケットをダウンロード中 (Downloading jacket)... ")
 	err = pjsekaioverlay.DownloadCover(chartSource, chart, formattedOutDir)
@@ -333,23 +354,6 @@ func origMain(isOptionSpecified bool) {
 		}
 	}
 
-	if !isOptionSpecified {
-		fmt.Print("\nコンボのAP表示を有効にしますか？（これは後でAviUtlで変更できます）[y/n]\nEnable AP indicator for combo? (You can change this later in AviUtl) [y/n]\n> ")
-		before, _ := rawmode.Enable()
-		tmpEnableComboApByte, _ := bufio.NewReader(os.Stdin).ReadByte()
-		tmpEnableComboAp := string(tmpEnableComboApByte)
-		rawmode.Restore(before)
-
-		if tmpEnableComboAp == "Y" || tmpEnableComboAp == "y" {
-			apCombo = true
-			fmt.Printf("\n\033[A\033[2K\r> %s\n", color.GreenString(tmpEnableComboAp))
-			fmt.Println(color.GreenString("TOGGLE: ON"))
-		} else {
-			apCombo = false
-			fmt.Printf("\n\033[A\033[2K\r> %s\n", color.RedString(tmpEnableComboAp))
-			fmt.Println(color.RedString("TOGGLE: OFF"))
-		}
-	}
 	executableDir := filepath.Dir(executablePath)
 	assets := filepath.Join(executableDir, "assets")
 
@@ -397,25 +401,23 @@ func origMain(isOptionSpecified bool) {
 
 	description := []string{fmt.Sprintf("作詞：-    作曲：%s    編曲：-", composerAndVocals[0]), fmt.Sprintf("Vo：%s    譜面作成：%s", composerAndVocals[1], charter[0])}
 	descriptionv1 := []string{fmt.Sprintf("作詞：-    作曲：%s    編曲：-", composerAndVocals[0]), fmt.Sprintf("歌：%s    譜面作成：%s", composerAndVocals[1], charter[0])}
-	extra := "[追加情報]"
+	extra := "【追加情報】"
 	exFile := "tournament-mode.png"
 	exFileOpacity := "100.0"
-	ap := "0.00"
 
 	if enUI {
 		description = []string{fmt.Sprintf("Lyrics: -    Music: %s    Arrangement: -", composerAndVocals[0]), fmt.Sprintf("Vo: %s    Chart Design: %s", composerAndVocals[1], charter[0])}
 		descriptionv1 = []string{fmt.Sprintf("Lyrics: -    Music: %s    Arrangement: -", composerAndVocals[0]), fmt.Sprintf("Vocals: %s    Chart Design: %s", composerAndVocals[1], charter[0])}
-		extra = "[Additional Info]"
+		extra = "【Additional Info】"
 		exFile = "tournament-mode-en.png"
 	}
 	if scoreMode == 2 {
 		exFileOpacity = "0.0"
 	}
-	if apCombo {
-		ap = "1.00"
-	}
 
-	err = pjsekaioverlay.WriteExoFiles(assets, formattedOutDir, chart.Title, description, descriptionv1, difficulty, extra, exFile, exFileOpacity, ap)
+	mapping := pjsekaioverlay.SetOverlayDefault()
+
+	err = pjsekaioverlay.WriteExoFiles(assets, formattedOutDir, chart.Title, description, descriptionv1, difficulty, extra, exFile, exFileOpacity, mapping)
 
 	if err != nil {
 		fmt.Println(color.RedString(fmt.Sprintf("FAIL: %s", err.Error())))
@@ -425,7 +427,7 @@ func origMain(isOptionSpecified bool) {
 	fmt.Println(color.GreenString("OK"))
 
 	fmt.Println(color.GreenString("\n全ての処理が完了しました。READMEの規約を確認した上で、exoファイルをAviUtlにインポートして下さい。\nExecution complete! Please import the exo file into AviUtl after reviewing the README Terms of Use."))
-	fmt.Printf("%s\n", color.GreenString("- 出力先ディレクトリ (Output path): "+filepath.Dir(formattedOutDir)+"\\"+chartId))
+	fmt.Printf("%s\n", color.GreenString("- 出力先ディレクトリ (Output path): "+resultDir))
 }
 
 func main() {

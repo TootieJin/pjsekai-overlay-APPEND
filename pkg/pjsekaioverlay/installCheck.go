@@ -1,10 +1,12 @@
 package pjsekaioverlay
 
 import (
+	"bufio"
 	_ "embed"
 	"io"
 	"os"
 	"path/filepath"
+	"strconv"
 	"strings"
 
 	wapi "github.com/iamacarpet/go-win64api"
@@ -26,19 +28,27 @@ var sekaiObjv1 []byte
 //go:embed sekai-v1-en.obj
 var sekaiObjEnv1 []byte
 
-func TryInstallObject() bool {
+func DetectAviUtl() (string, *so.Process) {
 	processes, _ := wapi.ProcessList()
 	var aviutlProcess *so.Process
 	for _, process := range processes {
-		if (process.Executable == "aviutl.exe") != (process.Executable == "aviutl2.exe") {
+		if process.Executable == "aviutl.exe" || process.Executable == "aviutl2.exe" {
 			aviutlProcess = &process
 			break
 		}
 	}
 	if aviutlProcess == nil {
+		return "", nil
+	}
+	return filepath.Dir(aviutlProcess.Fullpath), aviutlProcess
+}
+
+func TryInstallObject(aviutlPath string) bool {
+	mappingObj := SetOverlayDefault()
+	if mappingObj == nil {
 		return false
 	}
-	aviutlPath := filepath.Dir(aviutlProcess.Fullpath)
+
 	var exeditRoot string
 	if _, err := os.Stat(filepath.Join(aviutlPath, "exedit.auf")); err == nil {
 		exeditRoot = filepath.Join(aviutlPath)
@@ -129,6 +139,26 @@ func TryInstallObject() bool {
 		"\r", "\r\n",
 		"\n", "\r\n",
 		"{version}", Version,
+		// Root
+		"{offset}", mappingObj[0],
+		"{cache}", mappingObj[1],
+		"{font_type}", mappingObj[2],
+		"{watermark}", mappingObj[3],
+		// Life
+		"{life}", mappingObj[4],
+		"{overflow}", mappingObj[5],
+		// Score
+		"{min_digit}", mappingObj[6],
+		"{anim_score}", mappingObj[7],
+		"{score_speed}", mappingObj[8],
+		// Combo
+		"{ap}", mappingObj[9],
+		"{tag}", mappingObj[10],
+		"{last_digit}", mappingObj[11],
+		"{combo_speed}", mappingObj[12],
+		// Judgement
+		"{judge}", mappingObj[13],
+		"{judge_speed}", mappingObj[14],
 	).Replace(string(sekaiObj))).WriteTo(sekaiObjWriter)
 
 	strings.NewReader(strings.NewReplacer(
@@ -136,6 +166,26 @@ func TryInstallObject() bool {
 		"\r", "\r\n",
 		"\n", "\r\n",
 		"{version}", Version,
+		// Root
+		"{offset}", mappingObj[0],
+		"{cache}", mappingObj[1],
+		"{font_type}", mappingObj[2],
+		"{watermark}", mappingObj[3],
+		// Life
+		"{life}", mappingObj[4],
+		"{overflow}", mappingObj[5],
+		// Score
+		"{min_digit}", mappingObj[6],
+		"{anim_score}", mappingObj[7],
+		"{score_speed}", mappingObj[8],
+		// Combo
+		"{ap}", mappingObj[9],
+		"{tag}", mappingObj[10],
+		"{last_digit}", mappingObj[11],
+		"{combo_speed}", mappingObj[12],
+		// Judgement
+		"{judge}", mappingObj[13],
+		"{judge_speed}", mappingObj[14],
 	).Replace(string(sekaiObjEn))).WriteTo(sekaiObjWriterEn)
 
 	strings.NewReader(strings.NewReplacer(
@@ -143,6 +193,23 @@ func TryInstallObject() bool {
 		"\r", "\r\n",
 		"\n", "\r\n",
 		"{version}", Version,
+		// Root
+		"{offset}", mappingObj[0],
+		"{cache}", mappingObj[1],
+		"{font_type}", mappingObj[2],
+		"{watermark}", mappingObj[3],
+		// Score
+		"{min_digit}", mappingObj[6],
+		"{anim_score}", mappingObj[7],
+		"{score_speed}", mappingObj[8],
+		// Combo
+		"{ap}", mappingObj[9],
+		"{tag}", mappingObj[10],
+		"{last_digit}", mappingObj[11],
+		"{combo_speed}", mappingObj[12],
+		// Judgement
+		"{judge}", mappingObj[13],
+		"{judge_speed}", mappingObj[14],
 	).Replace(string(sekaiObjv1))).WriteTo(sekaiObjWriterv1)
 
 	strings.NewReader(strings.NewReplacer(
@@ -150,23 +217,123 @@ func TryInstallObject() bool {
 		"\r", "\r\n",
 		"\n", "\r\n",
 		"{version}", Version,
+		// Root
+		"{offset}", mappingObj[0],
+		"{cache}", mappingObj[1],
+		"{font_type}", mappingObj[2],
+		"{watermark}", mappingObj[3],
+		// Score
+		"{min_digit}", mappingObj[6],
+		"{anim_score}", mappingObj[7],
+		"{score_speed}", mappingObj[8],
+		// Combo
+		"{ap}", mappingObj[9],
+		"{tag}", mappingObj[10],
+		"{last_digit}", mappingObj[11],
+		"{combo_speed}", mappingObj[12],
+		// Judgement
+		"{judge}", mappingObj[13],
+		"{judge_speed}", mappingObj[14],
 	).Replace(string(sekaiObjEnv1))).WriteTo(sekaiObjWriterEnv1)
 	return true
 }
 
-func TryInstallScript() bool {
-	processes, _ := wapi.ProcessList()
-	var aviutlProcess *so.Process
-	for _, process := range processes {
-		if (process.Executable == "aviutl.exe") != (process.Executable == "aviutl2.exe") {
-			aviutlProcess = &process
-			break
+func SetOverlayDefault() []string {
+	execPath, err := os.Executable()
+	if err != nil {
+		panic(err)
+	}
+
+	overlayPath := filepath.Dir(execPath)
+	configFile := filepath.Join(overlayPath, "default-override.ini")
+
+	if _, err := os.Stat(configFile); os.IsNotExist(err) {
+		configFile = filepath.Join(overlayPath, "default.ini")
+	}
+
+	if _, err := os.Stat(configFile); os.IsNotExist(err) {
+		defaultContent := []byte("; 保存後、exoファイルのデフォルト値が次回のpjsekai-overlay生成時に適用されます。\n; オブジェクトファイルの変更を反映させるには、オブジェクトファイルの再インストールも可能です（AviUtlを開く > pjsekai-overlay.APPEND.exeを開く）。\n; 元のデフォルト値に戻すには、このファイルを削除し、pjsekai-overlay.APPEND.exeを再度開いてください。\n\n; After saving, default values in the exo file will be applied for the next pjsekai-overlay generation.\n; You can also reinstall object file to apply changes on obj files as well. (open AviUtl > open pjsekai-overlay.APPEND.exe)\n; To reset back to the original default value, delete this file and open pjsekai-overlay.APPEND.exe again.\n\n[設定/Root]\noffset=216.0\ncache=1\nfont_type=0\nwatermark=1\n[ライフ/Life]\nlife=1000\noverflow=0\n[スコア/Score]\nmin_dight=8\nanim_score=0\nspeed=1.00\n[コンボ/Combo]\nap=1\ntag=1\nlast_digit=4\nspeed=1.00\n[判定/Judgement]\njudge=0\nspeed=1.00")
+		err := os.WriteFile(configFile, defaultContent, 0644)
+		if err != nil {
+			return nil
 		}
 	}
-	if aviutlProcess == nil {
+
+	file, err := os.Open(configFile)
+	if err != nil {
+		return nil
+	}
+	defer file.Close()
+
+	scanner := bufio.NewScanner(file)
+	var result []string
+
+	for scanner.Scan() {
+		line := scanner.Text()
+		if strings.Contains(line, "=") {
+			parts := strings.SplitN(line, "=", 2)
+			if len(parts) != 2 {
+				continue
+			}
+			value := strings.TrimSpace(parts[1])
+			result = append(result, value)
+		}
+	}
+
+	if err := scanner.Err(); err != nil {
+		return nil
+	}
+
+	return result
+}
+
+func ModifyAviUtlConfig(aviutlPath string) bool {
+	var configFile string
+	if _, err := os.Stat(filepath.Join(aviutlPath, "aviutl.ini")); err == nil {
+		configFile = filepath.Join(aviutlPath, "aviutl.ini")
+	}
+	file, err := os.OpenFile(configFile, os.O_RDWR, 0644)
+	if err != nil {
 		return false
 	}
-	aviutlPath := filepath.Dir(aviutlProcess.Fullpath)
+	defer file.Close()
+
+	scanner := bufio.NewScanner(file)
+	lines := []string{}
+	for scanner.Scan() {
+		lines = append(lines, scanner.Text())
+	}
+	if err := scanner.Err(); err != nil {
+		return false
+	}
+
+	file.Seek(0, 0)
+	file.Truncate(0)
+
+	for _, line := range lines {
+		if strings.HasPrefix(line, "width=") {
+			if number, _ := strconv.Atoi(strings.Split(line, "=")[1]); number < 4096 {
+				line = "width=4096"
+			}
+		} else if strings.HasPrefix(line, "height=") {
+			if number, _ := strconv.Atoi(strings.Split(line, "=")[1]); number < 4096 {
+				line = "height=4096"
+			}
+		} else if strings.HasPrefix(line, "max_w=") {
+			line = "max_w=0"
+		} else if strings.HasPrefix(line, "max_h=") {
+			line = "max_h=0"
+		}
+		_, err := file.WriteString(line + "\n")
+		if err != nil {
+			return false
+		}
+	}
+
+	return true
+}
+
+func TryInstallScript(aviutlPath string) bool {
 	var exeditRoot string
 	if _, err := os.Stat(filepath.Join(aviutlPath, "exedit.auf")); err == nil {
 		exeditRoot = filepath.Join(aviutlPath)
