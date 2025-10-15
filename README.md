@@ -8,6 +8,7 @@ Fork of [pjsekai-overlay](https://github.com/sevenc-nanashi/pjsekai-overlay) by 
 > [!CAUTION]
 > **For English users:** This tool is primary only for people with technical know-how and basic knowledge of AviUtl.\
 > Only use this tool if you can figure it out yourself. **DO NOT open issues, DM me, or request help about this**.\
+> 
 > *Also, to a certain someone with the mindset of `"Just switch to a different editing software since I don’t even know how to install aviutl"`: I suggest you **make your own pjsekai-overlay that supports your desired editing software.** (if you can even find a video editor that is as versatile and extensible as AviUtl, that is).*
 
 - **16:9**
@@ -66,6 +67,7 @@ PJSekai-style video creation tool:
 
 > [!NOTE]
 > **(optional)** You can remove watermark by check/unchecking `Watermark` in the `Root@pjsekai-overlay-en` element.\
+> 
 > <img width=80% height=80% alt="image" src="https://github.com/user-attachments/assets/48a636da-8ec0-443b-9cf4-b73fd93c47df" />
 
 ## Requirements
@@ -75,10 +77,6 @@ PJSekai-style video creation tool:
 - [Unmult](https://github.com/mes51/AVIUtl_Unmult)
 - **Fonts:** RodinNTLG [DB](https://en.fontworks.co.jp/fontsearch/rodinntlgpro-db/) + [EB](https://en.fontworks.co.jp/fontsearch/rodinntlgpro-eb/)
 - Basic knowledge of AviUtl
-
-*- Refer to this [English guide](https://forum.videohelp.com/threads/360967-AviUtl-video-tutorial#post2288628) for using AviUtl EN, and [setup guide (partially outdated)](https://github.com/Khronophobia/pjsekai-overlay-english/wiki) for pjsekai-overlay.*
-> [!IMPORTANT]
-> **REMEMBER TO GO TO `File > SETTINGS > SYSTEM` AND SET THE `Max resolution` TO 4000x4000 (or bigger)!!!!!!!!**
 
 ## Video Guide
 
@@ -132,7 +130,8 @@ PJSekai-style video creation tool:
 ## UI Customization Specifications
 > [!TIP]
 > You can change default values in `default.ini`, **reducing the need to change values in AviUtl.**\
-> (image)
+> 
+> <img width=70% height=70% alt="image" src="https://github.com/user-attachments/assets/bd2151ad-2045-46ef-96c2-cbbb426a68d9" />
 
 ### Root@pjsekai-overlay-en
 <img width="383" height="79" alt="image" src="https://github.com/user-attachments/assets/76da6c77-f6a7-4480-b279-b5d53f3e583f" />
@@ -150,7 +149,7 @@ PJSekai-style video creation tool:
 | **Name** 	|   Type   	| Description                                                                         	| Default 	|   Range  	|
 |----------	|:--------:	|-------------------------------------------------------------------------------------	|:-------:	|:--------:	|
 | **LIFE**<br>`life` 	| `track0` 	| LIFE value (self-explanatory)<br>- When value changes, the LIFE bar changes as well 	|   1000  	| 0 ~ 2000 	|
-| **Show overflow LIFE bar**<br>`overflow` 	| `check0` 	| (image) 	|  0(OFF)  	|    X   	|
+| **Show overflow LIFE bar**<br>`overflow` 	| `check0` 	| <img width=50% height=50% alt="life_overflow" src="https://github.com/user-attachments/assets/75ad981f-cb1d-4112-939d-8f8bf39a1222" /> 	|  0(OFF)  	|    X   	|
 
 ### Score@pjsekai-overlay-en
 <img width="125" height="125" alt="ScoreUP" src="https://github.com/user-attachments/assets/a5a8b0f0-035c-4951-8ae3-d2038945d86c" /> <img width=50% height=50% alt="bg" src="https://github.com/user-attachments/assets/3db93b3e-2280-46e1-a08f-00e50a5e5e8c" />
@@ -186,7 +185,6 @@ PJSekai-style video creation tool:
 - [@Khronophobia](https://github.com/Khronophobia) for the customized lane assets in Blender!
 - And everyone who used my tool... thank you all so much.
 
-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 # pjsekai-overlay-APPEND / フォークプロセカ風動画作成補助ツール (日本語)
@@ -232,6 +230,7 @@ PJSekai-style video creation tool:
 
 > [!NOTE]
 > **(任意)** `設定@pjsekai-overlay`要素でチェック/チェックを外すことで、`透かし`を消すことができます。\
+> 
 > <img width=80% height=80% alt="image" src="https://github.com/user-attachments/assets/05cc6e7d-0e62-4729-a4df-c8d8634b0a10" />
 
 ## 必須事項
@@ -241,9 +240,6 @@ PJSekai-style video creation tool:
 - [Unmult](https://github.com/mes51/AVIUtl_Unmult)
 - **フォント：** ロダンNTLG [DB](https://en.fontworks.co.jp/fontsearch/rodinntlgpro-db/) + [EB](https://en.fontworks.co.jp/fontsearch/rodinntlgpro-eb/)
 - AviUtlの基本的な知識
-
-> [!IMPORTANT]
-> **必ず`ファイル > 設定 > システム`に移動し、`最大画像サイズ`を4000x4000（またはそれ以上）に設定してください!!!!!!!!**
 
 ## 動画の作り方
 
@@ -298,7 +294,8 @@ PJSekai-style video creation tool:
 ## UIカスタマイズ仕様書
 > [!TIP]
 > `default.ini`でデフォルト値を変更できます。**これによりAviUtlで値を変更する必要が軽減されます。**\
-> (画像)
+> 
+> <img width=70% height=70% alt="image" src="https://github.com/user-attachments/assets/bd2151ad-2045-46ef-96c2-cbbb426a68d9" />
 
 ### 設定@pjsekai-overlay
 <img width="383" height="79" alt="image" src="https://github.com/user-attachments/assets/76da6c77-f6a7-4480-b279-b5d53f3e583f" />
@@ -316,7 +313,7 @@ PJSekai-style video creation tool:
 | **名前**         |   タイプ       | 説明                                                                                                    | デフォルト     |        範囲           |
 |----------	|:--------:	|-------------------------------------------------------------------------------------	|:-------:	|:--------:	|
 | **ライフ**<br>`life` 	| `track0` 	| LIFEの値（自明）<br>- 値が変化すると、LIFEバーも変化します 	|   1000  	| 0 ~ 2000 	|
-| **過剰なライフバー**<br>`overflow` 	| `check0` 	| (image) 	|  0(OFF)  	|    X   	|
+| **過剰なライフバー**<br>`overflow` 	| `check0` 	| <img width=50% height=50% alt="life_overflow" src="https://github.com/user-attachments/assets/75ad981f-cb1d-4112-939d-8f8bf39a1222" /> 	|  0(OFF)  	|    X   	|
 
 ### スコア@pjsekai-overlay
 <img width="125" height="125" alt="ScoreUP" src="https://github.com/user-attachments/assets/a5a8b0f0-035c-4951-8ae3-d2038945d86c" /> <img width=50% height=50% alt="bg" src="https://github.com/user-attachments/assets/3db93b3e-2280-46e1-a08f-00e50a5e5e8c" />
