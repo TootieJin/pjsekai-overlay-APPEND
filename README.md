@@ -9,7 +9,7 @@ Fork of [pjsekai-overlay](https://github.com/sevenc-nanashi/pjsekai-overlay) by 
 > **For English users:** This tool is primary only for people with technical know-how and basic knowledge of AviUtl.\
 > Only use this tool if you can figure it out yourself. **DO NOT open issues, DM me, or request help about this**.
 > 
-> *Also, to a certain someone with the mindset of `"Just switch to a different editing software since I don’t even know how to install aviutl"`: I suggest you **make your own pjsekai-overlay that supports your desired editing software.** (if you can even find a video editor that is as versatile and extensible as AviUtl, that is).*
+> *Also, to [a certain someone](https://discordid.netlify.app/?id=1370076899404939327) with the mindset of `"Just switch to a different editing software since I don’t even know how to install aviutl"` [(image source)](https://github.com/user-attachments/assets/4850442d-3f3a-438a-92d9-97d052f2fba0): I suggest you **make your own pjsekai-overlay that supports your desired editing software.** (if you can even find a video editor that is as versatile and extensible as AviUtl, that is).*
 
 - **16:9**
 
