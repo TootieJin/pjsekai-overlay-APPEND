@@ -112,7 +112,8 @@ func origMain(isOptionSpecified bool) {
 		}
 	}
 
-	Tips()
+	// TipsAPIを使用してtipsを表示（利用できない場合は従来のTips関数にフォールバック）
+	TipsAPI()
 
 	var chartId string
 	if flag.Arg(0) != "" {
