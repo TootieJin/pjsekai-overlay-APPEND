@@ -101,16 +101,16 @@ PJSekai-style video creation tool:
          ⌞script
 ```
    - *If a folder is missing, make a new folder with said name.*
-4. Open AviUtl
+4. **Install UI objects** (open AviUtl > open `pjsekai-overlay-APPEND.exe`)
    - **Note: You must open AviUtl before opening pjsekai-overlay-APPEND to install objects.**
-5. Open `pjsekai-overlay-APPEND.exe`
    - If followed correctly, you'll be able to see 3 green lines in your console:
      ```
      AviUtlの設定変更が正常に完了しました。(AviUtl configurations successfully modified.)
      AviUtlオブジェクトのインストールに成功しました。(AviUtl object successfully installed.)
      AviUtl依存関係スクリプトのインストールに成功しました。(AviUtl dependency scripts successfully installed.)
      ```
-6. Input the chart ID including the prefix.
+5. **Restart AviUtl to take effect.**
+6. In your `pjsekai-overlay-APPEND.exe` console, input the chart ID including the prefix.
    - `chcy-`: Chart Cyanvas
       - `0`: Archive ([cc.sevenc7c.com](https://cc.sevenc7c.com))
       - `1`: Offshoot server ([chart-cyanvas.com](https://chart-cyanvas.com))
@@ -265,16 +265,16 @@ PJSekai-style video creation tool:
          ⌞script
 ```
    - *フォルダがない場合は、その名前で新しいフォルダを作ってください。*
-4. AviUtl を起動する
-   - **pjsekai-overlay が起動する前に AviUtl を起動するとオブジェクトのインストールが行われます。**
-5. `pjsekai-overlay-APPEND.exe` を起動する
-   - 正しく実行すれば、コンソールに3本の緑色の線が表示されます：
+4. **UIオブジェクトのインストールする** (AviUtlを起動 > `pjsekai-overlay-APPEND.exe`を起動)
+   - **注意：pjsekai-overlay-APPENDが起動する前にAviUtlを起動するとオブジェクトのインストールが行われます。**
+   - 正しく実行されると、コンソールに3本の緑色の行が表示されます:
      ```
      AviUtlの設定変更が正常に完了しました。(AviUtl configurations successfully modified.)
      AviUtlオブジェクトのインストールに成功しました。(AviUtl object successfully installed.)
      AviUtl依存関係スクリプトのインストールに成功しました。(AviUtl dependency scripts successfully installed.)
      ```
-6. 譜面IDを接頭辞込みで入力して下さい
+5. **変更を反映させるため、AviUtlを再起動してください。**
+6. `pjsekai-overlay-APPEND.exe`コンソールで、譜面IDを接頭辞込みで入力して下さい。
    - `chcy-`: Chart Cyanvas
       - `0`: アーカイブ([cc.sevenc7c.com](https://cc.sevenc7c.com))
       - `1`: 分岐サーバー([chart-cyanvas.com](https://chart-cyanvas.com))
