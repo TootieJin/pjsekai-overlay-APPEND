@@ -259,6 +259,48 @@ func DownloadCover(source Source, level sonolus.LevelInfo, destPath string) erro
 	return nil
 }
 
+func DownloadPreview(source Source, level sonolus.LevelInfo, destPath string) error {
+	var previewUrl string
+	var err error
+
+	if source.Id == "local_server" {
+		previewUrl, err = sonolus.JoinUrl("http://"+source.Host, level.Preview.Url)
+	} else {
+		previewUrl, err = sonolus.JoinUrl("https://"+source.Host, level.Preview.Url)
+	}
+
+	if err != nil {
+		return fmt.Errorf("URLの解析に失敗しました。(URL parsing failed.) [%s]", err)
+	}
+
+	resp, err := http.Get(previewUrl)
+	if err != nil {
+		return fmt.Errorf("サーバーに接続できませんでした。(Could not connect to server.) [%s]", err)
+	}
+
+	defer resp.Body.Close()
+
+	if resp.StatusCode != 200 {
+		return fmt.Errorf("音声が見つかりませんでした。(Audio not found.) [%d]", resp.StatusCode)
+	}
+
+	var file *os.File
+	file, err = os.Create(path.Join(destPath, "preview.mp3"))
+
+	if err != nil {
+		return fmt.Errorf("ファイルの作成に失敗しました。(Failed to create file.) [%s]", err)
+	}
+
+	defer file.Close()
+
+	if file != nil {
+		if _, err := io.Copy(file, resp.Body); err != nil {
+			return fmt.Errorf("ファイルの書き込みに失敗しました。(Failed to write file.) [%s]", err)
+		}
+	}
+	return nil
+}
+
 func CopyFile(src, dst string) error {
 	in, err := os.Open(src)
 	if err != nil {
@@ -290,8 +332,8 @@ func CopyFile(src, dst string) error {
 	return nil
 }
 
-func DownloadBackground(source Source, level sonolus.LevelInfo, destPath string, chartId string) error {
-	if source.Id == "local_server" {
+func DownloadBackground(source Source, level sonolus.LevelInfo, destPath string, chartId string, arg string) error {
+	if level.UseBackground.UseDefault || source.Name == "Chart Cyanvas Archive" || source.Id == "potato_leaves" || source.Id == "local_server" || source.Id == "next_sekai" {
 		coverPath := path.Join(destPath, "cover.png")
 		if _, err := os.Stat(coverPath); os.IsNotExist(err) {
 			return fmt.Errorf("カバー画像が見つかりません。先にカバー画像をダウンロードしてください。(Jacket image not found. Download jacket image first.)")
@@ -301,17 +343,22 @@ func DownloadBackground(source Source, level sonolus.LevelInfo, destPath string,
 		if err != nil {
 			return fmt.Errorf("実行ファイルパスの取得に失敗しました。(Failed to obtain execuable path.) [%s]", err)
 		}
-		backgroundGenPath := path.Join(path.Dir(executablePath), "pjsekai-background-gen.exe")
-		outputPath := path.Join(destPath, "background.png")
+
+		backgroundGenPath := path.Join(path.Dir(executablePath), "dependencies", "pjsekai-background-gen.exe")
+
+		var outputPath string
+		if arg == "-v 1" {
+			outputPath = path.Join(destPath, "background-v1.png")
+		} else {
+			outputPath = path.Join(destPath, "background.png")
+		}
 
 		// pjsekai-background-gen.exeが存在しない場合はダウンロード
 		if _, err := os.Stat(backgroundGenPath); os.IsNotExist(err) {
-			fmt.Printf("背景生成ツールが見つかりません。ダウンロード中... (Background generator not found. Downloading...)\n")
 			err = DownloadBackgroundGenerator(backgroundGenPath)
 			if err != nil {
 				return fmt.Errorf("背景生成ツールのダウンロードに失敗しました。(Failed to download background generator.) [%s]", err)
 			}
-			fmt.Printf("背景生成ツールのダウンロードが完了しました。(Background generator downloaded successfully.)\n")
 		}
 
 		absBackgroundGenPath, err := filepath.Abs(backgroundGenPath)
@@ -324,13 +371,10 @@ func DownloadBackground(source Source, level sonolus.LevelInfo, destPath string,
 			return fmt.Errorf("カバー画像のパス解決に失敗しました。(Failed to resolve path for jacket image.) [%s]", err)
 		}
 
-		fmt.Printf("Debug: カバー画像を使用して背景を生成 (Generating background with jacket image): %s\n", absCoverPath)
-
-		cmd := exec.Command(absBackgroundGenPath, absCoverPath)
+		cmd := exec.Command(absBackgroundGenPath, absCoverPath, arg)
 		output, err := cmd.CombinedOutput()
-
 		if err != nil {
-			return fmt.Errorf("背景生成に失敗しました。(Failed to generate background.) [%s] 出力/Output: %s", err, string(output))
+			return fmt.Errorf("背景生成に失敗しました。(Failed to generate background.) [%s] \n出力/Output: \n%s\n コマンド/Command: %s", err, string(output), cmd)
 		}
 
 		generatedBackgroundPath := path.Join(destPath, "cover.output.png")
@@ -351,18 +395,8 @@ func DownloadBackground(source Source, level sonolus.LevelInfo, destPath string,
 		if err != nil {
 			return fmt.Errorf("背景ファイルのリネームに失敗しました。(Failed to rename background file.) [%s]", err)
 		}
-
-		fmt.Printf("Debug: 背景生成完了(Background generated): %s\n", outputPath)
 	} else {
-		var backgroundUrl string
-		var err error
-		useDefault := level.UseBackground.UseDefault
-
-		if useDefault {
-			backgroundUrl, err = sonolus.JoinUrl("https://"+source.Host, level.Engine.Background.Image.Url)
-		} else {
-			backgroundUrl, err = sonolus.JoinUrl("https://"+source.Host, level.UseBackground.Item.Image.Url)
-		}
+		backgroundUrl, err := sonolus.JoinUrl("https://"+source.Host, level.Engine.Background.Image.Url)
 
 		if err != nil {
 			return fmt.Errorf("URLの解析に失敗しました。(URL parsing failed.) [%s]", err)
@@ -383,9 +417,6 @@ func DownloadBackground(source Source, level sonolus.LevelInfo, destPath string,
 		var filev1 *os.File
 
 		if strings.Contains(chartId, "?levelbg=default_or_v1") || strings.Contains(chartId, "?levelbg=v1") { // v1 BG (or custom)
-			filev1, err = os.Create(path.Join(destPath, "background-v1.png"))
-			file = nil
-		} else if source.Id == "potato_leaves" {
 			filev1, err = os.Create(path.Join(destPath, "background-v1.png"))
 			file = nil
 		} else {
@@ -415,7 +446,7 @@ func DownloadBackground(source Source, level sonolus.LevelInfo, destPath string,
 }
 
 func DownloadBackgroundGenerator(destPath string) error {
-	const downloadURL = "https://github.com/sevenc-nanashi/pjsekai-background-gen-rust/releases/download/v0.1.0/pjsekai-background-gen.exe"
+	const downloadURL = "https://github.com/TootieJin/pjsekai-background-gen-rust/releases/download/v0.1.0/pjsekai-background-gen.exe"
 
 	resp, err := http.Get(downloadURL)
 	if err != nil {

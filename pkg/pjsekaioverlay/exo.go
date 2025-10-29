@@ -95,9 +95,10 @@ func WriteExoFiles(assets string, destDir string, title string, description []st
 		"{tag}", mappingExo[10], // track1
 		"{last_digit}", mappingExo[11], // dialog: digits=
 		"{combo_speed}", mappingExo[12], // dialog: speed=
+		"{combo_burst}", mappingExo[13], // dialog: combo_burst=
 		// Judgement
-		"{judge}", mappingExo[13], // track0
-		"{judge_speed}", mappingExo[14], // dialog: speed=
+		"{judge}", mappingExo[14], // track0
+		"{judge_speed}", mappingExo[15], // dialog: speed=
 	}
 
 	mappingv1 := []string{
@@ -125,9 +126,10 @@ func WriteExoFiles(assets string, destDir string, title string, description []st
 		"{tag}", mappingExo[10], // track1
 		"{last_digit}", mappingExo[11], // dialog: digits=
 		"{combo_speed}", mappingExo[12], // dialog: speed=
+		"{combo_burst}", mappingExo[13], // dialog: combo_burst=
 		// Judgement
-		"{judge}", mappingExo[13], // track0
-		"{judge_speed}", mappingExo[14], // dialog: speed=
+		"{judge}", mappingExo[14], // track0
+		"{judge_speed}", mappingExo[15], // dialog: speed=
 	}
 	for i := range mapping {
 		if i%2 == 0 {

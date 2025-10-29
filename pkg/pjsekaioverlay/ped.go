@@ -194,7 +194,7 @@ func getTimeFromBpmChanges(bpmChanges []BpmChange, beat float64) float64 {
 	return ret
 }
 
-func CalculateScore(levelInfo sonolus.LevelInfo, levelData sonolus.LevelData, power float64, scoreMode int) []PedFrame {
+func CalculateScore(levelInfo sonolus.LevelInfo, levelData sonolus.LevelData, power float64, scoreMode string) []PedFrame {
 	rating := levelInfo.Rating
 	var weightedNotesCount float64 = 0
 	for _, entity := range levelData.Entities {
@@ -218,7 +218,7 @@ func CalculateScore(levelInfo sonolus.LevelInfo, levelData sonolus.LevelData, po
 	noteEntities := ([]sonolus.LevelDataEntity{})
 
 	var weightedComboFax float64
-	if scoreMode == 3 {
+	if scoreMode == "sonolus" {
 		for _, entity := range levelData.Entities {
 			weight := WEIGHT_MAP[entity.Archetype]
 			if weight == 0 {
@@ -296,9 +296,9 @@ func CalculateScore(levelInfo sonolus.LevelInfo, levelData sonolus.LevelData, po
 				levelFax * // Level fax
 				comboFax * // Combo fax
 				1) // Skill fax (Always 1)
-		case 2:
+		case "tournament":
 			score += 3
-		case 3:
+		case "sonolus":
 			score += 1000000 * (comboFax / weightedComboFax)
 		}
 
@@ -315,7 +315,7 @@ func CalculateScore(levelInfo sonolus.LevelInfo, levelData sonolus.LevelData, po
 	return frames
 }
 
-func WritePedFile(frames []PedFrame, assets string, path string, levelInfo sonolus.LevelInfo, levelData sonolus.LevelData, scoreMode int, enUI bool) error {
+func WritePedFile(frames []PedFrame, assets string, path string, levelInfo sonolus.LevelInfo, levelData sonolus.LevelData, scoreMode string, enUI bool) error {
 	file, err := os.Create(path)
 	if err != nil {
 		return fmt.Errorf("ファイルの作成に失敗しました (Failed to create file.) [%s]", err)
@@ -335,7 +335,7 @@ func WritePedFile(frames []PedFrame, assets string, path string, levelInfo sonol
 		if weight == 0 {
 			continue
 		}
-		if scoreMode == 2 {
+		if scoreMode == "tournament" {
 			weight = 3
 		}
 		weightedNotesCount += weight
@@ -390,13 +390,13 @@ func WritePedFile(frames []PedFrame, assets string, path string, levelInfo sonol
 		rankC := float64(20000 + (rating-5)*100)
 
 		switch scoreMode {
-		case 2:
+		case "tournament":
 			rankBorder = math.Floor(weightedNotesCount)
 			rankS = math.Floor(weightedNotesCount * 0.800)
 			rankA = math.Floor(weightedNotesCount * 0.666)
 			rankB = math.Floor(weightedNotesCount * 0.533)
 			rankC = math.Floor(weightedNotesCount * 0.400)
-		case 3:
+		case "sonolus":
 			rankBorder = 1000000
 			rankS = 900000
 			rankA = 750000
@@ -406,11 +406,11 @@ func WritePedFile(frames []PedFrame, assets string, path string, levelInfo sonol
 
 		// bar
 
-		rankBorderPos := 1650.0
-		rankSPos := 1478.0
-		rankAPos := 1230.0
-		rankBPos := 982.0
-		rankCPos := 734.0
+		rankBorderPos := 1650.0 / 1650
+		rankSPos := 1478.0 / 1650
+		rankAPos := 1234.0 / 1650
+		rankBPos := 990.0 / 1650
+		rankCPos := 746.0 / 1650
 
 		rankBorderPosv1 := 1.0
 		rankSPosv1 := 0.890
@@ -449,6 +449,9 @@ func WritePedFile(frames []PedFrame, assets string, path string, levelInfo sonol
 		}
 
 		time := frame.Time
+		if i%100 == 0 && i > 0 {
+			writer.Write(fmt.Appendf(nil, "c|%f:%d\n", time, i))
+		}
 		if i < len(frames)-1 && time == frames[i+1].Time {
 			continue
 		}
@@ -456,7 +459,7 @@ func WritePedFile(frames []PedFrame, assets string, path string, levelInfo sonol
 			time = frames[i-1].Time + 0.000001
 		}
 
-		writer.Write(fmt.Appendf(nil, "s|%f:%.0f:%.0f:%.0f:%.0f:%f:%f:%s:%d\n", time, score2, score, frameScore2, frameScore, scoreX/1650, scoreXv1, rank, i))
+		writer.Write(fmt.Appendf(nil, "s|%f:%.0f:%.0f:%.0f:%.0f:%f:%f:%s:%d\n", time, score2, score, frameScore2, frameScore, scoreX, scoreXv1, rank, i))
 	}
 
 	return nil

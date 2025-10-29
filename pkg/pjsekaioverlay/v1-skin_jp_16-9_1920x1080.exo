@@ -592,7 +592,7 @@ check0=0
 type=0
 filter=0
 name=コンボ@pjsekai-overlay-v1
-param=last_digit={last_digit};speed={combo_speed}
+param=last_digit={last_digit};speed={combo_speed};combo_burst={combo_burst}
 [26.1]
 _name=標準描画
 X=684.0

@@ -62,8 +62,11 @@ func origMain(isOptionSpecified bool) {
 	var outDir string
 	flag.StringVar(&outDir, "out-dir", "./dist/_chartId_", "出力先ディレクトリを指定します。_chartId_ は譜面IDに置き換えられます。\nEnter the output path. _chartId_ will be replaced with the chart ID.")
 
-	var scoreMode int
-	flag.IntVar(&scoreMode, "score-mode", 1, "採点モードを指定します。(Specify scoring mode.)")
+	var customBG bool
+	flag.BoolVar(&customBG, "custom-bg", false, "UntitledChartsでカスタム背景を使用する。(Use custom background in UntitledCharts.)")
+
+	var scoreMode string
+	flag.StringVar(&scoreMode, "score-mode", "default", "採点モードを指定します。(Specify scoring mode.)")
 
 	var teamPower float64
 	flag.Float64Var(&teamPower, "team-power", 250000, "総合力を指定します。(Enter the team's power.)")
@@ -126,7 +129,7 @@ func origMain(isOptionSpecified bool) {
 
 	var chartInstance []string
 	if strings.HasPrefix(chartId, "chcy-") {
-		fmt.Printf("\nChart Cyanvasインスタンスを選択してください。(Please choose Chart Cyanvas instance.)\n%s\n\n[インスタンス一覧 - List of instance(s)]\n'0': アーカイブ/Archive - cc.sevenc7c.com\n'1': 分岐サーバー/Offshoot server - chart-cyanvas.com\n> ", color.YellowString("(!) 別のインスタンスを持っていますか？URLドメインを入力してください。(Do you have a different instance? Input the URL domain.)"))
+		fmt.Printf("\nChart Cyanvasインスタンスを選択してください。(Please choose Chart Cyanvas instance.)\n%s\n\n[インスタンス一覧 - List of instance(s)]\n'0': アーカイブ/Archive - cc.sevenc7c.com\n'1': 分岐サーバー/Offshoot server - chart-cyanvas.com\n> ", color.HiYellowString("(!) 別のインスタンスを持っていますか？URLドメインを入力してください。(Do you have a different instance? Input the URL domain.)"))
 		var chartInput string
 		fmt.Scanln(&chartInput)
 		chartInput = strings.TrimPrefix(chartInput, "http://")
@@ -232,7 +235,15 @@ func origMain(isOptionSpecified bool) {
 
 	fmt.Println(color.GreenString("OK"))
 
-	customBG := false
+	fmt.Print("- 音声のプレビューをダウンロード中 (Downloading preview audio)... ")
+	err = pjsekaioverlay.DownloadPreview(chartSource, chart, formattedOutDir)
+	if err != nil {
+		fmt.Println(color.RedString(fmt.Sprintf("FAIL: %s", err.Error())))
+		return
+	}
+
+	fmt.Println(color.GreenString("OK"))
+
 	if !isOptionSpecified && chartSource.Id == "untitledcharts" {
 		fmt.Print("\nカスタム背景を使用しますか？（デフォルトを使用するには「n」）[y/n]\nUse custom background? ('n' to use default) [y/n]\n> ")
 		before, _ := rawmode.Enable()
@@ -250,33 +261,44 @@ func origMain(isOptionSpecified bool) {
 		}
 	}
 
-	fmt.Print("- 背景をダウンロード中 (Downloading background)... ")
 	if customBG {
-		err = pjsekaioverlay.DownloadBackground(chartSource, chart, formattedOutDir, chartId)
+		fmt.Print("- 背景をダウンロード中 (Downloading background)... ")
+
+		err = pjsekaioverlay.DownloadBackground(chartSource, chart, formattedOutDir, chartId, "")
 		if err != nil {
 			fmt.Println(color.RedString(fmt.Sprintf("FAIL: %s", err.Error())))
 			return
 		}
 
-		err = pjsekaioverlay.DownloadBackground(chartSource, chartUNv1def, formattedOutDir, chartId+"?levelbg=default_or_v1")
+		err = pjsekaioverlay.DownloadBackground(chartSource, chartUNv1def, formattedOutDir, chartId+"?levelbg=default_or_v1", "")
 		if err != nil {
 			fmt.Println(color.RedString(fmt.Sprintf("FAIL: %s", err.Error())))
 			return
 		}
 	} else if chartSource.Id == "untitledcharts" {
-		err = pjsekaioverlay.DownloadBackground(chartSource, chartUNv3, formattedOutDir, chartId+"?levelbg=v3")
+		fmt.Print("- 背景をダウンロード中 (Downloading background)... ")
+
+		err = pjsekaioverlay.DownloadBackground(chartSource, chartUNv3, formattedOutDir, chartId+"?levelbg=v3", "")
 		if err != nil {
 			fmt.Println(color.RedString(fmt.Sprintf("FAIL: %s", err.Error())))
 			return
 		}
 
-		err = pjsekaioverlay.DownloadBackground(chartSource, chartUNv1, formattedOutDir, chartId+"?levelbg=v1")
+		err = pjsekaioverlay.DownloadBackground(chartSource, chartUNv1, formattedOutDir, chartId+"?levelbg=v1", "")
 		if err != nil {
 			fmt.Println(color.RedString(fmt.Sprintf("FAIL: %s", err.Error())))
 			return
 		}
 	} else {
-		err = pjsekaioverlay.DownloadBackground(chartSource, chart, formattedOutDir, chartId)
+		fmt.Print("- ローカルで背景を発生中 (Generating background locally)... ")
+
+		err = pjsekaioverlay.DownloadBackground(chartSource, chart, formattedOutDir, chartId, "-v 1")
+		if err != nil {
+			fmt.Println(color.RedString(fmt.Sprintf("FAIL: %s", err.Error())))
+			return
+		}
+
+		err = pjsekaioverlay.DownloadBackground(chartSource, chart, formattedOutDir, chartId, "-v 3")
 		if err != nil {
 			fmt.Println(color.RedString(fmt.Sprintf("FAIL: %s", err.Error())))
 			return
@@ -303,16 +325,16 @@ func origMain(isOptionSpecified bool) {
 		rawmode.Restore(before)
 		switch tmpScoreMode {
 		default:
-			scoreMode = 1 // default
+			scoreMode = "default"
 		case "2":
-			scoreMode = 2 // tournament
+			scoreMode = "tournament"
 		case "3":
-			scoreMode = 3 // arcade
+			scoreMode = "sonolus"
 		}
 		fmt.Printf("\n\033[A\033[2K\r> %s\n", color.GreenString(tmpScoreMode))
 	}
 
-	if !isOptionSpecified && scoreMode == 1 {
+	if !isOptionSpecified && scoreMode == "default" {
 		fmt.Print("\n総合力を指定してください。 (Input your team power.)\n\n- 小数と科学的記数法が使える (Accepts decimals & scientific notation)\n- おすすめ (Recommended): 250000 - 300000\n- 制限 (Limit): ???\n> ")
 		var tmpTeamPower string
 		fmt.Scanln(&tmpTeamPower)
@@ -326,7 +348,7 @@ func origMain(isOptionSpecified bool) {
 		}
 
 		if teamPower >= math.Abs(1e+33) {
-			fmt.Printf("\033[A\033[2K\r> %s\n", color.YellowString(tmpTeamPower))
+			fmt.Printf("\033[A\033[2K\r> %s\n", color.HiYellowString(tmpTeamPower))
 			fmt.Println(color.HiYellowString("WARN: スコアは大きすぎると精度が落ちる可能性がある。Score may decrease precision if it's too large.\n"))
 		} else {
 			fmt.Printf("\033[A\033[2K\r> %s\n", color.GreenString(tmpTeamPower))
@@ -399,8 +421,8 @@ func origMain(isOptionSpecified bool) {
 		charter = charterTag
 	}
 
-	description := []string{fmt.Sprintf("作詞：-    作曲：%s    編曲：-", composerAndVocals[0]), fmt.Sprintf("Vo：%s    譜面作成：%s", composerAndVocals[1], charter[0])}
-	descriptionv1 := []string{fmt.Sprintf("作詞：-    作曲：%s    編曲：-", composerAndVocals[0]), fmt.Sprintf("歌：%s    譜面作成：%s", composerAndVocals[1], charter[0])}
+	description := []string{fmt.Sprintf("作詞：-    作曲：%s    編曲：-", composerAndVocals[0]), fmt.Sprintf("Vo：%s    譜面制作：%s", composerAndVocals[1], charter[0])}
+	descriptionv1 := []string{fmt.Sprintf("作詞：-    作曲：%s    編曲：-", composerAndVocals[0]), fmt.Sprintf("歌：%s    譜面制作：%s", composerAndVocals[1], charter[0])}
 	extra := "【追加情報】"
 	exFile := "tournament-mode.png"
 	exFileOpacity := "100.0"
@@ -411,7 +433,7 @@ func origMain(isOptionSpecified bool) {
 		extra = "【Additional Info】"
 		exFile = "tournament-mode-en.png"
 	}
-	if scoreMode == 2 {
+	if scoreMode == "tournament" {
 		exFileOpacity = "0.0"
 	}
 

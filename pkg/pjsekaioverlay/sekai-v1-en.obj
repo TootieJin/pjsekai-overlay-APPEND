@@ -12,6 +12,7 @@ if obj.track1 ~= 1 or not PED_DATA or PED_DATA.file ~= file then
   local time = os.clock()
   PED_DATA = {}
   PED_DATA.frames = {}
+  PED_DATA.combo = {}
   PED_DATA.path = nil
   PED_DATA.version = nil
   PED_DATA.version_status = "none"
@@ -19,6 +20,7 @@ if obj.track1 ~= 1 or not PED_DATA or PED_DATA.file ~= file then
   PED_DATA.file = file
   PED_DATA.cache_number = obj.track1
   PED_DATA.current = nil
+  PED_DATA.burst = nil
   local fp = io.open(file, "r")
   if fp then
     PED_DATA.loaded = "invalid"
@@ -34,10 +36,16 @@ if obj.track1 ~= 1 or not PED_DATA or PED_DATA.file ~= file then
             score = tonumber(nmatch[3]),
             offset2 = tonumber(nmatch[4]),
             offset = tonumber(nmatch[5]),
-            -- width = tonumber(nmatch[6]),
-            widthv1 = tonumber(nmatch[7]),
+            width = tonumber(nmatch[6]),
+            -- widthv1 = tonumber(nmatch[7]),
             rank = nmatch[8],
             combo = tonumber(nmatch[9])
+          }
+        elseif header == "c" then -- Combo
+          local nmatch = {string.match(data, "([%-0-9.]+):([%-0-9.]+)")}
+          PED_DATA.combo[#PED_DATA.combo + 1] = {
+            time = tonumber(nmatch[1]),
+            combo = tonumber(nmatch[2])
           }
         elseif header == "p" then -- Path
           PED_DATA.path = data
@@ -52,6 +60,7 @@ if obj.track1 ~= 1 or not PED_DATA or PED_DATA.file ~= file then
     debug_print("[pjsekai-overlay] Time: " .. os.clock() - time)
     debug_print("[pjsekai-overlay] Version: " .. PED_DATA.version)
     debug_print("[pjsekai-overlay] # of frames: " .. #PED_DATA.frames)
+    debug_print("[pjsekai-overlay] # of combo bursts: " .. #PED_DATA.combo)
     fp:close()
   else
     PED_DATA.loaded = "not_found"
@@ -66,15 +75,26 @@ if PED_DATA.version == "{version}" or "{version}" == "0.0.0" or "{version}" == "
     score = 0,
     offset2 = 0,
     offset = 0,
-    -- width = 0,
-    widthv1 = 0,
+    width = 0,
+    -- widthv1 = 0,
     rank = "d",
+    combo = 0,
+  }
+  PED_DATA.burst = {
+    time = 0,
     combo = 0,
   }
   for i = #PED_DATA.frames, 1, -1 do
     local score = PED_DATA.frames[i]
     if (score.time * obj.framerate) < (obj.frame - OFFSET) then
       PED_DATA.current = score
+      break
+    end
+  end
+  for i = #PED_DATA.combo, 1, -1 do
+    local combo = PED_DATA.combo[i]
+    if (combo.time * obj.framerate) < (obj.frame - OFFSET) then
+      PED_DATA.burst = combo
       break
     end
   end
@@ -118,7 +138,7 @@ else
 end
 if obj.check0 and PED_DATA.version_status == "ok" then
   if obj.track2 == 0 then
-    obj.setfont("メイリオ", 32)
+    obj.setfont("メイリオ", 100)
     obj.load(
         "text",
         "<s100,メイリオ,B>※TootieJin氏の「pjsekai-overlay-APPEND」を使用\n"..
@@ -301,7 +321,7 @@ end
 @Combo
 --track0:AP Combo,0,1,{ap},1
 --track1:Combo Tag,0,1,{tag},1
---dialog:Show the last X digit(s),last_digit={last_digit};Animation Speed,speed={combo_speed}
+--dialog:Show the last X digit(s),last_digit={last_digit};Animation Speed,speed={combo_speed};n00 Combo Burst/chk,combo_burst={combo_burst}
 
 if PED_DATA and PED_DATA.version_status == "ok" then
   local ap_alpha = (math.sin(obj.time * math.pi * 4/3) + 1) * (1 / 2)
@@ -324,10 +344,11 @@ if PED_DATA and PED_DATA.version_status == "ok" then
       obj.draw(0, -67, 0, 0.67)
     end
 
-    local combo_str
-    combo_str = tostring(PED_DATA.current.combo)
+    local combo_str = tostring(PED_DATA.current.combo)
+    local combo_burst_str = tostring(PED_DATA.burst.combo)
 
     local progress = ((obj.frame - OFFSET) - (PED_DATA.current.time * obj.framerate)) * speed
+    local progress_combo = ((obj.frame - OFFSET) - (PED_DATA.burst.time * obj.framerate)) * speed
     for i = 1, #combo_str do
       if #combo_str - last_digit < i then
         local digit = combo_str:sub(i, i)
@@ -386,6 +407,33 @@ if PED_DATA and PED_DATA.version_status == "ok" then
             end
           end
           obj.draw(shift * 72 * shift_fax, 0, 0, 0.70 * shift_fax, alpha)
+        end
+      end
+    end
+    if progress_combo < 14 and combo_burst == 1 then
+      for i = 1, #combo_burst_str do
+        if #combo_burst_str - last_digit < i then
+          local digit = combo_burst_str:sub(i, i)
+          local shift = -(#combo_burst_str / 2) + i - 0.5
+          local shift_fax_burst = 1.75 - (1.077 - (progress_combo / 14))^3
+          local alpha_burst = ((progress_combo + 6) / 20) * -1 + 1
+          if progress_combo < 1 then
+            shift_fax_burst = 1.75
+            alpha_burst = 0.7
+          end
+
+          if obj.track0 == 1 then
+            obj.load("image", PED_DATA.path.."/combo/b_"..digit..".png")
+            obj.setoption("blend", 0)
+            obj.draw(shift * 72 * shift_fax_burst, 0, 0, 0.70 * shift_fax_burst, ap_alpha * alpha_burst)
+            obj.load("image", PED_DATA.path.."/combo/p_"..digit..".png")
+          else
+            obj.load("image", PED_DATA.path.."/combo/b_"..digit..".png")
+            obj.setoption("blend", 0)
+            obj.draw(shift * 72 * shift_fax_burst, 0, 0, 0.70 * shift_fax_burst, 0)
+            obj.load("image", PED_DATA.path.."/combo/n_"..digit..".png")
+          end
+          obj.draw(shift * 72 * shift_fax_burst, 0, 0, 0.70 * shift_fax_burst, alpha_burst)
         end
       end
     end

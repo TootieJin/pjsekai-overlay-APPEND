@@ -623,7 +623,7 @@ check0=0
 type=0
 filter=0
 name=Combo@pjsekai-overlay-en-v1
-param=last_digit={last_digit};speed={combo_speed}
+param=last_digit={last_digit};speed={combo_speed};combo_burst={combo_burst}
 [27.1]
 _name=Standard drawing
 X=505.0

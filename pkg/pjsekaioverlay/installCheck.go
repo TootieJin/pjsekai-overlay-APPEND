@@ -28,6 +28,9 @@ var sekaiObjv1 []byte
 //go:embed sekai-v1-en.obj
 var sekaiObjEnv1 []byte
 
+//go:embed default.ini
+var defaultContent []byte
+
 func DetectAviUtl() (string, *so.Process) {
 	processes, _ := wapi.ProcessList()
 	var aviutlProcess *so.Process
@@ -156,9 +159,10 @@ func TryInstallObject(aviutlPath string) bool {
 		"{tag}", mappingObj[10],
 		"{last_digit}", mappingObj[11],
 		"{combo_speed}", mappingObj[12],
+		"{combo_burst}", mappingObj[13],
 		// Judgement
-		"{judge}", mappingObj[13],
-		"{judge_speed}", mappingObj[14],
+		"{judge}", mappingObj[14],
+		"{judge_speed}", mappingObj[15],
 	).Replace(string(sekaiObj))).WriteTo(sekaiObjWriter)
 
 	strings.NewReader(strings.NewReplacer(
@@ -183,9 +187,10 @@ func TryInstallObject(aviutlPath string) bool {
 		"{tag}", mappingObj[10],
 		"{last_digit}", mappingObj[11],
 		"{combo_speed}", mappingObj[12],
+		"{combo_burst}", mappingObj[13],
 		// Judgement
-		"{judge}", mappingObj[13],
-		"{judge_speed}", mappingObj[14],
+		"{judge}", mappingObj[14],
+		"{judge_speed}", mappingObj[15],
 	).Replace(string(sekaiObjEn))).WriteTo(sekaiObjWriterEn)
 
 	strings.NewReader(strings.NewReplacer(
@@ -207,9 +212,10 @@ func TryInstallObject(aviutlPath string) bool {
 		"{tag}", mappingObj[10],
 		"{last_digit}", mappingObj[11],
 		"{combo_speed}", mappingObj[12],
+		"{combo_burst}", mappingObj[13],
 		// Judgement
-		"{judge}", mappingObj[13],
-		"{judge_speed}", mappingObj[14],
+		"{judge}", mappingObj[14],
+		"{judge_speed}", mappingObj[15],
 	).Replace(string(sekaiObjv1))).WriteTo(sekaiObjWriterv1)
 
 	strings.NewReader(strings.NewReplacer(
@@ -231,9 +237,10 @@ func TryInstallObject(aviutlPath string) bool {
 		"{tag}", mappingObj[10],
 		"{last_digit}", mappingObj[11],
 		"{combo_speed}", mappingObj[12],
+		"{combo_burst}", mappingObj[13],
 		// Judgement
-		"{judge}", mappingObj[13],
-		"{judge_speed}", mappingObj[14],
+		"{judge}", mappingObj[14],
+		"{judge_speed}", mappingObj[15],
 	).Replace(string(sekaiObjEnv1))).WriteTo(sekaiObjWriterEnv1)
 	return true
 }
@@ -252,7 +259,6 @@ func SetOverlayDefault() []string {
 	}
 
 	if _, err := os.Stat(configFile); os.IsNotExist(err) {
-		defaultContent := []byte("; 保存後、exoファイルのデフォルト値が次回のpjsekai-overlay生成時に適用されます。\n; オブジェクトファイルの変更を反映させるには、オブジェクトファイルの再インストールも可能です（AviUtlを開く > pjsekai-overlay.APPEND.exeを開く）。\n; 元のデフォルト値に戻すには、このファイルを削除し、pjsekai-overlay.APPEND.exeを再度開いてください。\n\n; After saving, default values in the exo file will be applied for the next pjsekai-overlay generation.\n; You can also reinstall object file to apply changes on obj files as well. (open AviUtl > open pjsekai-overlay.APPEND.exe)\n; To reset back to the original default value, delete this file and open pjsekai-overlay.APPEND.exe again.\n\n[設定/Root]\noffset=216.0\ncache=1\nfont_type=0\nwatermark=1\n[ライフ/Life]\nlife=1000\noverflow=0\n[スコア/Score]\nmin_dight=8\nanim_score=0\nspeed=1.00\n[コンボ/Combo]\nap=1\ntag=1\nlast_digit=4\nspeed=1.00\n[判定/Judgement]\njudge=0\nspeed=1.00")
 		err := os.WriteFile(configFile, defaultContent, 0644)
 		if err != nil {
 			return nil
