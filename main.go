@@ -250,8 +250,22 @@ func origMain(isOptionSpecified bool) {
 		return
 	}
 
-	formattedOutDir := filepath.Join(cwd, strings.ReplaceAll(outDir, "_chartId_", chartId+" ("+chart.Title+")"))
-	resultDir := filepath.Dir(formattedOutDir) + "\\" + chartId + " (" + chart.Title + ")"
+	formattedOutDir := filepath.Join(cwd, strings.ReplaceAll(outDir, "_chartId_", chartId))
+	resultDir := filepath.Dir(formattedOutDir) + "\\" + chartId
+
+	isAdminPerm := func(path string) bool {
+		testFile := filepath.Join(path, ".test_access")
+		err := os.WriteFile(testFile, []byte("test"), 0644)
+		if err != nil {
+			return true
+		}
+		os.Remove(testFile)
+		return false
+	}
+	if isAdminPerm(formattedOutDir) {
+		fmt.Println(color.RedString(fmt.Sprintf("FAIL: ディレクトリには管理者権限が必要です。pjsekai-overlay-APPEND を「C:\\」または別の場所に移動してください。\nYour directory requires administrative permissions. Please move pjsekai-overlay-APPEND to \"C:\\\" or somewhere else.\n\n出力先ディレクトリ (Output path):%s", resultDir)))
+		return
+	}
 
 	isASCII := func(s string) bool {
 		for i := 0; i < len(s); i++ {
@@ -261,11 +275,11 @@ func origMain(isOptionSpecified bool) {
 		}
 		return true
 	}
-
 	if !isASCII(formattedOutDir) {
-		formattedOutDir = filepath.Join(cwd, strings.ReplaceAll(outDir, "_chartId_", chartId))
-		resultDir = filepath.Dir(formattedOutDir) + "\\" + chartId
+		fmt.Println(color.RedString(fmt.Sprintf("FAIL: ディレクトリに非ASCII文字が含まれています。pjsekai-overlay-APPEND を「C:\\」または別の場所に移動してください。\nYour directory contains non-ASCII characters. Please move pjsekai-overlay-APPEND to \"C:\\\" or somewhere else.\n\n出力先ディレクトリ (Output path):%s", resultDir)))
+		return
 	}
+
 	fmt.Printf("- 出力先ディレクトリ (Output path): %s\n", color.CyanString(resultDir))
 
 	fmt.Print("- ジャケットをダウンロード中 (Downloading jacket)... ")
