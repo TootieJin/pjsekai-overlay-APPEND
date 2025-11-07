@@ -1,0 +1,279 @@
+--track0:長さ,0,1000,200
+--track1:幅,0,500,80
+--track2:高さ,0,500,50
+--track3:回転,-3600,3600,0,0.01
+--dialog:隙間,k_gap=50;色/col,col=0xffffff;自動方向(移動時のみ)/chk,j_hoko=0;計算基準軸(0or1),axis=0;
+
+local k_l=obj.track0
+local k_w=obj.track1
+local k_h=obj.track2
+
+if(j_hoko==0) then
+
+	obj.load("figure","四角形",col,2)
+	obj.effect()
+	obj.setoption("billboard",0)
+	obj.drawpoly(0,-k_l/2,0, -k_w-k_gap/2,k_l/2,0, -k_gap/2+1,k_l/2,0, 0,-k_l/2,0)--左翼
+	obj.drawpoly(0,-k_l/2,0, k_w+k_gap/2,k_l/2,0, k_gap/2-1,k_l/2,0, 0,-k_l/2,0)--右翼
+	obj.drawpoly(0,-k_l/2,0, -k_gap/2,k_l/2,0, 0,k_l/2,k_h, 0,-k_l/2,0)--左胴
+	obj.drawpoly(0,-k_l/2,0, k_gap/2,k_l/2,0, 0,k_l/2,k_h, 0,-k_l/2,0)--右胴
+
+else
+
+
+--3Dライン（仮）を改変
+
+function cal_draw(x1,y1,z1,x2,y2,z2,x3,y3,z3,x4,y4,z4)
+	-- 行列がグローバルで微妙ですが…
+	px1 =	x1*m00+y1*m01+z1*m02
+	py1 =	x1*m10+y1*m11+z1*m12
+	pz1 =	x1*m20+y1*m21+z1*m22
+	px2 =	x2*m00+y2*m01+z2*m02
+	py2 =	x2*m10+y2*m11+z2*m12
+	pz2 =	x2*m20+y2*m21+z2*m22
+	px3 =	x3*m00+y3*m01+z3*m02
+	py3 =	x3*m10+y3*m11+z3*m12
+	pz3 =	x3*m20+y3*m21+z3*m22
+	px4 =	x4*m00+y4*m01+z4*m02
+	py4 =	x4*m10+y4*m11+z4*m12
+	pz4 =	x4*m20+y4*m21+z4*m22
+	obj.drawpoly(
+		x0+px1*r00+py1*r01+pz1*r02,
+		y0+px1*r10+py1*r11+pz1*r12,
+		z0+px1*r20+py1*r21+pz1*r22,
+		x0+px2*r00+py2*r01+pz2*r02,
+		y0+px2*r10+py2*r11+pz2*r12,
+		z0+px2*r20+py2*r21+pz2*r22,
+		x0+px3*r00+py3*r01+pz3*r02,
+		y0+px3*r10+py3*r11+pz3*r12,
+		z0+px3*r20+py3*r21+pz3*r22,
+		x0+px4*r00+py4*r01+pz4*r02,
+		y0+px4*r10+py4*r11+pz4*r12,
+		z0+px4*r20+py4*r21+pz4*r22,
+	1,1,1,1,1,1,1,1)
+end
+
+-- ライン部分
+local min_step=2
+
+speed = 0
+base_x = obj.getvalue("x")
+base_y = obj.getvalue("y")
+base_z = obj.getvalue("z")
+--obj.load("figure","円",col,obj.track0)
+--obj.effect()
+--obj.setoption("billboard",3)
+obj.ox = obj.ox-base_x
+obj.oy = obj.oy-base_y
+obj.oz = obj.oz-base_z
+t = 0;
+f = 0;
+l = 0;
+n = 0;
+d = 0
+s = obj.w/2*10/50;
+if( s < min_step ) then
+	s = min_step
+end
+if( s < 1 ) then
+	s = 1
+end
+ex = obj.getvalue("x",0)
+ey = obj.getvalue("y",0)
+ez = obj.getvalue("z",0)
+x0 = ex
+y0 = ey
+z0 = ez
+while( t < obj.time ) do
+	r = s
+	while( r > 0 ) do
+		if( l <= 0 ) then
+			if( t >= obj.time ) then
+				break
+			end
+			sx = ex
+			sy = ey
+			sz = ez
+			f = f+1
+			t = f/obj.framerate
+			ex = obj.getvalue("x",t)
+			ey = obj.getvalue("y",t)
+			ez = obj.getvalue("z",t)
+			l = math.sqrt((ex-sx)*(ex-sx)+(ey-sy)*(ey-sy)+(ez-sz)*(ez-sz))
+			n = l
+		end
+		if( l > r ) then
+			d = d+r
+			l = l-r
+			r = 0;
+			x1 = ex+(sx-ex)*l/n
+			y1 = ey+(sy-ey)*l/n
+			z1 = ez+(sz-ez)*l/n
+		else
+			d = d+l
+			r = r-l
+			l = 0
+			x1 = ex
+			y1 = ey
+			z1 = ez
+		end
+		if( speed > 0 ) then
+			if( t >= obj.totaltime ) then
+				break
+			end
+			t = d/(obj.framerate*speed)
+		elseif( l > 0 ) then
+			t = (f-l/n)/obj.framerate
+		end
+	end
+	--obj.draw(x0,y0,z0)
+	x0 = x1
+	y0 = y1
+	z0 = z1
+end
+if( speed > 0 ) then
+	t = d/(obj.framerate*speed)-obj.time;
+	if( t < 0 ) then
+		t = 0
+	end
+	if( l > 0 ) then
+		f = f-l/n
+	end
+	t = f/obj.framerate-t
+	x0 = obj.getvalue("x",t)
+	y0 = obj.getvalue("y",t)
+	z0 = obj.getvalue("z",t)
+else 
+	t = obj.time;
+	x0 = base_x
+	y0 = base_y
+	z0 = base_z
+end
+--obj.draw(x0,y0,z0)
+obj.ox = obj.ox+base_x
+obj.oy = obj.oy+base_y
+obj.oz = obj.oz+base_z
+
+
+
+-- 先端部分
+--if( obj.track1 > 0 ) then
+	obj.load("figure","四角形",col,3)
+	obj.effect()
+	obj.setoption("billboard",0)
+	obj.ox = obj.ox-base_x
+	obj.oy = obj.oy-base_y
+	obj.oz = obj.oz-base_z
+	l = 4*4
+	s = t
+	e = t
+	t = 0.5/obj.framerate
+	vx = 0
+	vy = 0
+	vz = 0
+
+	while( s > 0 or e < obj.totaltime ) do
+		s = s-t
+		e = e+t
+		if( s < 0 ) then
+			s = 0
+		end
+		if( e > obj.totaltime ) then
+			e = obj.totaltime
+		end
+		x = obj.getvalue("x",s)-obj.getvalue("x",e)
+		y = obj.getvalue("y",s)-obj.getvalue("y",e)
+		z = obj.getvalue("z",s)-obj.getvalue("z",e)
+		if( math.sqrt(x*x+y*y+z*z) >= l ) then
+			l = math.sqrt(x*x+y*y+z*z)
+			vx = x/l
+			vy = y/l
+			vz = z/l
+			break
+		end
+	end
+
+	--	先端の回転
+	r = (obj.track3+90)*math.pi/180
+	s = math.sin(r)
+	c = math.cos(r)
+	r00 = vx*vx*(1-c) + c
+	r01 = vx*vy*(1-c) - vz*s
+	r02 = vz*vx*(1-c) + vy*s
+	r10 = vx*vy*(1-c) + vz*s
+	r11 = vy*vy*(1-c) + c
+	r12 = vy*vz*(1-c) - vx*s
+	r20 = vz*vx*(1-c) - vy*s
+	r21 = vy*vz*(1-c) + vx*s
+	r22 = vz*vz*(1-c) + c
+
+	--	任意軸の回転
+	if( axis == 1 ) then
+		--	X軸を基準に
+		c = vx
+		s = math.sqrt(1-c*c)
+		l = math.sqrt(vy*vy+vz*vz)
+		y = vy/l
+		z = vz/l
+		m00 =  -c
+		m01 =  -y*s
+		m02 =  -z*s
+		m10 = -y*s
+		m11 =  z*z*(1-c)+c
+		m12 = -y*z*(1-c)
+		m20 = -z*s
+		m21 = -y*z*(1-c)
+		m22 =  y*y*(1-c)+c
+
+--		l = obj.track1/2
+--		w = obj.track0/2
+
+		cal_draw(k_l,0,0, 0, 0,-k_w-k_gap, 0,0,-k_gap+0.5, k_l,0,0)--左翼
+		cal_draw(k_l,0,0, 0, 0, k_w+k_gap, 0,0, k_gap-0.5, k_l,0,0)--右翼
+		cal_draw(k_l,0,0, 0,0,-k_gap, 0,k_h,0, k_l,0,0)--左胴
+		cal_draw(k_l,0,0, 0,0, k_gap, 0,k_h,0, k_l,0,0)--右胴
+
+--		cal_draw(0,-l,-w, l*2,0,-w, 0  ,l,-w, 0,-l,-w)
+--		cal_draw(0,-l, w, l*2,0, w, 0  ,l, w, 0,-l, w)
+--		cal_draw(0,-l,-w, l*2,0,-w, l*2,0, w, 0,-l, w)
+--		cal_draw(0, l,-w, l*2,0,-w, l*2,0, w, 0, l, w)
+--		cal_draw(0,-l,-w,   0,l,-w, 0  ,l, w, 0,-l, w)
+	else
+
+		--	Z軸を基準に
+		c = -vz
+		s = math.sqrt(1-c*c)
+		l = math.sqrt(vx*vx+vy*vy)
+		x = vx/l
+		y = vy/l
+		m00 =  y*y*(1-c)+c
+		m01 = -x*y*(1-c)
+		m02 = -x*s
+		m10 = -x*y*(1-c)
+		m11 =  x*x*(1-c)+c
+		m12 = -y*s
+		m20 =  x*s
+		m21 =  y*s
+		m22 =  c
+
+--		l = obj.track1/2
+--		w = obj.track0/2
+
+		cal_draw(0,0,k_l, 0, -k_w-k_gap,0, 0,-k_gap+0.5,0, 0,0,k_l)--左翼
+		cal_draw(0,0,k_l, 0,  k_w+k_gap,0, 0, k_gap-0.5,0, 0,0,k_l)--右翼
+		cal_draw(0,0,k_l, 0, -k_gap,0, -k_h,0,0, 0,0,k_l)--左胴
+		cal_draw(0,0,k_l, 0,  k_gap,0, -k_h,0,0, 0,0,k_l)--右胴
+
+		--cal_draw( w,-l,0,  w,0,l*2,  w,l,0  ,  w,-l,0)
+		--cal_draw(-w,-l,0, -w,0,l*2,  w,0,l*2,  w,-l,0)
+		--cal_draw(-w, l,0, -w,0,l*2,  w,0,l*2,  w, l,0)
+		--cal_draw(-w,-l,0, -w,l,  0,  w,l,0  ,  w,-l,0)
+	end
+
+	obj.ox = obj.ox+base_x
+	obj.oy = obj.oy+base_y
+	obj.oz = obj.oz+base_z
+--end
+
+end
+

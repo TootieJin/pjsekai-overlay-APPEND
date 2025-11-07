@@ -396,7 +396,7 @@ func DownloadBackground(source Source, level sonolus.LevelInfo, destPath string,
 			return fmt.Errorf("背景ファイルのリネームに失敗しました。(Failed to rename background file.) [%s]", err)
 		}
 	} else {
-		backgroundUrl, err := sonolus.JoinUrl("https://"+source.Host, level.Engine.Background.Image.Url)
+		backgroundUrl, err := sonolus.JoinUrl("https://"+source.Host, level.UseBackground.Item.Image.Url)
 
 		if err != nil {
 			return fmt.Errorf("URLの解析に失敗しました。(URL parsing failed.) [%s]", err)

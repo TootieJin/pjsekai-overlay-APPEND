@@ -472,8 +472,8 @@ overlay=1
 camera=0
 [19.0]
 _name=Custom object
-track0={life}
-track1=0.00
+track0=6000.00
+track1={life}
 track2=0.00
 track3=0.00
 check0={overflow}
@@ -546,8 +546,8 @@ overlay=1
 camera=0
 [21.0]
 _name=Custom object
-track0={min_digit}
-track1=0.00
+track0=6000.00
+track1={min_digit}
 track2=0.00
 track3=0.00
 check0={anim_score}
@@ -620,9 +620,9 @@ overlay=1
 camera=0
 [23.0]
 _name=Custom object
-track0={ap}
-track1={tag}
-track2=0.00
+track0=6000.00
+track1={ap}
+track2={tag}
 track3=0.00
 check0=0
 type=0

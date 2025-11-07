@@ -11,7 +11,7 @@ import (
 func Title() {
 	fmt.Printf(
 		strings.TrimSpace(dedent.Dedent(`
-    %s== pjsekai-overlay-%sAP%sPE%sND %s-----------------------------------------------------------%s
+    %s-- pjsekai-overlay-%sAP%sPE%sND %s-----------------------------------------------------------%s
     %sフォークプロセカ風動画作成補助ツール / Forked PJSekai-style video creation tool%s
         Version: %s%s%s
 

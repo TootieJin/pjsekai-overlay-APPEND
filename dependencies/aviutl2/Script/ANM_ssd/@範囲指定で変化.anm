@@ -1,0 +1,63 @@
+@”ÍˆÍŽw’è‚Å•Ï‰»iej
+--track0:”ÍˆÍ,0,4000,200,1
+--track1:•,1,4000,4000,1
+--track2:eobj•\Ž¦,0,1,1,1
+--track3:”ÍˆÍ•\Ž¦,0,1,1,1
+--dialog:X,x=0;Y,y=0;Z,z=0;Šg‘å—¦,s=50;“§–¾“x,alp=0;X‰ñ“],rx=0;Y‰ñ“],ry=0;Z‰ñ“],rz=0;Œ¸/‰Á/S[0-2],adc=2;‰ÁŒ¸‘¬[1-5],beki=2;Ž©“®ˆÚ“®[0-2],jido=0;Ž©“®Žž‰ñ“]‚ ‚è/chk,jdk=1;
+
+obj.effect()
+
+h_sz=obj.track0/2
+h_hb=math.min(h_sz,obj.track1)
+px=obj.x
+py=obj.y
+obj.draw(0,0,0,1,obj.track2)
+
+--”ÍˆÍ•\Ž¦
+if(obj.track3==1) then
+	obj.load("figure","‰~",0xff0000,h_sz*2,h_hb)
+	obj.draw(0,0,0,100/obj.getvalue("zoom"),0.5)
+end
+
+
+@”ÍˆÍŽw’è‚Å•Ï‰»iŽqj
+
+
+obj.effect()
+local i=(h_sz - math.sqrt((px-obj.x)^2+(py-obj.y)^2))/h_hb
+
+if( i > 0 ) then
+	if( i > 1 ) then
+		i = 1
+	end
+
+	if(adc<1) then
+		i=1-(1-i)^beki
+	elseif(adc<2) then
+		i=i^beki
+	else
+		if(i<=0.5) then
+			i=(2*i)^beki/2
+		else
+			i=(1-(1-(i-0.5)*2)^beki)/2+0.5
+		end
+	end
+
+	if(jido==1 or 2) then
+		J_rz=math.atan2(py-obj.y,px-obj.x)
+
+		if(jido==1) then
+			x=-h_sz*math.cos(J_rz)
+			y=-h_sz*math.sin(J_rz)
+			rz=math.deg(J_rz)*jdk
+		elseif(jido==2) then
+			x=px-obj.x
+			y=py-obj.y
+		end
+	end
+
+
+	obj.draw(x*i,y*i,z*i,1+i*(s-100)/100,1-i*alp/100,rx*i,ry*i,rz*i)
+else
+	obj.draw()
+end

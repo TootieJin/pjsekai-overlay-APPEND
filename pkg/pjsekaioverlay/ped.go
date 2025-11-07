@@ -343,7 +343,7 @@ func WritePedFile(frames []PedFrame, assets string, path string, levelInfo sonol
 
 	lastScore := 0.0
 	lastScore2 := 0.0
-	rating := levelInfo.Rating
+	rating := math.Max(5, math.Min(float64(levelInfo.Rating), 40))
 	for i, frame := range frames {
 		// 2-variable scoring (supports accurate digits up to 1e+34)
 		score := math.Mod(frame.Score, 1e+17)
@@ -377,12 +377,6 @@ func WritePedFile(frames []PedFrame, assets string, path string, levelInfo sonol
 		scoreX := 0.0
 		scoreXv1 := 0.0
 
-		if rating < 5 {
-			rating = 5
-		} else if rating > 40 {
-			rating = 40
-		}
-
 		rankBorder := float64(1200000 + (rating-5)*4100)
 		rankS := float64(1040000 + (rating-5)*5200)
 		rankA := float64(840000 + (rating-5)*4200)
@@ -412,11 +406,11 @@ func WritePedFile(frames []PedFrame, assets string, path string, levelInfo sonol
 		rankBPos := 990.0 / 1650
 		rankCPos := 746.0 / 1650
 
-		rankBorderPosv1 := 1.0
-		rankSPosv1 := 0.890
-		rankAPosv1 := 0.742
-		rankBPosv1 := 0.591
-		rankCPosv1 := 0.447
+		rankBorderPosv1 := 610.0 / 610
+		rankSPosv1 := 541.5 / 610
+		rankAPosv1 := 452.0 / 610
+		rankBPosv1 := 361.0 / 610
+		rankCPosv1 := 273.0 / 610
 
 		if math.Ceil(score2) < 0 || math.Ceil(score) < 0 {
 			rank = "d"

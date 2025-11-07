@@ -1,0 +1,22 @@
+--param:200
+local index,ratio = math.modf(obj.getpoint("index"))
+local st = obj.getpoint(index);
+local ed = obj.getpoint(index+1);
+
+if(obj.getpoint("index")<1) then
+	local n = obj.getpoint("param")/100*2+1
+	local t = 1-ratio
+	if( n <= 1 ) then
+			t = t*t
+	elseif( t > 1-1/n ) then
+		t = 1-(1-t)*n
+	else
+		t = t*n/(n-1)
+		t = math.sin((t-1)*(n-1)*math.pi)*t*0.4/(1+(1-t)*3)
+	end
+	yure = st + (ed-st)*(1-t)
+else
+	yure= st + (ed-st)*ratio
+end
+
+return yure;

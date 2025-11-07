@@ -1,0 +1,18 @@
+--track0:再生位置,0,50000,0,1
+--track1:再生速度,-1000,1000,100,1
+--track2:ループ,0,1,1,1
+--track3:透明あり,0,1,0,1
+--file:
+local t=obj.track0-1
+for i=0,obj.frame do
+	t=t+obj.getvalue(1,i/30)/100
+end
+if(obj.track2==0) then
+	ksd=t/obj.framerate
+else
+	ksd=(t/obj.framerate)%obj.load("movie",file)
+end
+
+obj.load("movie",file,ksd,obj.track3)
+
+--再生速度を直線移動等で変化させることができます。

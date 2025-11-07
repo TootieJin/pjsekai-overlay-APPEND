@@ -1,0 +1,58 @@
+--track0:個数,1,100,3,1
+--track1:幅,0,2000,6
+--track2:しきい値,0,255,128,1
+--track3:細かさ,0,50,12
+--dialog:横サイズ,sw=800;縦サイズ,sh=450;ランダム＋幅,habar=0;乱数,rns=0;色/col,col=0xffffff;
+
+--[[
+ティム氏の色調補正セットにある「T_Color_Module.dll」が必要です。
+http://www.nicovideo.jp/watch/sm21178949
+からダウンロードし、当スクリプトファイルと同じフォルダに入れてください。
+]]
+
+
+
+local n=obj.track0
+local d=obj.track1
+local sikii=obj.track2
+local koma=obj.track3
+local ln=math.sqrt(sw^2+sh^2)
+
+
+--ライン
+obj.setoption("drawtarget","tempbuffer",sw,sh)
+
+obj.load("figure","四角形",0xffffff,2)
+
+
+for i=0,n-1 do
+	cx=obj.rand(-sw/2,sw/2,i+0,rns)
+	cy=obj.rand(-sh/2,sh/2,i+1,rns)
+	r=obj.rand(0,180,i+2,rns)
+	dr=obj.rand(d,d+habar,i+3,rns)
+
+	x0= cx + math.cos(math.rad(r))*ln     + math.cos(math.rad(r+90))*dr/2
+	x1= cx + math.cos(math.rad(r))*ln     + math.cos(math.rad(r-90))*dr/2
+	x2= cx + math.cos(math.rad(r+180))*ln + math.cos(math.rad(r-90))*dr/2
+	x3= cx + math.cos(math.rad(r+180))*ln + math.cos(math.rad(r+90))*dr/2
+	y0= cy + math.sin(math.rad(r))*ln     + math.sin(math.rad(r+90))*dr/2
+	y1= cy + math.sin(math.rad(r))*ln     + math.sin(math.rad(r-90))*dr/2
+	y2= cy + math.sin(math.rad(r+180))*ln + math.sin(math.rad(r-90))*dr/2
+	y3= cy + math.sin(math.rad(r+180))*ln + math.sin(math.rad(r+90))*dr/2
+
+	obj.drawpoly(x0,y0,0,x1,y1,0,x2,y2,0,x3,y3,0)
+end
+
+obj.load("tempbuffer")
+
+
+--ノイズ
+obj.effect("ノイズ","周期X",koma,"周期Y",koma,"mode",1)
+
+require("T_Color_Module")
+local userdata,w,h=obj.getpixeldata()
+T_Color_Module.binarization(userdata,w,h,sikii,1)
+obj.putpixeldata(userdata)
+
+obj.effect("カラーキー","color_yc",0,"status",1)
+obj.effect("単色化","color",col,"輝度を保持する",0)

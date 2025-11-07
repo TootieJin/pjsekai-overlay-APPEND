@@ -57,7 +57,19 @@ var rawBaseExoENv1 []byte
 //go:embed v1-skin_en_4-3_1440x1080.exo
 var rawBaseExoEN43v1 []byte
 
-func WriteExoFiles(assets string, destDir string, title string, description []string, descriptionv1 []string, difficulty string, extra string, exFile string, exFileOpacity string, mappingExo []string) error {
+//go:embed main2_16-9_1920x1080.object
+var rawBaseAlias []byte
+
+//go:embed main2_4-3_1440x1080.object
+var rawBaseAlias43 []byte
+
+//go:embed v1-skin2_16-9_1920x1080.object
+var rawBaseAliasv1 []byte
+
+//go:embed v1-skin2_4-3_1440x1080.object
+var rawBaseAlias43v1 []byte
+
+func WriteExoFiles(assets string, destDir string, title string, description []string, descriptionv1 []string, difficulty string, extra string, exFile string, exFileOpacity string, mappingFile []string) error {
 	baseExoJP := string(rawBaseExoJP)
 	baseExoJP43 := string(rawBaseExoJP43)
 	baseExoEN := string(rawBaseExoEN)
@@ -79,26 +91,26 @@ func WriteExoFiles(assets string, destDir string, title string, description []st
 		"{opacity}", exFileOpacity,
 		"{difficulty}", strings.ToLower(difficulty),
 		// Root
-		"{offset}", mappingExo[0], // track0
-		"{cache}", mappingExo[1], // track1
-		"{font_type}", mappingExo[2], // track2
-		"{watermark}", mappingExo[3], // check0
+		"{offset}", mappingFile[0], // track0
+		"{cache}", mappingFile[1], // track1
+		"{font_type}", mappingFile[2], // track2
+		"{watermark}", mappingFile[3], // check0
 		// Life
-		"{life}", mappingExo[4], // track0
-		"{overflow}", mappingExo[5], // check0
+		"{life}", mappingFile[4], // track0
+		"{overflow}", mappingFile[5], // check0
 		// Score
-		"{min_digit}", mappingExo[6], // track0
-		"{anim_score}", mappingExo[7], // check0
-		"{score_speed}", mappingExo[8], // dialog: speed=
+		"{min_digit}", mappingFile[6], // track0
+		"{anim_score}", mappingFile[7], // check0
+		"{score_speed}", mappingFile[8], // dialog: speed=
 		// Combo
-		"{ap}", mappingExo[9], // track0
-		"{tag}", mappingExo[10], // track1
-		"{last_digit}", mappingExo[11], // dialog: digits=
-		"{combo_speed}", mappingExo[12], // dialog: speed=
-		"{combo_burst}", mappingExo[13], // dialog: combo_burst=
+		"{ap}", mappingFile[9], // track0
+		"{tag}", mappingFile[10], // track1
+		"{last_digit}", mappingFile[11], // dialog: digits=
+		"{combo_speed}", mappingFile[12], // dialog: speed=
+		"{combo_burst}", mappingFile[13], // dialog: combo_burst=
 		// Judgement
-		"{judge}", mappingExo[14], // track0
-		"{judge_speed}", mappingExo[15], // dialog: speed=
+		"{judge}", mappingFile[14], // track0
+		"{judge_speed}", mappingFile[15], // dialog: speed=
 	}
 
 	mappingv1 := []string{
@@ -113,23 +125,26 @@ func WriteExoFiles(assets string, destDir string, title string, description []st
 		"{opacity}", exFileOpacity,
 		"{difficulty}", strings.ToLower(difficulty),
 		// Root
-		"{offset}", mappingExo[0], // track0
-		"{cache}", mappingExo[1], // track1
-		"{font_type}", mappingExo[2], // track2
-		"{watermark}", mappingExo[3], // check0
+		"{offset}", mappingFile[0], // track0
+		"{cache}", mappingFile[1], // track1
+		"{font_type}", mappingFile[2], // track2
+		"{watermark}", mappingFile[3], // check0
+		// Life
+		// "{life}", mappingFile[4],
+		// "{overflow}", mappingFile[5],
 		// Score
-		"{min_digit}", mappingExo[6], // track0
-		"{anim_score}", mappingExo[7], // check0
-		"{score_speed}", mappingExo[8], // dialog: speed=
+		"{min_digit}", mappingFile[6], // track0
+		"{anim_score}", mappingFile[7], // check0
+		"{score_speed}", mappingFile[8], // dialog: speed=
 		// Combo
-		"{ap}", mappingExo[9], // track0
-		"{tag}", mappingExo[10], // track1
-		"{last_digit}", mappingExo[11], // dialog: digits=
-		"{combo_speed}", mappingExo[12], // dialog: speed=
-		"{combo_burst}", mappingExo[13], // dialog: combo_burst=
+		"{ap}", mappingFile[9], // track0
+		"{tag}", mappingFile[10], // track1
+		"{last_digit}", mappingFile[11], // dialog: digits=
+		"{combo_speed}", mappingFile[12], // dialog: speed=
+		"{combo_burst}", mappingFile[13], // dialog: combo_burst=
 		// Judgement
-		"{judge}", mappingExo[14], // track0
-		"{judge_speed}", mappingExo[15], // dialog: speed=
+		"{judge}", mappingFile[14], // track0
+		"{judge_speed}", mappingFile[15], // dialog: speed=
 	}
 	for i := range mapping {
 		if i%2 == 0 {
@@ -261,6 +276,141 @@ func WriteExoFiles(assets string, destDir string, title string, description []st
 	}
 	if err := os.WriteFile(filepath.Join(destDir, "v1-skin_en_4-3_1440x1080.exo"),
 		encodedExoEN43v1,
+		0644); err != nil {
+		return fmt.Errorf("ファイルの書き込みに失敗しました (Failed to write file) [%w]", err)
+	}
+	return nil
+}
+
+func WriteAliasFiles(assets string, destDir string, title string, description []string, descriptionv1 []string, difficulty string, extra string, exFile string, exFileOpacity string, mappingFile []string) error {
+	baseAlias := string(rawBaseAlias)
+	baseAlias43 := string(rawBaseAlias43)
+	baseAliasv1 := string(rawBaseAliasv1)
+	baseAlias43v1 := string(rawBaseAlias43v1)
+
+	var fontName string
+	if mappingFile[2] == "0" {
+		fontName = "メイリオ"
+	} else {
+		fontName = "FOT-RodinNTLG Pro EB"
+	}
+
+	mapping := []string{
+		"{assets}", strings.ReplaceAll(assets, "\\", "/"),
+		"{dist}", strings.ReplaceAll(destDir, "\\", "/"),
+		"{text:difficulty}", difficulty,
+		"{text:extra}", extra,
+		"{text:title}", title,
+		"{text:description-1}", description[0],
+		"{text:description-2}", description[1],
+		"{image:tournament}", exFile,
+		"{opacity}", exFileOpacity,
+		"{difficulty}", strings.ToLower(difficulty),
+		// Root
+		"{offset}", mappingFile[0],
+		"{cache}", mappingFile[1],
+		"{font_type}", fontName,
+		"{watermark}", mappingFile[3],
+		// Life
+		"{life}", mappingFile[4],
+		"{overflow}", mappingFile[5],
+		// Score
+		"{min_digit}", mappingFile[6],
+		"{anim_score}", mappingFile[7],
+		"{score_speed}", mappingFile[8],
+		// Combo
+		"{ap}", mappingFile[9],
+		"{tag}", mappingFile[10],
+		"{last_digit}", mappingFile[11],
+		"{combo_speed}", mappingFile[12],
+		"{combo_burst}", mappingFile[13],
+		// Judgement
+		"{judge}", mappingFile[14],
+		"{judge_speed}", mappingFile[15],
+	}
+
+	mappingv1 := []string{
+		"{assets}", strings.ReplaceAll(assets, "\\", "/"),
+		"{dist}", strings.ReplaceAll(destDir, "\\", "/"),
+		"{text:difficulty}", difficulty,
+		"{text:extra}", extra,
+		"{text:title}", title,
+		"{text:description-1}", description[0],
+		"{text:description-2}", description[1],
+		"{image:tournament}", exFile,
+		"{opacity}", exFileOpacity,
+		"{difficulty}", strings.ToLower(difficulty),
+		// Root
+		"{offset}", mappingFile[0],
+		"{cache}", mappingFile[1],
+		"{font_type}", fontName,
+		"{watermark}", mappingFile[3],
+		// Life
+		// "{life}", mappingFile[4],
+		// "{overflow}", mappingFile[5],
+		// Score
+		"{min_digit}", mappingFile[6],
+		"{anim_score}", mappingFile[7],
+		"{score_speed}", mappingFile[8],
+		// Combo
+		"{ap}", mappingFile[9],
+		"{tag}", mappingFile[10],
+		"{last_digit}", mappingFile[11],
+		"{combo_speed}", mappingFile[12],
+		"{combo_burst}", mappingFile[13],
+		// Judgement
+		"{judge}", mappingFile[14],
+		"{judge_speed}", mappingFile[15],
+	}
+	for i := range mapping {
+		if i%2 == 0 {
+			continue
+		}
+		if !strings.Contains(baseAlias, mapping[i-1]) {
+			panic(fmt.Sprintf("aliasファイルの生成に失敗しました (Failed to generate alias file) [Missing: %s]", mapping[i-1]))
+		}
+		if !strings.Contains(baseAlias43, mapping[i-1]) {
+			panic(fmt.Sprintf("aliasファイルの生成に失敗しました (Failed to generate alias file) [Missing: %s]", mapping[i-1]))
+		}
+		baseAlias = strings.ReplaceAll(baseAlias, mapping[i-1], mapping[i])
+		baseAlias43 = strings.ReplaceAll(baseAlias43, mapping[i-1], mapping[i])
+	}
+	for i := range mappingv1 {
+		if i%2 == 0 {
+			continue
+		}
+		if !strings.Contains(baseAliasv1, mappingv1[i-1]) {
+			panic(fmt.Sprintf("aliasファイルの生成に失敗しました (Failed to generate alias file) [Missing: %s]", mappingv1[i-1]))
+		}
+		if !strings.Contains(baseAlias43v1, mappingv1[i-1]) {
+			panic(fmt.Sprintf("aliasファイルの生成に失敗しました (Failed to generate alias file) [Missing: %s]", mappingv1[i-1]))
+		}
+		baseAliasv1 = strings.ReplaceAll(baseAliasv1, mappingv1[i-1], mappingv1[i])
+		baseAlias43v1 = strings.ReplaceAll(baseAlias43v1, mappingv1[i-1], mappingv1[i])
+	}
+
+	baseAlias = strings.ReplaceAll(baseAlias, "\n", "\r\n")
+	baseAlias43 = strings.ReplaceAll(baseAlias43, "\n", "\r\n")
+	baseAliasv1 = strings.ReplaceAll(baseAliasv1, "\n", "\r\n")
+	baseAlias43v1 = strings.ReplaceAll(baseAlias43v1, "\n", "\r\n")
+
+	if err := os.WriteFile(filepath.Join(destDir, "main2_16-9_1920x1080.object"),
+		[]byte(baseAlias),
+		0644); err != nil {
+		return fmt.Errorf("ファイルの書き込みに失敗しました (Failed to write file) [%w]", err)
+	}
+	if err := os.WriteFile(filepath.Join(destDir, "main2_4-3_1440x1080.object"),
+		[]byte(baseAlias43),
+		0644); err != nil {
+		return fmt.Errorf("ファイルの書き込みに失敗しました (Failed to write file) [%w]", err)
+	}
+	if err := os.WriteFile(filepath.Join(destDir, "v1-skin2_16-9_1920x1080.object"),
+		[]byte(baseAliasv1),
+		0644); err != nil {
+		return fmt.Errorf("ファイルの書き込みに失敗しました (Failed to write file) [%w]", err)
+	}
+	if err := os.WriteFile(filepath.Join(destDir, "v1-skin2_4-3_1440x1080.object"),
+		[]byte(baseAlias43v1),
 		0644); err != nil {
 		return fmt.Errorf("ファイルの書き込みに失敗しました (Failed to write file) [%w]", err)
 	}
