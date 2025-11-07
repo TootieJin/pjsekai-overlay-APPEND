@@ -100,7 +100,7 @@ PJSekai-style video creation tool:
 0. [Install AviUtl](#requirements)
 1. Download the latest version of pjsekai-overlay-APPEND [here](https://github.com/TootieJin/pjsekai-overlay-APPEND/releases/latest/).
    - **(optional)** You can download `extra-assets.zip` for use of non-essential assets.
-2. Unzip the file
+2. Unzip the file in a directory that **doesn't contain non-ASCII characters** (see https://github.com/TootieJin/pjsekai-overlay-APPEND/issues/5)
 3. Follow the steps based on which AviUtl you want to use:
 
 | AviUtl                                                                                                                                                                                                                                                                                                                           	| **AviUtl ExEdit2 (Beta)**                                                                      	|
@@ -258,7 +258,7 @@ PJSekai-style video creation tool:
 0. [AviUtlをインストールする](#必須事項)
 1. 右のReleasesから最新のバージョンのzipを[ダウンロード](https://github.com/TootieJin/pjsekai-overlay-APPEND/releases/latest/)する
    - **(任意)** 必須ではないアセットを使用する場合は、`extra-assets.zip` をダウンロードできます。
-2. zip を解凍する
+2. ファイルを解凍する際は、**非ASCII文字を含まないディレクトリ**を選択してください（詳細は https://github.com/TootieJin/pjsekai-overlay-APPEND/issues/5 を参照）
 3. 使用したいAviUtlに応じて以下の手順に従ってください：
 
 | AviUtl                                                                                                                                                                                                                                                                                                                           	| **AviUtl ExEdit2 (Beta)**                                                                      	|
