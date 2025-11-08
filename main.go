@@ -147,8 +147,7 @@ func origMain(isOptionSpecified bool) {
 		fmt.Println(color.HiYellowString("変更を適用するには、" + aviutlName + "を再起動してください。(Please restart " + aviutlName + " to apply changes.)"))
 	}
 
-	// TipsAPIを使用してtipsを表示（利用できない場合は従来のTips関数にフォールバック）
-	TipsAPI()
+	Tips()
 
 	var chartId string
 	if flag.Arg(0) != "" {
