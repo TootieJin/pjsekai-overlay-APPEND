@@ -242,8 +242,6 @@ func origMain(isOptionSpecified bool) {
 		return
 	}
 
-	fmt.Println(color.GreenString("OK"))
-
 	cwd, err := os.Getwd()
 
 	if err != nil {
@@ -257,7 +255,7 @@ func origMain(isOptionSpecified bool) {
 	isAdminPerm := func(path string) bool {
 		created := false
 		if _, err := os.Stat(path); os.IsNotExist(err) {
-			if err := os.MkdirAll(path, 0o755); err != nil {
+			if err := os.MkdirAll(path, 0755); err != nil {
 				return true
 			}
 			created = true
@@ -278,7 +276,7 @@ func origMain(isOptionSpecified bool) {
 		return false
 	}
 	if isAdminPerm(formattedOutDir) {
-		fmt.Println(color.RedString(fmt.Sprintf("FAIL: ディレクトリには管理者権限が必要です。pjsekai-overlay-APPEND を「C:\\」または別の場所に移動してください。\nYour directory requires administrative permissions. Please move pjsekai-overlay-APPEND to \"C:\\\" or somewhere else.\n\n出力先ディレクトリ (Output path): %s", resultDir)))
+		fmt.Println(color.RedString(fmt.Sprintf("\nFAIL: ディレクトリには管理者権限が必要です。pjsekai-overlay-APPEND を「C:\\」または別の場所に移動してください。\nYour directory requires administrative permissions. Please move pjsekai-overlay-APPEND to \"C:\\\" or somewhere else.\n\n出力先ディレクトリ (Output path): %s", resultDir)))
 		return
 	}
 
@@ -295,6 +293,7 @@ func origMain(isOptionSpecified bool) {
 		return
 	}
 
+	fmt.Println(color.GreenString("OK"))
 	fmt.Printf("- 出力先ディレクトリ (Output path): %s\n", color.CyanString(resultDir))
 
 	fmt.Print("- ジャケットをダウンロード中 (Downloading jacket)... ")
