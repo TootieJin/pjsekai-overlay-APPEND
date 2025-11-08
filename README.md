@@ -5,7 +5,7 @@
 
 [![pjsekai-overlay-APPEND thumbnail](https://github.com/user-attachments/assets/dcc037f7-1c2b-4b83-b17b-b3c5155d670c)]()
 
-Fork of [pjsekai-overlay](https://github.com/sevenc-nanashi/pjsekai-overlay) by [TootieJin](https://tootiejin.com), an open-sourced tool to make Project Sekai Fanmade (custom chart) videos.
+Fork of [pjsekai-overlay](https://github.com/sevenc-nanashi/pjsekai-overlay) by [TootieJin](https://tootiejin.com), an open-sourced tool to make Project Sekai Fanmade (custom chart) videos - in other words... "Make your Sonolus look like Project Sekai."
 
 > [!CAUTION]
 > **For English users:** This tool is primary only for people with technical know-how and basic knowledge of AviUtl.\
@@ -27,7 +27,7 @@ https://github.com/user-attachments/assets/3efab743-246a-4da7-8d80-a02b2f09f5b3
 
 - **AviUtl ExEdit2 preview**
 
-<img width="2560" height="1554" alt="image" src="https://github.com/user-attachments/assets/18f6d16b-5ba4-4953-aa7d-5ceebb87348a" />
+[![AviUtl ExEdit2 preview](https://github.com/user-attachments/assets/18f6d16b-5ba4-4953-aa7d-5ceebb87348a)]()
 
 - **Video Example**
 
@@ -120,8 +120,8 @@ PJSekai-style video creation tool:
    - `sync-`: Local Server ([ScoreSync](https://github.com/Piliman22/ScoreSync))
 5. Import specified exo/alias(.object) file by navigating to your `pjsekai-overlay/dist/[chart ID]` directory:
 
-|      	| AviUtl                                                          	| **AviUtl ExEdit2 (Beta)**                                        	  |
-|------	|-----------------------------------------------------------------	|--------------------------------------------------------------------	|
+|      	| AviUtl                                                          	| **AviUtl ExEdit2 (Beta)**                                        	|
+|------	|-----------------------------------------------------------------	|--------------------------------------------------------------------|
 | 16:9 	| `main_en_16-9_1920x1080.exo`<br>`v1-skin_en_16-9_1920x1080.exo` 	| `main2_16-9_1920x1080.object`<br>`v1-skin2_16-9_1920x1080.object` 	|
 | 4:3  	| `main_en_4-3_1440x1080.exo`<br>`v1-skin_en_4-3_1440x1080.exo`   	| `main2_4-3_1440x1080.object`<br>`v1-skin2_4-3_1440x1080.object`   	|
 
@@ -185,7 +185,7 @@ PJSekai-style video creation tool:
 - [@Reiyunkun](https://github.com/Reiyunkun), [@gaven1880](https://github.com/gaven1880), and [@YumYummity](https://github.com/YumYummity) for providing [additional PJSK assets](./extra%20assets)!
 - [@Khronophobia](https://github.com/Khronophobia) for the customized lane assets in Blender!
 - [@nagotown](https://github.com/nagotown) for the [aviutl2-EN](https://github.com/nagotown/aviutl2-EN) translation script!
-- And everyone who used my tool... thank you all so much.
+- And everyone who used my tool, thank you all so much.
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -278,8 +278,8 @@ PJSekai-style video creation tool:
    - `sync-`: ローカルサーバー([ScoreSync](https://github.com/Piliman22/ScoreSync))
 5. `pjsekai-overlay/dist/[譜面ID]`ディレクトリに移動して、指定したexo/alias(.object)ファイルをインポートします：
 
-|      	| AviUtl                                                          	| **AviUtl ExEdit2 (Beta)**                                        	  |
-|------	|-----------------------------------------------------------------	|--------------------------------------------------------------------	|
+|      	| AviUtl                                                          	| **AviUtl ExEdit2 (Beta)**                                        	|
+|------	|-----------------------------------------------------------------	|--------------------------------------------------------------------|
 | 16:9 	| `main_jp_16-9_1920x1080.exo`<br>`v1-skin_jp_16-9_1920x1080.exo` 	| `main2_16-9_1920x1080.object`<br>`v1-skin2_16-9_1920x1080.object` 	|
 | 4:3  	| `main_jp_4-3_1440x1080.exo`<br>`v1-skin_jp_4-3_1440x1080.exo`   	| `main2_4-3_1440x1080.object`<br>`v1-skin2_4-3_1440x1080.object`   	|
 

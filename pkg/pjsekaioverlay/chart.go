@@ -416,7 +416,7 @@ func DownloadBackground(source Source, level sonolus.LevelInfo, destPath string,
 		var file *os.File
 		var filev1 *os.File
 
-		if strings.Contains(chartId, "?levelbg=default_or_v1") || strings.Contains(chartId, "?levelbg=v1") { // v1 BG (or custom)
+		if strings.Contains(chartId, "?c_background=v1") || strings.Contains(chartId, "?levelbg=default_or_v1") || strings.Contains(chartId, "?levelbg=v1") { // v1 BG (or custom)
 			filev1, err = os.Create(path.Join(destPath, "background-v1.png"))
 			file = nil
 		} else {

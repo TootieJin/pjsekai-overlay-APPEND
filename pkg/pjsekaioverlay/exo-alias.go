@@ -96,15 +96,15 @@ func WriteExoFiles(assets string, destDir string, title string, description []st
 		"{font_type}", mappingFile[2], // track2
 		"{watermark}", mappingFile[3], // check0
 		// Life
-		"{life}", mappingFile[4], // track0
+		"{life}", mappingFile[4], // track1
 		"{overflow}", mappingFile[5], // check0
 		// Score
-		"{min_digit}", mappingFile[6], // track0
+		"{min_digit}", mappingFile[6], // track1
 		"{anim_score}", mappingFile[7], // check0
 		"{score_speed}", mappingFile[8], // dialog: speed=
 		// Combo
-		"{ap}", mappingFile[9], // track0
-		"{tag}", mappingFile[10], // track1
+		"{ap}", mappingFile[9], // track1
+		"{tag}", mappingFile[10], // track2
 		"{last_digit}", mappingFile[11], // dialog: digits=
 		"{combo_speed}", mappingFile[12], // dialog: speed=
 		"{combo_burst}", mappingFile[13], // dialog: combo_burst=
@@ -133,12 +133,12 @@ func WriteExoFiles(assets string, destDir string, title string, description []st
 		// "{life}", mappingFile[4],
 		// "{overflow}", mappingFile[5],
 		// Score
-		"{min_digit}", mappingFile[6], // track0
+		"{min_digit}", mappingFile[6], // track1
 		"{anim_score}", mappingFile[7], // check0
 		"{score_speed}", mappingFile[8], // dialog: speed=
 		// Combo
-		"{ap}", mappingFile[9], // track0
-		"{tag}", mappingFile[10], // track1
+		"{ap}", mappingFile[9], // track1
+		"{tag}", mappingFile[10], // track2
 		"{last_digit}", mappingFile[11], // dialog: digits=
 		"{combo_speed}", mappingFile[12], // dialog: speed=
 		"{combo_burst}", mappingFile[13], // dialog: combo_burst=

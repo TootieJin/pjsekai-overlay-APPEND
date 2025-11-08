@@ -92,7 +92,7 @@ func origMain(isOptionSpecified bool) {
 
 	aviutlPath, aviutlProcess, aviutlName := pjsekaioverlay.DetectAviUtl()
 	if aviutlProcess != "" {
-		fmt.Printf("Instance: %s\n", color.GreenString(aviutlName))
+		fmt.Printf("Instance (auto-detected): %s\n", color.GreenString(aviutlName))
 	}
 
 	if !isOptionSpecified && aviutlProcess == "" {
@@ -217,6 +217,7 @@ func origMain(isOptionSpecified bool) {
 	}
 
 	// Additional BG
+	chartCCv1, _ := pjsekaioverlay.FetchChart(chartSource, chartId+"?c_background=v1")
 	chartUNv3, _ := pjsekaioverlay.FetchChart(chartSource, chartId+"?levelbg=v3")
 	chartUNv1, _ := pjsekaioverlay.FetchChart(chartSource, chartId+"?levelbg=v1")
 	chartUNv1def, _ := pjsekaioverlay.FetchChart(chartSource, chartId+"?levelbg=default_or_v1")
@@ -263,7 +264,7 @@ func origMain(isOptionSpecified bool) {
 		return false
 	}
 	if isAdminPerm(formattedOutDir) {
-		fmt.Println(color.RedString(fmt.Sprintf("FAIL: ディレクトリには管理者権限が必要です。pjsekai-overlay-APPEND を「C:\\」または別の場所に移動してください。\nYour directory requires administrative permissions. Please move pjsekai-overlay-APPEND to \"C:\\\" or somewhere else.\n\n出力先ディレクトリ (Output path):%s", resultDir)))
+		fmt.Println(color.RedString(fmt.Sprintf("FAIL: ディレクトリには管理者権限が必要です。pjsekai-overlay-APPEND を「C:\\」または別の場所に移動してください。\nYour directory requires administrative permissions. Please move pjsekai-overlay-APPEND to \"C:\\\" or somewhere else.\n\n出力先ディレクトリ (Output path): %s", resultDir)))
 		return
 	}
 
@@ -276,7 +277,7 @@ func origMain(isOptionSpecified bool) {
 		return true
 	}
 	if !isASCII(formattedOutDir) {
-		fmt.Println(color.RedString(fmt.Sprintf("FAIL: ディレクトリに非ASCII文字が含まれています。pjsekai-overlay-APPEND を「C:\\」または別の場所に移動してください。\nYour directory contains non-ASCII characters. Please move pjsekai-overlay-APPEND to \"C:\\\" or somewhere else.\n\n出力先ディレクトリ (Output path):%s", resultDir)))
+		fmt.Println(color.RedString(fmt.Sprintf("FAIL: ディレクトリに非ASCII文字が含まれています。pjsekai-overlay-APPEND を「C:\\」または別の場所に移動してください。\nYour directory contains non-ASCII characters. Please move pjsekai-overlay-APPEND to \"C:\\\" or somewhere else.\n\n出力先ディレクトリ (Output path): %s", resultDir)))
 		return
 	}
 
@@ -341,6 +342,20 @@ func origMain(isOptionSpecified bool) {
 		}
 
 		err = pjsekaioverlay.DownloadBackground(chartSource, chartUNv1, formattedOutDir, chartId+"?levelbg=v1", "")
+		if err != nil {
+			fmt.Println(color.RedString(fmt.Sprintf("FAIL: %s", err.Error())))
+			return
+		}
+	} else if chartSource.Id == "chart_cyanvas" && chartSource.Name != "Chart Cyanvas (Archive)" {
+		fmt.Print("- 背景をダウンロード中 (Downloading background)... ")
+
+		err = pjsekaioverlay.DownloadBackground(chartSource, chart, formattedOutDir, chartId, "")
+		if err != nil {
+			fmt.Println(color.RedString(fmt.Sprintf("FAIL: %s", err.Error())))
+			return
+		}
+
+		err = pjsekaioverlay.DownloadBackground(chartSource, chartCCv1, formattedOutDir, chartId+"?c_background=v1", "")
 		if err != nil {
 			fmt.Println(color.RedString(fmt.Sprintf("FAIL: %s", err.Error())))
 			return
