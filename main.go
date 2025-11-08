@@ -255,12 +255,26 @@ func origMain(isOptionSpecified bool) {
 	resultDir := filepath.Dir(formattedOutDir) + "\\" + chartId
 
 	isAdminPerm := func(path string) bool {
+		created := false
+		if _, err := os.Stat(path); os.IsNotExist(err) {
+			if err := os.MkdirAll(path, 0o755); err != nil {
+				return true
+			}
+			created = true
+		}
+
 		testFile := filepath.Join(path, ".test_access")
-		err := os.WriteFile(testFile, []byte("test"), 0644)
-		if err != nil {
+		if err := os.WriteFile(testFile, []byte("test"), 0644); err != nil {
 			return true
 		}
-		os.Remove(testFile)
+
+		// cleanup test file
+		_ = os.Remove(testFile)
+
+		if created {
+			_ = os.Remove(path)
+		}
+
 		return false
 	}
 	if isAdminPerm(formattedOutDir) {
