@@ -33,7 +33,7 @@ _name=Standard drawing
 X=0.0
 Y=0.0
 Z=0.0
-Zoom%=85.64
+Zoom%=85.60
 Clearness=27.5
 Rotation=0.00
 blend=0
@@ -373,8 +373,8 @@ _name=Standard drawing
 X=0.0
 Y=0.0
 Z=0.0
-Zoom%=150.00
-Clearness=0.0
+Zoom%=85.60
+Clearness=27.5
 Rotation=0.00
 blend=0
 [17]
@@ -567,8 +567,8 @@ overlay=1
 camera=0
 [25.0]
 _name=Custom object
-track0={min_digit}
-track1=0.00
+track0=6000.00
+track1={min_digit}
 track2=0.00
 track3=0.00
 check0={anim_score}
@@ -578,10 +578,10 @@ name=Score@pjsekai-overlay-en-v1
 param=speed={score_speed}
 [25.1]
 _name=Standard drawing
-X=0.0
-Y=-137.0
+X=-418.0
+Y=-479.0
 Z=0.0
-Zoom%=108.00
+Zoom%=75.60
 Clearness=0.0
 Rotation=0.00
 blend=0
@@ -615,15 +615,15 @@ overlay=1
 camera=0
 [27.0]
 _name=Custom object
-track0={ap}
-track1={tag}
-track2=0.00
+track0=6000.00
+track1={ap}
+track2={tag}
 track3=0.00
 check0=0
 type=0
 filter=0
 name=Combo@pjsekai-overlay-en-v1
-param=last_digit={last_digit};speed={combo_speed}
+param=last_digit={last_digit};speed={combo_speed};combo_burst={combo_burst}
 [27.1]
 _name=Standard drawing
 X=505.0

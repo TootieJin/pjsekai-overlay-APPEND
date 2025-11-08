@@ -1,0 +1,49 @@
+--track0:横幅,5,500,50
+--track1:高さ,0,1000,50
+--track2:角度,-720,720,0,0.01
+--track3:速さ,-500,500,0
+--dialog:中心,pos={};
+lw=obj.track0*2
+lh=obj.track1
+cr=obj.track2
+offs=obj.time*obj.track3%lw
+obj.setanchor("pos",1)
+cx=pos[1]
+cy=pos[2]
+
+w,h=obj.getpixel()
+r1=math.atan2(-lh,lw/2)+math.rad(cr)
+r2=math.rad(cr)
+l1=math.sqrt((lw/2)^2+lh^2)
+lmax=math.sqrt(w^2+h^2)
+
+obj.setoption("drawtarget","tempbuffer",w,h)
+obj.draw()
+
+obj.setoption("blend","alpha_sub")
+obj.load("figure","四角形",0xffffff,2)
+
+
+--斜めクリッピング
+X0=cx+lmax*math.cos(r2+math.pi)
+Y0=cy+lmax*math.sin(r2+math.pi)
+X1=cx+lmax*math.cos(r2)
+Y1=cy+lmax*math.sin(r2)
+X2=cx+lmax*math.sqrt(5)*math.cos(r2+math.atan2(lmax,lmax/2))
+Y2=cy+lmax*math.sqrt(5)*math.sin(r2+math.atan2(lmax,lmax/2))
+X3=cx+lmax*math.sqrt(5)*math.cos(r2+math.atan2(lmax,-lmax/2))
+Y3=cy+lmax*math.sqrt(5)*math.sin(r2+math.atan2(lmax,-lmax/2))
+obj.drawpoly(X0,Y0,0, X1,Y1,0, X2,Y2,0, X3,Y3,0)
+
+--三角クリッピング
+n=math.floor(lmax/lw)+1
+for i=-n,n do
+  x0=cx                  +math.cos(r2)*lw*i +offs*math.cos(r2)
+  y0=cy                  +math.sin(r2)*lw*i +offs*math.sin(r2)
+  x1=cx +math.cos(r1)*l1 +math.cos(r2)*lw*i +offs*math.cos(r2)
+  y1=cy +math.sin(r1)*l1 +math.sin(r2)*lw*i +offs*math.sin(r2)
+  x2=cx +math.cos(r2)*lw +math.cos(r2)*lw*i +offs*math.cos(r2)
+  y2=cy +math.sin(r2)*lw +math.sin(r2)*lw*i +offs*math.sin(r2)
+  obj.drawpoly(x0,y0,0, x1,y1,0, x2,y2,0, x0,y0,0)
+end
+obj.load("tempbuffer")

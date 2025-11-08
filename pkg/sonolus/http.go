@@ -14,6 +14,7 @@ type LevelInfo struct {
 	Rating        int                     `json:"rating"`
 	Cover         SRL                     `json:"cover"`
 	Data          SRL                     `json:"data"`
+	Preview       SRL                     `json:"preview"`
 	UseBackground UseItem[BackgroundInfo] `json:"useBackground"`
 	Engine        EngineInfo              `json:"engine"`
 	Tags          []TagInfo               `json:"tags"`

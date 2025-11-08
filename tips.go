@@ -131,8 +131,17 @@ func Tips() {
 		"一部の譜面作成者は、本日「ウマ娘」をプレイしています。",
 		"Some charters are playing the horse game \"Umamusume\" today.",
 
+		"一部の譜面作成者は、本日「ステラソラ」をプレイしています。",
+		"Some charters are playing \"Stella Sora\" today.",
+
+		"一部の譜面作成者は、本日「ユメステ」をプレイしています。",
+		"Some charters are playing the harder game \"World Dai Star\" today.",
+
 		"38面ダイスを使って、公式譜面の難易度を決定します。",
 		"A 38-sided dice are used to decide the difficulty of each official chart.",
+
+		"ああ…38面ダイスは38を出した…",
+		"Oh...  the 38-sided dice landed a 38...",
 
 		"セガ（英語）は、「Anime Expo 2025 × プロセカ(EN)」キャンペーンを実施し、特定の曲を100万回プレイすることで...300クリスタルを獲得できるキャンペーンを実施しました。",
 		"SEGA (English) hosted an \"Anime Expo 2025 x Colorful Stage\" campaign requiring everyone to play a specific song 1 MILLION times to get... 300 crystals.",
@@ -163,6 +172,72 @@ func Tips() {
 
 		"1 .",
 		"█   .     3.....",
+
+		"sudo device auto-play",
+		"sudo device auto-play",
+
+		"← To Be Continued...",
+		"← To Be Continued...",
+
+		"怪獣になりたい",
+		"I want to be a monster",
+
+		"[非表示のTip]",
+		"[Hidden Tip]",
+
+		"▼・ᴗ・▼",
+		"▼・ᴗ・▼",
+
+		"ミクさと一歌さはいつも君と一緒にいる…プロセカをアンインストールしない限り！",
+		"Miku and Ichika will always be with you... Unless you uninstall the game!",
+
+		"pjsekai-overlay-APPENDが1周年を迎えます（2024年11月24日）！本ツールをご利用いただきありがとうございます。",
+		"pjsekai-overlay-APPEND is turning a year old (Nov 24th, 2024)! Thank you for using the tool.",
+
+		"Don't Fight The Music",
+		"And Revive The Melody",
+
+		"これって本当に読まれてるの？",
+		"Do people actually read these?",
+
+		"今日に至るまで、どちらのAviUtlバージョンにもmp4出力機能が組み込まれていない...",
+		"To this day, both AviUtl versions doesn't even have built-in mp4 exporter...",
+
+		"* 行動ごとにノーツが評価されます。獲得した経験値ごとにノーツが評価されます。",
+		"* Notes will be judged for every action. Notes will be judged for every EXP you've earned.",
+
+		"この番組の制作資金は、視聴者の皆様のご支援により実現しました",
+		"Funding for this program was made possible by viewers like you",
+
+		"知ってる？読み込み中に何か読みたいから、Tipがあるんだよ…",
+		"Do you know? Tips exist cuz you want something to read when loading...",
+
+		"このツールが好きならリポジトリをスターしてください！（あるいは好きじゃなくても！）",
+		"Star the repo if you love this tool! (or don't love this tool!)",
+
+		"ここをクリックして素早く生成",
+		"Click here to quick-generate",
+
+		"AviUtl2に英語モジュールがないということは、別途の英語エイリアス(.object)ファイルを使用する必要がないことを意味します。",
+		"AviUtl2 not having English mod means you don't have to use the separate English alias(.object) file.",
+
+		"ドラッグ＆ドロップ時にアニメーションが遅くなることに気づきましたか？「プロジェクトの新規」でフレームレートを60fpsに設定してください。",
+		"Noticed the animation slowing down when drag and dropped? Set frame rate in \"New Project\" to 60fps.",
+
+		"外の月を見て！今すぐ！",
+		"Look at the moon outside! RIGHT NOW!",
+
+		"これまでにない譜面を作成しよう",
+		"Chart like you never did before",
+
+		"PLAY    YOU     DID",
+		"    LIKE   NEVER   BEFORE",
+
+		"最適な体験のためにはAviUtl ExEdit2をご利用ください。",
+		"Use AviUtl ExEdit2 for best experience.",
+
+		"2025年11月8日現在、公式ゲーム内の譜面総数は3107枚である。二項分布の公式を用いると、38面ダイスでLv38が出る確率は1.1×10^34分の1である。",
+		"As of Nov 8th 2025, there are a grand total of 3107 charts in the official game. Using the binomial formula, there's a 1 in 1.1×10^34 chance land a Lv38 in a 38-sided die.",
 	}
 
 	// これを見て何か追加したいTipsがあれば、PRを送ってください

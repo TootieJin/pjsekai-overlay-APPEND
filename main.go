@@ -5,9 +5,9 @@ import (
 	"context"
 	"flag"
 	"fmt"
-	"io"
 	"math"
 	"os"
+	"os/exec"
 	"path/filepath"
 	"strconv"
 	"strings"
@@ -18,8 +18,6 @@ import (
 	"github.com/google/go-github/v57/github"
 	"github.com/srinathh/gokilo/rawmode"
 	"golang.org/x/sys/windows"
-	"golang.org/x/text/encoding/japanese"
-	"golang.org/x/text/transform"
 )
 
 func checkUpdate() (string, string) {
@@ -62,8 +60,11 @@ func origMain(isOptionSpecified bool) {
 	var outDir string
 	flag.StringVar(&outDir, "out-dir", "./dist/_chartId_", "出力先ディレクトリを指定します。_chartId_ は譜面IDに置き換えられます。\nEnter the output path. _chartId_ will be replaced with the chart ID.")
 
-	var scoreMode int
-	flag.IntVar(&scoreMode, "score-mode", 1, "採点モードを指定します。(Specify scoring mode.)")
+	var customBG bool
+	flag.BoolVar(&customBG, "custom-bg", false, "UntitledChartsでカスタム背景を使用する。(Use custom background in UntitledCharts.)")
+
+	var scoreMode string
+	flag.StringVar(&scoreMode, "score-mode", "default", "採点モードを指定します。(Specify scoring mode.)")
 
 	var teamPower float64
 	flag.Float64Var(&teamPower, "team-power", 250000, "総合力を指定します。(Enter the team's power.)")
@@ -89,27 +90,61 @@ func origMain(isOptionSpecified bool) {
 		return
 	}
 
-	aviutlPath, _ := pjsekaioverlay.DetectAviUtl() // aviutl2 soon?
+	aviutlPath, aviutlProcess, aviutlName := pjsekaioverlay.DetectAviUtl()
+	if aviutlProcess != "" {
+		fmt.Printf("Instance: %s\n", color.GreenString(aviutlName))
+	}
 
+	if !isOptionSpecified && aviutlProcess == "" {
+		fmt.Print("\nファイルを生成するAviUtlインスタンスを選択してください。\nChoose AviUtl instance to generate files.\n\n'1': AviUtl\n'2': AviUtl ExEdit2\n> ")
+		before, _ := rawmode.Enable()
+		tmpAviutlByte, _ := bufio.NewReader(os.Stdin).ReadByte()
+		tmpAviutl := string(tmpAviutlByte)
+		rawmode.Restore(before)
+		switch tmpAviutl {
+		default:
+			aviutlProcess = ""
+			fmt.Printf("\n\033[A\033[2K\r> %s\n", color.RedString(tmpAviutl))
+			fmt.Println(color.RedString("FAIL: AviUtlインスタンスが選択されていません。\nAviUtl instance not selected."))
+			return
+		case "1":
+			aviutlProcess = "aviutl.exe"
+			aviutlName = "AviUtl"
+			fmt.Printf("\n\033[A\033[2K\r> %s\n", color.GreenString(tmpAviutl))
+			fmt.Println(color.GreenString("Instance: AviUtl"))
+		case "2":
+			aviutlProcess = "aviutl2.exe"
+			aviutlName = "AviUtl ExEdit2"
+			aviutlPath, _ = filepath.Abs("C:\\ProgramData\\aviutl2")
+			fmt.Printf("\n\033[A\033[2K\r> %s\n", color.GreenString(tmpAviutl))
+			fmt.Println(color.GreenString("Instance: AviUtl ExEdit2"))
+		}
+	}
+
+	var successInstall = false
 	if !skipAviutlModConfig {
-		success := pjsekaioverlay.ModifyAviUtlConfig(aviutlPath)
+		success := pjsekaioverlay.ModifyAviUtlConfig(aviutlPath, aviutlProcess)
 		if success {
-			fmt.Println(color.GreenString("AviUtlの設定変更が正常に完了しました。(AviUtl configurations successfully modified.)"))
+			fmt.Println(color.GreenString(aviutlName + "の設定変更が正常に完了しました。(" + aviutlName + " configurations successfully modified.)"))
+			successInstall = true
 		}
 	}
-
 	if !skipAviutlInstall {
-		success := pjsekaioverlay.TryInstallObject(aviutlPath)
+		success := pjsekaioverlay.TryInstallObject(aviutlPath, aviutlProcess)
 		if success {
-			fmt.Println(color.GreenString("AviUtlオブジェクトのインストールに成功しました。(AviUtl object successfully installed.)"))
+			fmt.Println(color.GreenString(aviutlName + "オブジェクトのインストールに成功しました。(" + aviutlName + " object successfully installed.)"))
+			successInstall = true
 		}
 	}
-
 	if !skipAviutlScriptInstall {
-		success := pjsekaioverlay.TryInstallScript(aviutlPath)
+		success := pjsekaioverlay.TryInstallScript(aviutlPath, aviutlProcess)
 		if success {
-			fmt.Println(color.GreenString("AviUtl依存関係スクリプトのインストールに成功しました。(AviUtl dependency scripts successfully installed.)"))
+			fmt.Println(color.GreenString(aviutlName + "依存関係スクリプトのインストールに成功しました。(" + aviutlName + " dependency scripts successfully installed.)"))
+			successInstall = true
 		}
+	}
+	if successInstall {
+		fmt.Println(color.HiYellowString("変更を適用するには、" + aviutlName + "を再起動してください。(Please restart " + aviutlName + " to apply changes.)"))
 	}
 
 	// TipsAPIを使用してtipsを表示（利用できない場合は従来のTips関数にフォールバック）
@@ -127,7 +162,7 @@ func origMain(isOptionSpecified bool) {
 
 	var chartInstance []string
 	if strings.HasPrefix(chartId, "chcy-") {
-		fmt.Printf("\nChart Cyanvasインスタンスを選択してください。(Please choose Chart Cyanvas instance.)\n%s\n\n[インスタンス一覧 - List of instance(s)]\n'0': アーカイブ/Archive - cc.sevenc7c.com\n'1': 分岐サーバー/Offshoot server - chart-cyanvas.com\n> ", color.YellowString("(!) 別のインスタンスを持っていますか？URLドメインを入力してください。(Do you have a different instance? Input the URL domain.)"))
+		fmt.Printf("\nChart Cyanvasインスタンスを選択してください。(Please choose Chart Cyanvas instance.)\n%s\n\n[インスタンス一覧 - List of instance(s)]\n'0': アーカイブ/Archive - cc.sevenc7c.com\n'1': 分岐サーバー/Offshoot server - chart-cyanvas.com\n> ", color.HiYellowString("(!) 別のインスタンスを持っていますか？URLドメインを入力してください。(Do you have a different instance? Input the URL domain.)"))
 		var chartInput string
 		fmt.Scanln(&chartInput)
 		chartInput = strings.TrimPrefix(chartInput, "http://")
@@ -216,12 +251,36 @@ func origMain(isOptionSpecified bool) {
 		return
 	}
 
-	formattedOutDir := filepath.Join(cwd, strings.ReplaceAll(outDir, "_chartId_", chartId+" ("+chart.Title+")"))
-	resultDir := filepath.Dir(formattedOutDir) + "\\" + chartId + " (" + chart.Title + ")"
-	if _, err := io.ReadAll(transform.NewReader(strings.NewReader(formattedOutDir), japanese.ShiftJIS.NewEncoder())); err != nil {
-		formattedOutDir = filepath.Join(cwd, strings.ReplaceAll(outDir, "_chartId_", chartId))
-		resultDir = filepath.Dir(formattedOutDir) + "\\" + chartId
+	formattedOutDir := filepath.Join(cwd, strings.ReplaceAll(outDir, "_chartId_", chartId))
+	resultDir := filepath.Dir(formattedOutDir) + "\\" + chartId
+
+	isAdminPerm := func(path string) bool {
+		testFile := filepath.Join(path, ".test_access")
+		err := os.WriteFile(testFile, []byte("test"), 0644)
+		if err != nil {
+			return true
+		}
+		os.Remove(testFile)
+		return false
 	}
+	if isAdminPerm(formattedOutDir) {
+		fmt.Println(color.RedString(fmt.Sprintf("FAIL: ディレクトリには管理者権限が必要です。pjsekai-overlay-APPEND を「C:\\」または別の場所に移動してください。\nYour directory requires administrative permissions. Please move pjsekai-overlay-APPEND to \"C:\\\" or somewhere else.\n\n出力先ディレクトリ (Output path):%s", resultDir)))
+		return
+	}
+
+	isASCII := func(s string) bool {
+		for i := 0; i < len(s); i++ {
+			if s[i] > 127 {
+				return false
+			}
+		}
+		return true
+	}
+	if !isASCII(formattedOutDir) {
+		fmt.Println(color.RedString(fmt.Sprintf("FAIL: ディレクトリに非ASCII文字が含まれています。pjsekai-overlay-APPEND を「C:\\」または別の場所に移動してください。\nYour directory contains non-ASCII characters. Please move pjsekai-overlay-APPEND to \"C:\\\" or somewhere else.\n\n出力先ディレクトリ (Output path):%s", resultDir)))
+		return
+	}
+
 	fmt.Printf("- 出力先ディレクトリ (Output path): %s\n", color.CyanString(resultDir))
 
 	fmt.Print("- ジャケットをダウンロード中 (Downloading jacket)... ")
@@ -233,7 +292,15 @@ func origMain(isOptionSpecified bool) {
 
 	fmt.Println(color.GreenString("OK"))
 
-	customBG := false
+	// fmt.Print("- 音声のプレビューをダウンロード中 (Downloading preview audio)... ")
+	// err = pjsekaioverlay.DownloadPreview(chartSource, chart, formattedOutDir)
+	// if err != nil {
+	// 	fmt.Println(color.RedString(fmt.Sprintf("FAIL: %s", err.Error())))
+	// 	return
+	// }
+
+	// fmt.Println(color.GreenString("OK"))
+
 	if !isOptionSpecified && chartSource.Id == "untitledcharts" {
 		fmt.Print("\nカスタム背景を使用しますか？（デフォルトを使用するには「n」）[y/n]\nUse custom background? ('n' to use default) [y/n]\n> ")
 		before, _ := rawmode.Enable()
@@ -251,33 +318,44 @@ func origMain(isOptionSpecified bool) {
 		}
 	}
 
-	fmt.Print("- 背景をダウンロード中 (Downloading background)... ")
 	if customBG {
-		err = pjsekaioverlay.DownloadBackground(chartSource, chart, formattedOutDir, chartId)
+		fmt.Print("- 背景をダウンロード中 (Downloading background)... ")
+
+		err = pjsekaioverlay.DownloadBackground(chartSource, chart, formattedOutDir, chartId, "")
 		if err != nil {
 			fmt.Println(color.RedString(fmt.Sprintf("FAIL: %s", err.Error())))
 			return
 		}
 
-		err = pjsekaioverlay.DownloadBackground(chartSource, chartUNv1def, formattedOutDir, chartId+"?levelbg=default_or_v1")
+		err = pjsekaioverlay.DownloadBackground(chartSource, chartUNv1def, formattedOutDir, chartId+"?levelbg=default_or_v1", "")
 		if err != nil {
 			fmt.Println(color.RedString(fmt.Sprintf("FAIL: %s", err.Error())))
 			return
 		}
 	} else if chartSource.Id == "untitledcharts" {
-		err = pjsekaioverlay.DownloadBackground(chartSource, chartUNv3, formattedOutDir, chartId+"?levelbg=v3")
+		fmt.Print("- 背景をダウンロード中 (Downloading background)... ")
+
+		err = pjsekaioverlay.DownloadBackground(chartSource, chartUNv3, formattedOutDir, chartId+"?levelbg=v3", "")
 		if err != nil {
 			fmt.Println(color.RedString(fmt.Sprintf("FAIL: %s", err.Error())))
 			return
 		}
 
-		err = pjsekaioverlay.DownloadBackground(chartSource, chartUNv1, formattedOutDir, chartId+"?levelbg=v1")
+		err = pjsekaioverlay.DownloadBackground(chartSource, chartUNv1, formattedOutDir, chartId+"?levelbg=v1", "")
 		if err != nil {
 			fmt.Println(color.RedString(fmt.Sprintf("FAIL: %s", err.Error())))
 			return
 		}
 	} else {
-		err = pjsekaioverlay.DownloadBackground(chartSource, chart, formattedOutDir, chartId)
+		fmt.Print("- ローカルで背景を生成中 - しばらく時間がかかります (Generating background locally - will take a while)... ")
+
+		err = pjsekaioverlay.DownloadBackground(chartSource, chart, formattedOutDir, chartId, "-v 1")
+		if err != nil {
+			fmt.Println(color.RedString(fmt.Sprintf("FAIL: %s", err.Error())))
+			return
+		}
+
+		err = pjsekaioverlay.DownloadBackground(chartSource, chart, formattedOutDir, chartId, "-v 3")
 		if err != nil {
 			fmt.Println(color.RedString(fmt.Sprintf("FAIL: %s", err.Error())))
 			return
@@ -297,23 +375,28 @@ func origMain(isOptionSpecified bool) {
 	fmt.Println(color.GreenString("OK"))
 
 	if !isOptionSpecified {
-		fmt.Print("\n採点モードを選択してください。(Select scoring mode.)\n'1': デフォルト/Default\n'2': 大会モード/Tournament Mode (PERFECT = +3)\n'3': Sonolusスコア/Arcade Score (MAX: 1000000)\n> ")
+		fmt.Print("\n採点モードを選択してください。(Choose scoring mode.)\n'1': デフォルト/Default\n'2': 大会モード/Tournament Mode (PERFECT = +3)\n'3': Sonolusスコア/Arcade Score (MAX: 1000000)\n> ")
 		before, _ := rawmode.Enable()
 		tmpScoreModeByte, _ := bufio.NewReader(os.Stdin).ReadByte()
 		tmpScoreMode := string(tmpScoreModeByte)
 		rawmode.Restore(before)
 		switch tmpScoreMode {
 		default:
-			scoreMode = 1 // default
+			scoreMode = "default"
+			fmt.Printf("\n\033[A\033[2K\r> %s\n", color.GreenString(tmpScoreMode))
+			fmt.Println(color.GreenString("Score Mode: デフォルト/Default"))
 		case "2":
-			scoreMode = 2 // tournament
+			scoreMode = "tournament"
+			fmt.Printf("\n\033[A\033[2K\r> %s\n", color.GreenString(tmpScoreMode))
+			fmt.Println(color.GreenString("Score Mode: 大会/Tournament"))
 		case "3":
-			scoreMode = 3 // arcade
+			scoreMode = "sonolus"
+			fmt.Printf("\n\033[A\033[2K\r> %s\n", color.GreenString(tmpScoreMode))
+			fmt.Println(color.GreenString("Score Mode: Sonolusスコア/Arcade Score"))
 		}
-		fmt.Printf("\n\033[A\033[2K\r> %s\n", color.GreenString(tmpScoreMode))
 	}
 
-	if !isOptionSpecified && scoreMode == 1 {
+	if !isOptionSpecified && scoreMode == "default" {
 		fmt.Print("\n総合力を指定してください。 (Input your team power.)\n\n- 小数と科学的記数法が使える (Accepts decimals & scientific notation)\n- おすすめ (Recommended): 250000 - 300000\n- 制限 (Limit): ???\n> ")
 		var tmpTeamPower string
 		fmt.Scanln(&tmpTeamPower)
@@ -327,7 +410,7 @@ func origMain(isOptionSpecified bool) {
 		}
 
 		if teamPower >= math.Abs(1e+33) {
-			fmt.Printf("\033[A\033[2K\r> %s\n", color.YellowString(tmpTeamPower))
+			fmt.Printf("\033[A\033[2K\r> %s\n", color.HiYellowString(tmpTeamPower))
 			fmt.Println(color.HiYellowString("WARN: スコアは大きすぎると精度が落ちる可能性がある。Score may decrease precision if it's too large.\n"))
 		} else {
 			fmt.Printf("\033[A\033[2K\r> %s\n", color.GreenString(tmpTeamPower))
@@ -339,7 +422,7 @@ func origMain(isOptionSpecified bool) {
 
 	fmt.Println(color.GreenString("OK"))
 	if !isOptionSpecified {
-		fmt.Print("\n英語版を使う？（イントロ + v3 UI）- Use English version? (Intro + v3 UI) [y/n]\n> ")
+		fmt.Print("\n英語UIを使う？（イントロ + v3 UI）- Use English UI? (Intro + v3 UI) [y/n]\n> ")
 		before, _ := rawmode.Enable()
 		tmpEnableENByte, _ := bufio.NewReader(os.Stdin).ReadByte()
 		tmpEnableEN := string(tmpEnableENByte)
@@ -369,7 +452,12 @@ func origMain(isOptionSpecified bool) {
 
 	fmt.Println(color.GreenString("OK"))
 
-	fmt.Print("- exoファイルを生成中 (Generating exo file)... ")
+	var exoType = "exo"
+	if aviutlProcess == "aviutl2.exe" {
+		exoType = "alias(.object)"
+	}
+
+	fmt.Printf("- %sファイルを生成中 (Generating %s file)... ", exoType, exoType)
 
 	var difficulty string
 	difficultyStrings := []string{"EASY", "NORMAL", "HARD", "EXPERT", "MASTER", "APPEND", "ETERNAL"}
@@ -400,8 +488,8 @@ func origMain(isOptionSpecified bool) {
 		charter = charterTag
 	}
 
-	description := []string{fmt.Sprintf("作詞：-    作曲：%s    編曲：-", composerAndVocals[0]), fmt.Sprintf("Vo：%s    譜面作成：%s", composerAndVocals[1], charter[0])}
-	descriptionv1 := []string{fmt.Sprintf("作詞：-    作曲：%s    編曲：-", composerAndVocals[0]), fmt.Sprintf("歌：%s    譜面作成：%s", composerAndVocals[1], charter[0])}
+	description := []string{fmt.Sprintf("作詞：-    作曲：%s    編曲：-", composerAndVocals[0]), fmt.Sprintf("Vo：%s    譜面制作：%s", composerAndVocals[1], charter[0])}
+	descriptionv1 := []string{fmt.Sprintf("作詞：-    作曲：%s    編曲：-", composerAndVocals[0]), fmt.Sprintf("歌：%s    譜面制作：%s", composerAndVocals[1], charter[0])}
 	extra := "【追加情報】"
 	exFile := "tournament-mode.png"
 	exFileOpacity := "100.0"
@@ -412,13 +500,17 @@ func origMain(isOptionSpecified bool) {
 		extra = "【Additional Info】"
 		exFile = "tournament-mode-en.png"
 	}
-	if scoreMode == 2 {
+	if scoreMode == "tournament" {
 		exFileOpacity = "0.0"
 	}
 
 	mapping := pjsekaioverlay.SetOverlayDefault()
 
-	err = pjsekaioverlay.WriteExoFiles(assets, formattedOutDir, chart.Title, description, descriptionv1, difficulty, extra, exFile, exFileOpacity, mapping)
+	if aviutlProcess == "aviutl.exe" {
+		err = pjsekaioverlay.WriteExoFiles(assets, formattedOutDir, chart.Title, description, descriptionv1, difficulty, extra, exFile, exFileOpacity, mapping)
+	} else {
+		err = pjsekaioverlay.WriteAliasFiles(assets, formattedOutDir, chart.Title, description, descriptionv1, difficulty, extra, exFile, exFileOpacity, mapping)
+	}
 
 	if err != nil {
 		fmt.Println(color.RedString(fmt.Sprintf("FAIL: %s", err.Error())))
@@ -427,8 +519,11 @@ func origMain(isOptionSpecified bool) {
 
 	fmt.Println(color.GreenString("OK"))
 
-	fmt.Println(color.GreenString("\n全ての処理が完了しました。READMEの規約を確認した上で、exoファイルをAviUtlにインポートして下さい。\nExecution complete! Please import the exo file into AviUtl after reviewing the README Terms of Use."))
-	fmt.Printf("%s\n", color.GreenString("- 出力先ディレクトリ (Output path): "+resultDir))
+	message := fmt.Sprintf("\n全ての処理が完了しました。READMEの規約を確認した上で、%sファイルを%sにインポートして下さい。\nExecution complete! Please import the %s file into %s after reviewing the README Terms of Use.", exoType, aviutlName, exoType, aviutlName)
+	fmt.Print(color.GreenString(message))
+
+	cmd := exec.Command(`explorer`, `/select,`, resultDir)
+	cmd.Run()
 }
 
 func main() {

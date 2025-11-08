@@ -1,0 +1,7 @@
+--param:10
+local index,ratio = math.modf(obj.getpoint("index"))
+local st = obj.getpoint(index);
+local ed = obj.getpoint(index+1);
+return st + (ed-st)*math.floor(ratio*obj.getpoint("param"))/obj.getpoint("param");
+
+--パラメータの単位は％

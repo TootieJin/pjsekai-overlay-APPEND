@@ -1,0 +1,30 @@
+--track0:しきい値,0,255,128,1
+--track1:周期XY,0,50,5,0.01
+--track2:変化速度,0,50,0
+--track3:種類,0,5,0,1
+--dialog:色/col,col=0xffffff;輝度保持/chk,kdhj=0;
+
+--[[
+ティム氏の色調補正セットにある「T_Color_Module.dll」が必要です。
+http://www.nicovideo.jp/watch/sm21178949
+からダウンロードし、当スクリプトファイルと同じフォルダに入れてください。
+]]
+
+
+
+local sikii=obj.track0
+local syk=obj.track1
+local hks=obj.track2
+local nizs=obj.track3
+
+
+obj.effect("単色化","color",0xffffff,"輝度を保持する",kdhj)
+obj.effect("ノイズ","変化速度",hks,"周期X",syk,"周期Y",syk,"mode",1,"type",nizs)
+
+require("T_Color_Module")
+local userdata,w,h=obj.getpixeldata()
+T_Color_Module.binarization(userdata,w,h,sikii,1)
+obj.putpixeldata(userdata)
+
+obj.effect("カラーキー","color_yc",0,"status",1)
+obj.effect("単色化","color",col,"輝度を保持する",0)

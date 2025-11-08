@@ -1,0 +1,39 @@
+--[[pixelshader@psmain:
+Texture2D InputTexture : register(t0);
+
+float4 psmain(float4 pos : SV_Position) : SV_Target {
+    float4 color = InputTexture[uint2(pos.xy)];
+    float3 p = color.rgb * color.a;
+    
+    float irate = max(max(p.r, p.g), p.b);
+    if (irate <= 0.0)
+    {
+        return float4(0.0, 0.0, 0.0, 0.0);
+    }
+
+    float3 t = p / irate;
+    float ta = 0.0;
+    if (t.b > 0.0)
+    {
+        ta = p.b / t.b;
+    }
+    else if (t.g > 0.0)
+    {
+        ta = p.g / t.g;
+    }
+    else if (t.r > 0.0)
+    {
+        ta = p.r / t.r;
+    }
+    
+    if (ta > 0.0)
+    {
+        return float4(t * ta, ta);
+    }
+    else
+    {
+        return float4(0.0, 0.0, 0.0, 0.0);
+    }
+}
+]]
+obj.pixelshader("psmain","object","object")

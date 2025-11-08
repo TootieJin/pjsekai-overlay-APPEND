@@ -1,0 +1,92 @@
+--track0:サイズ,1,2000,100,1
+--track1:ライン幅,1,1000,20,1
+--track2:頭サイズ,0,1000,50,1
+--track3:角度,0,360,260
+--dialog:色/col,col=0xffff00;図形/fig,fig="三角形";上下反転/chk,jgh=0;左右反転/chk,syh=0;中心角,cc=0;終点あり/chk,siri=0;
+size = obj.track0
+haba = obj.track1
+hds = obj.track2
+r = obj.track3
+
+--仮想バッファに描画
+kaso=math.max(size-haba+hds,size)
+obj.setoption("blend","alpha_add")
+obj.setoption("drawtarget","tempbuffer",kaso,kaso)
+
+
+--本体
+obj.load("figure","円",col,size,haba)
+obj.effect("斜めクリッピング","角度",180-r/2,"ぼかし",0)
+obj.effect("ミラー","境目調整",-size/2)
+obj.draw(0,0,0,1,1,0,0,-90+r/2*(1-cc/180))
+
+
+--頭
+obj.load("figure",fig,col,hds)
+l = size/2 - haba/2
+rr = math.rad(r-r*cc/360)
+if(fig=="三角形") then
+	cl = hds*math.sin(math.rad(30))/2-1
+else
+	cl=0
+end
+x = math.sin(rr)*l + math.cos(rr)*cl
+y = -math.cos(rr)*l + math.sin(rr)*cl
+obj.draw(x,y,0,1,1,0,0,90+r*(1-cc/360))
+
+
+--終点図形
+if(siri==1) then
+	rr2 = math.rad(-r*cc/360)
+	if(fig=="三角形") then
+		cl = hds*math.sin(math.rad(30))/2-1
+	else
+		cl=0
+	end
+	x = math.sin(rr2)*l - math.cos(rr2)*cl
+	y = -math.cos(rr2)*l - math.sin(rr2)*cl
+	obj.draw(x,y,0,1,1,0,0,-90-r*cc/360)
+end
+
+
+--仮想バッファから読み込み
+obj.load("tempbuffer")
+
+obj.effect("反転","上下反転",jgh,"左右反転",syh)
+
+
+
+--[[
+おまけ（講座動画バージョン）
+
+--  --track0:サイズ,1,2000,100,1
+--  --track1:ライン幅,1,1000,20,1
+--  --track2:頭サイズ,0,1000,50,1
+--  --track3:角度,0,360,260
+--  --dialog:色/col,col=0xffff00;
+size = obj.track0
+haba = obj.track1
+hds = obj.track2
+r = obj.track3
+
+--仮想バッファに描画
+kaso=math.max(size-haba+hds,size)
+obj.setoption("drawtarget","tempbuffer",kaso,kaso)
+
+
+--本体
+obj.load("figure","円",col,size,haba)
+obj.effect("斜めクリッピング","角度",180-r/2)
+obj.effect("ミラー","境目調整",-size/2)
+obj.draw(0,0,0,1,1,0,0,-90+r/2)
+
+--頭
+obj.load("figure","三角形",col,hds)
+l = size/2 - haba/2
+x = math.sin(math.rad(r))*l
+y = -math.cos(math.rad(r))*l
+obj.draw(x,y,0,1,1,0,0,90+r)
+
+--仮想バッファから読み込み
+obj.load("tempbuffer")
+]]

@@ -1,0 +1,44 @@
+--track0:分割数,4,50,10,1
+--track1:割合,0,100,50
+--track2:回転,-720,720,0
+--track3:サイズ,0,2000,200,1
+--dialog:色1/col,col=0xff0000;色2(負値で透明)/col,col2=0xffff00;図形/fig,fig="円";横サイズ,w=800;縦サイズ,h=450;図形角度,figr=0;中心座標,pos={0,0};
+
+local div = obj.track0
+local val = obj.track1/100
+local r   = obj.track2
+local s   = obj.track3
+
+obj.setanchor("pos",1)
+local cx = pos[1]
+local cy = pos[2]
+local l  = math.sqrt((w+math.abs(cx))^2+(h+math.abs(cy))^2)*1.2
+
+obj.setoption("drawtarget","tempbuffer",w,h)
+
+--背景色
+if(col2>=0) then
+	obj.load("figure","四角形",col2,2)
+	obj.drawpoly(-w/2,-h/2,0,w/2,-h/2,0,w/2,h/2,0,-w/2,h/2,0)
+end
+
+--光
+obj.load("figure","四角形",col,2)
+for i=0,div-1 do
+	local a=i/div
+	local b=a+1/div*val
+	local sr=r-360/div*val/2-90
+	x1=cx+l*math.cos(math.rad(sr+360*a))
+	y1=cy+l*math.sin(math.rad(sr+360*a))
+	x2=cx+l*math.cos(math.rad(sr+360*(a+b)/2))
+	y2=cy+l*math.sin(math.rad(sr+360*(a+b)/2))
+	x3=cx+l*math.cos(math.rad(sr+360*b))
+	y3=cy+l*math.sin(math.rad(sr+360*b))
+	obj.drawpoly(cx,cy,0, x1,y1,0, x2,y2,0, x3,y3,0)
+end
+
+--図形
+obj.load("figure",fig,col,s)
+obj.draw(cx,cy,0,1,1,0,0,r+figr)
+
+obj.load("tempbuffer")

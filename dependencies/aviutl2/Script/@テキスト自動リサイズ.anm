@@ -1,0 +1,167 @@
+--Ver20240319
+
+@テキスト余白カット
+--track0:上余白,0,2000,20,0.1
+--track1:下余白,0,2000,20,0.1
+--track2:左余白,0,2000,20,0.1
+--track3:右余白,0,2000,20,0.1
+--dialog:上クリッピング/chk,enable_top=1;下クリッピング/chk,enable_bottom=1;左クリッピング/chk,enable_left=1;右クリッピング/chk,enable_right=1;ライン精度,accuracy_line=1;ピクセル精度,accuracy_pixel=1;
+--check0:座標補正する,1
+
+
+--動作モード指定
+obj.pixeloption("type", "rgb")
+obj.pixeloption("get", "obj")
+obj.pixeloption("put", "obj")
+obj.pixeloption("blend")
+
+--変数宣言
+local margin_top    = obj.track0    --余白
+local margin_bottom = obj.track1
+local margin_left   = obj.track2
+local margin_right  = obj.track3
+
+local trim_top      = 0             --クリッピング量
+local trim_bottom   = 0
+local trim_left     = 0
+local trim_right    = 0
+
+local r,g,b,a       = 0,0,0,0
+local x,y           = 0,0
+local w,h           = obj.getpixel()
+local i             = 0
+
+
+--精度最小値制限
+if (accuracy_line < 1) then
+    accuracy_line = 1
+end 
+
+if (accuracy_pixel < 1) then
+    accuracy_pixel = 1
+end 
+
+
+--上クリッピング量測定
+for y=0, h, accuracy_line do
+    for x=0, w, accuracy_pixel do
+        r,g,b,a = obj.getpixel(x,y)
+        if ( a ~= 0 ) then
+            trim_top = y - accuracy_line
+            break
+        end
+    end
+    if ( trim_top ~= 0 ) then
+        break
+    end
+end
+
+--下クリッピング量測定
+for y=h, 0, ( -1 * accuracy_line ) do
+    for x=0, w, accuracy_pixel do
+        r,g,b,a = obj.getpixel(x,y)
+        if ( a ~= 0 ) then
+            trim_bottom = ( obj.h - y ) - accuracy_line
+            break
+        end
+    end
+    if ( trim_bottom ~= 0 ) then
+        break
+    end
+end
+
+--左クリッピング量測定
+for x=0, w, accuracy_line do
+    for y=0, h, accuracy_pixel do
+        r,g,b,a = obj.getpixel(x,y)
+        if ( a ~= 0 ) then
+            trim_left = x - accuracy_line
+            break
+        end
+    end
+    if ( trim_left ~= 0 ) then
+        break
+    end
+end
+
+--右クリッピング量測定
+for x=w, 0, (-1 * accuracy_line)do
+    for y=0, h, accuracy_pixel do
+        r,g,b,a = obj.getpixel(x,y)
+        if ( a ~= 0 ) then
+            trim_right = ( obj.w - x ) - accuracy_line
+            break
+        end
+    end
+    if ( trim_right ~= 0 ) then
+        break
+    end
+end
+
+--マージンチェック(座標補正する場合の最大値制限)
+if margin_top > trim_top then
+    margin_top = trim_top
+end
+
+if margin_bottom > trim_bottom then
+    margin_bottom = trim_bottom
+end
+
+if margin_left > trim_left then
+    margin_left = trim_left
+end
+
+if margin_right > trim_right then
+    margin_right = trim_right
+end
+
+--クリッピング
+if enable_top then
+    obj.effect( "クリッピング", "上", trim_top - margin_top)
+    if( obj.check0 ) then
+        obj.cy = obj.cy + (trim_top - margin_top) / 2
+    end
+end
+
+if enable_bottom then
+    obj.effect( "クリッピング", "下", trim_bottom - margin_bottom)
+    if( obj.check0 ) then
+        obj.cy = obj.cy - (trim_bottom - margin_bottom) / 2
+    end
+end
+
+if enable_left then
+    obj.effect( "クリッピング", "左", trim_left - margin_left)
+    if( obj.check0 ) then
+        obj.cx = obj.cx + (trim_left - margin_left) / 2
+    end
+end
+
+if enable_right then
+    obj.effect( "クリッピング", "右", trim_right - margin_right)
+    if( obj.check0 ) then
+        obj.cx = obj.cx - (trim_right - margin_right) / 2
+    end
+end
+
+
+
+@テキスト枠サイズ指定
+--track0:Xサイズ,0,4000,1920,0.1
+--track1:Yサイズ,0,4000,1080,0.1
+--dialog:X有効/chk,mode_enablex=1;Y有効/chk,mode_enabley=1;
+
+local w = obj.track0
+local h = obj.track1
+
+if mode_enablex == 1 then
+    if obj.w > w then
+        obj.effect( "拡大率", "X", w / obj.w * 100)
+    end
+end
+
+if mode_enabley == 1 then
+    if obj.h > h then
+        obj.effect( "拡大率", "Y", h / obj.h * 100)
+    end
+end
