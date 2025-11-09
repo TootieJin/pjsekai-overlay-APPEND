@@ -3,7 +3,7 @@
 ; Place in ProgramData\aviutl2\Language to add to Language Settings
 
 ; Original file: https://github.com/nagotown/aviutl2-EN
-; Version: b18a
+; Version: b19
 ; pjsekai-overlay language support by TootieJin
 
 [Effect]
@@ -657,6 +657,7 @@ Z軸回転=Rotate Z
 パターン画像=Pattern Image
 影を付ける=Add Shadow
 影の範囲=Shadow Range
+自動スクロール=Auto Scroll
 
 ; Extras (Originally untranslated)
 超点X=Diffuse X
