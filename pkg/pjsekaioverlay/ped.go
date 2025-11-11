@@ -342,36 +342,11 @@ func WritePedFile(frames []PedFrame, assets string, path string, levelInfo sonol
 	}
 
 	lastScore := 0.0
-	lastScore2 := 0.0
 	rating := math.Max(5, math.Min(float64(levelInfo.Rating), 40))
 	for i, frame := range frames {
-		// 2-variable scoring (supports accurate digits up to 1e+34)
-		score := math.Mod(frame.Score, 1e+17)
-		score2 := math.Floor(frame.Score / 1e+17)
-		if score2 < 0 {
-			score2 = math.Ceil(frame.Score / 1e+17)
-		}
-
-		if math.Ceil(score) < 0 && math.Ceil(score2) < 0 {
-			score = -score
-		}
-
-		frameScore := math.Mod(frame.Score-(lastScore+(lastScore2*1e+17)), 1e+17)
-		frameScore2 := score2 - lastScore2
-
-		lastScore = math.Mod(frame.Score, 1e+17)
-		lastScore2 = math.Floor(frame.Score / 1e+17)
-		if lastScore2 < 0 {
-			lastScore2 = math.Ceil(frame.Score / 1e+17)
-		}
-
-		if math.Ceil(frameScore) < 0 && math.Floor(frameScore2) > 0 {
-			frameScore = 1e+16 - frameScore
-		}
-
-		if math.Ceil(frameScore) < 0 && math.Ceil(frameScore2) < 0 {
-			frameScore = -frameScore
-		}
+		score := frame.Score
+		frameScore := score - lastScore
+		lastScore = frame.Score
 
 		rank := "n"
 		scoreX := 0.0
@@ -412,11 +387,11 @@ func WritePedFile(frames []PedFrame, assets string, path string, levelInfo sonol
 		rankBPosv1 := 361.0 / 610
 		rankCPosv1 := 273.0 / 610
 
-		if math.Ceil(score2) < 0 || math.Ceil(score) < 0 {
+		if score < 0 {
 			rank = "d"
 			scoreX = 0
 			scoreXv1 = 0
-		} else if score >= rankBorder || math.Floor(score2) > 0 {
+		} else if score >= rankBorder {
 			rank = "s"
 			scoreX = rankBorderPos
 			scoreXv1 = rankBorderPosv1
@@ -453,7 +428,7 @@ func WritePedFile(frames []PedFrame, assets string, path string, levelInfo sonol
 			time = frames[i-1].Time + 0.000001
 		}
 
-		writer.Write(fmt.Appendf(nil, "s|%f:%.0f:%.0f:%.0f:%.0f:%f:%f:%s:%d\n", time, score2, score, frameScore2, frameScore, scoreX, scoreXv1, rank, i))
+		writer.Write(fmt.Appendf(nil, "s|%f:%.0f:%.0f:%f:%f:%s:%d\n", time, score, frameScore, scoreX, scoreXv1, rank, i))
 	}
 
 	return nil

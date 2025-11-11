@@ -1,0 +1,41 @@
+name = "ext"
+files = {
+	["LICENSE"] = "ext/LICENSE",
+	["README.md"] = "ext/README.md",
+	["assert.lua"] = "ext/assert.lua",
+	["class.lua"] = "ext/class.lua",
+	["cmdline.lua"] = "ext/cmdline.lua",
+	["coroutine.lua"] = "ext/coroutine.lua",
+	["ctypes.lua"] = "ext/ctypes.lua",
+	["debug.lua"] = "ext/debug.lua",
+	["detect_ffi.lua"] = "ext/detect_ffi.lua",
+	["detect_lfs.lua"] = "ext/detect_lfs.lua",
+	["detect_os.lua"] = "ext/detect_os.lua",
+	["env.lua"] = "ext/env.lua",
+	["ext.lua"] = "ext/ext.lua",
+	["ext.rockspec"] = "ext/ext.rockspec",
+	["fromlua.lua"] = "ext/fromlua.lua",
+	["gc.lua"] = "ext/gc.lua",
+	["gcmem.lua"] = "ext/gcmem.lua",
+	["io.lua"] = "ext/io.lua",
+	["load.lua"] = "ext/load.lua",
+	["math.lua"] = "ext/math.lua",
+	["meta.lua"] = "ext/meta.lua",
+	["number.lua"] = "ext/number.lua",
+	["op.lua"] = "ext/op.lua",
+	["os.lua"] = "ext/os.lua",
+	["path.lua"] = "ext/path.lua",
+	["range.lua"] = "ext/range.lua",
+	["reload.lua"] = "ext/reload.lua",
+	["require.lua"] = "ext/require.lua",
+	["string.lua"] = "ext/string.lua",
+	["table.lua"] = "ext/table.lua",
+	["timer.lua"] = "ext/timer.lua",
+	["tolua.lua"] = "ext/tolua.lua",
+	["xpcall.lua"] = "ext/xpcall.lua",
+}
+deps = {
+	"ffi",
+	--"lfs",	-- for vanilla lua
+	"lfs_ffi",	-- for luajit
+}

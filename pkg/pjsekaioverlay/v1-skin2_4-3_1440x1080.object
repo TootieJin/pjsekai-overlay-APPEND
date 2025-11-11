@@ -558,6 +558,7 @@ X軸境界=6000
 最小桁数={min_digit}
 アニメーション速度={score_speed}
 アニメーション採点={anim_score}
+「ユメステ」アニメーション={wds_anim}
 [21.1]
 effect.name=標準描画
 X=-418.00

@@ -90,13 +90,63 @@ func origMain(isOptionSpecified bool) {
 		return
 	}
 
+	mappingName, mapping := pjsekaioverlay.SetOverlayDefault()
+
+	if len(mapping) != 17 {
+		fmt.Println(color.RedString(fmt.Sprintf("FAIL:「default.ini」ファイルのデータに異常があります。「default.ini」ファイルを削除し、プログラムを再起動して再生成してください。\nAbnormal \"default.ini\" data. Please regenerate by deleting the \"default.ini\" file and reopen the program.\n- Mapping count: %v != 17", len(mapping))))
+		return
+	}
+
+	var inRange = map[string]bool{
+		// Root
+		"offset":    mapping[0] >= -99999.9 && mapping[0] <= 99999.9,
+		"cache":     mapping[1] == 0 || mapping[1] == 1,
+		"font_type": mapping[2] == 0 || mapping[2] == 1,
+		"watermark": mapping[3] == 0 || mapping[3] == 1,
+		// Life
+		"life":     mapping[4] >= 0 && mapping[4] <= 9999 && math.Mod(mapping[4], 1.0) == 0,
+		"overflow": mapping[5] == 0 || mapping[5] == 1,
+		// Score
+		"min_digit":   1 <= mapping[6] && mapping[6] <= 99 && math.Mod(mapping[6], 1.0) == 0,
+		"score_speed": mapping[7] >= 0,
+		"anim_score":  mapping[8] == 0 || mapping[8] == 1,
+		"wds_anim":    mapping[9] == 0 || mapping[9] == 1,
+		// Combo
+		"ap":          mapping[10] == 0 || mapping[10] == 1,
+		"tag":         mapping[11] == 0 || mapping[11] == 1,
+		"last_digit":  mapping[12] >= 0 && math.Mod(mapping[12], 1.0) == 0,
+		"combo_speed": mapping[13] >= 0,
+		"combo_burst": mapping[14] == 0 || mapping[14] == 1,
+		// Judgement
+		"judge":       1 <= mapping[15] && mapping[15] <= 99 && math.Mod(mapping[15], 1.0) == 0,
+		"judge_speed": mapping[16] >= 0,
+	}
+
+	var mappingErr []string
+	for i := range mapping {
+		inRangeBool := inRange[mappingName[i]]
+		if !inRangeBool {
+			mappingErr = append(mappingErr, mappingName[i], fmt.Sprintf("%v", mapping[i]))
+		}
+	}
+
+	if mappingErr != nil {
+		fmt.Println(color.RedString(fmt.Sprintf("FAIL:「default.ini」ファイルのデータに異常があります。「default.ini」ファイルを削除し、プログラムを再起動して再生成してください。\nAbnormal \"default.ini\" data. Please regenerate by deleting the \"default.ini\" file and reopen the program.\n- Mapping out of range: %s", mappingErr)))
+		return
+	}
+
+	var mappingStr []string
+	for _, v := range mapping {
+		mappingStr = append(mappingStr, fmt.Sprintf("%v", v))
+	}
+
 	aviutlPath, aviutlProcess, aviutlName := pjsekaioverlay.DetectAviUtl()
 	if aviutlProcess != "" {
 		fmt.Printf("Instance (auto-detected): %s\n", color.GreenString(aviutlName))
 	}
 
 	if !isOptionSpecified && aviutlProcess == "" {
-		fmt.Print("\nファイルを生成するAviUtlインスタンスを選択してください。\nChoose AviUtl instance to generate files.\n\n'1': AviUtl\n'2': AviUtl ExEdit2\n> ")
+		fmt.Print("ファイルを生成するAviUtlインスタンスを選択してください。\nChoose AviUtl instance to generate files.\n\n'1': AviUtl\n'2': AviUtl ExEdit2\n> ")
 		before, _ := rawmode.Enable()
 		tmpAviutlByte, _ := bufio.NewReader(os.Stdin).ReadByte()
 		tmpAviutl := string(tmpAviutlByte)
@@ -130,7 +180,7 @@ func origMain(isOptionSpecified bool) {
 		}
 	}
 	if !skipAviutlInstall {
-		success := pjsekaioverlay.TryInstallObject(aviutlPath, aviutlProcess)
+		success := pjsekaioverlay.TryInstallObject(aviutlPath, aviutlProcess, mappingStr)
 		if success {
 			fmt.Println(color.GreenString(aviutlName + "オブジェクトのインストールに成功しました。(" + aviutlName + " object successfully installed.)"))
 			successInstall = true
@@ -223,7 +273,7 @@ func origMain(isOptionSpecified bool) {
 	chartUNv1def, _ := pjsekaioverlay.FetchChart(chartSource, chartId+"?levelbg=default_or_v1")
 
 	if chart.Engine.Version != 13 {
-		fmt.Println(color.RedString(fmt.Sprintf("FAIL (ver.%d):エンジンのバージョンが古い。pjsekai-overlay-APPENDを最新版に更新してください。\nUnsupported engine version. Please update pjsekai-overlay-APPEND to latest version.", chart.Engine.Version)))
+		fmt.Println(color.RedString(fmt.Sprintf("FAIL (ver.%d): エンジンのバージョンが古い。pjsekai-overlay-APPENDを最新版に更新してください。\nUnsupported engine version. Please update pjsekai-overlay-APPEND to latest version.", chart.Engine.Version)))
 		return
 	}
 
@@ -289,7 +339,7 @@ func origMain(isOptionSpecified bool) {
 		return true
 	}
 	if !isASCII(formattedOutDir) {
-		fmt.Println(color.RedString(fmt.Sprintf("FAIL: ディレクトリに非ASCII文字が含まれています。pjsekai-overlay-APPEND を「C:\\」または別の場所に移動してください。\nYour directory contains non-ASCII characters. Please move pjsekai-overlay-APPEND to \"C:\\\" or somewhere else.\n\n出力先ディレクトリ (Output path): %s", resultDir)))
+		fmt.Println(color.RedString(fmt.Sprintf("\nFAIL: ディレクトリに非ASCII文字が含まれています。pjsekai-overlay-APPEND を「C:\\」または別の場所に移動してください。\nYour directory contains non-ASCII characters. Please move pjsekai-overlay-APPEND to \"C:\\\" or somewhere else.\n\n出力先ディレクトリ (Output path): %s", resultDir)))
 		return
 	}
 
@@ -424,7 +474,7 @@ func origMain(isOptionSpecified bool) {
 	}
 
 	if !isOptionSpecified && scoreMode == "default" {
-		fmt.Print("\n総合力を指定してください。 (Input your team power.)\n\n- 小数と科学的記数法が使える (Accepts decimals & scientific notation)\n- おすすめ (Recommended): 250000 - 300000\n- 制限 (Limit): ???\n> ")
+		fmt.Print("\n総合力を指定してください。 (Input your team power.)\n\n- 小数と科学的記数法が使える (Accepts decimals & scientific notation)\n- おすすめ (Recommended): 250000 - 300000\n- 例 (Example): 1234567; 1e+20; -300000\n> ")
 		var tmpTeamPower string
 		fmt.Scanln(&tmpTeamPower)
 		if tmpTeamPower == "" {
@@ -436,7 +486,7 @@ func origMain(isOptionSpecified bool) {
 			return
 		}
 
-		if teamPower >= math.Abs(1e+33) {
+		if teamPower >= math.Abs(2^56/10) && aviutlProcess == "aviutl.exe" {
 			fmt.Printf("\033[A\033[2K\r> %s\n", color.HiYellowString(tmpTeamPower))
 			fmt.Println(color.HiYellowString("WARN: スコアは大きすぎると精度が落ちる可能性がある。Score may decrease precision if it's too large.\n"))
 		} else {
@@ -531,12 +581,10 @@ func origMain(isOptionSpecified bool) {
 		exFileOpacity = "0.0"
 	}
 
-	mapping := pjsekaioverlay.SetOverlayDefault()
-
 	if aviutlProcess == "aviutl.exe" {
-		err = pjsekaioverlay.WriteExoFiles(assets, formattedOutDir, chart.Title, description, descriptionv1, difficulty, extra, exFile, exFileOpacity, mapping)
+		err = pjsekaioverlay.WriteExoFiles(assets, formattedOutDir, chart.Title, description, descriptionv1, difficulty, extra, exFile, exFileOpacity, mappingStr)
 	} else {
-		err = pjsekaioverlay.WriteAliasFiles(assets, formattedOutDir, chart.Title, description, descriptionv1, difficulty, extra, exFile, exFileOpacity, mapping)
+		err = pjsekaioverlay.WriteAliasFiles(assets, formattedOutDir, chart.Title, description, descriptionv1, difficulty, extra, exFile, exFileOpacity, mappingStr)
 	}
 
 	if err != nil {
@@ -547,7 +595,7 @@ func origMain(isOptionSpecified bool) {
 	fmt.Println(color.GreenString("OK"))
 
 	message := fmt.Sprintf("\n全ての処理が完了しました。READMEの規約を確認した上で、%sファイルを%sにインポートして下さい。\nExecution complete! Please import the %s file into %s after reviewing the README Terms of Use.", exoType, aviutlName, exoType, aviutlName)
-	fmt.Print(color.GreenString(message))
+	fmt.Println(color.GreenString(message))
 
 	cmd := exec.Command(`explorer`, `/select,`, resultDir)
 	cmd.Run()

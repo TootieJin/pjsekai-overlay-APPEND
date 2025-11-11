@@ -13,7 +13,13 @@ import (
 
 func Tips() {
 	r := rand.New(rand.NewSource(time.Now().UnixNano()))
+	start := time.Date(2024, 11, 24, 14, 29, 30, 0, time.UTC) // first ever commit for this repo <3
+	now := time.Now()
+	duration := now.Sub(start)
 	tips := []string{
+		fmt.Sprintf("pjsekai-overlay-APPENDの最初のコミットからの経過時間: %v", duration),
+		fmt.Sprintf("Time since the first commit of pjsekai-overlay-APPEND: %v", duration),
+
 		"水板を継続して運用する場合、名無しは月額15,000円以上を支払う必要がありました。",
 		"Had Chart Cyanvas server continue to run, Nanashi would have to pay $100+/month for it.",
 

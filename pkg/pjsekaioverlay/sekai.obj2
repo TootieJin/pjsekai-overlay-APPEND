@@ -8,6 +8,7 @@
 --check@cache:キャッシュ,{cache}
 --check@watermark:透かし,{watermark}
 
+local big = require("bignumber")
 if cache ~= 1 or not PED_DATA or PED_DATA.file ~= file then
   debug_print("[debug] Loading ped data in " .. file)
   PED_DATA = {}
@@ -29,17 +30,15 @@ if cache ~= 1 or not PED_DATA or PED_DATA.file ~= file then
       if header ~= nil then
         PED_DATA.loaded = "ok"
         if header == "s" then
-          local nmatch = {string.match(data, "([%-0-9.]+):([%-0-9.]+):([%-0-9.]+):([%-0-9.]+):([%-0-9.]+):([%-0-9.]+):([%-0-9.]+):([a-z]+):([%-0-9.]+)")}
+          local nmatch = {string.match(data, "([%-0-9.]+):([%-0-9.]+):([%-0-9.]+):([%-0-9.]+):([%-0-9.]+):([a-z]+):([%-0-9.]+)")}
           PED_DATA.frames[#PED_DATA.frames + 1] = {
             time = tonumber(nmatch[1]),
-            score2 = tonumber(nmatch[2]),
-            score = tonumber(nmatch[3]),
-            offset2 = tonumber(nmatch[4]),
-            offset = tonumber(nmatch[5]),
-            width = tonumber(nmatch[6]),
-            widthv1 = tonumber(nmatch[7]),
-            rank = nmatch[8],
-            combo = tonumber(nmatch[9])
+            score = big(nmatch[2]):tonumber(),
+            offset = big(nmatch[3]):tonumber(),
+            width = tonumber(nmatch[4]),
+            widthv1 = tonumber(nmatch[5]),
+            rank = nmatch[6],
+            combo = tonumber(nmatch[7])
           }
         elseif header == "c" then -- Combo
           local nmatch = {string.match(data, "([%-0-9.]+):([%-0-9.]+)")}
@@ -73,9 +72,7 @@ if PED_DATA.version == "{version}" or "{version}" == "0.0.0" then
   OFFSET = offset
   PED_DATA.current = {
     time = 0,
-    score2 = 0,
     score = 0,
-    offset2 = 0,
     offset = 0,
     width = 0,
     widthv1 = 0,
@@ -256,12 +253,13 @@ end
 @スコア
 --label:カスタムオブジェクト
 --track@x_boundary:X軸境界,0,9999,6000,1
---track@min_digit:最小桁数,1,17,{min_digit},1
+--track@min_digit:最小桁数,1,99,{min_digit},1
 --value@speed:アニメーション速度,{score_speed}
 --check@anim_score:アニメーション採点,{anim_score}
+--check@wds_anim:「ユメステ」アニメーション,{wds_anim}
 
 if PED_DATA and PED_DATA.version_status == "ok" then
-  obj.setoption("drawtarget", "tempbuffer", x_boundary, 446)
+  obj.setoption("drawtarget", "tempbuffer", x_boundary, math.ceil(120 * 1.5))
   obj.setoption("blend", 0)
   obj.load("image", PED_DATA.path.."/score/bg.png")
   obj.draw(0, 0, 0, 0.2145)
@@ -295,113 +293,67 @@ if PED_DATA and PED_DATA.version_status == "ok" then
 
   -- -127, 27, +22
   local score_str = ""
-  local score_str2 = ""
-  local minusDigits = min_digit - 1
-  if minusDigits < 1 then
-    minusDigits = 1
-  end
+  local minusDigits = math.max(1, min_digit - 1)
   if anim_score == 1 then
-    if math.floor(math.abs(PED_DATA.current.score2)) > 0 then
-      score_str = string.format("%17.0f", PED_DATA.current.score - PED_DATA.current.offset * (1 - progress_offset)^3):gsub(" ", "0")
-      score_str2 = string.format("%.0f", PED_DATA.current.score2 - PED_DATA.current.offset2 * (1 - progress_offset)^3)
+    if PED_DATA.current.score < 0 then
+      score_str = "-" .. string.format("%"..minusDigits..".0f", math.abs(PED_DATA.current.score - PED_DATA.current.offset * (1 - progress_offset)^3)):gsub(" ", "n")
     else
       score_str = string.format("%"..min_digit..".0f", PED_DATA.current.score - PED_DATA.current.offset * (1 - progress_offset)^3):gsub(" ", "n")
     end
-    if PED_DATA.current.score < 0 then
-      score_str = "-" .. string.format("%"..minusDigits..".0f", math.abs(PED_DATA.current.score - PED_DATA.current.offset * (1 - progress_offset)^3)):gsub(" ", "n")
-    end
   else
-    if math.floor(math.abs(PED_DATA.current.score2)) > 0 then
-      score_str = string.format("%17.0f", PED_DATA.current.score):gsub(" ", "0")
-      score_str2 = string.format("%.0f", PED_DATA.current.score2)
+    if PED_DATA.current.score < 0 then
+      score_str = "-" .. string.format("%"..minusDigits..".0f", math.abs(PED_DATA.current.score)):gsub(" ", "n")
     else
       score_str = string.format("%"..min_digit..".0f", PED_DATA.current.score):gsub(" ", "n")
     end
-    if PED_DATA.current.score < 0 then
-      score_str = "-" .. string.format("%"..minusDigits..".0f", math.abs(PED_DATA.current.score)):gsub(" ", "n")
-    end
   end
 
-  local score_len = string.len(score_str)
-  local score_len2 = string.len(score_str2)
+  local score_len = #score_str
 
   local progress = (progress_frame / 12) * speed
-  if PED_DATA.current.time > 0 and progress <= 2.5 then -- 30
-    local diff = ""
-    local diff2 = ""
-    if math.floor(math.abs(PED_DATA.current.offset2)) > 0 then
-      diff = string.format("%17.0f", PED_DATA.current.offset):gsub(" ", "0")
-      diff2 = string.format("%.0f", PED_DATA.current.offset2):gsub(" ", "0")
-    else
+  if PED_DATA.current.offset ~= 0 and progress <= 2.5 then -- 30
+    local diff = "+" .. string.format("%.0f", PED_DATA.current.offset)
+    if PED_DATA.current.offset < 0 then
       diff = string.format("%.0f", PED_DATA.current.offset)
     end
-
-    local diff_len = string.len(diff)
-    local diff_len2 = string.len(diff2)
+    local diff_len = #diff
 
     if progress > 1 then
       progress = 1
     end
 
-    local diff_x = 47 * (1 - (0.9 ^ (progress * 12))) + 22 * (score_len + score_len2 - 8)
+    local diff_x = 26.25 + 47 * (1 - (0.9 ^ (progress * 12))) + 22 * (score_len - 8)
     local diff_y = 34
     local diff_alpha = 1.3 * (1 - (0.9 ^ (progress * 12)))
-    local c_minus = 0
 
-    if PED_DATA.current.offset >= 0 and PED_DATA.current.offset2 >= 0 then
-      obj.load("image", PED_DATA.path.."/score/digit/splus.png")
-      obj.draw(26.25 + diff_x, diff_y, 0, 0.42, diff_alpha)
-      obj.load("image", PED_DATA.path.."/score/digit/plus.png")
-      obj.draw(26.25 + diff_x, diff_y, 0, 0.42, diff_alpha)
-    else
-      c_minus = 1
+    if wds_anim == 1 then
+      diff_x = -127
+      diff_y = 68 - 15.5 * (1 - (0.9 ^ (progress * 12)))
     end
 
     for c = 1, diff_len do
-      local digit = diff2:sub(c, c)
+      local digit = diff:sub(c, c)
       obj.load("image", PED_DATA.path.."/score/digit/s"..digit..".png")
-      obj.draw(26.25 + 13.65 * (c - c_minus) + diff_x, diff_y, 0, 0.42, diff_alpha)
+      obj.draw(13.65 * (c - 1) + diff_x, diff_y, 0, 0.42, diff_alpha)
     end
     for c = 1, diff_len do
-      local digit = diff2:sub(c, c)
-      obj.load("image", PED_DATA.path.."/score/digit/"..digit..".png")
-      obj.draw(26.25 + 13.65 * (c - c_minus) + diff_x, diff_y, 0, 0.42, diff_alpha)
-    end
-    for c = 1, diff_len2 + diff_len do
-      local digit = diff:sub(c, c)
-      obj.load("image", PED_DATA.path.."/score/digit/s"..digit..".png")
-      obj.draw(26.25 + 13.65 * (c - c_minus + diff_len2) + diff_x, diff_y, 0, 0.42, diff_alpha)
-    end
-    for c = 1, diff_len2 + diff_len do
       local digit = diff:sub(c, c)
       obj.load("image", PED_DATA.path.."/score/digit/"..digit..".png")
-      obj.draw(26.25 + 13.65 * (c - c_minus + diff_len2) + diff_x, diff_y, 0, 0.42, diff_alpha)
+      obj.draw(13.65 * (c - 1) + diff_x, diff_y, 0, 0.42, diff_alpha)
     end
   end
 
-  for c = 1, score_len2 do
-    local digit = score_str2:sub(c, c)
-    obj.load("image", PED_DATA.path.."/score/digit/s"..digit..".png")
-    obj.draw(-127 + 22 * (c - 1), 26, 0, 0.65)
-    obj.draw(-127 + 22 * (c - 1), 26, 0, 0.65)
-  end
-  for c = 1, score_len2 do
-    local digit = score_str2:sub(c, c)
-    obj.load("image", PED_DATA.path.."/score/digit/"..digit..".png")
-    obj.draw(-127 + 22 * (c - 1), 26, 0, 0.65)
-    obj.draw(-127 + 22 * (c - 1), 26, 0, 0.65)
-  end
-  for c = 1, score_len2 + score_len do
+  for c = 1, score_len do
     local digit = score_str:sub(c, c)
     obj.load("image", PED_DATA.path.."/score/digit/s"..digit..".png")
-    obj.draw(-127 + 22 * (c - 1 + score_len2), 26, 0, 0.65)
-    obj.draw(-127 + 22 * (c - 1 + score_len2), 26, 0, 0.65)
+    obj.draw(-127 + 22 * (c - 1), 26, 0, 0.65)
+    obj.draw(-127 + 22 * (c - 1), 26, 0, 0.65)
   end
-  for c = 1, score_len2 + score_len do
+  for c = 1, score_len do
     local digit = score_str:sub(c, c)
     obj.load("image", PED_DATA.path.."/score/digit/"..digit..".png")
-    obj.draw(-127 + 22 * (c - 1 + score_len2), 26, 0, 0.65)
-    obj.draw(-127 + 22 * (c - 1 + score_len2), 26, 0, 0.65)
+    obj.draw(-127 + 22 * (c - 1), 26, 0, 0.65)
+    obj.draw(-127 + 22 * (c - 1), 26, 0, 0.65)
   end
   obj.copybuffer("obj", "tmp")
 end
@@ -541,19 +493,21 @@ end
 
 if PED_DATA and PED_DATA.version_status == "ok" then
   if PED_DATA.current.time > 0 then
+    obj.setoption("drawtarget", "tempbuffer", 310, 82)
     local progress = ((obj.frame - OFFSET) - (PED_DATA.current.time * obj.framerate)) * speed
     local judge_list = {"perfect", "great", "good", "bad", "miss", "auto"}
 
     if progress < 2 then
       obj.load("image", PED_DATA.path.."/judge/v3/"..judge_list[judge]..".png")
-      obj.draw(0, 0, 0, 0.7, 0)
+      obj.draw(0, 0, 0, (2/3), 0)
     elseif progress < 5 then
       obj.load("image", PED_DATA.path.."/judge/v3/"..judge_list[judge]..".png")
-      obj.draw(0, 0, 0, 0.7 - (-1.45 + (progress / 4)) ^ 4 * 0.7)
+      obj.draw(0, 0, 0, (2/3) - (-1.45 + (progress / 4)) ^ 4 * (2/3))
     elseif progress < 20 then
       obj.load("image", PED_DATA.path.."/judge/v3/"..judge_list[judge]..".png")
-      obj.draw(0, 0, 0, 0.7)
+      obj.draw(0, 0, 0, (2/3))
     end
+  obj.copybuffer("obj", "tmp")
   end
 end
 ----------------------------------------------------------------
@@ -561,6 +515,7 @@ end
 --label:カスタムオブジェクト
 
 if PED_DATA and PED_DATA.version_status == "ok" then
+  obj.setoption("drawtarget", "tempbuffer", 330, 74)
   local auto_alpha = math.sin(math.fmod((obj.time - 1.6) / 1.25, 1.2) * math.pi)
   if auto_alpha < 0 then
     auto_alpha = 0
@@ -576,5 +531,6 @@ if PED_DATA and PED_DATA.version_status == "ok" then
       obj.draw(0, 0, 0, 1, auto_alpha)
     end
   end
+  obj.copybuffer("obj", "tmp")
 end
 -- vim: set ft=lua fenc=cp932:

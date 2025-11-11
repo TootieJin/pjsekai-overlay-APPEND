@@ -25,9 +25,9 @@ https://github.com/user-attachments/assets/ab4ee52c-2ffa-4941-b916-87e1f3559d72
 
 https://github.com/user-attachments/assets/3efab743-246a-4da7-8d80-a02b2f09f5b3
 
-- **AviUtl ExEdit2 preview**
+- **AviUtl ExEdit2 Preview**
 
-[![AviUtl ExEdit2 preview](https://github.com/user-attachments/assets/18f6d16b-5ba4-4953-aa7d-5ceebb87348a)]()
+[![AviUtl ExEdit2 Preview](https://github.com/user-attachments/assets/18f6d16b-5ba4-4953-aa7d-5ceebb87348a)]()
 
 - **Video Example**
 
@@ -45,6 +45,7 @@ This is a forked version of pjsekai-overlay with additional features originally 
   - v1 UI skin (Full support)
   - Automatically changes chart difficulty to generate in AviUtl based on chart tag (or title)
   - Additional support for more servers
+  - **(AviUtl ExEdit2 ONLY)** Supports very big number (~ 1.7e+307) using [lua-bignumber](https://github.com/thenumbernine/lua-bignumber)
   - **[Various UI customization](#ui-customization-specifications)**
     - Animated Scoring
     - Adjust animation speed in different elements
@@ -79,9 +80,9 @@ PJSekai-style video creation tool:
 
 ## Requirements
 
-| AviUtl                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     | **AviUtl ExEdit2 (Beta)**                                                                                                                                                                                                                                                                                                                                                                                                            |
+| AviUtl                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     | **AviUtl ExEdit2**                                                                                                                                                                                                                                                                                                                                                                                                            |
 | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [AviUtl](http://spring-fragrance.mints.ne.jp/aviutl/) + [Advanced Editing plug-in](http://spring-fragrance.mints.ne.jp/aviutl/) + [L-SMASH Works](https://github.com/Mr-Ojii/L-SMASH-Works-Auto-Builds/releases/latest) + [easymp4](https://aoytsk.blog.jp/aviutl/easymp4.zip) ([JP Installation Guide](https://aviutl.info/dl-innsuto-ru/))<br>- **JP version:** [AviUtl JP Installer Script](https://github.com/menndouyukkuri/aviutl-installer-script)<br>- **EN version:** [AviUtl EN Extra Pack](https://www.videohelp.com/download/AviUtl_setup_1.14.exe)<br><br>*Import all plugins to `aviutl\Plugins` folder* | [AviUtl ExEdit2 **(via installer)**](http://spring-fragrance.mints.ne.jp/aviutl/) + [L-SMASH Works](https://github.com/Mr-Ojii/L-SMASH-Works-Auto-Builds/releases/latest) + [MP4Exporter](https://apps.esugo.net/aviutl2-mp4exporter/)<br>- English language can be selected in `設定 > 言語の設定 > English` (`Settings > Language > English`)<br><br>*Import `AviUtl2\lwinput.aui2` & `MP4Exporter.auo2` plugin to `C:\ProgramData\aviutl2\Plugin` folder* |
+| [AviUtl](http://spring-fragrance.mints.ne.jp/aviutl/) + [Advanced Editing plug-in](http://spring-fragrance.mints.ne.jp/aviutl/) + [L-SMASH Works](https://github.com/Mr-Ojii/L-SMASH-Works-Auto-Builds/releases/latest) + [easymp4](https://aoytsk.blog.jp/aviutl/easymp4.zip) ([JP Installation Guide](https://aviutl.info/dl-innsuto-ru/))<br>- **JP installer:** [AviUtl JP Installer Script](https://github.com/menndouyukkuri/aviutl-installer-script)<br>- **EN installer:** [AviUtl EN Extra Pack](https://www.videohelp.com/download/AviUtl_setup_1.14.exe)<br><br>*Import all plugins to `aviutl\Plugins` folder* | [AviUtl ExEdit2 **(via installer)**](http://spring-fragrance.mints.ne.jp/aviutl/) + [L-SMASH Works](https://github.com/Mr-Ojii/L-SMASH-Works-Auto-Builds/releases/latest) + [MP4Exporter](https://apps.esugo.net/aviutl2-mp4exporter/)<br>- English language can be selected in `設定 > 言語の設定 > English` (`Settings > Language > English`)<br><br>*Import `AviUtl2\lwinput.aui2` & `MP4Exporter.auo2` plugin to `C:\ProgramData\aviutl2\Plugin` folder* |
 - **Fonts:** RodinNTLG [DB](https://en.fontworks.co.jp/fontsearch/rodinntlgpro-db/) + [EB](https://en.fontworks.co.jp/fontsearch/rodinntlgpro-eb/)
 - Basic knowledge of AviUtl
 
@@ -103,7 +104,7 @@ PJSekai-style video creation tool:
 2. Unzip the file in a directory that **doesn't contain non-ASCII characters nor require administrative permissions** (see https://github.com/TootieJin/pjsekai-overlay-APPEND/issues/5)
 3. Follow the steps based on which AviUtl you want to use:
 
-| AviUtl                                                                                                                                                                                                                                                                                                                           	| **AviUtl ExEdit2 (Beta)**                                                                      	|
+| AviUtl                                                                                                                                                                                                                                                                                                                           	| **AviUtl ExEdit2**                                                                      	|
 |----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------	|--------------------------------------------------------------------------------------------	|
 | 1. Go to `aviutl.exe` file location and make a new folder `script` in the `aviutl\Plugins` directory<br>2. **Install UI objects** (open AviUtl > open `pjsekai-overlay-APPEND.exe`)<br>- **Note: You must open AviUtl before opening pjsekai-overlay-APPEND to install objects**<br>3. **Restart AviUtl to apply changes.** 	| 1. Open `pjsekai-overlay-APPEND.exe`<br>2. Press `2` to choose the AviUtl ExEdit2 instance 	|
 
@@ -120,12 +121,18 @@ PJSekai-style video creation tool:
    - `sync-`: Local Server ([ScoreSync](https://github.com/Piliman22/ScoreSync))
 5. Import specified exo/alias(.object) file by navigating to your `pjsekai-overlay/dist/[chart ID]` directory:
 
-|      	| AviUtl                                                          	| **AviUtl ExEdit2 (Beta)**                                        	|
+|      	| AviUtl (EN Extra Pack)                                            	| **AviUtl ExEdit2**                                        	|
 |------	|-----------------------------------------------------------------	|--------------------------------------------------------------------|
 | 16:9 	| `main_en_16-9_1920x1080.exo`<br>`v1-skin_en_16-9_1920x1080.exo` 	| `main2_16-9_1920x1080.object`<br>`v1-skin2_16-9_1920x1080.object` 	|
 | 4:3  	| `main_en_4-3_1440x1080.exo`<br>`v1-skin_en_4-3_1440x1080.exo`   	| `main2_4-3_1440x1080.object`<br>`v1-skin2_4-3_1440x1080.object`   	|
 
+> [!WARNING]
+> If you're using the v1 exo in AviUtl EN, **you may have to load it again.** 
+> AviUtl EN for some reason decided to stop loading all exo elements when loading for the first time like wtf???
+
 6. Once finished, export your video as mp4
+   - AviUtl: `File > Export with Plugin > かんたんMP4出力` or `File > Export with Plugin > Adv. x264/x265 Export(GUI) Ex`
+   - **AviUtl ExEdit2:** `File > Export > MP4 Exporter (by えすご/Esugo)`
 
 ## UI Customization Specifications
 > [!TIP]
@@ -139,45 +146,46 @@ PJSekai-style video creation tool:
 | **Name**      	| Description                                                                                                	| Default 	|        Range       	|
 |---------------	|------------------------------------------------------------------------------------------------------------	|:-------:	|:------------------:	|
 | **Offset**<br>`offset`    	| Number of frames to shift events<br>- Increase to shift timing later<br>- Decrease to shift timing earlier 	|  216.0  	| -99999.9 ~ 99999.9 	|
-| **Cache**<br>`cache`     	| When cache is set to 0, any change in the `data.ped` is applied immediately                               	|    1    	|        0 ~ 1       	|
-| **Font type**<br>`font_type` 	| Set font type configuration for the watermark text<br>(`0` - メイリオ, `1` - RodinNTLG EB)                 	|    0    	|        0 ~ 1       	|
-| **Watermark**<br>`watermark` 	| Enable watermark text at the bottom-left corner                                                            	|   1(ON)  	|          X         	|
+| **Cache**<br>`cache`     	| When cache is set to 0, any change in the `data.ped` is applied immediately                               	|    1    	|        0 or 1       	|
+| **Font type**<br>`font_type` 	| Set font type configuration for the watermark text<br>(`0` - メイリオ, `1` - RodinNTLG EB)                 	|    0    	|        0 or 1       	|
+| **Watermark**<br>`watermark` 	| Enable watermark text at the bottom-left corner                                                            	|   1 (ON)  	|          0 or 1         	|
 
 ### Life@pjsekai-overlay-en (v3 only)
 <img width="125" height="125" alt="LifeUP" src="https://github.com/user-attachments/assets/6f7a7db8-50bb-43cf-9463-5f46325c862e" /> <img width=50% height=50% alt="life" src="https://github.com/user-attachments/assets/7aab3534-66cf-4dad-936e-3d423ecce615" />
 
 | **Name** 	| Description                                                                         	| Default 	|   Range  	|
 |----------	|-------------------------------------------------------------------------------------	|:-------:	|:--------:	|
-| **LIFE**<br>`life` 	| LIFE value (self-explanatory)<br>- When value changes, the LIFE bar changes as well 	|   1000  	| 0 ~ 9999 	|
-| **Show overflow LIFE bar**<br>`overflow` 	| <img width=50% height=50% alt="life_overflow" src="https://github.com/user-attachments/assets/75ad981f-cb1d-4112-939d-8f8bf39a1222" /> 	|  0(OFF)  	|    X   	|
+| **LIFE**<br>`life` 	| LIFE value (self-explanatory)<br>- When value changes, the LIFE bar changes as well 	|   1000  	| 0 ~ 9999 (Integer) 	|
+| **Show overflow LIFE bar**<br>`overflow` 	| <img width=50% height=50% alt="life_overflow" src="https://github.com/user-attachments/assets/75ad981f-cb1d-4112-939d-8f8bf39a1222" /> 	|  0 (OFF)  	|    0 or 1   	|
 
 ### Score@pjsekai-overlay-en
 <img width="125" height="125" alt="ScoreUP" src="https://github.com/user-attachments/assets/a5a8b0f0-035c-4951-8ae3-d2038945d86c" /> <img width=50% height=50% alt="bg" src="https://github.com/user-attachments/assets/3db93b3e-2280-46e1-a08f-00e50a5e5e8c" />
 
 | **Name**             	| Description                                    	| Default 	|  Range 	|
 |----------------------	|------------------------------------------------	|:-------:	|:------:	|
-| **Min Digit**<br>`min_digit`        	| Render the minimum amount of digits in score   	|    8    	| 1 ~ 17 	|
-| **Animated Scoring**<br>`anim_score` 	| Increase incrementally rather than all at once 	|  0(OFF)  	|    X   	|
-| **Animation Speed**<br>`speed`   | Adjust animation speed                       	   |   1.00     |    X 	   |
+| **Min Digit**<br>`min_digit`        	| Render the minimum amount of digits in score   	|    8    	| 1 ~ 99 (Integer)	|
+| **Animation Speed**<br>`score_speed`   | Adjust animation speed                       	   |   1.00     |    >= 0 	   |
+| **Animated Scoring**<br>`anim_score` 	| Increase incrementally rather than all at once 	|  0 (OFF)  	|    0 or 1   	|
+| **WDS animation**<br>`wds_anim` 	| Toggle World Dai Star's added score animation 	|  0 (OFF)  	|    0 or 1   	|
 
 ### Combo@pjsekai-overlay-en
 <img width="148" height="49" alt="pt" src="https://github.com/user-attachments/assets/9db50558-cf81-4ed8-a2bd-1d4bbd22e156" /> <img width="145" height="45" alt="nt" src="https://github.com/user-attachments/assets/3ca0f65e-8ce6-40c9-8ff4-53a8ee9d2f81" />
 
 | **Name**                          	| Description                            	  | Default | Range 	|
 |-----------------------------------	|----------------------------------------	  |:-------:|:-----:	|
-| **AP Combo**<br>`ap`                      	| Toggle AP Combo status                 	  |    1   	| 0 ~ 1 	|
-| **Combo Tag**<br>`tag`                     	| Toggle rendering combo tag             	  |    1   	| 0 ~ 1 	|
-| **Animation Speed**<br>`speed`                 	| Adjust animation speed               	  |   1.00   |   X 	|
-| **Show the last X digit(s)**<br>`last_digit`        	| `4`: 12345 -> /2345<br>`2`: 12345 -> ///45 |    4   	|   X   	|
-| **n00 Combo Burst**<br>`combo_burst`        	| Toggle World Dai Star's combo burst effect |    0(OFF)   	|   X   	|
+| **AP Combo**<br>`ap`                      	| Toggle AP Combo status                 	  |    1   	| 0 or 1 	|
+| **Combo Tag**<br>`tag`                     	| Toggle rendering combo tag             	  |    1   	| 0 or 1 	|
+| **Show the last X digit(s)**<br>`last_digit`        	| `4`: 12345 -> /2345<br>`2`: 12345 -> ///45 |    4   	|   >= 0 (Integer)   	|
+| **Animation Speed**<br>`score_speed`   | Adjust animation speed                  |   1.00     |    >= 0 	   |
+| **n00 Combo Burst**<br>`combo_burst`        	| Toggle World Dai Star's combo burst effect |    0 (OFF)   	|   0 or 1   	|
 
 ### Judgement@pjsekai-overlay-en
 <img width="125" height="125" alt="SkillUP" src="https://github.com/user-attachments/assets/e29f426d-71ae-4de5-912a-a5c7375f538d" />
 
 | **Name**       	| Description                                                                   	| Default 	| Range 	|
 |----------------	|-------------------------------------------------------------------------------	|:-------:	|:-----:	|
-| **Judge Type**<br>`judge` 	| `1`: <img width=25% height=25% alt="perfect" src="https://github.com/user-attachments/assets/28950e9e-0dac-49d9-81d3-70bdaa2d6f0c" /><br>`2`: <img width=25% height=25% alt="great" src="https://github.com/user-attachments/assets/ccf333a7-795d-43ad-8002-a9d2220e18a6" /><br>`3`: <img width=25% height=25% alt="good" src="https://github.com/user-attachments/assets/9d0a26bb-c8e7-47d0-9a3d-717b4ad0e0fa" /><br>`4`: <img width=25% height=25% alt="bad" src="https://github.com/user-attachments/assets/5b757195-8bd4-4beb-9f77-808000f1d865" /><br>`5`: <img width=25% height=25% alt="miss" src="https://github.com/user-attachments/assets/734ead15-491b-4bdb-9017-f2b30ab32223" /><br>`6`: <img width=25% height=25% alt="auto" src="https://github.com/user-attachments/assets/b9d674cf-1b69-478e-b2be-53691109b12d" /> 	|    1    	| 1 ~ 6 	|
-| **Animation Speed**<br>`speed`                 	| Adjust animation speed               	  |   1.00   |   X 	|
+| **Judge Type**<br>`judge` 	| `1`: <img width=25% height=25% alt="perfect" src="https://github.com/user-attachments/assets/28950e9e-0dac-49d9-81d3-70bdaa2d6f0c" /><br>`2`: <img width=25% height=25% alt="great" src="https://github.com/user-attachments/assets/ccf333a7-795d-43ad-8002-a9d2220e18a6" /><br>`3`: <img width=25% height=25% alt="good" src="https://github.com/user-attachments/assets/9d0a26bb-c8e7-47d0-9a3d-717b4ad0e0fa" /><br>`4`: <img width=25% height=25% alt="bad" src="https://github.com/user-attachments/assets/5b757195-8bd4-4beb-9f77-808000f1d865" /><br>`5`: <img width=25% height=25% alt="miss" src="https://github.com/user-attachments/assets/734ead15-491b-4bdb-9017-f2b30ab32223" /><br>`6`: <img width=25% height=25% alt="auto" src="https://github.com/user-attachments/assets/b9d674cf-1b69-478e-b2be-53691109b12d" /> 	|    1    	| 1 ~ 6 (Integer) 	|
+| **Animation Speed**<br>`speed`                 	| Adjust animation speed               	  |   1.00   |   >= 0 	|
 
 ## Special Thanks
 - **[@sevenc-nanashi](https://github.com/sevenc-nanashi) for developing the [pjsekai-overlay](https://github.com/sevenc-nanashi/pjsekai-overlay) & [pjsekai-background-gen-rust](https://github.com/sevenc-nanashi/pjsekai-background-gen-rust) tool!**
@@ -202,7 +210,8 @@ PJSekai-style video creation tool:
   - 英語版AviUtlの使用機能
   - v1 UIスキン（フル対応）
   - 譜面のタグ（またはタイトル）に基づいて、AviUtlで生成される譜面の難易度を自動的に変更する
-  - 追加サーバーのサポート
+  - 追加サーバーの対応
+  - **(AviUtl ExEdit2 のみ)** [lua-bignumber](https://github.com/thenumbernine/lua-bignumber)を使用して非常に大きな数値（~ 1.7e+307）を対応
   - **[各種UIカスタマイズ](#uiカスタマイズ仕様書)**
     - アニメーション付きスコア表示
     - 異なる要素でアニメーション速度を調整する
@@ -261,7 +270,7 @@ PJSekai-style video creation tool:
 2. ファイルを解凍するディレクトリは、**非ASCII文字を含まず、管理者権限を必要としない**ものを選んでください。（詳細は https://github.com/TootieJin/pjsekai-overlay-APPEND/issues/5 を参照）
 3. 使用したいAviUtlに応じて以下の手順に従ってください：
 
-| AviUtl                                                                                                                                                                                                                                                                                                                           	| **AviUtl ExEdit2 (Beta)**                                                                      	|
+| AviUtl                                                                                                                                                                                                                                                                                                                           	| **AviUtl ExEdit2**                                                                      	|
 |----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------	|--------------------------------------------------------------------------------------------	|
 | 1. `aviutl.exe` ファイルの場所へ移動し、`aviutl\Plugins` ディレクトリ内に新しいフォルダ`script`を作成してください<br>2. **UIオブジェクトのインストール** (AviUtlを起動 > `pjsekai-overlay-APPEND.exe` を起動)<br>- **注意: オブジェクトをインストールするには、pjsekai-overlay-APPENDを開く前に必ずAviUtlを起動しておく必要があります**<br>3. **変更を適用するためAviUtlを再起動してください。**     | 1. `pjsekai-overlay-APPEND.exe`を開く<br>2. `2`を押してAviUtl ExEdit2インスタンスを選択     |
 
@@ -278,12 +287,14 @@ PJSekai-style video creation tool:
    - `sync-`: ローカルサーバー([ScoreSync](https://github.com/Piliman22/ScoreSync))
 5. `pjsekai-overlay/dist/[譜面ID]`ディレクトリに移動して、指定したexo/alias(.object)ファイルをインポートします：
 
-|      	| AviUtl                                                          	| **AviUtl ExEdit2 (Beta)**                                        	|
+|      	| AviUtl                                                          	| **AviUtl ExEdit2**                                              	|
 |------	|-----------------------------------------------------------------	|--------------------------------------------------------------------|
 | 16:9 	| `main_jp_16-9_1920x1080.exo`<br>`v1-skin_jp_16-9_1920x1080.exo` 	| `main2_16-9_1920x1080.object`<br>`v1-skin2_16-9_1920x1080.object` 	|
 | 4:3  	| `main_jp_4-3_1440x1080.exo`<br>`v1-skin_jp_4-3_1440x1080.exo`   	| `main2_4-3_1440x1080.object`<br>`v1-skin2_4-3_1440x1080.object`   	|
 
 6. 完了後、動画をmp4形式で出力します
+   - AviUtl: `ファイル > プラグイン出力 > かんたんMP4出力` または `ファイル > プラグイン出力 > 拡張 x264 出力(GUI) Ex`
+   - **AviUtl ExEdit2:** `ファイル > ファイル出力 > MP4 Exporter (by えすご/Esugo)`
 
 ## UIカスタマイズ仕様書
 > [!TIP]
@@ -297,45 +308,46 @@ PJSekai-style video creation tool:
 | **名前**         | 説明                                                                                                    | デフォルト     |        範囲           |
 |---------------   |------------------------------------------------------------------------------------------------------------	|:-------:	|:------------------:	|
 | **オフセット**<br>`offset`    | タイミングをシフトするフレーム数<br>- 増加するとタイミングが遅くなる<br>- 減少するとタイミングが早くなる 	|  216.0  	| -99999.9 ~ 99999.9 	|
-| **キャッシュ**<br>`cache`    	| キャッシュが0に設定されている場合、`data.ped`の変更は即時反映されます                               	|    1    	|        0 ~ 1       	|
-| **フォント種類**<br>`font_type`  | 透かしテキストのフォント種類設定を設定する<br>(`0` - メイリオ, `1` - RodinNTLG EB)                 	|    0    	|        0 ~ 1       	|
-| **透かし**<br>`watermark` 	   | 左下隅に透かしテキストを表示する                                                            	|   1(ON)  	|          X         	|
+| **キャッシュ**<br>`cache`    	| キャッシュが0に設定されている場合、`data.ped`の変更は即時反映されます                               	|    1    	|        0か1      	|
+| **フォント種類**<br>`font_type`  | 透かしテキストのフォント種類設定を設定する<br>(`0` - メイリオ, `1` - RodinNTLG EB)                 	|    0    	|        0か1      	|
+| **透かし**<br>`watermark` 	   | 左下隅に透かしテキストを表示する                                                            	|   1 (ON)  	|          0か1         	|
 
 ### ライフ@pjsekai-overlay (v3のみ)
 <img width="125" height="125" alt="LifeUP" src="https://github.com/user-attachments/assets/6f7a7db8-50bb-43cf-9463-5f46325c862e" /> <img width=50% height=50% alt="life" src="https://github.com/user-attachments/assets/7aab3534-66cf-4dad-936e-3d423ecce615" />
 
 | **名前**         | 説明                                                                                                    | デフォルト     |        範囲           |
 |----------	|-------------------------------------------------------------------------------------	|:-------:	|:--------:	|
-| **ライフ**<br>`life` 	| LIFEの値（自明）<br>- 値が変化すると、LIFEバーも変化します 	|   1000  	| 0 ~ 9999 	|
-| **過剰なライフバー**<br>`overflow` 	| <img width=50% height=50% alt="life_overflow" src="https://github.com/user-attachments/assets/75ad981f-cb1d-4112-939d-8f8bf39a1222" /> 	|  0(OFF)  	|    X   	|
+| **ライフ**<br>`life` 	| LIFEの値（自明）<br>- 値が変化すると、LIFEバーも変化します 	|   1000  	| 0 ~ 9999 (整数) 	|
+| **過剰なライフバー**<br>`overflow` 	| <img width=50% height=50% alt="life_overflow" src="https://github.com/user-attachments/assets/75ad981f-cb1d-4112-939d-8f8bf39a1222" /> 	|  0 (OFF)  	|    0か1   	|
 
 ### スコア@pjsekai-overlay
 <img width="125" height="125" alt="ScoreUP" src="https://github.com/user-attachments/assets/a5a8b0f0-035c-4951-8ae3-d2038945d86c" /> <img width=50% height=50% alt="bg" src="https://github.com/user-attachments/assets/3db93b3e-2280-46e1-a08f-00e50a5e5e8c" />
 
 | **名前**         | 説明                                                                                                    | デフォルト     |        範囲           |
 |----------------------	|------------------------------------------------	|:-------:	|:------:	|
-| **最小桁数**<br>`min_digit`        	| スコアの桁数を最小限に表示する   	|    8    	| 1 ~ 17 	|
-| **アニメーション採点**<br>`anim_score` 	| 一気にではなく、段階的に増やす 	|  0(OFF)  	|    X   	|
-| **アニメーション速度**<br>`speed`	| アニメーション速度を調整する 	|    1.00    	|   X 	|
+| **最小桁数**<br>`min_digit`        	| スコアの桁数を最小限に表示する   	|    8    	| 1 ~ 99 (整数)	|
+| **アニメーション速度**<br>`score_speed`	| アニメーション速度を調整する 	|    1.00    	|   0以上 	|
+| **アニメーション採点**<br>`anim_score` 	| 一気にではなく、段階的に増やす 	|  0 (OFF)  	|    0か1   	|
+| **「ユメステ」アニメーション**<br>`wds_anim` 	| ユメステの追加スコアアニメーションを切り替える 	|  0 (OFF)  	|   0か1   	|
 
 ### コンボ@pjsekai-overlay
 <img width="148" height="49" alt="pt" src="https://github.com/user-attachments/assets/9db50558-cf81-4ed8-a2bd-1d4bbd22e156" /> <img width="145" height="45" alt="nt" src="https://github.com/user-attachments/assets/3ca0f65e-8ce6-40c9-8ff4-53a8ee9d2f81" />
 
 | **名前**         | 説明                                                                                                    | デフォルト     |        範囲           |
 |-----------------------------------	|----------------------------------------	|:-------:	|:-----:	|
-| **APコンボ**<br>`ap`                      	| APコンボ状態を切り替える                 	|    1    	| 0 ~ 1 	|
-| **コンボタグ**<br>`tag`                     	| コンボタグの表示切り替え             	|    1    	| 0 ~ 1 	|
-| **アニメーション速度**<br>`speed`                     	| アニメーション速度を調整する 	|    1.00    	| X 	|
-| **最後のX桁を表示**<br>`last_digit` 	| `4`: 12345 -> /2345<br>`2`: 12345 -> ///45 |    4   	|   X   	|
-| **n00コンボ効果**<br>`combo_burst`            | ユメステのn00コンボ効果を切り替え |    0(OFF)       |   X       |
+| **APコンボ**<br>`ap`                      	| APコンボ状態を切り替える                 	|    1    	| 0か1 	|
+| **コンボタグ**<br>`tag`                     	| コンボタグの表示切り替え             	|    1    	| 0か1 	|
+| **最後のX桁を表示**<br>`last_digit` 	| `4`: 12345 -> /2345<br>`2`: 12345 -> ///45 |    4   	|  1以上 (整数)   	|
+| **アニメーション速度**<br>`combo_speed`                     	| アニメーション速度を調整する 	|    1.00    	| 0以上	|
+| **n00コンボ効果**<br>`combo_burst`            | ユメステのn00コンボ効果を切り替える |    0 (OFF)       |   0か1       |
 
 ### 判定@pjsekai-overlay
 <img width="125" height="125" alt="SkillUP" src="https://github.com/user-attachments/assets/e29f426d-71ae-4de5-912a-a5c7375f538d" />
 
 | **名前**         | 説明                                                                                                    | デフォルト     |        範囲           |
 |----------------	|-------------------------------------------------------------------------------	|:-------:	|:-----:	|
-| **判定タイプ**<br>`judge` 	| `1`: <img width=25% height=25% alt="perfect" src="https://github.com/user-attachments/assets/28950e9e-0dac-49d9-81d3-70bdaa2d6f0c" /><br>`2`: <img width=25% height=25% alt="great" src="https://github.com/user-attachments/assets/ccf333a7-795d-43ad-8002-a9d2220e18a6" /><br>`3`: <img width=25% height=25% alt="good" src="https://github.com/user-attachments/assets/9d0a26bb-c8e7-47d0-9a3d-717b4ad0e0fa" /><br>`4`: <img width=25% height=25% alt="bad" src="https://github.com/user-attachments/assets/5b757195-8bd4-4beb-9f77-808000f1d865" /><br>`5`: <img width=25% height=25% alt="miss" src="https://github.com/user-attachments/assets/734ead15-491b-4bdb-9017-f2b30ab32223" /><br>`6`: <img width=25% height=25% alt="auto" src="https://github.com/user-attachments/assets/b9d674cf-1b69-478e-b2be-53691109b12d" /> 	|    1    	| 1 ~ 6 	|
-| **アニメーション速度**<br>`speed`                     	| アニメーション速度を調整する 	|    1.00    	| X 	|
+| **判定タイプ**<br>`judge` 	| `1`: <img width=25% height=25% alt="perfect" src="https://github.com/user-attachments/assets/28950e9e-0dac-49d9-81d3-70bdaa2d6f0c" /><br>`2`: <img width=25% height=25% alt="great" src="https://github.com/user-attachments/assets/ccf333a7-795d-43ad-8002-a9d2220e18a6" /><br>`3`: <img width=25% height=25% alt="good" src="https://github.com/user-attachments/assets/9d0a26bb-c8e7-47d0-9a3d-717b4ad0e0fa" /><br>`4`: <img width=25% height=25% alt="bad" src="https://github.com/user-attachments/assets/5b757195-8bd4-4beb-9f77-808000f1d865" /><br>`5`: <img width=25% height=25% alt="miss" src="https://github.com/user-attachments/assets/734ead15-491b-4bdb-9017-f2b30ab32223" /><br>`6`: <img width=25% height=25% alt="auto" src="https://github.com/user-attachments/assets/b9d674cf-1b69-478e-b2be-53691109b12d" /> 	|    1    	| 1 ~ 6 (整数) 	|
+| **アニメーション速度**<br>`judge_speed`                     	| アニメーション速度を調整する 	|    1.00    	| 0以上	|
 
 ## 特別なお礼
 - **[@sevenc-nanashi](https://github.com/sevenc-nanashi)氏による[pjsekai-overlay](https://github.com/sevenc-nanashi/pjsekai-overlay)と[pjsekai-background-gen-rust](https://github.com/sevenc-nanashi/pjsekai-background-gen-rust)ツールの開発に感謝します！**

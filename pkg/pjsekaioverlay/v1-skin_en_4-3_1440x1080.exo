@@ -575,7 +575,7 @@ check0={anim_score}
 type=0
 filter=0
 name=Score@pjsekai-overlay-en-v1
-param=speed={score_speed}
+param=speed={score_speed};wds_anim={wds_anim}
 [25.1]
 _name=Standard drawing
 X=-418.0
@@ -648,7 +648,7 @@ track3=0.00
 check0=0
 type=0
 filter=0
-name=三角括弧
+name=Angled Brackets
 param=color=0x962493
 [28.1]
 _name=Standard drawing

@@ -515,8 +515,9 @@ group=3
 effect.name=スコア@pjsekai-overlay-2
 X軸境界=6000
 最小桁数={min_digit}
-アニメーション速度={anim_score}
-アニメーション採点={score_speed}
+アニメーション速度={score_speed}
+アニメーション採点={anim_score}
+「ユメステ」アニメーション={wds_anim}
 [18.1]
 effect.name=標準描画
 X=-583.50

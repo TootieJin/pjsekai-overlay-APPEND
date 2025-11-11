@@ -581,7 +581,7 @@ check0={anim_score}
 type=0
 filter=0
 name=Score@pjsekai-overlay-en
-param=speed={score_speed}
+param=speed={score_speed};wds_anim={wds_anim}
 [20.1]
 _name=Standard drawing
 X=-583.5

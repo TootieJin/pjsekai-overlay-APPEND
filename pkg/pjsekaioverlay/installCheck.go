@@ -65,11 +65,11 @@ func DetectAviUtl() (string, string, string) {
 	return aviutlPath, aviutlProcess.Executable, aviutlName
 }
 
-func TryInstallObject(aviutlPath string, aviutlProcess string) bool {
-	mappingObj := SetOverlayDefault()
-	if mappingObj == nil || aviutlPath == "" {
+func TryInstallObject(aviutlPath string, aviutlProcess string, mappingObj []string) bool {
+	if aviutlPath == "" {
 		return false
 	}
+
 	switch aviutlProcess {
 	case "aviutl.exe":
 		var exeditRoot string
@@ -172,17 +172,18 @@ func TryInstallObject(aviutlPath string, aviutlProcess string) bool {
 			"{overflow}", mappingObj[5],
 			// Score
 			"{min_digit}", mappingObj[6],
-			"{anim_score}", mappingObj[7],
-			"{score_speed}", mappingObj[8],
+			"{score_speed}", mappingObj[7],
+			"{anim_score}", mappingObj[8],
+			"{wds_anim}", mappingObj[9],
 			// Combo
-			"{ap}", mappingObj[9],
-			"{tag}", mappingObj[10],
-			"{last_digit}", mappingObj[11],
-			"{combo_speed}", mappingObj[12],
-			"{combo_burst}", mappingObj[13],
+			"{ap}", mappingObj[10],
+			"{tag}", mappingObj[11],
+			"{last_digit}", mappingObj[12],
+			"{combo_speed}", mappingObj[13],
+			"{combo_burst}", mappingObj[14],
 			// Judgement
-			"{judge}", mappingObj[14],
-			"{judge_speed}", mappingObj[15],
+			"{judge}", mappingObj[15],
+			"{judge_speed}", mappingObj[16],
 		).Replace(string(sekaiObj))).WriteTo(sekaiObjWriter)
 
 		strings.NewReader(strings.NewReplacer(
@@ -200,17 +201,18 @@ func TryInstallObject(aviutlPath string, aviutlProcess string) bool {
 			"{overflow}", mappingObj[5],
 			// Score
 			"{min_digit}", mappingObj[6],
-			"{anim_score}", mappingObj[7],
-			"{score_speed}", mappingObj[8],
+			"{score_speed}", mappingObj[7],
+			"{anim_score}", mappingObj[8],
+			"{wds_anim}", mappingObj[9],
 			// Combo
-			"{ap}", mappingObj[9],
-			"{tag}", mappingObj[10],
-			"{last_digit}", mappingObj[11],
-			"{combo_speed}", mappingObj[12],
-			"{combo_burst}", mappingObj[13],
+			"{ap}", mappingObj[10],
+			"{tag}", mappingObj[11],
+			"{last_digit}", mappingObj[12],
+			"{combo_speed}", mappingObj[13],
+			"{combo_burst}", mappingObj[14],
 			// Judgement
-			"{judge}", mappingObj[14],
-			"{judge_speed}", mappingObj[15],
+			"{judge}", mappingObj[15],
+			"{judge_speed}", mappingObj[16],
 		).Replace(string(sekaiObjEn))).WriteTo(sekaiObjWriterEn)
 
 		strings.NewReader(strings.NewReplacer(
@@ -228,17 +230,18 @@ func TryInstallObject(aviutlPath string, aviutlProcess string) bool {
 			// "{overflow}", mappingObj[5],
 			// Score
 			"{min_digit}", mappingObj[6],
-			"{anim_score}", mappingObj[7],
-			"{score_speed}", mappingObj[8],
+			"{score_speed}", mappingObj[7],
+			"{anim_score}", mappingObj[8],
+			"{wds_anim}", mappingObj[9],
 			// Combo
-			"{ap}", mappingObj[9],
-			"{tag}", mappingObj[10],
-			"{last_digit}", mappingObj[11],
-			"{combo_speed}", mappingObj[12],
-			"{combo_burst}", mappingObj[13],
+			"{ap}", mappingObj[10],
+			"{tag}", mappingObj[11],
+			"{last_digit}", mappingObj[12],
+			"{combo_speed}", mappingObj[13],
+			"{combo_burst}", mappingObj[14],
 			// Judgement
-			"{judge}", mappingObj[14],
-			"{judge_speed}", mappingObj[15],
+			"{judge}", mappingObj[15],
+			"{judge_speed}", mappingObj[16],
 		).Replace(string(sekaiObjv1))).WriteTo(sekaiObjWriterv1)
 
 		strings.NewReader(strings.NewReplacer(
@@ -256,17 +259,18 @@ func TryInstallObject(aviutlPath string, aviutlProcess string) bool {
 			// "{overflow}", mappingObj[5],
 			// Score
 			"{min_digit}", mappingObj[6],
-			"{anim_score}", mappingObj[7],
-			"{score_speed}", mappingObj[8],
+			"{score_speed}", mappingObj[7],
+			"{anim_score}", mappingObj[8],
+			"{wds_anim}", mappingObj[9],
 			// Combo
-			"{ap}", mappingObj[9],
-			"{tag}", mappingObj[10],
-			"{last_digit}", mappingObj[11],
-			"{combo_speed}", mappingObj[12],
-			"{combo_burst}", mappingObj[13],
+			"{ap}", mappingObj[10],
+			"{tag}", mappingObj[11],
+			"{last_digit}", mappingObj[12],
+			"{combo_speed}", mappingObj[13],
+			"{combo_burst}", mappingObj[14],
 			// Judgement
-			"{judge}", mappingObj[14],
-			"{judge_speed}", mappingObj[15],
+			"{judge}", mappingObj[15],
+			"{judge_speed}", mappingObj[16],
 		).Replace(string(sekaiObjEnv1))).WriteTo(sekaiObjWriterEnv1)
 
 	case "aviutl2.exe":
@@ -315,17 +319,18 @@ func TryInstallObject(aviutlPath string, aviutlProcess string) bool {
 			"{overflow}", mappingObj[5],
 			// Score
 			"{min_digit}", mappingObj[6],
-			"{anim_score}", mappingObj[7],
-			"{score_speed}", mappingObj[8],
+			"{score_speed}", mappingObj[7],
+			"{anim_score}", mappingObj[8],
+			"{wds_anim}", mappingObj[9],
 			// Combo
-			"{ap}", mappingObj[9],
-			"{tag}", mappingObj[10],
-			"{last_digit}", mappingObj[11],
-			"{combo_speed}", mappingObj[12],
-			"{combo_burst}", mappingObj[13],
+			"{ap}", mappingObj[10],
+			"{tag}", mappingObj[11],
+			"{last_digit}", mappingObj[12],
+			"{combo_speed}", mappingObj[13],
+			"{combo_burst}", mappingObj[14],
 			// Judgement
-			"{judge}", mappingObj[14],
-			"{judge_speed}", mappingObj[15],
+			"{judge}", mappingObj[15],
+			"{judge_speed}", mappingObj[16],
 		).Replace(string(sekaiObj2))
 		sekaiObj2v1Writer := strings.NewReplacer(
 			"\r\n", "\r\n",
@@ -342,17 +347,18 @@ func TryInstallObject(aviutlPath string, aviutlProcess string) bool {
 			// "{overflow}", mappingObj[5],
 			// Score
 			"{min_digit}", mappingObj[6],
-			"{anim_score}", mappingObj[7],
-			"{score_speed}", mappingObj[8],
+			"{score_speed}", mappingObj[7],
+			"{anim_score}", mappingObj[8],
+			"{wds_anim}", mappingObj[9],
 			// Combo
-			"{ap}", mappingObj[9],
-			"{tag}", mappingObj[10],
-			"{last_digit}", mappingObj[11],
-			"{combo_speed}", mappingObj[12],
-			"{combo_burst}", mappingObj[13],
+			"{ap}", mappingObj[10],
+			"{tag}", mappingObj[11],
+			"{last_digit}", mappingObj[12],
+			"{combo_speed}", mappingObj[13],
+			"{combo_burst}", mappingObj[14],
 			// Judgement
-			"{judge}", mappingObj[14],
-			"{judge_speed}", mappingObj[15],
+			"{judge}", mappingObj[15],
+			"{judge_speed}", mappingObj[16],
 		).Replace(string(sekaiObj2v1))
 		if _, err := io.WriteString(sekaiObj2File, sekaiObj2Writer); err != nil {
 			return false
@@ -367,7 +373,7 @@ func TryInstallObject(aviutlPath string, aviutlProcess string) bool {
 	return true
 }
 
-func SetOverlayDefault() []string {
+func SetOverlayDefault() ([]string, []float64) {
 	execPath, err := os.Executable()
 	if err != nil {
 		panic(err)
@@ -383,18 +389,19 @@ func SetOverlayDefault() []string {
 	if _, err := os.Stat(configFile); os.IsNotExist(err) {
 		err := os.WriteFile(configFile, defaultContent, 0644)
 		if err != nil {
-			return nil
+			return nil, nil
 		}
 	}
 
 	file, err := os.Open(configFile)
 	if err != nil {
-		return nil
+		return nil, nil
 	}
 	defer file.Close()
 
 	scanner := bufio.NewScanner(file)
-	var result []string
+	var name []string
+	var result []float64
 
 	for scanner.Scan() {
 		line := scanner.Text()
@@ -403,16 +410,20 @@ func SetOverlayDefault() []string {
 			if len(parts) != 2 {
 				continue
 			}
-			value := strings.TrimSpace(parts[1])
+			value, err := strconv.ParseFloat(strings.TrimSpace(parts[1]), 64)
+			if err != nil {
+				return nil, nil
+			}
+			name = append(name, strings.TrimSpace(parts[0]))
 			result = append(result, value)
 		}
 	}
 
 	if err := scanner.Err(); err != nil {
-		return nil
+		return nil, nil
 	}
 
-	return result
+	return name, result
 }
 
 func ModifyAviUtlConfig(aviutlPath string, aviutlProcess string) bool {
