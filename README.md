@@ -143,11 +143,11 @@ Go to `File > New Project` and set frame rate to 60. The change will be reflecte
 
 ### The UI doesn't show anything!
 You likely haven't selected a **`data.ped` file.** 
-- AviUtl: Go to `Root@pjsekai-overlay-en` and select `Reference`
+- AviUtl: Go to `Root@pjsekai-overlay-en`, select `Reference`, then select `data.ped` in the `pjsekai-overlay-APPEND\dist\[Chart ID]` directory
 
 <img width="630" height="72" alt="image" src="https://github.com/user-attachments/assets/50334797-d580-41ed-b0c9-d00be6875d04" />
 
-- **AviUtl ExEdit2:** Go to `Root@pjsekai-overlay-2` and select `PED File`
+- **AviUtl ExEdit2:** Go to `Root@pjsekai-overlay-2`, select `PED File`, then select `data.ped` in the `pjsekai-overlay-APPEND\dist\[Chart ID]` directory
 
 <img width="271" height="94" alt="image" src="https://github.com/user-attachments/assets/a08f3a04-4ac1-41d1-a850-7d08250366d4" />
 
@@ -330,11 +330,11 @@ PJSekai-style video creation tool:
 
 ### UIに何も表示されない！
 おそらく **`data.ped`ファイル** を選択していません。
-- AviUtl: `設定@pjsekai-overlay`に移動し、`参照`を選択
+- AviUtl: `設定@pjsekai-overlay`に移動し、`参照`を選択し、`pjsekai-overlay-APPEND\dist\[譜面ID]` ディレクトリ内の `data.ped` を選択します。
 
 <img width="620" height="64" alt="image" src="https://github.com/user-attachments/assets/07053e19-d153-4806-b65b-6f2b7df74478" />
 
-- **AviUtl ExEdit2:** `設定@pjsekai-overlay-2` に移動し、`PEDファイル`を選択
+- **AviUtl ExEdit2:** `設定@pjsekai-overlay-2` に移動し、`PEDファイル`を選択し、`pjsekai-overlay-APPEND\dist\[譜面ID]` ディレクトリ内の `data.ped` を選択します。
 
 <img width="229" height="72" alt="image" src="https://github.com/user-attachments/assets/ab303cee-8113-4f7a-a827-a16aac705702" />
 
