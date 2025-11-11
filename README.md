@@ -119,20 +119,40 @@ PJSekai-style video creation tool:
    - `coconut-next-sekai-`: Next SEKAI ([coconut.sonolus.com/next-sekai](https://coconut.sonolus.com/next-sekai))
    - `lalo-`: [laoloser](https://www.youtube.com/@laoloserr)'s server ([sonolus.laoloser.com](https://laoloser.com/sonolus))
    - `sync-`: Local Server ([ScoreSync](https://github.com/Piliman22/ScoreSync))
-5. Import specified exo/alias(.object) file by navigating to your `pjsekai-overlay/dist/[chart ID]` directory:
+5. Import specified exo/alias(.object) file by navigating to your `pjsekai-overlay-APPEND\dist\[Chart ID]` directory:
 
-|      	| AviUtl (EN Extra Pack)                                            	| **AviUtl ExEdit2**                                        	|
-|------	|-----------------------------------------------------------------	|--------------------------------------------------------------------|
+|      	| AviUtl (EN Extra Pack)                                           	| **AviUtl ExEdit2**                                                	|
+|------	|-----------------------------------------------------------------	|-------------------------------------------------------------------- |
 | 16:9 	| `main_en_16-9_1920x1080.exo`<br>`v1-skin_en_16-9_1920x1080.exo` 	| `main2_16-9_1920x1080.object`<br>`v1-skin2_16-9_1920x1080.object` 	|
 | 4:3  	| `main_en_4-3_1440x1080.exo`<br>`v1-skin_en_4-3_1440x1080.exo`   	| `main2_4-3_1440x1080.object`<br>`v1-skin2_4-3_1440x1080.object`   	|
-
-> [!WARNING]
-> If you're using the v1 exo in AviUtl EN, **you may have to load it again.** 
-> AviUtl EN for some reason decided to stop loading all exo elements when loading for the first time like wtf???
 
 6. Once finished, export your video as mp4
    - AviUtl: `File > Export with Plugin > かんたんMP4出力` or `File > Export with Plugin > Adv. x264/x265 Export(GUI) Ex`
    - **AviUtl ExEdit2:** `File > Export > MP4 Exporter (by えすご/Esugo)`
+
+## Common Problems
+### The Japanese characters look like gibberish
+Change your system locale to `Japanese (Japan)`: `Settings > Time & Language > Language > Administrative language settings > "Administrative" tab > Change system locale...`
+
+<img width=40% height=40% alt="image" src="https://github.com/user-attachments/assets/0b5b680a-56cf-4cdb-8bb9-f10a50d7c07a" />
+
+### The animation slowing down when importing
+Go to `File > New Project` and set frame rate to 60. The change will be reflected in future imports.
+
+<img width="418" height="178" alt="image" src="https://github.com/user-attachments/assets/6bff30c3-fb67-4169-931f-b3df7c7d65f6" />
+
+### The UI doesn't show anything!
+You likely haven't selected a **`data.ped` file.** 
+- AviUtl: Go to `Root@pjsekai-overlay-en` and select `Reference`
+
+<img width="630" height="72" alt="image" src="https://github.com/user-attachments/assets/50334797-d580-41ed-b0c9-d00be6875d04" />
+
+- **AviUtl ExEdit2:** Go to `Root@pjsekai-overlay-2` and select `PED File`
+
+<img width="271" height="94" alt="image" src="https://github.com/user-attachments/assets/a08f3a04-4ac1-41d1-a850-7d08250366d4" />
+
+### The intro doesn't load all objects
+AviUtl for whatever reason stops loading when importing for the first time. If that is the case, **you may have to import it again.**
 
 ## UI Customization Specifications
 > [!TIP]
@@ -285,16 +305,41 @@ PJSekai-style video creation tool:
    - `coconut-next-sekai-`: Next SEKAI ([coconut.sonolus.com/next-sekai](https://coconut.sonolus.com/next-sekai))
    - `lalo-`: [laoloser](https://www.youtube.com/@laoloserr)のサーバー([sonolus.laoloser.com](https://laoloser.com/sonolus))
    - `sync-`: ローカルサーバー([ScoreSync](https://github.com/Piliman22/ScoreSync))
-5. `pjsekai-overlay/dist/[譜面ID]`ディレクトリに移動して、指定したexo/alias(.object)ファイルをインポートします：
+5. `pjsekai-overlay-APPEND\dist\[譜面ID]`ディレクトリに移動して、指定したexo/alias(.object)ファイルをインポートします：
 
-|      	| AviUtl                                                          	| **AviUtl ExEdit2**                                              	|
-|------	|-----------------------------------------------------------------	|--------------------------------------------------------------------|
+|      	| AviUtl                                                          	| **AviUtl ExEdit2**                                                	|
+|------	|-----------------------------------------------------------------	|-------------------------------------------------------------------- |
 | 16:9 	| `main_jp_16-9_1920x1080.exo`<br>`v1-skin_jp_16-9_1920x1080.exo` 	| `main2_16-9_1920x1080.object`<br>`v1-skin2_16-9_1920x1080.object` 	|
 | 4:3  	| `main_jp_4-3_1440x1080.exo`<br>`v1-skin_jp_4-3_1440x1080.exo`   	| `main2_4-3_1440x1080.object`<br>`v1-skin2_4-3_1440x1080.object`   	|
 
 6. 完了後、動画をmp4形式で出力します
    - AviUtl: `ファイル > プラグイン出力 > かんたんMP4出力` または `ファイル > プラグイン出力 > 拡張 x264 出力(GUI) Ex`
    - **AviUtl ExEdit2:** `ファイル > ファイル出力 > MP4 Exporter (by えすご/Esugo)`
+
+## よくある問題
+### 日本語文字が文字化けしている
+システムロケールを`日本語（日本）`に変更してください：
+`設定 > 時間と言語 > 言語 > 管理言語設定 > 「管理」タブ > システムロケールの変更`
+
+<img width=40% height=40% alt="image" src="https://github.com/user-attachments/assets/db6ad3eb-9af8-4145-a362-4dab4af83a9e" />
+
+### インポート時のアニメーション速度低下
+`ファイル > プロジェクトを新規作成` を選択し、フレームレートを60に設定してください。この変更は今後のインポートに反映されます。
+
+<img width="420" height="178" alt="image" src="https://github.com/user-attachments/assets/a8015d9e-9024-486f-9182-571911f11c1c" />
+
+### UIに何も表示されない！
+おそらく **`data.ped`ファイル** を選択していません。
+- AviUtl: `設定@pjsekai-overlay`に移動し、`参照`を選択
+
+<img width="620" height="64" alt="image" src="https://github.com/user-attachments/assets/07053e19-d153-4806-b65b-6f2b7df74478" />
+
+- **AviUtl ExEdit2:** `設定@pjsekai-overlay-2` に移動し、`PEDファイル`を選択
+
+<img width="229" height="72" alt="image" src="https://github.com/user-attachments/assets/ab303cee-8113-4f7a-a827-a16aac705702" />
+
+### イントロが全てのオブジェクトを読み込まない
+AviUtlは、何らかの理由で初回インポート時に読み込みを停止することがあります。その場合、**再度インポートする必要があるかもしれません。**
 
 ## UIカスタマイズ仕様書
 > [!TIP]
