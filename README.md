@@ -106,7 +106,7 @@ PJSekai-style video creation tool:
 
 | AviUtl                                                                                                                                                                                                                                                                                                                           	| **AviUtl ExEdit2**                                                                      	|
 |----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------	|--------------------------------------------------------------------------------------------	|
-| 1. Go to `aviutl.exe` file location and make a new folder `script` in the `aviutl\Plugins` directory<br>2. **Install UI objects** (open AviUtl > open `pjsekai-overlay-APPEND.exe`)<br>- **Note: You must open AviUtl before opening pjsekai-overlay-APPEND to install objects**<br>3. **Restart AviUtl to apply changes.** 	| 1. Open `pjsekai-overlay-APPEND.exe`<br>2. Press `2` to choose the AviUtl ExEdit2 instance 	|
+| 1. **While `aviutl.exe` is open**, open `pjsekai-overlay-APPEND.exe`<br>2. **Restart AviUtl to apply changes.** 	| 1. Open `pjsekai-overlay-APPEND.exe`<br>2. Press `2` to choose the AviUtl ExEdit2 instance 	|
 
 4. In your `pjsekai-overlay-APPEND.exe` command prompt, input the chart ID including the prefix.
    - `chcy-`: Chart Cyanvas
@@ -292,7 +292,7 @@ PJSekai-style video creation tool:
 
 | AviUtl                                                                                                                                                                                                                                                                                                                           	| **AviUtl ExEdit2**                                                                      	|
 |----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------	|--------------------------------------------------------------------------------------------	|
-| 1. `aviutl.exe` ファイルの場所へ移動し、`aviutl\Plugins` ディレクトリ内に新しいフォルダ`script`を作成してください<br>2. **UIオブジェクトのインストール** (AviUtlを起動 > `pjsekai-overlay-APPEND.exe` を起動)<br>- **注意: オブジェクトをインストールするには、pjsekai-overlay-APPENDを開く前に必ずAviUtlを起動しておく必要があります**<br>3. **変更を適用するためAviUtlを再起動してください。**     | 1. `pjsekai-overlay-APPEND.exe`を開く<br>2. `2`を押してAviUtl ExEdit2インスタンスを選択     |
+| 1. **`aviutl.exe`が起動している状態で**、`pjsekai-overlay-APPEND.exe`を開く<br>2. **変更を適用するためにAviUtlを再起動する。**     | 1. `pjsekai-overlay-APPEND.exe`を開く<br>2. `2`を押してAviUtl ExEdit2インスタンスを選択     |
 
 4. `pjsekai-overlay-APPEND.exe`コンソールで、譜面IDを接頭辞込みで入力して下さい。
    - `chcy-`: Chart Cyanvas
