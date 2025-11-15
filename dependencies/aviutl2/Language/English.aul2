@@ -945,6 +945,10 @@ YUVレンジ=YUV Color Range
 音声波形を絶対値で表示=Display Audio Waveform as Absolute Value
 動画ファイルのドラッグ＆ドロップ時に音声を分離=Separate Audio when Drag And Dropping Video File
 空のシーンへのドラッグ＆ドロップ時にシーン設定を合わせる=Adjust Scene when Drag and Dropping To Empty Scene
+レイヤーのロック=Lock Layer
+レイヤーを設定=Adjust Layer
+レイヤー設定=Layer Settings
+レイヤー選択時に設定対象レイヤーを変更=Change the target layer when selecting layers
 
 ; Third-Party Export Plugins
 
