@@ -81,7 +81,9 @@ func TryInstallObject(aviutlPath string, aviutlProcess string, mappingObj []stri
 			return false
 		}
 
-		os.MkdirAll(filepath.Join(exeditRoot, "script"), 0755)
+		if err := os.MkdirAll(filepath.Join(exeditRoot, "script"), 0755); err != nil {
+			return false
+		}
 
 		var sekaiObjPath = filepath.Join(exeditRoot, "script", "@pjsekai-overlay.obj")
 		if _, err := os.Stat(sekaiObjPath); err == nil {
@@ -124,10 +126,10 @@ func TryInstallObject(aviutlPath string, aviutlProcess string, mappingObj []stri
 			}
 		}
 
-		err := os.MkdirAll(filepath.Join(exeditRoot, "script"), 0755)
-		if err != nil {
+		if err := os.MkdirAll(filepath.Join(exeditRoot, "script"), 0755); err != nil {
 			return false
 		}
+
 		sekaiObjFile, err := os.Create(sekaiObjPath)
 		if err != nil {
 			return false

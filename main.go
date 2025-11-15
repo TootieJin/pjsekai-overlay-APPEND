@@ -76,7 +76,7 @@ func origMain(isOptionSpecified bool) {
 	flag.BoolVar(&apCombo, "ap-combo", true, "コンボのAP表示を有効にします。(Enable AP display for combo.)")
 
 	flag.Usage = func() {
-		fmt.Println("Usage: pjsekai-overlay [譜面ID] [オプション]")
+		fmt.Println("Usage: pjsekai-overlay-APPEND [譜面ID (Chart ID)] [オプション (Options)]")
 		flag.PrintDefaults()
 	}
 
@@ -107,7 +107,7 @@ func origMain(isOptionSpecified bool) {
 		"life":     mapping[4] >= 0 && mapping[4] <= 9999 && math.Mod(mapping[4], 1.0) == 0,
 		"overflow": mapping[5] == 0 || mapping[5] == 1,
 		// Score
-		"min_digit":   1 <= mapping[6] && mapping[6] <= 99 && math.Mod(mapping[6], 1.0) == 0,
+		"min_digit":   mapping[6] >= 1 && mapping[6] <= 99 && math.Mod(mapping[6], 1.0) == 0,
 		"score_speed": mapping[7] >= 0,
 		"anim_score":  mapping[8] == 0 || mapping[8] == 1,
 		"wds_anim":    mapping[9] == 0 || mapping[9] == 1,
@@ -118,7 +118,7 @@ func origMain(isOptionSpecified bool) {
 		"combo_speed": mapping[13] >= 0,
 		"combo_burst": mapping[14] == 0 || mapping[14] == 1,
 		// Judgement
-		"judge":       1 <= mapping[15] && mapping[15] <= 99 && math.Mod(mapping[15], 1.0) == 0,
+		"judge":       mapping[15] >= 1 && mapping[15] <= 6 && math.Mod(mapping[15], 1.0) == 0,
 		"judge_speed": mapping[16] >= 0,
 	}
 
@@ -160,6 +160,7 @@ func origMain(isOptionSpecified bool) {
 		case "1":
 			aviutlProcess = "aviutl.exe"
 			aviutlName = "AviUtl"
+			aviutlPath, _, _ = pjsekaioverlay.DetectAviUtl()
 			fmt.Printf("\n\033[A\033[2K\r> %s\n", color.GreenString(tmpAviutl))
 			fmt.Println(color.GreenString("Instance: AviUtl"))
 		case "2":
@@ -409,7 +410,7 @@ func origMain(isOptionSpecified bool) {
 			fmt.Println(color.RedString(fmt.Sprintf("FAIL: %s", err.Error())))
 			return
 		}
-	} else if chartSource.Id == "chart_cyanvas" && chartSource.Name != "Chart Cyanvas (Archive)" {
+	} else if chartSource.Id == "chart_cyanvas" && chartSource.Name != "Chart Cyanvas Archive" {
 		fmt.Print("- 背景をダウンロード中 (Downloading background)... ")
 
 		err = pjsekaioverlay.DownloadBackground(chartSource, chart, formattedOutDir, chartId, "")
@@ -486,7 +487,7 @@ func origMain(isOptionSpecified bool) {
 			return
 		}
 
-		if teamPower >= math.Abs(2^56/10) && aviutlProcess == "aviutl.exe" {
+		if teamPower >= math.Abs(math.Pow(2, 56)/10) && aviutlProcess == "aviutl.exe" {
 			fmt.Printf("\033[A\033[2K\r> %s\n", color.HiYellowString(tmpTeamPower))
 			fmt.Println(color.HiYellowString("WARN: スコアは大きすぎると精度が落ちる可能性がある。Score may decrease precision if it's too large.\n"))
 		} else {

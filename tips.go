@@ -15,7 +15,7 @@ func Tips() {
 	r := rand.New(rand.NewSource(time.Now().UnixNano()))
 	start := time.Date(2024, 11, 24, 14, 29, 30, 0, time.UTC) // first ever commit for this repo <3
 	now := time.Now()
-	duration := now.Sub(start)
+	duration := now.Sub(start).Truncate(time.Second)
 	tips := []string{
 		fmt.Sprintf("pjsekai-overlay-APPENDの最初のコミットからの経過時間: %v", duration),
 		fmt.Sprintf("Time since the first commit of pjsekai-overlay-APPEND: %v", duration),
@@ -46,6 +46,9 @@ func Tips() {
 
 		"AviUtlは動画編集ツールです。UIで様々なカスタマイズが可能です。",
 		"AviUtl is an video editing tool. You can do crazy things with the UI.",
+
+		"AviUtl ExEdit2も動画編集ツールです。UIで様々なカスタマイズが可能です",
+		"AviUtl ExEdit2 is also an video editing tool. You can also do crazy things with the UI.",
 
 		"このTipはDeepLを使用して翻訳されています。",
 		"The tip above uses DeepL to translate this tip.",
@@ -83,7 +86,7 @@ func Tips() {
 		"総合力をマイナス数値に設定できます。試してみてください。",
 		"You can set team power to a negative number. Try it.",
 
-		"古いUIが恋しいですか？お任せください。",
+		"旧UIが恋しいですか？お任せください。",
 		"Miss the old UI? I'm here for you.",
 
 		"フリックの遊び方？ ↑←→↗↖↗↑→←",
@@ -244,6 +247,69 @@ func Tips() {
 
 		"2025年11月8日現在、公式ゲーム内の譜面総数は3107枚である。二項分布の公式を用いると、38面ダイスでLv38が出る確率は1.1×10^34分の1である。",
 		"As of Nov 8th 2025, there are a grand total of 3107 charts in the official game. Using the binomial formula, there's a 1 in 1.1×10^34 chance land a Lv38 in a 38-sided die.",
+
+		"UIに何も表示されない？おそらく「data.ped」ファイルが選択されていない可能性があります。",
+		"The UI doesn't show anything? You likely haven't selected a \"data.ped\" file.",
+
+		"AviUtlは、何らかの理由で初回インポート時に読み込みを停止する傾向があるため、場合によってはexoを再度インポートする必要が生じるかもしれません。",
+		"Sometimes you may have to import exo again because AviUtl, for whatever reason, tend to stop loading when importing for the first time.",
+
+		"Chart Cyanvasの終了後、pjsekai-overl-APPENDが対応するサーバー数は3台から8台に増えました。すごいですよね？",
+		"Since the fall of Chart Cyanvas, the number of servers supported for pjsekai-overl-APPEND went from 3 to 8. Crazy, isn't it?",
+
+		"君は俺の後ろ盾だ。",
+		"You have my back.",
+
+		"Goで書かれているにもかかわらず、Luaのコード行数はGoよりも多い。",
+		"Despite written in Go, the number of code lines in Lua are higher than Go.",
+
+		"大きな数値を使用している場合、出力速度が非常に遅くなることに注意してください。",
+		"If you are using big numbers, be aware that it will export very slowly.",
+
+		"これはv0.0限定のTipです！(何)",
+		"This is a v0.0 limited Tip! (what)",
+
+		"これはv0.5限定のTipです！",
+		"This is a v0.5 limited Tip!",
+
+		"日常生活：遅延。",
+		"Everyday life: Delayed.",
+
+		"セカイはどうやってうまれたの？「セカイ」は誰かの“本当の想い”から生まれた不思議な場所です。",
+		"How are SEKAI created? SEKAI are born from someone's true feelings.",
+
+		"「Untitled」はセカイへと繋がる。メロディも歌詞もない無音の楽曲です。",
+		"Untitled songs are linked to their SEKAI. They are silent songs with neither melody nor lyrics.",
+
+		"フルコンボやALL PERFECTを達成すると、専用のライブリザルトセリフが再生されます。",
+		"If you achieve a Full Combo or All Perfect, you will hear a special voice line on the results screen.",
+
+		"難易度「APPEND」は、3本指以上でのプレイが必要な特別な難易度です。",
+		"Extra difficulty is a mode that requires three or more fingers to play.", // localization error reference
+
+		"ご存知ですか？穂波さんの家族は、父親の床屋さんの上に住んでいます。",
+		"Did you know? Honami’s family lives above her father’s hair salon.",
+
+		"邪魔されたことありませんか？スマホの「おやすみモード」を試してみてください！",
+		"Have you ever been interrupted? Try Do Not Disturb (DND) on your phone!",
+
+		"豆知識：Tipsなんて全部役に立たない。（そうじゃない？）",
+		"Fun fact: Tips are ALL useless. (aren't they?)",
+
+		"何かが近づいている…",
+		"Something is coming...",
+
+		"翻訳者にとって、Tip集が最も重い負担です。興味があれば、ぜひ全部集めてみてください！",
+		"Tips are the heaviest burden for translators. Try collecting them all if you're interested!",
+
+		"また今度",
+		"See You Next Time",
+
+		"\n\n        =%#                                                                                                                                           \n  :%@@:@       @                                                                                                                             @@#-%    \n       #      @                                                                                                                             : # % %@  \n      :*     -=                                                                                                                          -@*@ % #: *  \n      %      #                          -*                                                                             :                   :      %   \n      @     @#%       #     #           *                                                                              - -+*%%%@%      :.   @.   =    \n      -    @   @    @ %     @%#         % %:           @                                                             *@%         @     #  *.     @    \n     @   :@     @% * @*%*@     %@.@*    %+             -%  @   =@-    := @@                                       %@   @:         @    #: +: @* :*  = \n     .             #                    %@#%@             @    # @    * @ %                                     %+                %=@        @*  @    \n                                                         #     @%          :.                                   #               @    @:     :    @    \n                                                        @                                                       %            @%       %     *    @    \n                                                       @                                   @                    =@ #   =%@@=          :%    #    @    \n                                                                         .                @                       +*.:        @% -@    @    %    @    \n           @:                             #.                                             @                        -  .   %@@@.    *    @    #    @    \n           %                          %   %                 .@                          %:                         %#@%=%          @   @    %    #    \n           *+@@                      # % @     =                                                                   #      :    @   #.  %    %   :*    \n         +%@      @#%  @  :=         @*# *   .*+@   ##      @   %:.     +* %                                       ==.@   @  :   @  % .*    @   #:    \n           @      @ @  *@*           #        %  *#   @=   @:   @+ @    %# % :*@@%: @:                              @ *             * *:   :*   @     \n           @                         %               @                    %*:                                       %:#*    +@%#   @@ @    %    =     \n                                     %             =%                   %@                                           * -#=      *@  =   @@*    @      \n                                                                        .                                             @ *  -= *= %: @%%  :     @      \n                                                                                                                       @ %   .@    .%    *      @     \n                                                                                                                         @% @.-     #   *:      +*    \n                                                                                                                           @  .@    *   @        @    \n                                                                                                                          :@     @@ @  @         %    \n                                                                                                                          % %*       **          -.   \n           .                               .                                                                            .%    @@- @@  +           #   \n                                                                                                                       *%        % -- @           @   \n                                                                                                                       *            % @           @   \n                                                                                                                     :@     #=      % =+          @   \n                                                                                                                     %     * %      #  %          @   \n                                                                                                                    @      @  #     :+  #         @   \n                 :*  #               :    :                                                                        *      #   @      @  =@#       @   \n                 :+# *  *            %#  =                                                                        *#     .#   #:     @   *        @   \n                 .@ @@ @*@ @.@*=@#*@ :.@ @  @                                                                     *     .%     #    #**           *   \n                                  .                                      =                                       @#    +#      %    #:           =    \n                                                          @* *.         %@   .@             :@   =               @  *+@.       %                 #    \n                           %@  :       = =        = :@@= %   .@##@# @%: *    **+ @@%@*@%*%@ %@%* *% :           %   +*         %                 @    \n                            @ .@@%@%  @@ @  @@    @=  *    :                                                   @   : -@        %                 @    \n                                                                                                            :@   @%           .*                #-    \n                                                                                                                                                      ",
+		"Thank you for playing!",
+
+		"譜面によって必要な演奏スキルは異なるが、素早くタップできれば問題ない。",
+		"Different charts have different demand of playing skills, but nothing matters if you tap real quick.",
 	}
 
 	// これを見て何か追加したいTipsがあれば、PRを送ってください
