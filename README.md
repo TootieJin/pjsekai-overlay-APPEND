@@ -209,7 +209,7 @@ AviUtl for whatever reason stops loading when importing for the first time. If t
 | **Name**       	| Description                                                                   	| Default 	| Range 	|
 |----------------	|-------------------------------------------------------------------------------	|:-------:	|:-----:	|
 | **Judge Type**<br>`judge` 	| `1`: <img width=25% height=25% alt="perfect" src="https://github.com/user-attachments/assets/28950e9e-0dac-49d9-81d3-70bdaa2d6f0c" /><br>`2`: <img width=25% height=25% alt="great" src="https://github.com/user-attachments/assets/ccf333a7-795d-43ad-8002-a9d2220e18a6" /><br>`3`: <img width=25% height=25% alt="good" src="https://github.com/user-attachments/assets/9d0a26bb-c8e7-47d0-9a3d-717b4ad0e0fa" /><br>`4`: <img width=25% height=25% alt="bad" src="https://github.com/user-attachments/assets/5b757195-8bd4-4beb-9f77-808000f1d865" /><br>`5`: <img width=25% height=25% alt="miss" src="https://github.com/user-attachments/assets/734ead15-491b-4bdb-9017-f2b30ab32223" /><br>`6`: <img width=25% height=25% alt="auto" src="https://github.com/user-attachments/assets/b9d674cf-1b69-478e-b2be-53691109b12d" /><br>`7 ~ 10`: Custom judgements 	|    1    	| 1 ~ 10 (Integer) 	|
-| **Animation Speed**<br>`speed`                 	| Adjust animation speed               	  |   1.00   |   >= 0 	|
+| **Animation Speed**<br>`judge_speed`                 	| Adjust animation speed               	  |   1.00   |   >= 0 	|
 
 ## Special Thanks
 - **[@sevenc-nanashi](https://github.com/sevenc-nanashi) for developing the [pjsekai-overlay](https://github.com/sevenc-nanashi/pjsekai-overlay) & [pjsekai-background-gen-rust](https://github.com/sevenc-nanashi/pjsekai-background-gen-rust) tool!**
