@@ -3,7 +3,7 @@
 ; Place in ProgramData\aviutl2\Language to add to Language Settings
 
 ; Original file: https://github.com/nagotown/aviutl2-EN
-; Version: b19a
+; Version: b20
 ; pjsekai-overlay language support by TootieJin
 
 [Effect]
@@ -202,6 +202,7 @@ ObjectMotionBlur_LK=Object Motion Blur_LK
 判定@pjsekai-overlay-2=Judgement@pjsekai-overlay-2
 オート@pjsekai-overlay-2=Auto@pjsekai-overlay-2
 設定@pjsekai-overlay-2-v1=Root@pjsekai-overlay-2-v1
+ライフ@pjsekai-overlay-2-v1=Life@pjsekai-overlay-2-v1
 スコア@pjsekai-overlay-2-v1=Score@pjsekai-overlay-2-v1
 コンボ@pjsekai-overlay-2-v1=Combo@pjsekai-overlay-2-v1
 判定@pjsekai-overlay-2-v1=Judgement@pjsekai-overlay-2-v1
@@ -228,7 +229,7 @@ n00コンボ効果=n00 Combo Burst
 判定タイプ=Judge Type
 ; Multi-use variable
 アニメーション速度=Animation Speed
-X軸境界= X-axis Boundary
+X軸境界=X-axis Boundary
 
 ; Label Names * Only popup menu names are translated
 基本効果=Basic Effect
@@ -659,6 +660,10 @@ Z軸回転=Rotate Z
 影を付ける=Add Shadow
 影の範囲=Shadow Range
 自動スクロール=Auto Scroll
+ゆらぎ=Fluctuation
+ゆがみ=Distortion
+起点X=BaseX
+起点Y=BaseY
 
 ; Extras (Originally untranslated)
 超点X=Diffuse X
@@ -945,10 +950,17 @@ YUVレンジ=YUV Color Range
 音声波形を絶対値で表示=Display Audio Waveform as Absolute Value
 動画ファイルのドラッグ＆ドロップ時に音声を分離=Separate Audio when Drag And Dropping Video File
 空のシーンへのドラッグ＆ドロップ時にシーン設定を合わせる=Adjust Scene when Drag and Dropping To Empty Scene
+プラグイン=Plugin
 レイヤーのロック=Lock Layer
-レイヤーを設定=Adjust Layer
+レイヤーを設定=Set Layer
 レイヤー設定=Layer Settings
-レイヤー選択時に設定対象レイヤーを変更=Change the target layer when selecting layers
+レイヤー選択時に設定対象レイヤーを変更=Change Target when Selecting Layer
+オブジェクトのテキストを編集=Edit Object Text
+小=Small
+中=Medium
+大=Large
+レイヤーの縦幅を大きく=Increase Layer Height
+レイヤーの縦幅を小さく=Decrease Layer Height
 
 ; Third-Party Export Plugins
 
@@ -1051,6 +1063,9 @@ YUVの設定=YUV Settings
 プラグイン・スクリプトのインストール=Install Script/Plugin
 前回アプリケーションが正常に終了しませんでした\n\nプロジェクトを復元しますか？=Application not exit normally last time\n\nRestore project?
 ファイル出力を中断=interrupt file output
+バッファリング中=Buffering
+プリセットを適用=Apply Preset
+プリセットの読み込みに失敗しました=Failed to load preet
 
 [Dialog]
 ; Dialog box names
@@ -1196,9 +1211,16 @@ Alt+左クリックドラックで右クリックドラック操作=Alt+Left Cli
 選択範囲=Select Range
 汎用プラグイン=Universal Plugin
 プラグイン・スクリプトのインストール=Install Script/Plugin
-下記のプラグインまたはスクリプトのファイルをインストールします=The following plugin or script files will be installed
-※インストール後にアプリケーションを再起動します=*Restart the application after installing
-インストールしない=Don’t install
+下記のプラグインまたはスクリプトのファイルをインストールします=The following plugin or script files install
+※インストール後にアプリケーションを再起動します=*Restart application after install
+インストールしない=Do not install
+プリセットを作成=New Preset
+対象範囲=Selected Range
+自身の項目のみ=Only Own Items
+自身以降のフィルタ効果を含める=Include Filter After Self
+対象項目=Target Item
+対象項目から外すとプリセット適用時に元の値が維持されます=When unchecked, original value remains
+背景色=Background Color
 ;OK=OK
 ;Cancel=Cancel
 

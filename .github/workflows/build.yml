@@ -35,7 +35,20 @@ jobs:
         env:
           GOOS: windows
           GOARCH: amd64
+      - name: Copy extra assets
+        run: cp -r extra-assets release/extra-assets
+      - name: Build extra assets zip
+        run: cd release && zip -r ../extra-assets-${{ steps.get_version.outputs.VERSION }}.zip extra-assets
       - name: Copy assets
         run: cp -r assets release/assets
+      - name: Copy dependencies
+        run: cp -r dependencies release/dependencies
       - name: Build zip
-        run: cd release && zip -r ../pjsekai-overlay-APPEND.zip .
+        run: cd release && zip -r ../pjsekai-overlay-APPEND-${{ steps.get_version.outputs.VERSION }}.zip . -x extra-assets/**
+      - name: Create Release
+        uses: softprops/action-gh-release@v1
+        with:
+          prerelease: ${{ steps.get_version.outputs.IS_PRERELEASE }}
+          files: |
+            extra-assets-${{ steps.get_version.outputs.VERSION }}.zip
+            pjsekai-overlay-APPEND-${{ steps.get_version.outputs.VERSION }}.zip

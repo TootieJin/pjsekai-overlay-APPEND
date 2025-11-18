@@ -8,10 +8,11 @@
 Fork of [pjsekai-overlay](https://github.com/sevenc-nanashi/pjsekai-overlay) by [TootieJin](https://tootiejin.com), an open-sourced tool to make Project Sekai Fanmade (custom chart) videos - in other words... "Make your Sonolus look like Project Sekai."
 
 > [!CAUTION]
-> **For English users:** This tool is primary only for people with technical know-how and basic knowledge of AviUtl.\
-> Only use this tool if you can figure it out yourself. **DO NOT open issues, DM me, or request help about this**.
+> **Before using pjsekai-overlay-APPEND:** This tool is primary only for people with **technical know-how and basic knowledge of AviUtl.** \
+> Only use this tool if you can figure it out yourself. If problems arise, **please [make a discussion thread.](https://github.com/TootieJin/pjsekai-overlay-APPEND/discussions)** \
+> Please also read the [Terms of Use](#terms-of-use) after using the tool.
 > 
-> *Also, to [a certain someone](https://discordid.netlify.app/?id=1370076899404939327) (a.k.a [this person](https://discordid.netlify.app/?id=919036186473947187)) with the mindset of `"Just switch to a different editing software since I don’t even know how to install aviutl"` [(image source)](https://github.com/user-attachments/assets/4850442d-3f3a-438a-92d9-97d052f2fba0): I suggest you **make your own pjsekai-overlay that supports your desired editing software.** (if you can even find a video editor that is as versatile and extensible as AviUtl, that is).*
+> - *P.S. To [a certain someone](https://discordid.netlify.app/?id=1370076899404939327) (a.k.a [this person](https://discordid.netlify.app/?id=919036186473947187)) with the mindset of `"Just switch to a different editing software since I don’t even know how to install aviutl"` [(image source)](https://github.com/user-attachments/assets/4850442d-3f3a-438a-92d9-97d052f2fba0): I suggest you **make your own pjsekai-overlay that supports your desired editing software.** (if you can even find a video editor that is as versatile and extensible as AviUtl, that is).*
 
 - **16:9**
 
@@ -37,7 +38,7 @@ https://github.com/user-attachments/assets/3efab743-246a-4da7-8d80-a02b2f09f5b3
 
 This is a forked version of pjsekai-overlay with additional features originally not in the main repo, including:
   - **AviUtl ExEdit2 Full Support**
-  - [Extra assets](./extra%20assets)
+  - [Extra assets](./extra-assets)
   - Added/adjusted elements to look identical to the official photography
   - Quickly make 1080p videos
   - iPad (4:3) video support
@@ -61,7 +62,7 @@ This is a forked version of pjsekai-overlay with additional features originally 
 ```
 PJSekai-style video creation tool:
 - Forked ver. by TootieJin (https://tootiejin.com) & ぴぃまん (https://pim4n-net.com)
-- Original by 名無し｡ (https://sevenc7c.com) 
+- Developed by 名無し｡ (https://sevenc7c.com) 
    https://github.com/TootieJin/pjsekai-overlay-APPEND
 ```
 
@@ -154,6 +155,9 @@ You likely haven't selected a **`data.ped` file.**
 ### The intro doesn't load all objects
 AviUtl for whatever reason stops loading when importing for the first time. If that is the case, **you may have to import it again.**
 
+### Still have questions or encountering problems?
+**[Make a discussion thread.](https://github.com/TootieJin/pjsekai-overlay-APPEND/discussions)**
+
 ## UI Customization Specifications
 > [!TIP]
 > You can change default values in `default.ini`, **reducing the need to change values in AviUtl.**
@@ -170,7 +174,7 @@ AviUtl for whatever reason stops loading when importing for the first time. If t
 | **Font type**<br>`font_type` 	| Set font type configuration for the watermark text<br>(`0` - メイリオ, `1` - RodinNTLG EB)                 	|    0    	|        0 or 1       	|
 | **Watermark**<br>`watermark` 	| Enable watermark text at the bottom-left corner                                                            	|   1 (ON)  	|          0 or 1         	|
 
-### Life@pjsekai-overlay-en (v3 only)
+### Life@pjsekai-overlay-en
 <img width="125" height="125" alt="LifeUP" src="https://github.com/user-attachments/assets/6f7a7db8-50bb-43cf-9463-5f46325c862e" /> <img width=50% height=50% alt="life" src="https://github.com/user-attachments/assets/7aab3534-66cf-4dad-936e-3d423ecce615" />
 
 | **Name** 	| Description                                                                         	| Default 	|   Range  	|
@@ -204,13 +208,13 @@ AviUtl for whatever reason stops loading when importing for the first time. If t
 
 | **Name**       	| Description                                                                   	| Default 	| Range 	|
 |----------------	|-------------------------------------------------------------------------------	|:-------:	|:-----:	|
-| **Judge Type**<br>`judge` 	| `1`: <img width=25% height=25% alt="perfect" src="https://github.com/user-attachments/assets/28950e9e-0dac-49d9-81d3-70bdaa2d6f0c" /><br>`2`: <img width=25% height=25% alt="great" src="https://github.com/user-attachments/assets/ccf333a7-795d-43ad-8002-a9d2220e18a6" /><br>`3`: <img width=25% height=25% alt="good" src="https://github.com/user-attachments/assets/9d0a26bb-c8e7-47d0-9a3d-717b4ad0e0fa" /><br>`4`: <img width=25% height=25% alt="bad" src="https://github.com/user-attachments/assets/5b757195-8bd4-4beb-9f77-808000f1d865" /><br>`5`: <img width=25% height=25% alt="miss" src="https://github.com/user-attachments/assets/734ead15-491b-4bdb-9017-f2b30ab32223" /><br>`6`: <img width=25% height=25% alt="auto" src="https://github.com/user-attachments/assets/b9d674cf-1b69-478e-b2be-53691109b12d" /> 	|    1    	| 1 ~ 6 (Integer) 	|
+| **Judge Type**<br>`judge` 	| `1`: <img width=25% height=25% alt="perfect" src="https://github.com/user-attachments/assets/28950e9e-0dac-49d9-81d3-70bdaa2d6f0c" /><br>`2`: <img width=25% height=25% alt="great" src="https://github.com/user-attachments/assets/ccf333a7-795d-43ad-8002-a9d2220e18a6" /><br>`3`: <img width=25% height=25% alt="good" src="https://github.com/user-attachments/assets/9d0a26bb-c8e7-47d0-9a3d-717b4ad0e0fa" /><br>`4`: <img width=25% height=25% alt="bad" src="https://github.com/user-attachments/assets/5b757195-8bd4-4beb-9f77-808000f1d865" /><br>`5`: <img width=25% height=25% alt="miss" src="https://github.com/user-attachments/assets/734ead15-491b-4bdb-9017-f2b30ab32223" /><br>`6`: <img width=25% height=25% alt="auto" src="https://github.com/user-attachments/assets/b9d674cf-1b69-478e-b2be-53691109b12d" /><br>`7 ~ 10`: Custom judgements 	|    1    	| 1 ~ 10 (Integer) 	|
 | **Animation Speed**<br>`speed`                 	| Adjust animation speed               	  |   1.00   |   >= 0 	|
 
 ## Special Thanks
 - **[@sevenc-nanashi](https://github.com/sevenc-nanashi) for developing the [pjsekai-overlay](https://github.com/sevenc-nanashi/pjsekai-overlay) & [pjsekai-background-gen-rust](https://github.com/sevenc-nanashi/pjsekai-background-gen-rust) tool!**
 - [@Piliman22](https://github.com/Piliman22) for contribution to make [ScoreSync](https://github.com/Piliman22/ScoreSync) in pjsekai-overlay possible!
-- [@Reiyunkun](https://github.com/Reiyunkun), [@gaven1880](https://github.com/gaven1880), and [@YumYummity](https://github.com/YumYummity) for providing [additional PJSK assets](./extra%20assets)!
+- [@Reiyunkun](https://github.com/Reiyunkun), [@gaven1880](https://github.com/gaven1880), and [@YumYummity](https://github.com/YumYummity) for providing [additional PJSK assets](./extra-assets)!
 - [@Khronophobia](https://github.com/Khronophobia) for the customized lane assets in Blender!
 - [@nagotown](https://github.com/nagotown) for the [aviutl2-EN](https://github.com/nagotown/aviutl2-EN) translation script!
 - And everyone who used my tool, thank you all so much.
@@ -221,9 +225,14 @@ AviUtl for whatever reason stops loading when importing for the first time. If t
 
 [TootieJin](https://tootiejin.com)氏による[pjsekai-overlay](https://github.com/sevenc-nanashi/pjsekai-overlay)用フォーク。pjsekai-overlay(-APPEND) は、プロセカの創作譜面をプロセカ風の動画にするためのオープンソースのツールです。
 
+> [!CAUTION]
+> **pjsekai-overlay-APPEND使用前に：** このツールは主に、**技術的な知識とAviUtlの基本的な理解がある方**のみを対象としています。\
+> 自分で理解できる方のみご使用ください。問題が発生した場合は、**[議論スレッドを作成してください。](https://github.com/TootieJin/pjsekai-overlay-APPEND/discussions)** \
+> ツール使用後は、[利用規約](#利用規約)も必ずお読みください。
+
 これはpjsekai-overlayのフォーク版で、元々メインレポにはない以下のような追加機能があります：
   - **AviUtl ExEdit2 フル対応**
-  - [追加アセット](./extra%20assets/)
+  - [追加アセット](./extra-assets/)
   - 本家撮影と同じように見えるように要素を追加/調整
   - 1080p動画を素早く作成
   - iPad（4:3）動画対応
@@ -247,7 +256,7 @@ AviUtl for whatever reason stops loading when importing for the first time. If t
 ```
 PJSekai-style video creation tool:
 - Forked ver. by TootieJin (https://tootiejin.com) & ぴぃまん (https://pim4n-net.com)
-- Original by 名無し｡ (https://sevenc7c.com) 
+- Developed by 名無し｡ (https://sevenc7c.com) 
    https://github.com/TootieJin/pjsekai-overlay-APPEND
 ```
 
@@ -341,6 +350,9 @@ PJSekai-style video creation tool:
 ### イントロが全てのオブジェクトを読み込まない
 AviUtlは、何らかの理由で初回インポート時に読み込みを停止することがあります。その場合、**再度インポートする必要があるかもしれません。**
 
+### まだ質問がある場合や問題が発生している場合は？
+**[議論スレッドを作成してください。](https://github.com/TootieJin/pjsekai-overlay-APPEND/discussions)**
+
 ## UIカスタマイズ仕様書
 > [!TIP]
 > `default.ini`でデフォルト値を変更できます。**これによりAviUtlで値を変更する必要が軽減されます。**
@@ -357,7 +369,7 @@ AviUtlは、何らかの理由で初回インポート時に読み込みを停�
 | **フォント種類**<br>`font_type`  | 透かしテキストのフォント種類設定を設定する<br>(`0` - メイリオ, `1` - RodinNTLG EB)                 	|    0    	|        0か1      	|
 | **透かし**<br>`watermark` 	   | 左下隅に透かしテキストを表示する                                                            	|   1 (ON)  	|          0か1         	|
 
-### ライフ@pjsekai-overlay (v3のみ)
+### ライフ@pjsekai-overlay
 <img width="125" height="125" alt="LifeUP" src="https://github.com/user-attachments/assets/6f7a7db8-50bb-43cf-9463-5f46325c862e" /> <img width=50% height=50% alt="life" src="https://github.com/user-attachments/assets/7aab3534-66cf-4dad-936e-3d423ecce615" />
 
 | **名前**         | 説明                                                                                                    | デフォルト     |        範囲           |
@@ -391,13 +403,13 @@ AviUtlは、何らかの理由で初回インポート時に読み込みを停�
 
 | **名前**         | 説明                                                                                                    | デフォルト     |        範囲           |
 |----------------	|-------------------------------------------------------------------------------	|:-------:	|:-----:	|
-| **判定タイプ**<br>`judge` 	| `1`: <img width=25% height=25% alt="perfect" src="https://github.com/user-attachments/assets/28950e9e-0dac-49d9-81d3-70bdaa2d6f0c" /><br>`2`: <img width=25% height=25% alt="great" src="https://github.com/user-attachments/assets/ccf333a7-795d-43ad-8002-a9d2220e18a6" /><br>`3`: <img width=25% height=25% alt="good" src="https://github.com/user-attachments/assets/9d0a26bb-c8e7-47d0-9a3d-717b4ad0e0fa" /><br>`4`: <img width=25% height=25% alt="bad" src="https://github.com/user-attachments/assets/5b757195-8bd4-4beb-9f77-808000f1d865" /><br>`5`: <img width=25% height=25% alt="miss" src="https://github.com/user-attachments/assets/734ead15-491b-4bdb-9017-f2b30ab32223" /><br>`6`: <img width=25% height=25% alt="auto" src="https://github.com/user-attachments/assets/b9d674cf-1b69-478e-b2be-53691109b12d" /> 	|    1    	| 1 ~ 6 (整数) 	|
+| **判定タイプ**<br>`judge` 	| `1`: <img width=25% height=25% alt="perfect" src="https://github.com/user-attachments/assets/28950e9e-0dac-49d9-81d3-70bdaa2d6f0c" /><br>`2`: <img width=25% height=25% alt="great" src="https://github.com/user-attachments/assets/ccf333a7-795d-43ad-8002-a9d2220e18a6" /><br>`3`: <img width=25% height=25% alt="good" src="https://github.com/user-attachments/assets/9d0a26bb-c8e7-47d0-9a3d-717b4ad0e0fa" /><br>`4`: <img width=25% height=25% alt="bad" src="https://github.com/user-attachments/assets/5b757195-8bd4-4beb-9f77-808000f1d865" /><br>`5`: <img width=25% height=25% alt="miss" src="https://github.com/user-attachments/assets/734ead15-491b-4bdb-9017-f2b30ab32223" /><br>`6`: <img width=25% height=25% alt="auto" src="https://github.com/user-attachments/assets/b9d674cf-1b69-478e-b2be-53691109b12d" /><br>`7 ~ 10`: カスタム判定 	|    1    	| 1 ~ 10 (整数) 	|
 | **アニメーション速度**<br>`judge_speed`                     	| アニメーション速度を調整する 	|    1.00    	| 0以上	|
 
 ## 特別なお礼
 - **[@sevenc-nanashi](https://github.com/sevenc-nanashi)氏による[pjsekai-overlay](https://github.com/sevenc-nanashi/pjsekai-overlay)と[pjsekai-background-gen-rust](https://github.com/sevenc-nanashi/pjsekai-background-gen-rust)ツールの開発に感謝します！**
 - [@Piliman22](https://github.com/Piliman22)氏、pjsekai-overlayにおける[ScoreSync](https://github.com/Piliman22/ScoreSync)の実現に貢献いただき感謝申し上げます！
-- [@Reiyunkun](https://github.com/Reiyunkun)氏、[@gaven1880](https://github.com/gaven1880)氏、[@YumYummity](https://github.com/YumYummity)氏による[追加のプロセカアセット](./extra%20assets)の提供に感謝します！
+- [@Reiyunkun](https://github.com/Reiyunkun)氏、[@gaven1880](https://github.com/gaven1880)氏、[@YumYummity](https://github.com/YumYummity)氏による[追加のプロセカアセット](./extra-assets)の提供に感謝します！
 - [@Khronophobia](https://github.com/Khronophobia)氏にはBlenderでのカスタムレーンアセットを提供いただきました！
 - [@nagotown](https://github.com/nagotown)氏による [aviutl2-EN](https://github.com/nagotown/aviutl2-EN) 翻訳スクリプト！
 - そして私のツールを使ってくださった皆様、本当にありがとうございます。
