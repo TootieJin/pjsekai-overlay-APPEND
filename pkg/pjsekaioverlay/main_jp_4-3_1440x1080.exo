@@ -430,7 +430,7 @@ Y=0.0
 Z=0.0
 拡大率=100.00
 透明度=0.0
-回転=0.01
+回転=0.00
 blend=0
 [18]
 start=1
@@ -476,11 +476,11 @@ track0=6000.00
 track1={life}
 track2=0.00
 track3=0.00
-check0={overflow}
+check0=0
 type=0
 filter=0
 name=ライフ@pjsekai-overlay
-param=
+param=overflow={overflow};lead_zero={lead_zero}
 [19.1]
 _name=標準描画
 X=532.0

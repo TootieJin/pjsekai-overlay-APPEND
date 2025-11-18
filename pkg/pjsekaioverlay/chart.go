@@ -134,7 +134,7 @@ func DetectChartSource(chartId string, chartInstance []string) (Source, error) {
 		source = Source{
 			Id:     "untitledcharts",
 			Name:   "UntitledCharts",
-			Color:  0x404464,
+			Color:  0x7765da,
 			Host:   "untitledcharts.com",
 			Status: 0,
 		}

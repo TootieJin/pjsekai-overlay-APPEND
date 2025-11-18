@@ -11,6 +11,7 @@ import (
 	"path/filepath"
 	"strconv"
 	"strings"
+	"time"
 
 	"github.com/TootieJin/pjsekai-overlay-APPEND/pkg/pjsekaioverlay"
 	"github.com/TootieJin/pjsekai-overlay-APPEND/pkg/sonolus"
@@ -92,7 +93,7 @@ func origMain(isOptionSpecified bool) {
 
 	mappingName, mapping := pjsekaioverlay.SetOverlayDefault()
 
-	if len(mapping) != 17 {
+	if len(mapping) != 18 {
 		fmt.Println(color.RedString(fmt.Sprintf("FAIL:「default.ini」ファイルのデータに異常があります。「default.ini」ファイルを削除し、プログラムを再起動して再生成してください。\nAbnormal \"default.ini\" data. Please regenerate by deleting the \"default.ini\" file and reopen the program.\n- Mapping count: %v != 17", len(mapping))))
 		return
 	}
@@ -104,22 +105,23 @@ func origMain(isOptionSpecified bool) {
 		"font_type": mapping[2] == 0 || mapping[2] == 1,
 		"watermark": mapping[3] == 0 || mapping[3] == 1,
 		// Life
-		"life":     mapping[4] >= 0 && mapping[4] <= 9999 && math.Mod(mapping[4], 1.0) == 0,
-		"overflow": mapping[5] == 0 || mapping[5] == 1,
+		"life":      mapping[4] >= 0 && mapping[4] <= 9999 && math.Mod(mapping[4], 1.0) == 0,
+		"overflow":  mapping[5] == 0 || mapping[5] == 1,
+		"lead_zero": mapping[6] == 0 || mapping[6] == 1,
 		// Score
-		"min_digit":   mapping[6] >= 1 && mapping[6] <= 99 && math.Mod(mapping[6], 1.0) == 0,
-		"score_speed": mapping[7] >= 0,
-		"anim_score":  mapping[8] == 0 || mapping[8] == 1,
-		"wds_anim":    mapping[9] == 0 || mapping[9] == 1,
+		"min_digit":   mapping[7] >= 1 && mapping[7] <= 99 && math.Mod(mapping[7], 1.0) == 0,
+		"score_speed": mapping[8] >= 0,
+		"anim_score":  mapping[9] == 0 || mapping[9] == 1,
+		"wds_anim":    mapping[10] == 0 || mapping[10] == 1,
 		// Combo
-		"ap":          mapping[10] == 0 || mapping[10] == 1,
-		"tag":         mapping[11] == 0 || mapping[11] == 1,
-		"last_digit":  mapping[12] >= 0 && math.Mod(mapping[12], 1.0) == 0,
-		"combo_speed": mapping[13] >= 0,
-		"combo_burst": mapping[14] == 0 || mapping[14] == 1,
+		"ap":          mapping[11] == 0 || mapping[11] == 1,
+		"tag":         mapping[12] == 0 || mapping[12] == 1,
+		"last_digit":  mapping[13] >= 0 && math.Mod(mapping[13], 1.0) == 0,
+		"combo_speed": mapping[14] >= 0,
+		"combo_burst": mapping[15] == 0 || mapping[15] == 1,
 		// Judgement
-		"judge":       mapping[15] >= 1 && mapping[15] <= 6 && math.Mod(mapping[15], 1.0) == 0,
-		"judge_speed": mapping[16] >= 0,
+		"judge":       mapping[16] >= 1 && mapping[16] <= 10 && math.Mod(mapping[16], 1.0) == 0,
+		"judge_speed": mapping[17] >= 0,
 	}
 
 	var mappingErr []string
@@ -195,7 +197,7 @@ func origMain(isOptionSpecified bool) {
 		}
 	}
 	if successInstall {
-		fmt.Println(color.HiYellowString("変更を適用するには、" + aviutlName + "を再起動してください。(Please restart " + aviutlName + " to apply changes.)"))
+		fmt.Println(color.HiYellowString("変更を適用するには、" + aviutlName + "を再起動してください。(Please restart " + aviutlName + " to apply changes.)\n"))
 	}
 
 	Tips()
@@ -245,7 +247,7 @@ func origMain(isOptionSpecified bool) {
 			return
 		}
 		if chartSource.Status == 1 {
-			fmt.Printf(color.RedString("FAIL: %sはサポートされなくなりました。ご利用ありがとうございました。\n%s is no longer supported. Thank you for using the service.\n"), chartSource.Name, chartSource.Name)
+			fmt.Printf(color.RedString("FAIL: %sは対応されなくなりました。ご利用ありがとうございました。\n%s is no longer supported. Thank you for using the service.\n"), chartSource.Name, chartSource.Name)
 			return
 		}
 		if chartSource.Status == 2 {
@@ -327,7 +329,7 @@ func origMain(isOptionSpecified bool) {
 		return false
 	}
 	if isAdminPerm(formattedOutDir) {
-		fmt.Println(color.RedString(fmt.Sprintf("\nFAIL: ディレクトリには管理者権限が必要です。pjsekai-overlay-APPEND を「C:\\」または別の場所に移動してください。\nYour directory requires administrative permissions. Please move pjsekai-overlay-APPEND to \"C:\\\" or somewhere else.\n\n出力先ディレクトリ (Output path): %s", resultDir)))
+		fmt.Println(color.RedString(fmt.Sprintf("\nFAIL: ディレクトリには管理者権限が必要です。pjsekai-overlay-APPENDを「C:\\」または別の場所に移動してください。\nYour directory requires administrative permissions. Please move pjsekai-overlay-APPEND to \"C:\\\" or somewhere else.\n\n出力先ディレクトリ (Output path): %s", resultDir)))
 		return
 	}
 
@@ -340,7 +342,7 @@ func origMain(isOptionSpecified bool) {
 		return true
 	}
 	if !isASCII(formattedOutDir) {
-		fmt.Println(color.RedString(fmt.Sprintf("\nFAIL: ディレクトリに非ASCII文字が含まれています。pjsekai-overlay-APPEND を「C:\\」または別の場所に移動してください。\nYour directory contains non-ASCII characters. Please move pjsekai-overlay-APPEND to \"C:\\\" or somewhere else.\n\n出力先ディレクトリ (Output path): %s", resultDir)))
+		fmt.Println(color.RedString(fmt.Sprintf("\nFAIL: ディレクトリに非ASCII文字が含まれています。pjsekai-overlay-APPENDを「C:\\」または別の場所に移動してください。\nYour directory contains non-ASCII characters. Please move pjsekai-overlay-APPEND to \"C:\\\" or somewhere else.\n\n出力先ディレクトリ (Output path): %s", resultDir)))
 		return
 	}
 
@@ -595,11 +597,13 @@ func origMain(isOptionSpecified bool) {
 
 	fmt.Println(color.GreenString("OK"))
 
-	message := fmt.Sprintf("\n全ての処理が完了しました。READMEの規約を確認した上で、%sファイルを%sにインポートして下さい。\nExecution complete! Please import the %s file into %s after reviewing the README Terms of Use.", exoType, aviutlName, exoType, aviutlName)
+	message := fmt.Sprintf("\n全ての処理が完了しました！READMEの規約を確認した上で、%sファイルを%sにインポートして下さい。\nExecution complete! Please import the %s file into %s after reviewing the README Terms of Use.", exoType, aviutlName, exoType, aviutlName)
 	fmt.Println(color.GreenString(message))
 
 	cmd := exec.Command(`explorer`, `/select,`, resultDir)
 	cmd.Run()
+
+	time.Sleep(2000 * time.Millisecond)
 }
 
 func main() {

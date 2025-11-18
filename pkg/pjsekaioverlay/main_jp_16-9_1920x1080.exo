@@ -503,11 +503,11 @@ track0=6000.00
 track1={life}
 track2=0.00
 track3=0.00
-check0={overflow}
+check0=0
 type=0
 filter=0
 name=ライフ@pjsekai-overlay
-param=
+param=overflow={overflow};lead_zero={lead_zero}
 [18.1]
 _name=標準描画
 X=705.0

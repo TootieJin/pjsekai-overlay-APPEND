@@ -20,6 +20,7 @@ if obj.track1 ~= 1 or not PED_DATA or PED_DATA.file ~= file then
   PED_DATA.file = file
   PED_DATA.cache_number = obj.track1
   PED_DATA.current = nil
+  PED_DATA.previous = nil
   PED_DATA.burst = nil
   local fp, err = io.open(file, "r")
   if fp then
@@ -61,15 +62,24 @@ if obj.track1 ~= 1 or not PED_DATA or PED_DATA.file ~= file then
     debug_print("[pjsekai-overlay] # of combo bursts: " .. #PED_DATA.combo)
     fp:close()
   else
-    PED_DATA.loaded = "not_found"
+    PED_DATA.loaded = "cannot_open"
     debug_print("[pjsekai-overlay] " .. err)
-    debug_print("[pjsekai-overlay] Couldn't find ped data file")
+    debug_print("[pjsekai-overlay] Couldn't open ped data file")
     ERROR = err
   end
 end
 if PED_DATA.version == "{version}" or "{version}" == "0.0.0" then
   OFFSET = obj.track0
   PED_DATA.current = {
+    time = 0,
+    score = 0,
+    offset = 0,
+    width = 0,
+    widthv1 = 0,
+    rank = "d",
+    combo = 0,
+  }
+  PED_DATA.previous = {
     time = 0,
     score = 0,
     offset = 0,
@@ -89,6 +99,23 @@ if PED_DATA.version == "{version}" or "{version}" == "0.0.0" then
       break
     end
   end
+  if PED_DATA.current and PED_DATA.current.time and PED_DATA.current.time > 0 then
+    for i = #PED_DATA.frames, 1, -1 do
+      local previous = PED_DATA.frames[i]
+      if previous.time < PED_DATA.current.time then
+        PED_DATA.previous = {
+          time = previous.time,
+          score = previous.score,
+          offset = previous.offset,
+          width = previous.width,
+          widthv1 = previous.widthv1,
+          rank = previous.rank,
+          combo = previous.combo
+        }
+        break
+      end
+    end
+  end
   for i = #PED_DATA.combo, 1, -1 do
     local combo = PED_DATA.combo[i]
     if (combo.time * obj.framerate) < (obj.frame - OFFSET) then
@@ -99,12 +126,11 @@ if PED_DATA.version == "{version}" or "{version}" == "0.0.0" then
   PED_DATA.version_status = "ok"
 else
   obj.setfont("メイリオ", 32)
-  if PED_DATA.loaded == "not_found" then
+  if PED_DATA.loaded == "cannot_open" then
     obj.load(
       "text",
       "<s32,メイリオ,B>(! ERROR !)\n<s>"..
-      "pedファイルが見付かりません！\n"..
-      "- 設定@pjsekai-overlay-v1に移動して参照ファイルを設定してください。\n"..
+      "pedファイルを開くことができません！\n"..
       "Error log: ".. ERROR
     )
   elseif PED_DATA.loaded == "invalid" then
@@ -156,6 +182,66 @@ if obj.check0 and PED_DATA.version_status == "ok" then
   obj.draw(-614 - ((obj.screen_w/2) - (1920/2)), 513 + ((obj.screen_h/2) - (1080/2)), 0, 0.24, 0.5)
 end
 ----------------------------------------------------------------
+@ライフ
+--track0:X軸境界,0,9999,6000,1
+--track1:ライフ,0,9999,{life},1
+--dialog:過剰なライフバー/chk,overflow={overflow};先行ゼロ/chk,lead_zero={lead_zero}
+
+local x_boundary = obj.track0
+local life = obj.track1
+if PED_DATA and PED_DATA.version_status == "ok" then
+  local life_num = life
+  local life_str = tostring(life)
+  local life_alpha = 1
+
+  if lead_zero == 1 then
+    life_str = string.rep("n", 4 - #life_str) .. life_str
+  end
+
+  obj.setoption("drawtarget", "tempbuffer", x_boundary, 124)
+  obj.load("image", PED_DATA.path .. "/life/v1/placeholder.png")
+  obj.draw(0, 0, 0, 1)
+
+  if overflow == 1 and life > 1000 then
+    obj.load("image", PED_DATA.path.."/life/v1/normal.png")
+  elseif life <= 200 then
+    obj.load("image", PED_DATA.path.."/life/v1/danger_bg.png")
+  else
+    obj.load("image", PED_DATA.path.."/life/v1/bg.png")
+  end
+  obj.draw(0, 0, 0, 1)
+
+  local life_name = ""
+  if overflow == 1 and life > 1000 then
+    life_alpha = (math.sin(obj.time * math.pi) + 1) * (1 / 2)
+    life_num = life - 1000
+    life_name = "overflow"
+  elseif life <= 200 then
+    life_name = "danger"
+  else
+    life_name = "normal"
+  end
+
+  -- I had to use different values here because AviUtl1 for some reason is not consistent in trangle mask wtf???
+  obj.load("image", PED_DATA.path.."/life/v1/"..life_name..".png")
+  obj.effect("マスク", "X", 158 + life_num * 0.249, "回転", 38, "サイズ", 504, "マスクの種類", "三角形", "マスクの反転", 1)
+  obj.draw(0, 0, 0, 1, life_alpha)
+
+  for i = #life_str, 1, -1 do
+    obj.load("image", PED_DATA.path .. "/life/v1/digit/b_" .. string.sub(life_str, i, i) .. ".png")
+    obj.draw(75 - (#life_str - i) * 25, -33.45, 0, 0.73)
+  end
+  for i = #life_str, 1, -1 do
+    obj.load("image", PED_DATA.path .. "/life/v1/digit/f_" .. string.sub(life_str, i, i) .. ".png")
+    obj.draw(75 - (#life_str - i) * 25, -33.45, 0, 0.73)
+  end
+
+  obj.load("image", PED_DATA.path .. "/life/v1/border.png")
+  obj.draw(0, 0, 0, 1)
+
+  obj.copybuffer("obj", "tmp")
+end
+----------------------------------------------------------------
 @スコア
 --track0:X軸境界,0,9999,6000,1
 --track1:最小桁数,1,99,{min_digit},1
@@ -164,16 +250,24 @@ end
 
 local x_boundary = obj.track0
 local min_digit = obj.track1
-local anim_score = obj.check0
+local anim_score = obj.check0 and 1 or 0
 if PED_DATA and PED_DATA.version_status == "ok" then
   obj.setoption("drawtarget", "tempbuffer", x_boundary, math.ceil(154 * 1.5))
   obj.setoption("blend", 0)
   obj.load("image", PED_DATA.path.."/score/score.png")
   obj.draw()
 
+  local progress_frame = ((obj.frame - OFFSET) - (PED_DATA.current.time * obj.framerate))
+  local progress_offset = math.min(1, (progress_frame / 30))
+
+  local width = PED_DATA.current.widthv1
+  if anim_score == 1 then
+    width = PED_DATA.current.widthv1 - (PED_DATA.current.widthv1 - PED_DATA.previous.widthv1) * (1 - progress_offset)^3
+  end
+
   -- -- 79, 35 / 357, 18
   obj.load("image", PED_DATA.path.."/score/inner.png")
-  obj.effect("マスク", "X", 125 + (PED_DATA.current.widthv1 * 610), "サイズ", 779, "マスクの種類", "四角形", "マスクの反転", 1)
+  obj.effect("マスク", "X", 125 + (width * 610), "サイズ", 779, "マスクの種類", "四角形", "マスクの反転", 1)
   obj.draw()
 
   if PED_DATA.current.rank ~= "d" then
@@ -184,20 +278,14 @@ if PED_DATA and PED_DATA.version_status == "ok" then
   obj.load("image", PED_DATA.path.."/score/bars.png")
   obj.draw()
 
-  local progress_frame = ((obj.frame - OFFSET) - (PED_DATA.current.time * obj.framerate))
-  local progress_offset = (progress_frame / 30)
-  if progress_offset > 1 then
-      progress_offset = 1
-  end
-
   -- -559, 27, +24
   local score_str = ""
   local minusDigits = math.max(1, min_digit - 1)
   if anim_score == 1 then
     if PED_DATA.current.score < 0 then
-      score_str = "-" .. string.format("%"..minusDigits..".0f", math.abs(PED_DATA.current.score - PED_DATA.current.offset * (1 - progress_offset)^3)):gsub(" ", "n")
+      score_str = "-" .. string.format("%"..minusDigits..".0f", math.abs(PED_DATA.current.score - (PED_DATA.current.score - PED_DATA.previous.score) * (1 - progress_offset)^3)):gsub(" ", "n")
     else
-      score_str = string.format("%"..min_digit..".0f", PED_DATA.current.score - PED_DATA.current.offset * (1 - progress_offset)^3):gsub(" ", "n")
+      score_str = string.format("%"..min_digit..".0f", PED_DATA.current.score - (PED_DATA.current.score - PED_DATA.previous.score) * (1 - progress_offset)^3):gsub(" ", "n")
     end
   else
     if PED_DATA.current.score < 0 then
@@ -210,16 +298,17 @@ if PED_DATA and PED_DATA.version_status == "ok" then
   local score_len = #score_str
 
   local progress = (progress_frame / 12) * speed
-  if PED_DATA.current.offset ~= 0 and progress <= 2.5 then -- 30
-    local diff = "+" .. string.format("%.0f", PED_DATA.current.offset)
-    if PED_DATA.current.offset < 0 then
-      diff = string.format("%.0f", PED_DATA.current.offset)
+  if PED_DATA.current.time >= 0 and PED_DATA.current.combo > 0 and progress <= 2.5 then -- 30
+    local offset = PED_DATA.current.offset
+    if PED_DATA.current.score ~= PED_DATA.previous.score then
+      offset = PED_DATA.current.score - PED_DATA.previous.score
+    end
+
+    local diff = "+" .. string.format("%.0f", offset)
+    if offset < 0 then
+      diff = string.format("%.0f", offset)
     end
     local diff_len = #diff
-
-    if progress > 1 then
-      progress = 1
-    end
 
     local diff_x = -9.5 + 67.5 * (1 - (0.9 ^ (progress * 12))) + 34.5 * (score_len - 8)
     local diff_y = 39
@@ -265,11 +354,8 @@ local x_boundary = obj.track0
 local ap = obj.track1
 local tag = obj.track2
 if PED_DATA and PED_DATA.version_status == "ok" then
-  local ap_alpha = (math.sin(obj.time * math.pi * 4/3) + 1) * (1 / 2)
-  if ap_alpha > 1 then
-    ap_alpha = 1
-  end
-  if PED_DATA.current.time > 0 then
+  local ap_alpha = math.min(1, (math.sin(obj.time * math.pi * 4/3) + 1) * (1 / 2))
+  if PED_DATA.current.combo > 0 then
     obj.setoption("drawtarget", "tempbuffer", x_boundary, 200)
 
     if tag == 1 then
@@ -290,17 +376,15 @@ if PED_DATA and PED_DATA.version_status == "ok" then
 
     local progress = ((obj.frame - OFFSET) - (PED_DATA.current.time * obj.framerate)) * speed
     local progress_combo = ((obj.frame - OFFSET) - (PED_DATA.burst.time * obj.framerate)) * speed
+    if progress < 1 then
+      progress = ((obj.frame - OFFSET) - (PED_DATA.previous.time * obj.framerate)) * speed
+    end
+
     for i = 1, #combo_str do
       if #combo_str - last_digit < i then
         local digit = combo_str:sub(i, i)
         local shift = -(#combo_str / 2) + i - 0.5
-        local shift_fax = 0
-
-        if progress > 8 then
-          shift_fax = 1
-        else
-          shift_fax = (progress / 8) * 0.5 + 0.5
-        end
+        local shift_fax = math.min(1, (progress / 8) * 0.5 + 0.5)
 
         if ap == 1 then
           obj.load("image", PED_DATA.path.."/combo/b_"..digit..".png")
@@ -379,13 +463,12 @@ if PED_DATA and PED_DATA.version_status == "ok" then
       end
     end
     obj.setoption("blend", 0)
-    obj.setoption("antialias", 1)
     obj.copybuffer("obj", "tmp")
   end
 end
 ----------------------------------------------------------------
 @判定
---track0:判定タイプ,1,6,{judge},1
+--track0:判定タイプ,1,10,{judge},1
 --dialog:アニメーション速度,speed={judge_speed}
 
 local judge = obj.track0
@@ -393,16 +476,15 @@ if PED_DATA and PED_DATA.version_status == "ok" then
   if PED_DATA.current.time > 0 then
     obj.setoption("drawtarget", "tempbuffer", 339, 109)
     local progress = ((obj.frame - OFFSET) - (PED_DATA.current.time * obj.framerate)) * speed
-    local judge_list = {"perfect", "great", "good", "bad", "miss", "auto"}
 
     if progress < 2 then
-      obj.load("image", PED_DATA.path.."/judge/v1/"..judge_list[judge]..".png")
+      obj.load("image", PED_DATA.path.."/judge/v1/"..judge..".png")
       obj.draw(0, 0, 0, 0.686, 0)
     elseif progress < 5 then
-      obj.load("image", PED_DATA.path.."/judge/v1/"..judge_list[judge]..".png")
+      obj.load("image", PED_DATA.path.."/judge/v1/"..judge..".png")
       obj.draw(0, 0, 0, 0.686 - (-1.45 + (progress / 4)) ^ 4 * 0.686)
     elseif progress < 20 then
-      obj.load("image", PED_DATA.path.."/judge/v1/"..judge_list[judge]..".png")
+      obj.load("image", PED_DATA.path.."/judge/v1/"..judge..".png")
       obj.draw(0, 0, 0, 0.686)
     end
   obj.copybuffer("obj", "tmp")
@@ -412,10 +494,7 @@ end
 @オート
 if PED_DATA and PED_DATA.version_status == "ok" then
   obj.setoption("drawtarget", "tempbuffer", 330, 74)
-  local auto_alpha = math.sin(math.fmod((obj.time - 1.6) / 1.25, 1.2) * math.pi)
-  if auto_alpha < 0 then
-    auto_alpha = 0
-  end
+  local auto_alpha = math.max(0, math.sin(math.fmod((obj.time - 1.6) / 1.25, 1.2) * math.pi))
   if PED_DATA.enUI then
     if obj.time - 1.6 >= 0 then
       obj.load("image", PED_DATA.path.."/autolive-en.png")

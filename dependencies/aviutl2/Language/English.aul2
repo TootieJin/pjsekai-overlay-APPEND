@@ -216,6 +216,7 @@ PEDファイル=PED File
 ; Life
 ライフ=LIFE
 過剰なライフバー=Overflow LIFE bar
+先行ゼロ=Leading zero
 ; Score
 最小桁数=Min Digit
 アニメーション採点=Animated Scoring

@@ -97,21 +97,22 @@ func WriteExoFiles(assets string, destDir string, title string, description []st
 		"{watermark}", mappingFile[3], // check0
 		// Life
 		"{life}", mappingFile[4], // track1
-		"{overflow}", mappingFile[5], // check0
+		"{overflow}", mappingFile[5], // dialog: overflow=
+		"{lead_zero}", mappingFile[6], // dialog: lead_zero=
 		// Score
-		"{min_digit}", mappingFile[6], // track1
-		"{score_speed}", mappingFile[7], // dialog: speed=
-		"{anim_score}", mappingFile[8], // check0
-		"{wds_anim}", mappingFile[9], // dialog: wds_anim=
+		"{min_digit}", mappingFile[7], // track1
+		"{score_speed}", mappingFile[8], // dialog: speed=
+		"{anim_score}", mappingFile[9], // check0
+		"{wds_anim}", mappingFile[10], // dialog: wds_anim=
 		// Combo
-		"{ap}", mappingFile[10], // track1
-		"{tag}", mappingFile[11], // track2
-		"{last_digit}", mappingFile[12], // dialog: digits=
-		"{combo_speed}", mappingFile[13], // dialog: speed=
-		"{combo_burst}", mappingFile[14], // dialog: combo_burst=
+		"{ap}", mappingFile[11], // track1
+		"{tag}", mappingFile[12], // track2
+		"{last_digit}", mappingFile[13], // dialog: digits=
+		"{combo_speed}", mappingFile[14], // dialog: speed=
+		"{combo_burst}", mappingFile[15], // dialog: combo_burst=
 		// Judgement
-		"{judge}", mappingFile[15], // track0
-		"{judge_speed}", mappingFile[16], // dialog: speed=
+		"{judge}", mappingFile[16], // track0
+		"{judge_speed}", mappingFile[17], // dialog: speed=
 	}
 
 	mappingv1 := []string{
@@ -131,22 +132,23 @@ func WriteExoFiles(assets string, destDir string, title string, description []st
 		"{font_type}", mappingFile[2], // track2
 		"{watermark}", mappingFile[3], // check0
 		// Life
-		// "{life}", mappingFile[4],
-		// "{overflow}", mappingFile[5],
+		"{life}", mappingFile[4], // track1
+		"{overflow}", mappingFile[5], // dialog: overflow=
+		"{lead_zero}", mappingFile[6], // dialog: lead_zero=
 		// Score
-		"{min_digit}", mappingFile[6], // track1
-		"{score_speed}", mappingFile[7], // dialog: speed=
-		"{anim_score}", mappingFile[8], // check0
-		"{wds_anim}", mappingFile[9], // dialog: wds_anim=
+		"{min_digit}", mappingFile[7], // track1
+		"{score_speed}", mappingFile[8], // dialog: speed=
+		"{anim_score}", mappingFile[9], // check0
+		"{wds_anim}", mappingFile[10], // dialog: wds_anim=
 		// Combo
-		"{ap}", mappingFile[10], // track1
-		"{tag}", mappingFile[11], // track2
-		"{last_digit}", mappingFile[12], // dialog: digits=
-		"{combo_speed}", mappingFile[13], // dialog: speed=
-		"{combo_burst}", mappingFile[14], // dialog: combo_burst=
+		"{ap}", mappingFile[11], // track1
+		"{tag}", mappingFile[12], // track2
+		"{last_digit}", mappingFile[13], // dialog: digits=
+		"{combo_speed}", mappingFile[14], // dialog: speed=
+		"{combo_burst}", mappingFile[15], // dialog: combo_burst=
 		// Judgement
-		"{judge}", mappingFile[15], // track0
-		"{judge_speed}", mappingFile[16], // dialog: speed=
+		"{judge}", mappingFile[16], // track0
+		"{judge_speed}", mappingFile[17], // dialog: speed=
 	}
 	for i := range mapping {
 		if i%2 == 0 {
@@ -316,20 +318,21 @@ func WriteAliasFiles(assets string, destDir string, title string, description []
 		// Life
 		"{life}", mappingFile[4],
 		"{overflow}", mappingFile[5],
+		"{lead_zero}", mappingFile[6],
 		// Score
-		"{min_digit}", mappingFile[6],
-		"{score_speed}", mappingFile[7],
-		"{anim_score}", mappingFile[8],
-		"{wds_anim}", mappingFile[9],
+		"{min_digit}", mappingFile[7],
+		"{score_speed}", mappingFile[8],
+		"{anim_score}", mappingFile[9],
+		"{wds_anim}", mappingFile[10],
 		// Combo
-		"{ap}", mappingFile[10],
-		"{tag}", mappingFile[11],
-		"{last_digit}", mappingFile[12],
-		"{combo_speed}", mappingFile[13],
-		"{combo_burst}", mappingFile[14],
+		"{ap}", mappingFile[11],
+		"{tag}", mappingFile[12],
+		"{last_digit}", mappingFile[13],
+		"{combo_speed}", mappingFile[14],
+		"{combo_burst}", mappingFile[15],
 		// Judgement
-		"{judge}", mappingFile[15],
-		"{judge_speed}", mappingFile[16],
+		"{judge}", mappingFile[16],
+		"{judge_speed}", mappingFile[17],
 	}
 
 	mappingv1 := []string{
@@ -349,22 +352,23 @@ func WriteAliasFiles(assets string, destDir string, title string, description []
 		"{font_type}", fontName,
 		"{watermark}", mappingFile[3],
 		// Life
-		// "{life}", mappingFile[4],
-		// "{overflow}", mappingFile[5],
+		"{life}", mappingFile[4],
+		"{overflow}", mappingFile[5],
+		"{lead_zero}", mappingFile[6],
 		// Score
-		"{min_digit}", mappingFile[6],
-		"{score_speed}", mappingFile[7],
-		"{anim_score}", mappingFile[8],
-		"{wds_anim}", mappingFile[9],
+		"{min_digit}", mappingFile[7],
+		"{score_speed}", mappingFile[8],
+		"{anim_score}", mappingFile[9],
+		"{wds_anim}", mappingFile[10],
 		// Combo
-		"{ap}", mappingFile[10],
-		"{tag}", mappingFile[11],
-		"{last_digit}", mappingFile[12],
-		"{combo_speed}", mappingFile[13],
-		"{combo_burst}", mappingFile[14],
+		"{ap}", mappingFile[11],
+		"{tag}", mappingFile[12],
+		"{last_digit}", mappingFile[13],
+		"{combo_speed}", mappingFile[14],
+		"{combo_burst}", mappingFile[15],
 		// Judgement
-		"{judge}", mappingFile[15],
-		"{judge_speed}", mappingFile[16],
+		"{judge}", mappingFile[16],
+		"{judge_speed}", mappingFile[17],
 	}
 	for i := range mapping {
 		if i%2 == 0 {

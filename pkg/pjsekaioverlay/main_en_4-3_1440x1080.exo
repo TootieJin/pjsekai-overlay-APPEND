@@ -430,7 +430,7 @@ Y=0.0
 Z=0.0
 Zoom%=100.00
 Clearness=0.0
-Rotation=0.01
+Rotation=0.00
 blend=0
 [18]
 start=1
@@ -476,11 +476,11 @@ track0=6000.00
 track1={life}
 track2=0.00
 track3=0.00
-check0={overflow}
+check0=0
 type=0
 filter=0
 name=Life@pjsekai-overlay-en
-param=
+param=overflow={overflow};lead_zero={lead_zero}
 [19.1]
 _name=Standard drawing
 X=532.0

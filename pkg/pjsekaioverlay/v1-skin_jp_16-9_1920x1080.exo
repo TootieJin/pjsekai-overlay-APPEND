@@ -441,7 +441,7 @@ Y=0.0
 Z=0.0
 拡大率=100.00
 透明度=0.0
-回転=0.01
+回転=0.00
 blend=0
 [21]
 start=1
@@ -492,8 +492,16 @@ group=2
 overlay=1
 camera=0
 [22.0]
-_name=画像ファイル
-file={assets}\life-v1.png
+_name=カスタムオブジェクト
+track0=6000.00
+track1={life}
+track2=0.00
+track3=0.00
+check0=0
+type=0
+filter=0
+name=ライフ@pjsekai-overlay-v1
+param=overflow={overflow};lead_zero={lead_zero}
 [22.1]
 _name=標準描画
 X=699.0

@@ -441,7 +441,7 @@ Y=0.0
 Z=0.0
 Zoom%=100.00
 Clearness=0.0
-Rotation=0.01
+Rotation=0.00
 blend=0
 [21]
 start=1
@@ -492,8 +492,16 @@ group=2
 overlay=1
 camera=0
 [22.0]
-_name=Image file
-file={assets}\life-v1.png
+_name=Custom object
+track0=6000.00
+track1={life}
+track2=0.00
+track3=0.00
+check0=0
+type=0
+filter=0
+name=Life@pjsekai-overlay-en-v1
+param=overflow={overflow};lead_zero={lead_zero}
 [22.1]
 _name=Standard drawing
 X=699.0

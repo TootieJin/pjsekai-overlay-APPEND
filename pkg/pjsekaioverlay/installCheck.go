@@ -172,20 +172,21 @@ func TryInstallObject(aviutlPath string, aviutlProcess string, mappingObj []stri
 			// Life
 			"{life}", mappingObj[4],
 			"{overflow}", mappingObj[5],
+			"{lead_zero}", mappingObj[6],
 			// Score
-			"{min_digit}", mappingObj[6],
-			"{score_speed}", mappingObj[7],
-			"{anim_score}", mappingObj[8],
-			"{wds_anim}", mappingObj[9],
+			"{min_digit}", mappingObj[7],
+			"{score_speed}", mappingObj[8],
+			"{anim_score}", mappingObj[9],
+			"{wds_anim}", mappingObj[10],
 			// Combo
-			"{ap}", mappingObj[10],
-			"{tag}", mappingObj[11],
-			"{last_digit}", mappingObj[12],
-			"{combo_speed}", mappingObj[13],
-			"{combo_burst}", mappingObj[14],
+			"{ap}", mappingObj[11],
+			"{tag}", mappingObj[12],
+			"{last_digit}", mappingObj[13],
+			"{combo_speed}", mappingObj[14],
+			"{combo_burst}", mappingObj[15],
 			// Judgement
-			"{judge}", mappingObj[15],
-			"{judge_speed}", mappingObj[16],
+			"{judge}", mappingObj[16],
+			"{judge_speed}", mappingObj[17],
 		).Replace(string(sekaiObj))).WriteTo(sekaiObjWriter)
 
 		strings.NewReader(strings.NewReplacer(
@@ -201,20 +202,21 @@ func TryInstallObject(aviutlPath string, aviutlProcess string, mappingObj []stri
 			// Life
 			"{life}", mappingObj[4],
 			"{overflow}", mappingObj[5],
+			"{lead_zero}", mappingObj[6],
 			// Score
-			"{min_digit}", mappingObj[6],
-			"{score_speed}", mappingObj[7],
-			"{anim_score}", mappingObj[8],
-			"{wds_anim}", mappingObj[9],
+			"{min_digit}", mappingObj[7],
+			"{score_speed}", mappingObj[8],
+			"{anim_score}", mappingObj[9],
+			"{wds_anim}", mappingObj[10],
 			// Combo
-			"{ap}", mappingObj[10],
-			"{tag}", mappingObj[11],
-			"{last_digit}", mappingObj[12],
-			"{combo_speed}", mappingObj[13],
-			"{combo_burst}", mappingObj[14],
+			"{ap}", mappingObj[11],
+			"{tag}", mappingObj[12],
+			"{last_digit}", mappingObj[13],
+			"{combo_speed}", mappingObj[14],
+			"{combo_burst}", mappingObj[15],
 			// Judgement
-			"{judge}", mappingObj[15],
-			"{judge_speed}", mappingObj[16],
+			"{judge}", mappingObj[16],
+			"{judge_speed}", mappingObj[17],
 		).Replace(string(sekaiObjEn))).WriteTo(sekaiObjWriterEn)
 
 		strings.NewReader(strings.NewReplacer(
@@ -228,22 +230,23 @@ func TryInstallObject(aviutlPath string, aviutlProcess string, mappingObj []stri
 			"{font_type}", mappingObj[2],
 			"{watermark}", mappingObj[3],
 			// Life
-			// "{life}", mappingObj[4],
-			// "{overflow}", mappingObj[5],
+			"{life}", mappingObj[4],
+			"{overflow}", mappingObj[5],
+			"{lead_zero}", mappingObj[6],
 			// Score
-			"{min_digit}", mappingObj[6],
-			"{score_speed}", mappingObj[7],
-			"{anim_score}", mappingObj[8],
-			"{wds_anim}", mappingObj[9],
+			"{min_digit}", mappingObj[7],
+			"{score_speed}", mappingObj[8],
+			"{anim_score}", mappingObj[9],
+			"{wds_anim}", mappingObj[10],
 			// Combo
-			"{ap}", mappingObj[10],
-			"{tag}", mappingObj[11],
-			"{last_digit}", mappingObj[12],
-			"{combo_speed}", mappingObj[13],
-			"{combo_burst}", mappingObj[14],
+			"{ap}", mappingObj[11],
+			"{tag}", mappingObj[12],
+			"{last_digit}", mappingObj[13],
+			"{combo_speed}", mappingObj[14],
+			"{combo_burst}", mappingObj[15],
 			// Judgement
-			"{judge}", mappingObj[15],
-			"{judge_speed}", mappingObj[16],
+			"{judge}", mappingObj[16],
+			"{judge_speed}", mappingObj[17],
 		).Replace(string(sekaiObjv1))).WriteTo(sekaiObjWriterv1)
 
 		strings.NewReader(strings.NewReplacer(
@@ -257,22 +260,23 @@ func TryInstallObject(aviutlPath string, aviutlProcess string, mappingObj []stri
 			"{font_type}", mappingObj[2],
 			"{watermark}", mappingObj[3],
 			// Life
-			// "{life}", mappingObj[4],
-			// "{overflow}", mappingObj[5],
+			"{life}", mappingObj[4],
+			"{overflow}", mappingObj[5],
+			"{lead_zero}", mappingObj[6],
 			// Score
-			"{min_digit}", mappingObj[6],
-			"{score_speed}", mappingObj[7],
-			"{anim_score}", mappingObj[8],
-			"{wds_anim}", mappingObj[9],
+			"{min_digit}", mappingObj[7],
+			"{score_speed}", mappingObj[8],
+			"{anim_score}", mappingObj[9],
+			"{wds_anim}", mappingObj[10],
 			// Combo
-			"{ap}", mappingObj[10],
-			"{tag}", mappingObj[11],
-			"{last_digit}", mappingObj[12],
-			"{combo_speed}", mappingObj[13],
-			"{combo_burst}", mappingObj[14],
+			"{ap}", mappingObj[11],
+			"{tag}", mappingObj[12],
+			"{last_digit}", mappingObj[13],
+			"{combo_speed}", mappingObj[14],
+			"{combo_burst}", mappingObj[15],
 			// Judgement
-			"{judge}", mappingObj[15],
-			"{judge_speed}", mappingObj[16],
+			"{judge}", mappingObj[16],
+			"{judge_speed}", mappingObj[17],
 		).Replace(string(sekaiObjEnv1))).WriteTo(sekaiObjWriterEnv1)
 
 	case "aviutl2.exe":
@@ -319,20 +323,21 @@ func TryInstallObject(aviutlPath string, aviutlProcess string, mappingObj []stri
 			// Life
 			"{life}", mappingObj[4],
 			"{overflow}", mappingObj[5],
+			"{lead_zero}", mappingObj[6],
 			// Score
-			"{min_digit}", mappingObj[6],
-			"{score_speed}", mappingObj[7],
-			"{anim_score}", mappingObj[8],
-			"{wds_anim}", mappingObj[9],
+			"{min_digit}", mappingObj[7],
+			"{score_speed}", mappingObj[8],
+			"{anim_score}", mappingObj[9],
+			"{wds_anim}", mappingObj[10],
 			// Combo
-			"{ap}", mappingObj[10],
-			"{tag}", mappingObj[11],
-			"{last_digit}", mappingObj[12],
-			"{combo_speed}", mappingObj[13],
-			"{combo_burst}", mappingObj[14],
+			"{ap}", mappingObj[11],
+			"{tag}", mappingObj[12],
+			"{last_digit}", mappingObj[13],
+			"{combo_speed}", mappingObj[14],
+			"{combo_burst}", mappingObj[15],
 			// Judgement
-			"{judge}", mappingObj[15],
-			"{judge_speed}", mappingObj[16],
+			"{judge}", mappingObj[16],
+			"{judge_speed}", mappingObj[17],
 		).Replace(string(sekaiObj2))
 		sekaiObj2v1Writer := strings.NewReplacer(
 			"\r\n", "\r\n",
@@ -345,22 +350,23 @@ func TryInstallObject(aviutlPath string, aviutlProcess string, mappingObj []stri
 			"{font_type}", mappingObj[2],
 			"{watermark}", mappingObj[3],
 			// Life
-			// "{life}", mappingObj[4],
-			// "{overflow}", mappingObj[5],
+			"{life}", mappingObj[4],
+			"{overflow}", mappingObj[5],
+			"{lead_zero}", mappingObj[6],
 			// Score
-			"{min_digit}", mappingObj[6],
-			"{score_speed}", mappingObj[7],
-			"{anim_score}", mappingObj[8],
-			"{wds_anim}", mappingObj[9],
+			"{min_digit}", mappingObj[7],
+			"{score_speed}", mappingObj[8],
+			"{anim_score}", mappingObj[9],
+			"{wds_anim}", mappingObj[10],
 			// Combo
-			"{ap}", mappingObj[10],
-			"{tag}", mappingObj[11],
-			"{last_digit}", mappingObj[12],
-			"{combo_speed}", mappingObj[13],
-			"{combo_burst}", mappingObj[14],
+			"{ap}", mappingObj[11],
+			"{tag}", mappingObj[12],
+			"{last_digit}", mappingObj[13],
+			"{combo_speed}", mappingObj[14],
+			"{combo_burst}", mappingObj[15],
 			// Judgement
-			"{judge}", mappingObj[15],
-			"{judge_speed}", mappingObj[16],
+			"{judge}", mappingObj[16],
+			"{judge_speed}", mappingObj[17],
 		).Replace(string(sekaiObj2v1))
 		if _, err := io.WriteString(sekaiObj2File, sekaiObj2Writer); err != nil {
 			return false
