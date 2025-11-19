@@ -200,6 +200,18 @@ func origMain(isOptionSpecified bool) {
 		fmt.Println(color.HiYellowString("変更を適用するには、" + aviutlName + "を再起動してください。(Please restart " + aviutlName + " to apply changes.)\n"))
 	}
 
+	locale := func() string {
+		cmd := exec.Command("powershell", "-Command", "Get-WinSystemLocale | Select-Object -ExpandProperty Name")
+		output, err := cmd.Output()
+		if err != nil {
+			return ""
+		}
+		return strings.TrimSpace(string(output))
+	}
+	if locale() != "ja-JP" {
+		fmt.Println(color.HiYellowString(fmt.Sprintf("WARN: お使いのシステムロケールが「日本語（日本）」に設定されていません。テキストの表示時に文字化けが発生する可能性があります。\nYour system locale is not set to \"Japanese (Japan)\". You may see gibberish characters when rendering texts.\n- System locale: %v", locale())))
+	}
+
 	Tips()
 
 	var chartId string
@@ -491,7 +503,7 @@ func origMain(isOptionSpecified bool) {
 
 		if teamPower >= math.Abs(math.Pow(2, 56)/10) && aviutlProcess == "aviutl.exe" {
 			fmt.Printf("\033[A\033[2K\r> %s\n", color.HiYellowString(tmpTeamPower))
-			fmt.Println(color.HiYellowString("WARN: スコアは大きすぎると精度が落ちる可能性がある。Score may decrease precision if it's too large.\n"))
+			fmt.Println(color.HiYellowString("WARN: スコアは大きすぎると精度が落ちる可能性がある。Score may decrease precision if it's too large."))
 		} else {
 			fmt.Printf("\033[A\033[2K\r> %s\n", color.GreenString(tmpTeamPower))
 		}

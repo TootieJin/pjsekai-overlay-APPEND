@@ -71,8 +71,8 @@ func Tips() {
 		"プロセカで使用されているフォントは、「dependencies」フォルダー内に格納されています。",
 		"The fonts used in sekai can be found in the \"dependencies\" folder...",
 
-		"「data.ped」ファイルの各行は、以下の形式に従っています：s|[時間枠（秒）]:[合計スコア]:[追加スコア]:[スコアバーの位置]:[順位]:[コンボ]",
-		"Each line in the \"data.ped\" file follows this format: s|[timeframe(sec)]:[totalscore]:[addedscore]:[scorebar position]:[rank]:[combo]",
+		"「data.ped」ファイルの各行は、以下の形式に従っています：s|[時間枠（秒）]:[合計スコア]:[追加スコア]:[スコアバーの位置]:[v1スコアバーの位置]:[順位]:[コンボ]",
+		"Each line in the \"data.ped\" file follows this format: s|[timeframe(sec)]:[totalscore]:[addedscore]:[scorebar position]:[v1 scorebar position]:[rank]:[combo]",
 
 		"APコンボ判定は、AviUtlにおいて互換性があります。",
 		"AP Combo & Judgement can be interchangeable in AviUtl.",
@@ -254,8 +254,8 @@ func Tips() {
 		"AviUtlは、何らかの理由で初回インポート時に読み込みを停止する傾向があるため、場合によってはexoを再度インポートする必要が生じるかもしれません。",
 		"Sometimes you may have to import exo again because AviUtl, for whatever reason, tend to stop loading when importing for the first time.",
 
-		"Chart Cyanvasの終了後、pjsekai-overl-APPENDが対応するサーバー数は3台から8台に増えました。すごいですよね？",
-		"Since the fall of Chart Cyanvas, the number of servers supported for pjsekai-overl-APPEND went from 3 to 8. Crazy, isn't it?",
+		"Chart Cyanvasの終了後、pjsekai-overlay-APPENDが対応するサーバー数は3台から8台に増えました。すごいですよね？",
+		"Since the fall of Chart Cyanvas, the number of servers supported for pjsekai-overlay-APPEND went from 3 to 8. Crazy, isn't it?",
 
 		"君は俺の後ろ盾だ。",
 		"You have my back.",
@@ -266,11 +266,11 @@ func Tips() {
 		"大きな数値を使用している場合、出力速度が非常に遅くなることに注意してください。",
 		"If you are using big numbers, be aware that it will export very slowly.",
 
-		"これはv0.0限定のTipです！(何)",
-		"This is a v0.0 limited Tip! (what)",
+		"これはv0.0.0限定のTipです！(何)",
+		"This is a v0.0.0 limited Tip! (what)",
 
-		"これはv0.5限定のTipです！",
-		"This is a v0.5 limited Tip!",
+		"これはv0.5.x限定のTipです！",
+		"This is a v0.5.x limited Tip!",
 
 		"日常生活：遅延。",
 		"Everyday life: Delayed.",
@@ -310,6 +310,12 @@ func Tips() {
 
 		"譜面によって必要な演奏スキルは異なるが、素早くタップできれば問題ない。",
 		"Different charts have different demand of playing skills, but nothing matters if you tap real quick.",
+
+		"質問や問題が発生しましたか？ GitHubで議論スレッドを作成してください。",
+		"Have questions or encountering problems? Make a discussion thread in GitHub.",
+
+		"じゃあ、僕たちがもらったTipsの数を数えた？",
+		"So have you counted how many Tips we've got?",
 	}
 
 	// これを見て何か追加したいTipsがあれば、PRを送ってください

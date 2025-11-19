@@ -185,7 +185,7 @@ end
 @Life
 --track0:X-axis Boundary,0,9999,6000,1
 --track1:LIFE,0,9999,{life},1
---dialog:Overflow LIFE bar/chk,overflow={overflow};Leading zero/chk,lead_zero={lead_zero}
+--dialog:Overflow LIFE Bar/chk,overflow={overflow};Leading Zero/chk,lead_zero={lead_zero}
 
 local x_boundary = obj.track0
 local life = obj.track1
