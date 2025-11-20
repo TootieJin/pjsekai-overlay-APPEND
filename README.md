@@ -52,7 +52,7 @@ This is a forked version of pjsekai-overlay with additional features originally 
     - Adjust animation speed in different elements
     - Interchangable AP Combo
     - Interchangable judgement type (PERFECT/GREAT/GOOD/etc.)
-    - Interchangable LIFE value (v3 only)
+    - Interchangable LIFE value
 
 ## Terms of Use
 
@@ -257,7 +257,7 @@ AviUtl for whatever reason stops loading when importing for the first time. If t
     - 異なる要素でアニメーション速度を調整する
     - 交換可能なAPコンボ
     - 交換可能な判定タイプ（PERFECT/GREAT/GOODなど）
-    - 交換可能なライフ値（v3のみ）
+    - 交換可能なライフ値
 
 ## 利用規約
 
