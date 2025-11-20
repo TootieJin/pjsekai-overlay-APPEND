@@ -406,6 +406,7 @@ n00コンボ効果=n00 Combo Burst
 ; Multi-use variable
 アニメーション速度=Animation Speed
 X軸境界=X-axis Boundary
+スキル効果=Skill Effect
 
 ; Label Names * Only popup menu names are translated
 基本効果=Basic Effect

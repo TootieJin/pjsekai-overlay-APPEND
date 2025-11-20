@@ -13,6 +13,7 @@ if obj.track1 ~= 1 or not PED_DATA or PED_DATA.file ~= file then
   PED_DATA = {}
   PED_DATA.frames = {}
   PED_DATA.combo = {}
+  PED_DATA.event = {}
   PED_DATA.path = nil
   PED_DATA.version = nil
   PED_DATA.version_status = "none"
@@ -22,6 +23,7 @@ if obj.track1 ~= 1 or not PED_DATA or PED_DATA.file ~= file then
   PED_DATA.current = nil
   PED_DATA.previous = nil
   PED_DATA.burst = nil
+  PED_DATA.skill = nil
   local fp, err = io.open(file, "r")
   if fp then
     PED_DATA.loaded = "invalid"
@@ -29,7 +31,7 @@ if obj.track1 ~= 1 or not PED_DATA or PED_DATA.file ~= file then
       local header, data = string.match(line, "([a-z]+)|(.+)")
       if header ~= nil then
         PED_DATA.loaded = "ok"
-        if header == "s" then
+        if header == "d" then -- Data
           local nmatch = {string.match(data, "([%-0-9.]+):([%-0-9.]+):([%-0-9.]+):([%-0-9.]+):([%-0-9.]+):([a-z]+):([%-0-9.]+)")}
           PED_DATA.frames[#PED_DATA.frames + 1] = {
             time = tonumber(nmatch[1]),
@@ -45,6 +47,11 @@ if obj.track1 ~= 1 or not PED_DATA or PED_DATA.file ~= file then
           PED_DATA.combo[#PED_DATA.combo + 1] = {
             time = tonumber(nmatch[1]),
             combo = tonumber(nmatch[2])
+          }
+        elseif header == "s" then -- Skill
+          local nmatch = {string.match(data, "([%-0-9.]+)")}
+          PED_DATA.event[#PED_DATA.event + 1] = {
+            time = tonumber(nmatch[1]),
           }
         elseif header == "p" then -- Path
           PED_DATA.path = data
@@ -92,6 +99,9 @@ if PED_DATA.version == "{version}" or "{version}" == "0.0.0" then
     time = 0,
     combo = 0,
   }
+  PED_DATA.skill = {
+    time = 0,
+  }
   for i = #PED_DATA.frames, 1, -1 do
     local score = PED_DATA.frames[i]
     if (score.time * obj.framerate) < (obj.frame - OFFSET) then
@@ -120,6 +130,13 @@ if PED_DATA.version == "{version}" or "{version}" == "0.0.0" then
     local combo = PED_DATA.combo[i]
     if (combo.time * obj.framerate) < (obj.frame - OFFSET) then
       PED_DATA.burst = combo
+      break
+    end
+  end
+  for i = #PED_DATA.event, 1, -1 do
+    local event = PED_DATA.event[i]
+    if (event.time * obj.framerate) < (obj.frame - OFFSET) then
+      PED_DATA.skill = event
       break
     end
   end
@@ -185,10 +202,12 @@ end
 @Life
 --track0:X-axis Boundary,0,9999,6000,1
 --track1:LIFE,0,9999,{life},1
+--track2:Skill Effect,0,1,{life_skill},1
 --dialog:Overflow LIFE Bar/chk,overflow={overflow};Leading Zero/chk,lead_zero={lead_zero}
 
 local x_boundary = obj.track0
 local life = obj.track1
+local skill = obj.track2
 if PED_DATA and PED_DATA.version_status == "ok" then
   local life_num = life
   local life_str = tostring(life)
@@ -198,8 +217,13 @@ if PED_DATA and PED_DATA.version_status == "ok" then
     life_str = string.rep("n", 4 - #life_str) .. life_str
   end
 
-  obj.setoption("drawtarget", "tempbuffer", x_boundary, 600)
+  obj.setoption("drawtarget", "tempbuffer", x_boundary, math.ceil(600 * 1.5))
   obj.load("image", PED_DATA.path .. "/life/v3/bg.png")
+  if skill == 1 then
+    obj.effect("Shadow", "X", 0, "Y", 0, "Thickness", 100, "Diffusion", 100, "color", 0x6dffff)
+    obj.draw(0, 0, 0, 1)
+    obj.load("image", PED_DATA.path .. "/life/v3/bg.png")
+  end
   obj.draw(0, 0, 0, 1)
 
   if overflow == 1 and life > 1000 then
@@ -238,20 +262,29 @@ end
 @Score
 --track0:X-axis Boundary,0,9999,6000,1
 --track1:Min Digit,1,99,{min_digit},1
+--track2:Skill Effect,0,2,{score_skill},1
 --check0:Animated Scoring,{anim_score}
 --dialog:Animation Speed,speed={score_speed};WDS Animation/chk,wds_anim={wds_anim}
 
 local x_boundary = obj.track0
 local min_digit = obj.track1
+local skill = obj.track2
 local anim_score = obj.check0 and 1 or 0
 if PED_DATA and PED_DATA.version_status == "ok" then
-  obj.setoption("drawtarget", "tempbuffer", x_boundary, math.ceil(120 * 1.5))
-  obj.setoption("blend", 0)
-  obj.load("image", PED_DATA.path.."/score/bg.png")
-  obj.draw(0, 0, 0, 0.2145)
-
   local progress_frame = ((obj.frame - OFFSET) - (PED_DATA.current.time * obj.framerate))
+  local progress_skill = ((obj.frame - OFFSET) - (PED_DATA.skill.time * obj.framerate))
   local progress_offset = math.min(1, (progress_frame / 30))
+
+  obj.setoption("drawtarget", "tempbuffer", x_boundary, math.ceil(120 * 1.5))
+  obj.load("image", PED_DATA.path.."/score/bg.png")
+  if skill >= 1 then
+    if (PED_DATA.skill and PED_DATA.skill.time > 0 and progress_skill <= 300) or skill == 2 then
+      obj.effect("Shadow", "X", 0, "Y", 0, "Thickness", 100, "Diffusion", 50, "color", 0xd4ff5d)
+      obj.draw(0, 0, 0, 0.2145)
+      obj.load("image", PED_DATA.path.."/score/bg.png")
+    end
+  end
+  obj.draw(0, 0, 0, 0.2145)
 
   local width = PED_DATA.current.width
   if anim_score == 1 then

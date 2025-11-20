@@ -71,8 +71,11 @@ func Tips() {
 		"プロセカで使用されているフォントは、「dependencies」フォルダー内に格納されています。",
 		"The fonts used in sekai can be found in the \"dependencies\" folder...",
 
-		"「data.ped」ファイルの各行は、以下の形式に従っています：s|[時間枠（秒）]:[合計スコア]:[追加スコア]:[スコアバーの位置]:[v1スコアバーの位置]:[順位]:[コンボ]",
-		"Each line in the \"data.ped\" file follows this format: s|[timeframe(sec)]:[totalscore]:[addedscore]:[scorebar position]:[v1 scorebar position]:[rank]:[combo]",
+		"「data.ped」ファイルの各行は、以下の形式に従っています：d|[時間枠（秒）]:[合計スコア]:[追加スコア]:[スコアバーの位置]:[v1スコアバーの位置]:[順位]:[コンボ]",
+		"Each line in the \"data.ped\" file follows this format: d|[timeframe(sec)]:[totalscore]:[addedscore]:[scorebar position]:[v1 scorebar position]:[rank]:[combo]",
+
+		"「data.ped」ファイル内のスキルイベントは次の形式に従います：s|[時間枠(秒)]。この行を追加するだけで、スコアバーが自動的にスキルグローを有効化します。",
+		"Skill events in the \"data.ped\" file follows this format: s|[timeframe(sec)]. Just add this line and your score bar activates skill glow automatically.",
 
 		"APコンボ判定は、AviUtlにおいて互換性があります。",
 		"AP Combo & Judgement can be interchangeable in AviUtl.",

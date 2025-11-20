@@ -93,7 +93,7 @@ func origMain(isOptionSpecified bool) {
 
 	mappingName, mapping := pjsekaioverlay.SetOverlayDefault()
 
-	if len(mapping) != 18 {
+	if len(mapping) != 20 {
 		fmt.Println(color.RedString(fmt.Sprintf("FAIL:「default.ini」ファイルのデータに異常があります。「default.ini」ファイルを削除し、プログラムを再起動して再生成してください。\nAbnormal \"default.ini\" data. Please regenerate by deleting the \"default.ini\" file and reopen the program.\n- Mapping count: %v != 17", len(mapping))))
 		return
 	}
@@ -105,23 +105,25 @@ func origMain(isOptionSpecified bool) {
 		"font_type": mapping[2] == 0 || mapping[2] == 1,
 		"watermark": mapping[3] == 0 || mapping[3] == 1,
 		// Life
-		"life":      mapping[4] >= 0 && mapping[4] <= 9999 && math.Mod(mapping[4], 1.0) == 0,
-		"overflow":  mapping[5] == 0 || mapping[5] == 1,
-		"lead_zero": mapping[6] == 0 || mapping[6] == 1,
+		"life":       mapping[4] >= 0 && mapping[4] <= 9999 && math.Mod(mapping[4], 1.0) == 0,
+		"life_skill": mapping[5] == 0 || mapping[5] == 1,
+		"overflow":   mapping[6] == 0 || mapping[6] == 1,
+		"lead_zero":  mapping[7] == 0 || mapping[7] == 1,
 		// Score
-		"min_digit":   mapping[7] >= 1 && mapping[7] <= 99 && math.Mod(mapping[7], 1.0) == 0,
-		"score_speed": mapping[8] >= 0,
-		"anim_score":  mapping[9] == 0 || mapping[9] == 1,
-		"wds_anim":    mapping[10] == 0 || mapping[10] == 1,
+		"min_digit":   mapping[8] >= 1 && mapping[8] <= 99 && math.Mod(mapping[8], 1.0) == 0,
+		"score_skill": mapping[9] >= 0 && mapping[9] <= 2 && math.Mod(mapping[9], 1.0) == 0,
+		"score_speed": mapping[10] >= 0,
+		"anim_score":  mapping[11] == 0 || mapping[11] == 1,
+		"wds_anim":    mapping[12] == 0 || mapping[12] == 1,
 		// Combo
-		"ap":          mapping[11] == 0 || mapping[11] == 1,
-		"tag":         mapping[12] == 0 || mapping[12] == 1,
-		"last_digit":  mapping[13] >= 0 && math.Mod(mapping[13], 1.0) == 0,
-		"combo_speed": mapping[14] >= 0,
-		"combo_burst": mapping[15] == 0 || mapping[15] == 1,
+		"ap":          mapping[13] == 0 || mapping[13] == 1,
+		"tag":         mapping[14] == 0 || mapping[14] == 1,
+		"last_digit":  mapping[15] >= 0 && math.Mod(mapping[15], 1.0) == 0,
+		"combo_speed": mapping[16] >= 0,
+		"combo_burst": mapping[17] == 0 || mapping[17] == 1,
 		// Judgement
-		"judge":       mapping[16] >= 1 && mapping[16] <= 10 && math.Mod(mapping[16], 1.0) == 0,
-		"judge_speed": mapping[17] >= 0,
+		"judge":       mapping[18] >= 1 && mapping[18] <= 10 && math.Mod(mapping[18], 1.0) == 0,
+		"judge_speed": mapping[19] >= 0,
 	}
 
 	var mappingErr []string

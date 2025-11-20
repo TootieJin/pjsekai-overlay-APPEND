@@ -501,6 +501,7 @@ group=2
 effect.name=ライフ@pjsekai-overlay-2-v1
 X軸境界=6000
 ライフ={life}
+スキル効果={life_skill}
 過剰なライフバー={overflow}
 先行ゼロ={lead_zero}
 [19.1]
@@ -558,6 +559,7 @@ group=2
 effect.name=スコア@pjsekai-overlay-2-v1
 X軸境界=6000
 最小桁数={min_digit}
+スキル効果={score_skill}
 アニメーション速度={score_speed}
 アニメーション採点={anim_score}
 「ユメステ」アニメーション={wds_anim}

@@ -14,6 +14,7 @@ if cache ~= 1 or not PED_DATA or PED_DATA.file ~= file then
   PED_DATA = {}
   PED_DATA.frames = {}
   PED_DATA.combo = {}
+  PED_DATA.event = {}
   PED_DATA.path = nil
   PED_DATA.version = nil
   PED_DATA.version_status = "none"
@@ -23,6 +24,7 @@ if cache ~= 1 or not PED_DATA or PED_DATA.file ~= file then
   PED_DATA.current = nil
   PED_DATA.previous = nil
   PED_DATA.burst = nil
+  PED_DATA.skill = nil
   local fp, err = io.open(file, "r")
   if fp then
     PED_DATA.loaded = "invalid"
@@ -30,7 +32,7 @@ if cache ~= 1 or not PED_DATA or PED_DATA.file ~= file then
       local header, data = string.match(line, "([a-z]+)|(.+)")
       if header ~= nil then
         PED_DATA.loaded = "ok"
-        if header == "s" then
+        if header == "d" then -- Data
           local nmatch = {string.match(data, "([%-0-9.]+):([%-0-9.]+):([%-0-9.]+):([%-0-9.]+):([%-0-9.]+):([a-z]+):([%-0-9.]+)")}
           PED_DATA.frames[#PED_DATA.frames + 1] = {
             time = tonumber(nmatch[1]),
@@ -46,6 +48,11 @@ if cache ~= 1 or not PED_DATA or PED_DATA.file ~= file then
           PED_DATA.combo[#PED_DATA.combo + 1] = {
             time = tonumber(nmatch[1]),
             combo = tonumber(nmatch[2])
+          }
+        elseif header == "s" then -- Skill
+          local nmatch = {string.match(data, "([%-0-9.]+)")}
+          PED_DATA.event[#PED_DATA.event + 1] = {
+            time = tonumber(nmatch[1]),
           }
         elseif header == "p" then -- Path
           PED_DATA.path = data
@@ -93,6 +100,9 @@ if PED_DATA.version == "{version}" or "{version}" == "0.0.0" then
     time = 0,
     combo = 0,
   }
+  PED_DATA.skill = {
+    time = 0,
+  }
   for i = #PED_DATA.frames, 1, -1 do
     local score = PED_DATA.frames[i]
     if (score.time * obj.framerate) < (obj.frame - OFFSET) then
@@ -121,6 +131,13 @@ if PED_DATA.version == "{version}" or "{version}" == "0.0.0" then
     local combo = PED_DATA.combo[i]
     if (combo.time * obj.framerate) < (obj.frame - OFFSET) then
       PED_DATA.burst = combo
+      break
+    end
+  end
+  for i = #PED_DATA.event, 1, -1 do
+    local event = PED_DATA.event[i]
+    if (event.time * obj.framerate) < (obj.frame - OFFSET) then
+      PED_DATA.skill = event
       break
     end
   end
@@ -235,6 +252,7 @@ end
 --label:カスタムオブジェクト
 --track@x_boundary:X軸境界,0,9999,6000,1
 --track@life:ライフ,0,9999,{life},1
+--track@skill:スキル効果,0,1,{life_skill},1
 --check@overflow:過剰なライフバー,{overflow}
 --check@lead_zero:先行ゼロ,{lead_zero}
 
@@ -247,8 +265,13 @@ if PED_DATA and PED_DATA.version_status == "ok" then
     life_str = string.rep("n", 4 - #life_str) .. life_str
   end
 
-  obj.setoption("drawtarget", "tempbuffer", x_boundary, 600)
+  obj.setoption("drawtarget", "tempbuffer", x_boundary, math.ceil(600 * 1.5))
   obj.load("image", PED_DATA.path .. "/life/v3/bg.png")
+  if skill == 1 then
+    obj.effect("ドロップシャドウ", "X", 0, "Y", 0, "濃さ", 100, "拡散", 100, "影色", 0x6dffff)
+    obj.draw(0, 0, 0, 1)
+    obj.load("image", PED_DATA.path .. "/life/v3/bg.png")
+  end
   obj.draw(0, 0, 0, 1)
 
   if overflow == 1 and life > 1000 then
@@ -293,18 +316,26 @@ end
 --label:カスタムオブジェクト
 --track@x_boundary:X軸境界,0,9999,6000,1
 --track@min_digit:最小桁数,1,99,{min_digit},1
+--track@skill:スキル効果,0,2,{score_skill},1
 --value@speed:アニメーション速度,{score_speed}
 --check@anim_score:アニメーション採点,{anim_score}
 --check@wds_anim:「ユメステ」アニメーション,{wds_anim}
 
 if PED_DATA and PED_DATA.version_status == "ok" then
-  obj.setoption("drawtarget", "tempbuffer", x_boundary, math.ceil(120 * 1.5))
-  obj.setoption("blend", 0)
-  obj.load("image", PED_DATA.path.."/score/bg.png")
-  obj.draw(0, 0, 0, 0.2145)
-
   local progress_frame = ((obj.frame - OFFSET) - (PED_DATA.current.time * obj.framerate))
+  local progress_skill = ((obj.frame - OFFSET) - (PED_DATA.skill.time * obj.framerate))
   local progress_offset = math.min(1, (progress_frame / 30))
+
+  obj.setoption("drawtarget", "tempbuffer", x_boundary, math.ceil(120 * 1.5))
+  obj.load("image", PED_DATA.path.."/score/bg.png")
+  if skill >= 1 then
+    if (PED_DATA.skill and PED_DATA.skill.time > 0 and progress_skill <= 300) or skill == 2 then
+      obj.effect("ドロップシャドウ", "X", 0, "Y", 0, "濃さ", 100, "拡散", 100, "影色", 0xd4ff5d)
+      obj.draw(0, 0, 0, 0.2145)
+      obj.load("image", PED_DATA.path.."/score/bg.png")
+    end
+  end
+  obj.draw(0, 0, 0, 0.2145)
 
   local width = PED_DATA.current.width
   if anim_score == 1 then

@@ -13,8 +13,9 @@ import (
 )
 
 type PedFrame struct {
-	Time  float64
-	Score float64
+	Time      float64
+	SkillTime float64
+	Score     float64
 }
 
 type BpmChange struct {
@@ -163,6 +164,10 @@ var WEIGHT_MAP = map[string]float64{
 	"FakeAnchorNote":              0,
 
 	"FakeDamageNote": 0,
+
+	"Skill":       0,
+	"FeverChance": 0,
+	"FeverStart":  0,
 }
 
 func getValueFromData(data []sonolus.LevelDataEntityValue, name string) (float64, error) {
@@ -206,10 +211,15 @@ func CalculateScore(levelInfo sonolus.LevelInfo, levelData sonolus.LevelData, po
 	}
 
 	frames := make([]PedFrame, 0, int(weightedNotesCount)+1)
-	frames = append(frames, PedFrame{Time: 0, Score: 0})
+	frames = append(frames, PedFrame{
+		Time:      0,
+		SkillTime: 0,
+		Score:     0,
+	})
 	bpmChanges := ([]BpmChange{})
 	levelFax := float64(rating-5)*0.005 + 1
 	comboFax := 1.0
+	skillFax := 1.0
 	comboCounterFax := 1.0
 
 	score := 0.0
@@ -277,14 +287,44 @@ func CalculateScore(levelInfo sonolus.LevelInfo, levelData sonolus.LevelData, po
 		}
 		return 0
 	})
+
+	skillActiveUntil := 0.0
 	for _, entity := range noteEntities {
 		weight := WEIGHT_MAP[entity.Archetype]
+
+		// get beat/time early so skillFax can be applied to this event
+		beat, err := getValueFromData(entity.Data, "#BEAT")
+		if err != nil {
+			entityCounter += 1
+			continue
+		}
+		eventTime := getTimeFromBpmChanges(bpmChanges, beat)
+
 		entityCounter += 1
 		if entityCounter%100 == 1 && entityCounter > 1 {
 			comboFax += 0.01
 		}
 		if comboFax > 1.1 {
 			comboFax = 1.1
+		}
+
+		if eventTime <= skillActiveUntil {
+			skillFax = 2.0
+		} else {
+			skillFax = 1.0
+		}
+
+		if entity.Archetype == "Skill" {
+			// activate skill for 5 seconds starting at eventTime
+			skillFax = 2.0
+			skillActiveUntil = eventTime + 5.0
+
+			frames = append(frames, PedFrame{
+				Time:      eventTime,
+				SkillTime: eventTime,
+				Score:     score,
+			})
+			continue
 		}
 
 		switch scoreMode {
@@ -295,20 +335,17 @@ func CalculateScore(levelInfo sonolus.LevelInfo, levelData sonolus.LevelData, po
 				1 * // Judge weight (Always 1)
 				levelFax * // Level fax
 				comboFax * // Combo fax
-				1) // Skill fax (Always 1)
+				skillFax) // Skill fax
 		case "tournament":
 			score += 3
 		case "sonolus":
 			score += 1000000 * (comboFax / weightedComboFax)
 		}
 
-		beat, err := getValueFromData(entity.Data, "#BEAT")
-		if err != nil {
-			continue
-		}
 		frames = append(frames, PedFrame{
-			Time:  getTimeFromBpmChanges(bpmChanges, beat),
-			Score: score,
+			Time:      eventTime,
+			SkillTime: 0,
+			Score:     score,
 		})
 	}
 
@@ -418,6 +455,14 @@ func WritePedFile(frames []PedFrame, assets string, path string, levelInfo sonol
 		}
 
 		time := frame.Time
+		skillTime := frame.SkillTime
+
+		if skillTime > 0 && skillTime == time {
+			// only emit when this frame is the actual activation frame and avoid duplicates
+			if i == 0 || frames[i-1].SkillTime != skillTime {
+				writer.Write(fmt.Appendf(nil, "s|%f\n", skillTime))
+			}
+		}
 		if i%100 == 0 && i > 0 {
 			writer.Write(fmt.Appendf(nil, "c|%f:%d\n", time, i))
 		}
@@ -428,7 +473,7 @@ func WritePedFile(frames []PedFrame, assets string, path string, levelInfo sonol
 			time = frames[i-1].Time + 0.000001
 		}
 
-		writer.Write(fmt.Appendf(nil, "s|%f:%.0f:%.0f:%f:%f:%s:%d\n", time, score, frameScore, scoreX, scoreXv1, rank, i))
+		writer.Write(fmt.Appendf(nil, "d|%f:%.0f:%.0f:%f:%f:%s:%d\n", time, score, frameScore, scoreX, scoreXv1, rank, i))
 	}
 
 	return nil
