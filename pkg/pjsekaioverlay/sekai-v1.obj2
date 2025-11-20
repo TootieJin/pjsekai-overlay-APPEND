@@ -258,11 +258,11 @@ end
 
 if PED_DATA and PED_DATA.version_status == "ok" then
   local life_num = life
-  local life_str = tostring(life)
+  local life_str = string.format("%d", life)
   local life_alpha = 1
 
   if lead_zero == 1 then
-    life_str = string.rep("n", 4 - #life_str) .. life_str
+    life_str = string.format("%4d", life):gsub(" ", "n")
   end
 
   obj.setoption("drawtarget", "tempbuffer", x_boundary, math.ceil(124 * 1.5))
