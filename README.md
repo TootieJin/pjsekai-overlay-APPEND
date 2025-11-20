@@ -175,12 +175,14 @@ AviUtl for whatever reason stops loading when importing for the first time. If t
 | **Watermark**<br>`watermark` 	| Enable watermark text at the bottom-left corner                                                            	|   1 (ON)  	|          0 or 1         	|
 
 ### Life@pjsekai-overlay-en
-<img width="125" height="125" alt="LifeUP" src="https://github.com/user-attachments/assets/6f7a7db8-50bb-43cf-9463-5f46325c862e" /> <img width=50% height=50% alt="life" src="https://github.com/user-attachments/assets/7aab3534-66cf-4dad-936e-3d423ecce615" />
+<img width="125" height="125" alt="LifeUP" src="https://github.com/user-attachments/assets/6f7a7db8-50bb-43cf-9463-5f46325c862e" /> <img width=30% height=30% alt="life-v1" src="https://github.com/user-attachments/assets/b467f932-fa04-4afa-bbf2-9aed811b0855" /> <img width=30% height=30% alt="life" src="https://github.com/user-attachments/assets/7aab3534-66cf-4dad-936e-3d423ecce615" />
 
 | **Name** 	| Description                                                                         	| Default 	|   Range  	|
 |----------	|-------------------------------------------------------------------------------------	|:-------:	|:--------:	|
 | **LIFE**<br>`life` 	| LIFE value (self-explanatory)<br>- When value changes, the LIFE bar changes as well 	|   1000  	| 0 ~ 9999 (Integer) 	|
-| **Show overflow LIFE bar**<br>`overflow` 	| <img width=50% height=50% alt="life_overflow" src="https://github.com/user-attachments/assets/75ad981f-cb1d-4112-939d-8f8bf39a1222" /> 	|  0 (OFF)  	|    0 or 1   	|
+| **Skill Effect**<br>`life_skill` 	| Toggle skill glow effect 	|  0 (OFF)  	|    0 or 1   	|
+| **Overflow LIFE Bar**<br>`overflow` 	| <img width=70% height=70% alt="life_overflow-v1" src="https://github.com/user-attachments/assets/2fd69cf1-a767-47e7-adc3-14ecd2d56ce6" /><br><img width=70% height=70% alt="life_overflow" src="https://github.com/user-attachments/assets/bbe6ea47-b8e8-498f-8e30-187ca8971c64" /> 	|  0 (OFF)  	|    0 or 1   	|
+| **Leading Zero**<br>`lead_zero` 	| Append the "0" digits for LIFE value below 1000 	|  0 (OFF)  	|    0 or 1   	|
 
 ### Score@pjsekai-overlay-en
 <img width="125" height="125" alt="ScoreUP" src="https://github.com/user-attachments/assets/a5a8b0f0-035c-4951-8ae3-d2038945d86c" /> <img width=50% height=50% alt="bg" src="https://github.com/user-attachments/assets/3db93b3e-2280-46e1-a08f-00e50a5e5e8c" />
@@ -188,9 +190,17 @@ AviUtl for whatever reason stops loading when importing for the first time. If t
 | **Name**             	| Description                                    	| Default 	|  Range 	|
 |----------------------	|------------------------------------------------	|:-------:	|:------:	|
 | **Min Digit**<br>`min_digit`        	| Render the minimum amount of digits in score   	|    8    	| 1 ~ 99 (Integer)	|
+| **Skill Effect**<br>`score_skill`        	| Toggle skill glow effect<br>`0`: OFF<br>`1`: AUTO **(Beta)** - For each skill event, show skill glow effect for 5 seconds<br>`2`: ON   	|    1  	| 0 ~ 2 (Integer)	|
 | **Animation Speed**<br>`score_speed`   | Adjust animation speed                       	   |   1.00     |    >= 0 	   |
 | **Animated Scoring**<br>`anim_score` 	| Increase incrementally rather than all at once 	|  0 (OFF)  	|    0 or 1   	|
 | **WDS animation**<br>`wds_anim` 	| Toggle World Dai Star's added score animation 	|  0 (OFF)  	|    0 or 1   	|
+
+> [!TIP]
+> Adding skill events in the chart from server are not yet supported, but **you can add skill events to use the AUTO Skill Effect.** Go to your `data.ped` file and for each skill event you want to add, add the line `s|[timeframe (seconds)]`. You can add this as many as you want.
+> - **Example:**
+> 
+> <img width=50% height=50% alt="image" src="https://github.com/user-attachments/assets/44bb1ec6-5d42-467c-af1b-53b583d8ad44" />
+
 
 ### Combo@pjsekai-overlay-en
 <img width="148" height="49" alt="pt" src="https://github.com/user-attachments/assets/9db50558-cf81-4ed8-a2bd-1d4bbd22e156" /> <img width="145" height="45" alt="nt" src="https://github.com/user-attachments/assets/3ca0f65e-8ce6-40c9-8ff4-53a8ee9d2f81" />
@@ -217,6 +227,7 @@ AviUtl for whatever reason stops loading when importing for the first time. If t
 - [@Reiyunkun](https://github.com/Reiyunkun), [@gaven1880](https://github.com/gaven1880), and [@YumYummity](https://github.com/YumYummity) for providing [additional PJSK assets](./extra-assets)!
 - [@Khronophobia](https://github.com/Khronophobia) for the customized lane assets in Blender!
 - [@nagotown](https://github.com/nagotown) for the [aviutl2-EN](https://github.com/nagotown/aviutl2-EN) translation script!
+- [@MattMayuga](https://github.com/MattMayuga) for the [customized judgement fonts](https://github.com/Tiny-Foxes/JudgeFonts-by-MattMayuga)!
 - And everyone who used my tool, thank you all so much.
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -370,12 +381,14 @@ AviUtlは、何らかの理由で初回インポート時に読み込みを停�
 | **透かし**<br>`watermark` 	   | 左下隅に透かしテキストを表示する                                                            	|   1 (ON)  	|          0か1         	|
 
 ### ライフ@pjsekai-overlay
-<img width="125" height="125" alt="LifeUP" src="https://github.com/user-attachments/assets/6f7a7db8-50bb-43cf-9463-5f46325c862e" /> <img width=50% height=50% alt="life" src="https://github.com/user-attachments/assets/7aab3534-66cf-4dad-936e-3d423ecce615" />
+<img width="125" height="125" alt="LifeUP" src="https://github.com/user-attachments/assets/6f7a7db8-50bb-43cf-9463-5f46325c862e" /> <img width=30% height=30% alt="life-v1" src="https://github.com/user-attachments/assets/b467f932-fa04-4afa-bbf2-9aed811b0855" /> <img width=30% height=30% alt="life" src="https://github.com/user-attachments/assets/7aab3534-66cf-4dad-936e-3d423ecce615" />
 
 | **名前**         | 説明                                                                                                    | デフォルト     |        範囲           |
 |----------	|-------------------------------------------------------------------------------------	|:-------:	|:--------:	|
 | **ライフ**<br>`life` 	| LIFEの値（自明）<br>- 値が変化すると、LIFEバーも変化します 	|   1000  	| 0 ~ 9999 (整数) 	|
-| **過剰なライフバー**<br>`overflow` 	| <img width=50% height=50% alt="life_overflow" src="https://github.com/user-attachments/assets/75ad981f-cb1d-4112-939d-8f8bf39a1222" /> 	|  0 (OFF)  	|    0か1   	|
+| **スキル効果**<br>`life_skill`     | スキルの光り効果を切り替え     |  0 (OFF)      |    0か1       |
+| **過剰なライフバー**<br>`overflow` 	| <img width=70% height=70% alt="life_overflow-v1" src="https://github.com/user-attachments/assets/2fd69cf1-a767-47e7-adc3-14ecd2d56ce6" /><br><img width=70% height=70% alt="life_overflow" src="https://github.com/user-attachments/assets/bbe6ea47-b8e8-498f-8e30-187ca8971c64" /> 	|  0 (OFF)  	|    0か1   	|
+| **先頭ゼロ**<br>`lead_zero`     | LIFE値が1000未満の場合に「0」桁を追加     |  0 (OFF)      |    0か1       |
 
 ### スコア@pjsekai-overlay
 <img width="125" height="125" alt="ScoreUP" src="https://github.com/user-attachments/assets/a5a8b0f0-035c-4951-8ae3-d2038945d86c" /> <img width=50% height=50% alt="bg" src="https://github.com/user-attachments/assets/3db93b3e-2280-46e1-a08f-00e50a5e5e8c" />
@@ -383,9 +396,16 @@ AviUtlは、何らかの理由で初回インポート時に読み込みを停�
 | **名前**         | 説明                                                                                                    | デフォルト     |        範囲           |
 |----------------------	|------------------------------------------------	|:-------:	|:------:	|
 | **最小桁数**<br>`min_digit`        	| スコアの桁数を最小限に表示する   	|    8    	| 1 ~ 99 (整数)	|
+| **スキル効果**<br>`score_skill`      | スキル発光効果の切り替え<br>`0`: OFF<br>`1`: AUTO **(β)** - 各スキル発動時、5秒間スキル発光効果を表示<br>`2`: ON       |    1      | 0 ～ 2 (整数)    |
 | **アニメーション速度**<br>`score_speed`	| アニメーション速度を調整する 	|    1.00    	|   0以上 	|
 | **アニメーション採点**<br>`anim_score` 	| 一気にではなく、段階的に増やす 	|  0 (OFF)  	|    0か1   	|
 | **「ユメステ」アニメーション**<br>`wds_anim` 	| ユメステの追加スコアアニメーションを切り替える 	|  0 (OFF)  	|   0か1   	|
+
+> [!TIP]
+> サーバーから譜面にスキルイベントを追加する機能はまだ対応されていませんが、**AUTOスキル効果を使用するためにスキルイベントを追加することは可能です。** `data.ped`ファイルを開き、追加したい各スキルイベントに対して`s|[時間枠 (秒)]`という行を追加してください。この行は必要な数だけ追加できます。
+> - **例：**
+> 
+> <img width=50% height=50% alt="image" src="https://github.com/user-attachments/assets/44bb1ec6-5d42-467c-af1b-53b583d8ad44" />
 
 ### コンボ@pjsekai-overlay
 <img width="148" height="49" alt="pt" src="https://github.com/user-attachments/assets/9db50558-cf81-4ed8-a2bd-1d4bbd22e156" /> <img width="145" height="45" alt="nt" src="https://github.com/user-attachments/assets/3ca0f65e-8ce6-40c9-8ff4-53a8ee9d2f81" />
@@ -412,4 +432,5 @@ AviUtlは、何らかの理由で初回インポート時に読み込みを停�
 - [@Reiyunkun](https://github.com/Reiyunkun)氏、[@gaven1880](https://github.com/gaven1880)氏、[@YumYummity](https://github.com/YumYummity)氏による[追加のプロセカアセット](./extra-assets)の提供に感謝します！
 - [@Khronophobia](https://github.com/Khronophobia)氏にはBlenderでのカスタムレーンアセットを提供いただきました！
 - [@nagotown](https://github.com/nagotown)氏による [aviutl2-EN](https://github.com/nagotown/aviutl2-EN) 翻訳スクリプト！
+- [@MattMayuga](https://github.com/MattMayuga) による[カスタマイズされた判定フォント](https://github.com/Tiny-Foxes/JudgeFonts-by-MattMayuga)!
 - そして私のツールを使ってくださった皆様、本当にありがとうございます。

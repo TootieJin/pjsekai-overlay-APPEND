@@ -274,12 +274,14 @@ if PED_DATA and PED_DATA.version_status == "ok" then
 
   if overflow == 1 and life > 1000 then
     obj.load("image", PED_DATA.path.."/life/v1/normal.png")
+    obj.draw(0, 0, 0, 1, 0.5)
   elseif life <= 200 then
     obj.load("image", PED_DATA.path.."/life/v1/danger_bg.png")
+    obj.draw(0, 0, 0, 1)
   else
     obj.load("image", PED_DATA.path.."/life/v1/bg.png")
+    obj.draw(0, 0, 0, 1)
   end
-  obj.draw(0, 0, 0, 1)
 
   local life_name = ""
   if overflow == 1 and life > 1000 then
