@@ -382,8 +382,8 @@ if PED_DATA and PED_DATA.version_status == "ok" then
 
   local score_len = #score_str
 
-  local progress = (progress_frame / 12) * speed
-  if PED_DATA.current.time >= 0 and PED_DATA.current.combo > 0 and progress <= 2.5 then -- 30
+  if PED_DATA.current.time >= 0 and PED_DATA.current.combo > 0 and progress_frame <= 30 then
+    local progress = math.min(1, (progress_frame / 12) * speed)
     local offset = PED_DATA.current.offset
     if PED_DATA.current.score ~= PED_DATA.previous.score then
       offset = PED_DATA.current.score - PED_DATA.previous.score
