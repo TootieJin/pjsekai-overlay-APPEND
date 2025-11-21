@@ -85,6 +85,7 @@ PJSekai-style video creation tool:
 | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | [AviUtl](http://spring-fragrance.mints.ne.jp/aviutl/) + [Advanced Editing plug-in](http://spring-fragrance.mints.ne.jp/aviutl/) + [L-SMASH Works](https://github.com/Mr-Ojii/L-SMASH-Works-Auto-Builds/releases/latest) + [easymp4](https://aoytsk.blog.jp/aviutl/easymp4.zip) ([JP Installation Guide](https://aviutl.info/dl-innsuto-ru/))<br>- **JP installer:** [AviUtl JP Installer Script](https://github.com/menndouyukkuri/aviutl-installer-script)<br>- **EN installer:** [AviUtl EN Extra Pack](https://www.videohelp.com/download/AviUtl_setup_1.14.exe)<br><br>*Import all plugins to `aviutl\Plugins` folder* | [AviUtl ExEdit2 **(via installer)**](http://spring-fragrance.mints.ne.jp/aviutl/) + [L-SMASH Works](https://github.com/Mr-Ojii/L-SMASH-Works-Auto-Builds/releases/latest) + [MP4Exporter](https://apps.esugo.net/aviutl2-mp4exporter/)<br>- English language can be selected in `設定 > 言語の設定 > English` (`Settings > Language > English`)<br><br>*Import `AviUtl2\lwinput.aui2` & `MP4Exporter.auo2` plugin to `C:\ProgramData\aviutl2\Plugin` folder* |
 - **Fonts:** RodinNTLG [DB](https://en.fontworks.co.jp/fontsearch/rodinntlgpro-db/) + [EB](https://en.fontworks.co.jp/fontsearch/rodinntlgpro-eb/)
+- Your system locale **must be `Japanese (Japan)`** [(Go here for how to change it)](#common-problems)
 - Basic knowledge of AviUtl
 
 ## Video Guide
@@ -132,7 +133,7 @@ PJSekai-style video creation tool:
    - **AviUtl ExEdit2:** `File > Export > MP4 Exporter (by えすご/Esugo)`
 
 ## Common Problems
-### The Japanese characters look like gibberish
+### Changing system locale
 Change your system locale to `Japanese (Japan)`: `Settings > Time & Language > Language > Administrative language settings > "Administrative" tab > Change system locale...`
 
 <img width=40% height=40% alt="image" src="https://github.com/user-attachments/assets/0b5b680a-56cf-4cdb-8bb9-f10a50d7c07a" />
@@ -289,6 +290,7 @@ PJSekai-style video creation tool:
 | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | [AviUtl](http://spring-fragrance.mints.ne.jp/aviutl/) + [拡張編集プラグイン](http://spring-fragrance.mints.ne.jp/aviutl/) + [L-SMASH Works](https://github.com/Mr-Ojii/L-SMASH-Works-Auto-Builds/releases/latest) + [easymp4](https://aoytsk.blog.jp/aviutl/easymp4.zip)<br>- **おすすめ：** [AviUtl インストーラースクリプト](https://github.com/menndouyukkuri/aviutl-installer-script)<br><br>*すべてのプラグインを `aviutl\Plugins` フォルダにインポートする* | [AviUtl ExEdit2 **(インストーラ版)**](http://spring-fragrance.mints.ne.jp/aviutl/) + [L-SMASH Works](https://github.com/Mr-Ojii/L-SMASH-Works-Auto-Builds/releases/latest) + [MP4Exporter](https://apps.esugo.net/aviutl2-mp4exporter/)<br><br>*`AviUtl2\lwinput.aui2`と`MP4Exporter.auo2`プラグインを`C:\ProgramData\aviutl2\Plugin`フォルダにインポートする* |
 - **フォント：** ロダンNTLG [DB](https://en.fontworks.co.jp/fontsearch/rodinntlgpro-db/) + [EB](https://en.fontworks.co.jp/fontsearch/rodinntlgpro-eb/)
+- システムロケールは**必ず「日本語（日本）」**に設定してください [(変更方法はこちら)](#よくある問題)
 - AviUtlの基本的な知識
 
 ## 動画の作り方
@@ -337,7 +339,7 @@ PJSekai-style video creation tool:
    - **AviUtl ExEdit2:** `ファイル > ファイル出力 > MP4 Exporter (by えすご/Esugo)`
 
 ## よくある問題
-### 日本語文字が文字化けしている
+### システムロケールの変更
 システムロケールを`日本語（日本）`に変更してください：
 `設定 > 時間と言語 > 言語 > 管理言語設定 > 「管理」タブ > システムロケールの変更`
 

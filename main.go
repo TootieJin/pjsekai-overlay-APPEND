@@ -91,6 +91,19 @@ func origMain(isOptionSpecified bool) {
 		return
 	}
 
+	locale := func() string {
+		cmd := exec.Command("powershell", "-Command", "Get-WinSystemLocale | Select-Object -ExpandProperty Name")
+		output, err := cmd.Output()
+		if err != nil {
+			return ""
+		}
+		return strings.TrimSpace(string(output))
+	}
+	if locale() != "ja-JP" {
+		fmt.Println(color.RedString(fmt.Sprintf("FAIL: お使いのシステムロケールが「日本語（日本）」に設定されていません。変更方法についてはREADMEを参照してください。\nYour system locale is not set to \"Japanese (Japan)\". Refer to README for how to change it.\n- System locale: %v", locale())))
+		return
+	}
+
 	mappingName, mapping := pjsekaioverlay.SetOverlayDefault()
 
 	if len(mapping) != 20 {
@@ -200,18 +213,6 @@ func origMain(isOptionSpecified bool) {
 	}
 	if successInstall {
 		fmt.Println(color.HiYellowString("変更を適用するには、" + aviutlName + "を再起動してください。(Please restart " + aviutlName + " to apply changes.)\n"))
-	}
-
-	locale := func() string {
-		cmd := exec.Command("powershell", "-Command", "Get-WinSystemLocale | Select-Object -ExpandProperty Name")
-		output, err := cmd.Output()
-		if err != nil {
-			return ""
-		}
-		return strings.TrimSpace(string(output))
-	}
-	if locale() != "ja-JP" {
-		fmt.Println(color.HiYellowString(fmt.Sprintf("WARN: お使いのシステムロケールが「日本語（日本）」に設定されていません。テキストの表示時に文字化けが発生する可能性があります。\nYour system locale is not set to \"Japanese (Japan)\". You may see gibberish characters when rendering texts.\n- System locale: %v", locale())))
 	}
 
 	Tips()
