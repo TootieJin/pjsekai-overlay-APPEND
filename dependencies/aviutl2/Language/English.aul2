@@ -1138,6 +1138,10 @@ YUVレンジ=YUV Color Range
 大=Large
 レイヤーの縦幅を大きく=Increase Layer Height
 レイヤーの縦幅を小さく=Decrease Layer Height
+オブジェクトプリセットフォルダ=Object Preset Folder
+パレット名を変更=Rename Palette
+選択範囲を切り取り=Cut Selected Range
+選択範囲を切り取りして詰める=Cut Selected Range and Remove Gap
 
 ; Third-Party Export Plugins
 
@@ -1242,7 +1246,8 @@ YUVの設定=YUV Settings
 ファイル出力を中断=interrupt file output
 バッファリング中=Buffering
 プリセットを適用=Apply Preset
-プリセットの読み込みに失敗しました=Failed to load preet
+プリセットの読み込みに失敗しました=Failed to load preset
+現在の編集データは更新されています\nプロジェクトを保存しますか？=Current editing data has been updated.\nSave project?
 
 [Dialog]
 ; Dialog box names
@@ -1398,6 +1403,7 @@ Alt+左クリックドラックで右クリックドラック操作=Alt+Left Cli
 対象項目=Target Item
 対象項目から外すとプリセット適用時に元の値が維持されます=When unchecked, original value remains
 背景色=Background Color
+パレット名を変更=Rename Palette
 ;OK=OK
 ;Cancel=Cancel
 
