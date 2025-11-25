@@ -211,7 +211,7 @@ AviUtl for whatever reason stops loading when importing for the first time. If t
 | **AP Combo**<br>`ap`                      	| Toggle AP Combo status                 	  |    1   	| 0 or 1 	|
 | **Combo Tag**<br>`tag`                     	| Toggle rendering combo tag             	  |    1   	| 0 or 1 	|
 | **Show the last X digit(s)**<br>`last_digit`        	| `4`: 12345 -> /2345<br>`2`: 12345 -> ///45 |    4   	|   >= 0 (Integer)   	|
-| **Animation Speed**<br>`score_speed`   | Adjust animation speed                  |   1.00     |    >= 0 	   |
+| **Animation Speed**<br>`combo_speed`   | Adjust animation speed                  |   1.00     |    >= 0 	   |
 | **n00 Combo Burst**<br>`combo_burst`        	| Toggle World Dai Star's combo burst effect |    0 (OFF)   	|   0 or 1   	|
 
 ### Judgement@pjsekai-overlay-en
