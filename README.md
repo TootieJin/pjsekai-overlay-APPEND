@@ -145,7 +145,7 @@ Go to `File > New Project` and set frame rate to 60. The change will be reflecte
 
 ### The UI doesn't show anything!
 You likely haven't selected a **`data.ped` file.** 
-- AviUtl: Go to `Root@pjsekai-overlay-en`, select `Reference`, then select `data.ped` in the `pjsekai-overlay-APPEND\dist\[Chart ID]` directory
+- **AviUtl:** Go to `Root@pjsekai-overlay-en`, select `Reference`, then select `data.ped` in the `pjsekai-overlay-APPEND\dist\[Chart ID]` directory
 
 <img width="630" height="72" alt="image" src="https://github.com/user-attachments/assets/50334797-d580-41ed-b0c9-d00be6875d04" />
 
@@ -352,7 +352,7 @@ PJSekai-style video creation tool:
 
 ### UIに何も表示されない！
 おそらく **`data.ped`ファイル** を選択していません。
-- AviUtl: `設定@pjsekai-overlay`に移動し、`参照`を選択し、`pjsekai-overlay-APPEND\dist\[譜面ID]` ディレクトリ内の `data.ped` を選択します。
+- **AviUtl:** `設定@pjsekai-overlay`に移動し、`参照`を選択し、`pjsekai-overlay-APPEND\dist\[譜面ID]` ディレクトリ内の `data.ped` を選択します。
 
 <img width="620" height="64" alt="image" src="https://github.com/user-attachments/assets/07053e19-d153-4806-b65b-6f2b7df74478" />
 
