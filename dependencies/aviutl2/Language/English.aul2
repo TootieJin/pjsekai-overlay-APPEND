@@ -3,7 +3,7 @@
 ; Place in ProgramData\aviutl2\Language to add to Language Settings
 
 ; Original file: https://github.com/nagotown/aviutl2-EN
-; Version: b20
+; Version: b22
 ; pjsekai-overlay language support by TootieJin
 
 [Effect]
@@ -87,6 +87,7 @@
 モデルファイル=Model File
 枠線=Frame Line
 拡張色設定=Extended Color Settings
+画像合成=Image Composition
 
 ; Extras (Originally untranslated)
 逆光=Backlight
@@ -822,7 +823,7 @@ Z軸回転=Rotate Z
 速さ=Velocity
 上下反転=Horizontal Flip
 左右反転=Vertical Flip
-輝度反転=Color Invert
+輝度反転=Luminance Invert
 色相反転=Hue Invert
 透明度反転=Transparency Invert
 トラック=Track
@@ -839,8 +840,17 @@ Z軸回転=Rotate Z
 自動スクロール=Auto Scroll
 ゆらぎ=Fluctuation
 ゆがみ=Distortion
-起点X=BaseX
-起点Y=BaseY
+起点X=Base X
+起点Y=Base Y
+描画=Rendering
+音声=Audio
+ループ画像=Loop Image
+前方から合成=Composite from the front
+後方から合成=Composite from the back
+色情報を上書き=Overwrite color 
+輝度をアルファ値として上書き=Overwrite Luminance as Alpha
+輝度をアルファ値として乗算=Multiply Luminance as Alpha
+画像=Image
 
 ; Extras (Originally untranslated)
 超点X=Diffuse X
@@ -1116,7 +1126,7 @@ YUVレンジ=YUV Color Range
 ファイルから選択=Select from File
 連番ファイル出力=Export Incremented File
 画面の設定=Display
-ファイル出力の設定=File Export
+ファイル出力の設定=File Export Settings
 シーンを複製=Duplicate Scene
 選択オブジェクトの追従=Follow Selected Object
 中間点の時間を表示=Show Keyframe Time
@@ -1142,12 +1152,16 @@ YUVレンジ=YUV Color Range
 パレット名を変更=Rename Palette
 選択範囲を切り取り=Cut Selected Range
 選択範囲を切り取りして詰める=Cut Selected Range and Remove Gap
+サブグループ項目を表示=Display Subgroup Label
+画像ファイルから選択=Select Image File
+動画ファイルから選択=Select Video File
+シーン=Scene
 
 ; Third-Party Export Plugins
 
 ; al2_wav_saver - https://github.com/hebiiro/al2_wav_saver
-WAVファイル出力 (32bit float)=WAV File Output (32-bit float)
-WAVファイル出力 (16bit short)=WAV File Output (16-bit short)
+WAVファイル出力 (32bit float)=Export WAV File (32-bit float)
+WAVファイル出力 (16bit short)=Export WAV File (16-bit short)
 
 ; Extras (Originally untranslated)
 WindowSize=Window Size
@@ -1160,7 +1174,7 @@ AviUtlのお部屋=AviUtl Room (Japanese Homepage)
 
 [Message]
 ; Tooltips, message boxes, and other dialogs
-ファイル出力中=Outputting file
+ファイル出力中=Exporting file
 パレットを切替=Change palette
 画面上から色を取得=Pick color from screen
 マウスクリックで色を取得=Pick color with mouse click
@@ -1209,8 +1223,8 @@ AviUtlのお部屋=AviUtl Room (Japanese Homepage)
 現在のシーンを削除しますか？=Delete the current scene?
 シーンを削除しますか？=Delete the scene?
 現在の編集データは破棄されますがよろしいですか？=The current project contains unsaved changes.\nContinue?
-ファイル出力を中断しますか？=Interrupt file output?
-ファイル出力が完了しました=File output is complete.
+ファイル出力を中断しますか？=Interrupt file export?
+ファイル出力が完了しました=File exporting is complete.
 プロジェクトファイルのパスが変更されています。\n\n以前のプロジェクトパスの配下の指定ファイルが存在しない場合は\n現在のプロジェクトパスの配下に変更しますか？=The project file path has changed\nDo you want to change the file path?
 指定のファイルが存在しません=Specified file not found
 プロジェクトの読み込みに失敗しました=Failed to load project
@@ -1243,7 +1257,7 @@ YUVの設定=YUV Settings
 同名のファイルが存在しています\n上書きしますか？=Another file with the same name exists.\nOverwrite?
 プラグイン・スクリプトのインストール=Install Script/Plugin
 前回アプリケーションが正常に終了しませんでした\n\nプロジェクトを復元しますか？=Application not exit normally last time\n\nRestore project?
-ファイル出力を中断=interrupt file output
+ファイル出力を中断=Interrupt file export
 バッファリング中=Buffering
 プリセットを適用=Apply Preset
 プリセットの読み込みに失敗しました=Failed to load preset
