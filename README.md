@@ -28,13 +28,12 @@ https://github.com/user-attachments/assets/3efab743-246a-4da7-8d80-a02b2f09f5b3
 
 - **AviUtl ExEdit2 Preview**
 
-[![AviUtl ExEdit2 Preview](https://github.com/user-attachments/assets/18f6d16b-5ba4-4953-aa7d-5ceebb87348a)]()
+<img width="auto" height="auto" alt="AviUtl ExEdit2 Preview" src="https://github.com/user-attachments/assets/18f6d16b-5ba4-4953-aa7d-5ceebb87348a" />
 
 - **Video Example**
 
 *(Click the image to watch it)*\
-[![【Project Sekai x Honkai: Star Rail】Nameless Faces - HOYO-MiX feat. Lilas Ikuta (Fanmade)](https://img.youtube.com/vi/uXx1OZDQZOI/maxresdefault.jpg)](https://youtu.be/uXx1OZDQZOI)
-[![【Project Sekai Fanmade? (v3→v1)】Hello, SEKAI - DECO*27【ETERNAL Lv32】](https://img.youtube.com/vi/BHVNuwxA1ek/maxresdefault.jpg)](https://youtu.be/BHVNuwxA1ek)
+<a href="https://youtu.be/uXx1OZDQZOI"><img width=45% height=45% alt="【Project Sekai x Honkai: Star Rail】Nameless Faces - HOYO-MiX feat. Lilas Ikuta (Fanmade)" src="https://img.youtube.com/vi/uXx1OZDQZOI/maxresdefault.jpg" /></a> <a href="https://youtu.be/BHVNuwxA1ek"><img width=45% height=45% alt="【Project Sekai Fanmade? (v3→v1)】Hello, SEKAI - DECO*27【ETERNAL Lv32】" src="https://img.youtube.com/vi/BHVNuwxA1ek/maxresdefault.jpg" /></a>
 
 This is a forked version of pjsekai-overlay with additional features originally not in the main repo, including:
   - **AviUtl ExEdit2 Full Support**
@@ -56,7 +55,7 @@ This is a forked version of pjsekai-overlay with additional features originally 
 
 ## Terms of Use
 
-**(REQUIRED)** In the description of your video, please copy the text here:
+1. **(REQUIRED)** In the description of your video, you must copy the text here:
 
 **EN**
 ```
@@ -74,10 +73,8 @@ PJSekai-style video creation tool:
    https://github.com/TootieJin/pjsekai-overlay-APPEND
 ```
 
-> [!NOTE]
-> **(optional)** You can remove watermark by check/unchecking `Watermark` in the `Root@pjsekai-overlay-en` element.
-> 
-> <img width=80% height=80% alt="image" src="https://github.com/user-attachments/assets/48a636da-8ec0-443b-9cf4-b73fd93c47df" />
+2. This tool **should not be used for malicious purposes** (such as spreading misinformation on social media).
+3. The author **assumes no responsibility whatsoever** for any issues or disadvantages arising from the use of this tool.
 
 ## Requirements
 
@@ -262,7 +259,7 @@ AviUtl for whatever reason stops loading when importing for the first time. If t
 
 ## 利用規約
 
-**(必須)** 動画の説明文に、こちらのテキストをコピーしてください：
+1. **(必須)** 動画の説明文に、こちらのテキストをコピーしてください：
 
 **EN**
 ```
@@ -280,10 +277,8 @@ PJSekai-style video creation tool:
    https://github.com/TootieJin/pjsekai-overlay-APPEND
 ```
 
-> [!NOTE]
-> **(任意)** `設定@pjsekai-overlay`要素でチェック/チェックを外すことで、`透かし`を消すことができます。
-> 
-> <img width=80% height=80% alt="image" src="https://github.com/user-attachments/assets/05cc6e7d-0e62-4729-a4df-c8d8634b0a10" />
+2. 決して**悪意のある使用**をしないでください。（SNS上でデマを流すために使う等）
+3. このツールを使ったことによるトラブルや不利益などが発生しても、作者は**一切の責任を負いません。**
 
 ## 必須事項
 | AviUtl                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     | **AviUtl ExEdit2 (推奨)**                                                                                                                                                                                                                                                                                                                                                                                                            |
@@ -433,6 +428,6 @@ AviUtlは、何らかの理由で初回インポート時に読み込みを停�
 - [@Piliman22](https://github.com/Piliman22)氏、pjsekai-overlayにおける[ScoreSync](https://github.com/Piliman22/ScoreSync)の実現に貢献いただき感謝申し上げます！
 - [@Reiyunkun](https://github.com/Reiyunkun)氏、[@gaven1880](https://github.com/gaven1880)氏、[@YumYummity](https://github.com/YumYummity)氏による[追加のプロセカアセット](./extra-assets)の提供に感謝します！
 - [@Khronophobia](https://github.com/Khronophobia)氏にはBlenderでのカスタムレーンアセットを提供いただきました！
-- [@nagotown](https://github.com/nagotown)氏による [aviutl2-EN](https://github.com/nagotown/aviutl2-EN) 翻訳スクリプト！
-- [@MattMayuga](https://github.com/MattMayuga) による[カスタマイズされた判定フォント](https://github.com/Tiny-Foxes/JudgeFonts-by-MattMayuga)!
+- [@nagotown](https://github.com/nagotown)氏による[aviutl2-EN](https://github.com/nagotown/aviutl2-EN)翻訳スクリプト！
+- [@MattMayuga](https://github.com/MattMayuga)氏による[カスタマイズされた判定フォント](https://github.com/Tiny-Foxes/JudgeFonts-by-MattMayuga)！
 - そして私のツールを使ってくださった皆様、本当にありがとうございます。
