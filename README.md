@@ -33,7 +33,7 @@ https://github.com/user-attachments/assets/3efab743-246a-4da7-8d80-a02b2f09f5b3
 - **Video Example**
 
 *(Click the image to watch it)*\
-<a href="https://youtu.be/uXx1OZDQZOI"><img width=45% height=45% alt="【Project Sekai x Honkai: Star Rail】Nameless Faces - HOYO-MiX feat. Lilas Ikuta (Fanmade)" src="https://img.youtube.com/vi/uXx1OZDQZOI/maxresdefault.jpg" /></a> <a href="https://youtu.be/BHVNuwxA1ek"><img width=45% height=45% alt="【Project Sekai Fanmade? (v3→v1)】Hello, SEKAI - DECO*27【ETERNAL Lv32】" src="https://img.youtube.com/vi/BHVNuwxA1ek/maxresdefault.jpg" /></a>
+<a href="https://youtu.be/uXx1OZDQZOI"><img width=49.5% height=49.5% alt="【Project Sekai x Honkai: Star Rail】Nameless Faces - HOYO-MiX feat. Lilas Ikuta (Fanmade)" src="https://img.youtube.com/vi/uXx1OZDQZOI/maxresdefault.jpg" /></a> <a href="https://youtu.be/BHVNuwxA1ek"><img width=49.5% height=49.5% alt="【Project Sekai Fanmade? (v3→v1)】Hello, SEKAI - DECO*27【ETERNAL Lv32】" src="https://img.youtube.com/vi/BHVNuwxA1ek/maxresdefault.jpg" /></a>
 
 This is a forked version of pjsekai-overlay with additional features originally not in the main repo, including:
   - **AviUtl ExEdit2 Full Support**
