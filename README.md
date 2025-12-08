@@ -92,10 +92,19 @@ PJSekai-style video creation tool:
 
 0. Make your chart first.
 1. Go to [Sonolus](https://sonolus.com/) to find your chart.
-2. Screen record the video with **BLACK Background**, **「Stage」OFF** and **「Hide UI」ON**
+2. Screen record the video with **BLACK Background**, **`Stage` OFF** and **`Hide UI` ON**
 
 > [!NOTE]
-> If recording in the UntitledCharts server, toggle **「Hide Custom Elements」ON** and **「Use Custom Tag」OFF**
+> If recording in the **UntitledCharts server**, you must do one of the following method:
+> 1. **Change `Server Engine`** to Next SEKAI
+> 
+> <img width=49% height="auto" alt="" src="https://github.com/user-attachments/assets/c517e819-9177-4a2b-81c0-6a4ea3b3a434" /> <img width=49% height="auto" alt="" src="https://github.com/user-attachments/assets/f77ff756-fb0c-4998-8833-e57e6c9935e74" />
+>
+> **OR**
+> 
+> 2. Toggle **`Hide Custom Elements` ON** and **`Use Custom Tag` OFF**
+> 
+> <img width=60% height="auto" alt="" src="https://github.com/user-attachments/assets/a0f48a98-c06c-4f94-86cb-45e775a29c4b" />
 
 3. Transfer the video file to your computer.
 4. Download the [FFmpeg](https://www.ffmpeg.org/) encoder and use it (`ffmpeg -i source.mp4 output.mp4`)
@@ -302,7 +311,16 @@ PJSekai-style video creation tool:
 2. **背景を黒**にし、**「Stage」OFF** と **「Hide UI」ON**にして、動画をスクリーン録画します。
 
 > [!NOTE]
-> UntitledChartsサーバーで記録する場合、**「Hide Custom Elements」ON** と **「Use Custom Tag」OFF**に設定してください。
+> **UntitledChartsサーバー**で録画する場合、以下のいずれかの方法を実施する必要があります：
+> 1. **「サーバーエンジン」** をNext SEKAIに変更する
+> 
+> <img width=49% height="auto" alt="" src="https://github.com/user-attachments/assets/17f21099-7055-4fdc-b628-aa09f3b36282" /> <img width=49% height="auto" alt="" src="https://github.com/user-attachments/assets/5a991e11-f1aa-4f94-8555-fe3909d42d03" />
+>
+> **または**
+> 
+> 2. **「Hide Custom Elements」ON** と **「Use Custom Tag」OFF** に設定
+>
+> <img width=60% height="auto" alt="" src="https://github.com/user-attachments/assets/a0f48a98-c06c-4f94-86cb-45e775a29c4b" />
 
 3. 撮影したプレイ動画のファイルをパソコンに転送する
    - まだダウンロードしていない場合は、[FFmpeg](https://www.ffmpeg.org/) エンコーダーをダウンロードする
