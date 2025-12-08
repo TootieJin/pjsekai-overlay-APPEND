@@ -1,5 +1,8 @@
 [**English Section**](#pjsekai-overlay-append--forked-pjsekai-style-video-creation-tool) | [**日本語セクション**](#pjsekai-overlay-append--フォークプロセカ風動画作成補助ツール)
 
+**Last README updated:** December 8th 2025, 4:55 PM (EST)\
+**最終README更新日:** 2025年12月9日 午前6時55分（JST）
+
 [![Releases](https://img.shields.io/github/downloads/TootieJin/pjsekai-overlay-APPEND/total?style=plastic)](https://github.com/TootieJin/pjsekai-overlay-APPEND/releases/) [![Stargazers](https://img.shields.io/github/stars/TootieJin/pjsekai-overlay-APPEND?style=plastic&color=yellow)](https://github.com/TootieJin/pjsekai-overlay-APPEND/stargazers)
 # pjsekai-overlay-APPEND / Forked PJSekai-style video creation tool
 
@@ -90,6 +93,10 @@ PJSekai-style video creation tool:
 0. Make your chart first.
 1. Go to [Sonolus](https://sonolus.com/) to find your chart.
 2. Screen record the video with **BLACK Background**, **「Stage」OFF** and **「Hide UI」ON**
+
+> [!NOTE]
+> If recording in the UntitledCharts server, toggle **「Hide Custom Elements」ON** and **「Use Custom Tag」OFF**
+
 3. Transfer the video file to your computer.
 4. Download the [FFmpeg](https://www.ffmpeg.org/) encoder and use it (`ffmpeg -i source.mp4 output.mp4`)
    - **This step is required so that the video file doesn't shift speed. (not known to be needed in AviUtl ExEdit2 yet)**
@@ -293,6 +300,10 @@ PJSekai-style video creation tool:
 0. 譜面を作る
 1. [Sonolus](https://sonolus.com/)で譜面を撮影する
 2. **背景を黒**にし、**「Stage」OFF** と **「Hide UI」ON**にして、動画をスクリーン録画します。
+
+> [!NOTE]
+> UntitledChartsサーバーで記録する場合、**「Hide Custom Elements」ON** と **「Use Custom Tag」OFF**に設定してください。
+
 3. 撮影したプレイ動画のファイルをパソコンに転送する
    - まだダウンロードしていない場合は、[FFmpeg](https://www.ffmpeg.org/) エンコーダーをダウンロードする
 4. [FFmpeg](https://www.ffmpeg.org/) エンコーダーをダウンロードして使用します（`ffmpeg -i source.mp4 output.mp4`）。
