@@ -1,7 +1,7 @@
 [**English Section**](#pjsekai-overlay-append--forked-pjsekai-style-video-creation-tool) | [**日本語セクション**](#pjsekai-overlay-append--フォークプロセカ風動画作成補助ツール)
 
-**Last README updated:** December 8th 2025, 4:55 PM (EST)\
-**最終README更新日:** 2025年12月9日 午前6時55分（JST）
+**Last README updated:** December 8th 2025, 6:52 PM (EST)\
+**最終README更新日:** 2025年12月9日 午前8時52分（JST）
 
 [![Releases](https://img.shields.io/github/downloads/TootieJin/pjsekai-overlay-APPEND/total?style=plastic)](https://github.com/TootieJin/pjsekai-overlay-APPEND/releases/) [![Stargazers](https://img.shields.io/github/stars/TootieJin/pjsekai-overlay-APPEND?style=plastic&color=yellow)](https://github.com/TootieJin/pjsekai-overlay-APPEND/stargazers)
 # pjsekai-overlay-APPEND / Forked PJSekai-style video creation tool
