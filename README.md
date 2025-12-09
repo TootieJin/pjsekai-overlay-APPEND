@@ -1,7 +1,7 @@
 [**English Section**](#pjsekai-overlay-append--forked-pjsekai-style-video-creation-tool) | [**日本語セクション**](#pjsekai-overlay-append--フォークプロセカ風動画作成補助ツール)
 
-**Last README updated:** December 8th 2025, 6:52 PM (EST)\
-**最終README更新日:** 2025年12月9日 午前8時52分（JST）
+**Last README updated:** December 9th 2025, 11:15 AM (EST)\
+**最終README更新日:** 2025年12月10日 午前1時15分（JST）
 
 [![Releases](https://img.shields.io/github/downloads/TootieJin/pjsekai-overlay-APPEND/total?style=plastic)](https://github.com/TootieJin/pjsekai-overlay-APPEND/releases/) [![Stargazers](https://img.shields.io/github/stars/TootieJin/pjsekai-overlay-APPEND?style=plastic&color=yellow)](https://github.com/TootieJin/pjsekai-overlay-APPEND/stargazers)
 # pjsekai-overlay-APPEND / Forked PJSekai-style video creation tool
@@ -90,26 +90,36 @@ PJSekai-style video creation tool:
 
 ## Video Guide
 
-0. Make your chart first.
+You'll need **a clean recording that has BLACK background & ALL UI hidden (including lanes)** like in the screenshot below:
+
+<img width=60% height="auto" alt="" src="https://github.com/user-attachments/assets/46578e52-a3e6-4248-9e2c-f61486cc6af6" />
+
+Follow the steps below:
 1. Go to [Sonolus](https://sonolus.com/) to find your chart.
-2. Screen record the video with **BLACK Background**, **`Stage` OFF** and **`Hide UI` ON**
+2. Screen record the video with **BLACK Background**, **`Stage` OFF**, **`Hide UI` ON or ALL** with **`Note Margin` >= 0.08**
 
 > [!NOTE]
+> To change the background, go to `Configuration > Background > Select`
+> 
+> <img width=60% height="auto" alt="" src="https://github.com/user-attachments/assets/a138e3b7-50cd-49e0-8977-c1df60ba9a3e" />
+
+
+> [!WARNING]
 > If recording in the **UntitledCharts server**, you must do one of the following method:
-> 1. **Change `Server Engine`** to Next SEKAI
+> - **Change `Server Engine`** to Next SEKAI
 > 
 > <img width=49% height="auto" alt="" src="https://github.com/user-attachments/assets/c517e819-9177-4a2b-81c0-6a4ea3b3a434" /> <img width=49% height="auto" alt="" src="https://github.com/user-attachments/assets/f77ff756-fb0c-4998-8833-e57e6c9935e74" />
 >
 > **OR**
 > 
-> 2. Toggle **`Hide Custom Elements` ON** and **`Use Custom Tag` OFF**
+> - Toggle **`Hide Custom Elements` ON** and **`Use Custom Tag` OFF**
 > 
 > <img width=60% height="auto" alt="" src="https://github.com/user-attachments/assets/a0f48a98-c06c-4f94-86cb-45e775a29c4b" />
 
 3. Transfer the video file to your computer.
-4. Download the [FFmpeg](https://www.ffmpeg.org/) encoder and use it (`ffmpeg -i source.mp4 output.mp4`)
-   - **This step is required so that the video file doesn't shift speed. (not known to be needed in AviUtl ExEdit2 yet)**
-   - Alternatively, you can use your video editor to export it.
+4. **(AviUtl ONLY)** Download the [FFmpeg](https://www.ffmpeg.org/) encoder and use it (`ffmpeg -i source.mp4 output.mp4`)
+   - **This step is required because of a funny bug only seen in AviUtl**: If the frame rate of the source video does not match the project, synchronization is delayed.
+   - Alternatively, you can use your video editor to do this step.
 5. Once done, refer to the usage guide below.
 
 ## Usage Guide
@@ -141,7 +151,19 @@ PJSekai-style video creation tool:
 | 16:9 	| - **EN ver:**<br>`main_en_16-9_1920x1080.exo`<br>`v1-skin_en_16-9_1920x1080.exo`<br>- **JP ver:**<br>`main_jp_16-9_1920x1080.exo`<br>`v1-skin_jp_16-9_1920x1080.exo` 	| `main2_16-9_1920x1080.object`<br>`v1-skin2_16-9_1920x1080.object` 	|
 | 4:3  	| - **EN ver:**<br>`main_en_4-3_1440x1080.exo`<br>`v1-skin_en_4-3_1440x1080.exo`<br>- **JP ver:**<br>`main_jp_4-3_1440x1080.exo`<br>`v1-skin_jp_4-3_1440x1080.exo`     	| `main2_4-3_1440x1080.object`<br>`v1-skin2_4-3_1440x1080.object`   	|
 
-6. Once finished, export your video as mp4
+6. **Select a video & audio file in the timeline** provided by the exo/alias(.object)
+
+<img width="auto" height="auto" alt="image" src="https://github.com/user-attachments/assets/c1373304-a32e-4a4d-ad73-c5fdb787369b" />
+
+7. Adjust the video & audio positioning as necessary. **Make sure the video frame matches the slot particle with the lane**
+
+<img width=50% height="auto" alt="image" src="https://github.com/user-attachments/assets/78b91894-57c7-424a-af2d-3ee6f2ff8fb8" />
+
+8. Go to `Root@pjsekai-overlay` and **adjust the `Offset`**
+
+<img width="auto" height="auto" alt="image" src="https://github.com/user-attachments/assets/433a1e1f-a24b-4518-8526-e73192eaf38a" />
+
+9. Once finished, export your video as mp4
    - **AviUtl:** `File > Export with Plugin > かんたんMP4出力` or `File > Export with Plugin > Adv. x264/x265 Export(GUI) Ex`
    - **AviUtl ExEdit2:** `File > Export > MP4 Exporter (by えすご/Esugo)`
 
@@ -306,27 +328,36 @@ PJSekai-style video creation tool:
 
 ## 動画の作り方
 
-0. 譜面を作る
+**黒い背景で、すべてのUI（レーンを含む）が非表示になっているクリーンな録画**が必要です。下記スクリーンショットのように：
+
+<img width=60% height="auto" alt="" src="https://github.com/user-attachments/assets/46578e52-a3e6-4248-9e2c-f61486cc6af6" />
+
+以下の手順に従ってください：
 1. [Sonolus](https://sonolus.com/)で譜面を撮影する
-2. **背景を黒**にし、**「Stage」OFF** と **「Hide UI」ON**にして、動画をスクリーン録画します。
+2. **背景を黒**にし、**`Stage` OFF**、**`Hide UI` ONかALL**、**`Note Margin` 0.08以上** にして、動画をスクリーン録画します。
 
 > [!NOTE]
+> 背景を変更するには、`設定 > 背景 > 選択` に移動してください
+> 
+> <img width=60% height="auto" alt="" src="https://github.com/user-attachments/assets/a138e3b7-50cd-49e0-8977-c1df60ba9a3e" />
+
+> [!WARNING]
 > **UntitledChartsサーバー**で録画する場合、以下のいずれかの方法を実施する必要があります：
-> 1. **「サーバーエンジン」** をNext SEKAIに変更する
+> - **`サーバーエンジン`** をNext SEKAIに変更する
 > 
 > <img width=49% height="auto" alt="" src="https://github.com/user-attachments/assets/17f21099-7055-4fdc-b628-aa09f3b36282" /> <img width=49% height="auto" alt="" src="https://github.com/user-attachments/assets/5a991e11-f1aa-4f94-8555-fe3909d42d03" />
 >
 > **または**
 > 
-> 2. **「Hide Custom Elements」ON** と **「Use Custom Tag」OFF** に設定
+> - **`Hide Custom Elements` ON** と **`Use Custom Tag` OFF** に設定
 >
 > <img width=60% height="auto" alt="" src="https://github.com/user-attachments/assets/a0f48a98-c06c-4f94-86cb-45e775a29c4b" />
 
 3. 撮影したプレイ動画のファイルをパソコンに転送する
    - まだダウンロードしていない場合は、[FFmpeg](https://www.ffmpeg.org/) エンコーダーをダウンロードする
-4. [FFmpeg](https://www.ffmpeg.org/) エンコーダーをダウンロードして使用します（`ffmpeg -i source.mp4 output.mp4`）。
-   - **この手順は、動画ファイルの速度がずれないようにするために必要です。(AviUtl ExEdit2では現時点で必要とされていない)**
-   - 代わりに、動画編集ソフトでエクスポートすることもできます。
+4. **(AviUtlのみ)** [FFmpeg](https://www.ffmpeg.org/) エンコーダーをダウンロードし、使用してください（`ffmpeg -i source.mp4 output.mp4`）
+   - **この手順はAviUtl特有の奇妙なバグのため必須です**：ソース動画のフレームレートがプロジェクトと一致しない場合、同期が遅延します。
+   - 代替手段として、動画編集ソフトでこの処理を行うことも可能です。
 5. 下の利用方法に従って UI を後付けする
 
 ## 利用方法
@@ -358,7 +389,19 @@ PJSekai-style video creation tool:
 | 16:9 	| `main_jp_16-9_1920x1080.exo`<br>`v1-skin_jp_16-9_1920x1080.exo` 	| `main2_16-9_1920x1080.object`<br>`v1-skin2_16-9_1920x1080.object` 	|
 | 4:3  	| `main_jp_4-3_1440x1080.exo`<br>`v1-skin_jp_4-3_1440x1080.exo`   	| `main2_4-3_1440x1080.object`<br>`v1-skin2_4-3_1440x1080.object`   	|
 
-6. 完了後、動画をmp4形式で出力します
+6. exo/alias(.object)が提供する**タイムラインで動画と音声ファイルを選択**
+
+<img width="auto" height="auto" alt="image" src="https://github.com/user-attachments/assets/c1373304-a32e-4a4d-ad73-c5fdb787369b" />
+
+7. 必要に応じて動画と音声の位置を調整してください。**動画フレームがレーン付きスロットパーティクルと一致していることを確認**
+
+<img width=50% height="auto" alt="image" src="https://github.com/user-attachments/assets/78b91894-57c7-424a-af2d-3ee6f2ff8fb8" />
+
+8. `設定@pjsekai-overlay`に移動し、**`オフセット`を調整**
+
+<img width="auto" height="auto" alt="image" src="https://github.com/user-attachments/assets/433a1e1f-a24b-4518-8526-e73192eaf38a" />
+
+9. 完了後、動画をmp4形式で出力します
    - **AviUtl:** `ファイル > プラグイン出力 > かんたんMP4出力` または `ファイル > プラグイン出力 > 拡張 x264 出力(GUI) Ex`
    - **AviUtl ExEdit2:** `ファイル > ファイル出力 > MP4 Exporter (by えすご/Esugo)`
 
