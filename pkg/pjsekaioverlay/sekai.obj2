@@ -657,4 +657,4 @@ if PED_DATA and PED_DATA.version_status == "ok" then
   end
   obj.copybuffer("obj", "tmp")
 end
--- vim: set ft=luajit
+-- vim: set ft=lua fenc=cp932:

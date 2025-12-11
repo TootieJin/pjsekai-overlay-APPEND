@@ -64,6 +64,15 @@ func BanList(name string) bool {
 		panic(err)
 	}
 
+	if resp.StatusCode != http.StatusOK {
+		panic(fmt.Sprintf("%d: %s", resp.StatusCode, http.StatusText(resp.StatusCode)))
+	}
+
+	bodyStr := string(body)
+	if strings.HasPrefix(strings.TrimSpace(bodyStr), "4") || strings.HasPrefix(strings.TrimSpace(bodyStr), "5") {
+		panic(bodyStr)
+	}
+
 	banList := strings.Split(string(body), "\n")
 	for _, bannedName := range banList {
 		if strings.TrimSpace(bannedName) == name {
