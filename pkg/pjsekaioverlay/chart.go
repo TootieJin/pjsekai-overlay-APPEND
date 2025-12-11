@@ -85,7 +85,7 @@ func FetchChart(source Source, chartId string) (sonolus.LevelInfo, error) {
 	return chart.Item, nil
 }
 
-func DetectChartSource(chartId string, chartInstance []string) (Source, error) {
+func DetectChartSource(chartId string, chartInstance string) (Source, error) {
 	var source Source
 	if strings.HasPrefix(chartId, "ptlv-") {
 		source = Source{
@@ -96,7 +96,7 @@ func DetectChartSource(chartId string, chartInstance []string) (Source, error) {
 			Status: 0,
 		}
 	} else if strings.HasPrefix(chartId, "chcy-") {
-		switch chartInstance[0] {
+		switch chartInstance {
 		case "0":
 			source = Source{
 				Id:     "chart_cyanvas",
@@ -116,9 +116,9 @@ func DetectChartSource(chartId string, chartInstance []string) (Source, error) {
 		default:
 			source = Source{
 				Id:     "chart_cyanvas",
-				Name:   "Chart Cyanvas (" + chartInstance[0] + ")",
+				Name:   "Chart Cyanvas (" + chartInstance + ")",
 				Color:  0x83ccd2,
-				Host:   chartInstance[0],
+				Host:   chartInstance,
 				Status: 0,
 			}
 		}

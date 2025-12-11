@@ -94,27 +94,29 @@ func WriteExoFiles(assets string, destDir string, title string, description []st
 		"{offset}", mappingFile[0], // track0
 		"{cache}", mappingFile[1], // track1
 		"{font_type}", mappingFile[2], // track2
-		"{watermark}", mappingFile[3], // check0
+		"{text_lang}", mappingFile[3], // dialog: text_lang=
+		"{watermark}", mappingFile[4], // check0
+		"{detail_stat}", mappingFile[5], // dialog: detail_stat=
 		// Life
-		"{life}", mappingFile[4], // track1
-		"{life_skill}", mappingFile[5], // track2
-		"{overflow}", mappingFile[6], // dialog: overflow=
-		"{lead_zero}", mappingFile[7], // dialog: lead_zero=
+		"{life}", mappingFile[6], // track1
+		"{life_skill}", mappingFile[7], // track2
+		"{overflow}", mappingFile[8], // dialog: overflow=
+		"{lead_zero}", mappingFile[9], // dialog: lead_zero=
 		// Score
-		"{min_digit}", mappingFile[8], // track1
-		"{score_skill}", mappingFile[9], // track2
-		"{score_speed}", mappingFile[10], // dialog: speed=
-		"{anim_score}", mappingFile[11], // check0
-		"{wds_anim}", mappingFile[12], // dialog: wds_anim=
+		"{min_digit}", mappingFile[10], // track1
+		"{score_skill}", mappingFile[11], // track2
+		"{score_speed}", mappingFile[12], // dialog: speed=
+		"{anim_score}", mappingFile[13], // check0
+		"{wds_anim}", mappingFile[14], // dialog: wds_anim=
 		// Combo
-		"{ap}", mappingFile[13], // track1
-		"{tag}", mappingFile[14], // track2
-		"{last_digit}", mappingFile[15], // dialog: digits=
-		"{combo_speed}", mappingFile[16], // dialog: speed=
-		"{combo_burst}", mappingFile[17], // dialog: combo_burst=
+		"{ap}", mappingFile[15], // track1
+		"{tag}", mappingFile[16], // track2
+		"{last_digit}", mappingFile[17], // dialog: digits=
+		"{combo_speed}", mappingFile[18], // dialog: speed=
+		"{combo_burst}", mappingFile[19], // dialog: combo_burst=
 		// Judgement
-		"{judge}", mappingFile[18], // track0
-		"{judge_speed}", mappingFile[19], // dialog: speed=
+		"{judge}", mappingFile[20], // track0
+		"{judge_speed}", mappingFile[21], // dialog: speed=
 	}
 
 	mappingv1 := []string{
@@ -132,27 +134,29 @@ func WriteExoFiles(assets string, destDir string, title string, description []st
 		"{offset}", mappingFile[0], // track0
 		"{cache}", mappingFile[1], // track1
 		"{font_type}", mappingFile[2], // track2
-		"{watermark}", mappingFile[3], // check0
+		"{text_lang}", mappingFile[3], // dialog: text_lang=
+		"{watermark}", mappingFile[4], // check0
+		"{detail_stat}", mappingFile[5], // dialog: detail_stat=
 		// Life
-		"{life}", mappingFile[4], // track1
-		"{life_skill}", mappingFile[5], // track2
-		"{overflow}", mappingFile[6], // dialog: overflow=
-		"{lead_zero}", mappingFile[7], // dialog: lead_zero=
+		"{life}", mappingFile[6], // track1
+		"{life_skill}", mappingFile[7], // track2
+		"{overflow}", mappingFile[8], // dialog: overflow=
+		"{lead_zero}", mappingFile[9], // dialog: lead_zero=
 		// Score
-		"{min_digit}", mappingFile[8], // track1
-		"{score_skill}", mappingFile[9], // track2
-		"{score_speed}", mappingFile[10], // dialog: speed=
-		"{anim_score}", mappingFile[11], // check0
-		"{wds_anim}", mappingFile[12], // dialog: wds_anim=
+		"{min_digit}", mappingFile[10], // track1
+		"{score_skill}", mappingFile[11], // track2
+		"{score_speed}", mappingFile[12], // dialog: speed=
+		"{anim_score}", mappingFile[13], // check0
+		"{wds_anim}", mappingFile[14], // dialog: wds_anim=
 		// Combo
-		"{ap}", mappingFile[13], // track1
-		"{tag}", mappingFile[14], // track2
-		"{last_digit}", mappingFile[15], // dialog: digits=
-		"{combo_speed}", mappingFile[16], // dialog: speed=
-		"{combo_burst}", mappingFile[17], // dialog: combo_burst=
+		"{ap}", mappingFile[15], // track1
+		"{tag}", mappingFile[16], // track2
+		"{last_digit}", mappingFile[17], // dialog: digits=
+		"{combo_speed}", mappingFile[18], // dialog: speed=
+		"{combo_burst}", mappingFile[19], // dialog: combo_burst=
 		// Judgement
-		"{judge}", mappingFile[18], // track0
-		"{judge_speed}", mappingFile[19], // dialog: speed=
+		"{judge}", mappingFile[20], // track0
+		"{judge_speed}", mappingFile[21], // dialog: speed=
 	}
 	for i := range mapping {
 		if i%2 == 0 {
@@ -303,6 +307,13 @@ func WriteAliasFiles(assets string, destDir string, title string, description []
 		fontName = "メイリオ"
 	}
 
+	var textLang string
+	if mappingFile[3] == "1" {
+		textLang = "English"
+	} else {
+		textLang = "日本語"
+	}
+
 	mapping := []string{
 		"{assets}", strings.ReplaceAll(assets, "\\", "/"),
 		"{dist}", strings.ReplaceAll(destDir, "\\", "/"),
@@ -318,27 +329,29 @@ func WriteAliasFiles(assets string, destDir string, title string, description []
 		"{offset}", mappingFile[0],
 		"{cache}", mappingFile[1],
 		"{font_type}", fontName,
-		"{watermark}", mappingFile[3],
+		"{text_lang}", textLang,
+		"{watermark}", mappingFile[4],
+		"{detail_stat}", mappingFile[5],
 		// Life
-		"{life}", mappingFile[4],
-		"{life_skill}", mappingFile[5],
-		"{overflow}", mappingFile[6],
-		"{lead_zero}", mappingFile[7],
+		"{life}", mappingFile[6],
+		"{life_skill}", mappingFile[7],
+		"{overflow}", mappingFile[8],
+		"{lead_zero}", mappingFile[9],
 		// Score
-		"{min_digit}", mappingFile[8],
-		"{score_skill}", mappingFile[9],
-		"{score_speed}", mappingFile[10],
-		"{anim_score}", mappingFile[11],
-		"{wds_anim}", mappingFile[12],
+		"{min_digit}", mappingFile[10],
+		"{score_skill}", mappingFile[11],
+		"{score_speed}", mappingFile[12],
+		"{anim_score}", mappingFile[13],
+		"{wds_anim}", mappingFile[14],
 		// Combo
-		"{ap}", mappingFile[13],
-		"{tag}", mappingFile[14],
-		"{last_digit}", mappingFile[15],
-		"{combo_speed}", mappingFile[16],
-		"{combo_burst}", mappingFile[17],
+		"{ap}", mappingFile[15],
+		"{tag}", mappingFile[16],
+		"{last_digit}", mappingFile[17],
+		"{combo_speed}", mappingFile[18],
+		"{combo_burst}", mappingFile[19],
 		// Judgement
-		"{judge}", mappingFile[18],
-		"{judge_speed}", mappingFile[19],
+		"{judge}", mappingFile[20],
+		"{judge_speed}", mappingFile[21],
 	}
 
 	mappingv1 := []string{
@@ -356,27 +369,29 @@ func WriteAliasFiles(assets string, destDir string, title string, description []
 		"{offset}", mappingFile[0],
 		"{cache}", mappingFile[1],
 		"{font_type}", fontName,
-		"{watermark}", mappingFile[3],
+		"{text_lang}", textLang,
+		"{watermark}", mappingFile[4],
+		"{detail_stat}", mappingFile[5],
 		// Life
-		"{life}", mappingFile[4],
-		"{life_skill}", mappingFile[5],
-		"{overflow}", mappingFile[6],
-		"{lead_zero}", mappingFile[7],
+		"{life}", mappingFile[6],
+		"{life_skill}", mappingFile[7],
+		"{overflow}", mappingFile[8],
+		"{lead_zero}", mappingFile[9],
 		// Score
-		"{min_digit}", mappingFile[8],
-		"{score_skill}", mappingFile[9],
-		"{score_speed}", mappingFile[10],
-		"{anim_score}", mappingFile[11],
-		"{wds_anim}", mappingFile[12],
+		"{min_digit}", mappingFile[10],
+		"{score_skill}", mappingFile[11],
+		"{score_speed}", mappingFile[12],
+		"{anim_score}", mappingFile[13],
+		"{wds_anim}", mappingFile[14],
 		// Combo
-		"{ap}", mappingFile[13],
-		"{tag}", mappingFile[14],
-		"{last_digit}", mappingFile[15],
-		"{combo_speed}", mappingFile[16],
-		"{combo_burst}", mappingFile[17],
+		"{ap}", mappingFile[15],
+		"{tag}", mappingFile[16],
+		"{last_digit}", mappingFile[17],
+		"{combo_speed}", mappingFile[18],
+		"{combo_burst}", mappingFile[19],
 		// Judgement
-		"{judge}", mappingFile[18],
-		"{judge_speed}", mappingFile[19],
+		"{judge}", mappingFile[20],
+		"{judge_speed}", mappingFile[21],
 	}
 	for i := range mapping {
 		if i%2 == 0 {

@@ -54,7 +54,7 @@ func Tips() {
 		"The tip above uses DeepL to translate this tip.",
 
 		"画像が切り取られていますか？「ファイル > 設定 > システム」で「最大画像サイズ」を設定する必要があります。",
-		"Image cropped? You need to adjust \"Max resolution\" in \"File > SETTINGS > SYSTEM\".",
+		"Image cropped? You need to adjust \"Max resolution\" in \"File > SETTINGS > System\".",
 
 		"どれくらいのTipsが実際に役立つと思いますか？",
 		"Guess how many Tips are literally useful?",
@@ -319,6 +319,12 @@ func Tips() {
 
 		"じゃあ、僕たちがもらったTipsの数を数えた？",
 		"So have you counted how many Tips we've got?",
+
+		"いないいないいないいないいないいない",
+		"いないいないいないいないいないいない",
+
+		"コンソールでこれを使って素早く生成: pjsekai-overlay-APPEND [譜面ID] [オプション]",
+		"Generate quickly using this in the console: pjsekai-overlay-APPEND [Chart ID] [Options]",
 	}
 
 	// これを見て何か追加したいTipsがあれば、PRを送ってください

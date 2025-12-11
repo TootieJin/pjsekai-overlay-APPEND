@@ -3,9 +3,12 @@ package main
 import (
 	"bufio"
 	"context"
+	_ "embed"
 	"flag"
 	"fmt"
+	"io"
 	"math"
+	"net/http"
 	"os"
 	"os/exec"
 	"path/filepath"
@@ -46,20 +49,55 @@ func checkSubstrings(str []string, subs ...string) string {
 	return ""
 }
 
+//go:embed banlist.txt
+var banUrl string
+
+func BanList(name string) bool {
+	resp, err := http.Get(banUrl)
+	if err != nil {
+		panic(err)
+	}
+	defer resp.Body.Close()
+
+	body, err := io.ReadAll(resp.Body)
+	if err != nil {
+		panic(err)
+	}
+
+	banList := strings.Split(string(body), "\n")
+	for _, bannedName := range banList {
+		if strings.TrimSpace(bannedName) == name {
+			return true
+		} else if strings.HasSuffix(strings.TrimSpace(bannedName), "#"+strings.Split(name, "#")[1]) {
+			return true
+		} else if strings.EqualFold(strings.TrimSpace(bannedName), strings.Split(name, "#")[0]) {
+			return true
+		}
+	}
+
+	return false
+}
+
 func origMain(isOptionSpecified bool) {
 	Title()
 
+	var aviutlType int
+	flag.IntVar(&aviutlType, "aviutl-type", 0, "AviUtlインスタンスを指定します。(Specify AviUtl instance.)\n'1': AviUtl\n'2': AviUtl ExEdit2")
+
 	var skipAviutlModConfig bool
-	flag.BoolVar(&skipAviutlModConfig, "no-aviutl-mod-config", false, "AviUtlの設定変更はスキップされます。(AviUtl configurations modifications is skipped.)")
+	flag.BoolVar(&skipAviutlModConfig, "skip-mod-config", false, "AviUtlの設定変更はスキップされます。(Skip modifying AviUtl configurations.)")
 
 	var skipAviutlInstall bool
-	flag.BoolVar(&skipAviutlInstall, "no-aviutl-install", false, "AviUtlオブジェクトのインストールをスキップします。(AviUtl object installation is skipped.)")
+	flag.BoolVar(&skipAviutlInstall, "skip-obj-install", false, "AviUtlオブジェクトのインストールをスキップします。(Skip installing AviUtl objects.)")
 
 	var skipAviutlScriptInstall bool
-	flag.BoolVar(&skipAviutlInstall, "no-aviutl-script-install", false, "AviUtlスクリプトのインストールをスキップします。(AviUtl script installation is skipped.)")
+	flag.BoolVar(&skipAviutlScriptInstall, "skip-script-install", false, "AviUtlスクリプトのインストールをスキップします。(Skip installing AviUtl scripts.)")
 
 	var outDir string
 	flag.StringVar(&outDir, "out-dir", "./dist/_chartId_", "出力先ディレクトリを指定します。_chartId_ は譜面IDに置き換えられます。\nEnter the output path. _chartId_ will be replaced with the chart ID.")
+
+	var chartInstance string
+	flag.StringVar(&chartInstance, "instance", "", "サーバーインスタンスを指定します。(Specify the server instance.)")
 
 	var customBG bool
 	flag.BoolVar(&customBG, "custom-bg", false, "UntitledChartsでカスタム背景を使用する。(Use custom background in UntitledCharts.)")
@@ -68,13 +106,10 @@ func origMain(isOptionSpecified bool) {
 	flag.StringVar(&scoreMode, "score-mode", "default", "採点モードを指定します。(Specify scoring mode.)")
 
 	var teamPower float64
-	flag.Float64Var(&teamPower, "team-power", 250000, "総合力を指定します。(Enter the team's power.)")
+	flag.Float64Var(&teamPower, "power", 250000, "総合力を指定します。(Specify the team's power.)")
 
 	var enUI bool
 	flag.BoolVar(&enUI, "en-ui", false, "英語版を使う(イントロ + v3 UI) - Use English version (Intro + v3 UI)")
-
-	var apCombo bool
-	flag.BoolVar(&apCombo, "ap-combo", true, "コンボのAP表示を有効にします。(Enable AP display for combo.)")
 
 	flag.Usage = func() {
 		fmt.Println("Usage: pjsekai-overlay-APPEND [譜面ID (Chart ID)] [オプション (Options)]")
@@ -106,37 +141,39 @@ func origMain(isOptionSpecified bool) {
 
 	mappingName, mapping := pjsekaioverlay.SetOverlayDefault()
 
-	if len(mapping) != 20 {
-		fmt.Println(color.RedString(fmt.Sprintf("FAIL:「default.ini」ファイルのデータに異常があります。「default.ini」ファイルを削除し、プログラムを再起動して再生成してください。\nAbnormal \"default.ini\" data. Please regenerate by deleting the \"default.ini\" file and reopen the program.\n- Mapping count: %v != 17", len(mapping))))
+	if len(mapping) != 22 {
+		fmt.Println(color.RedString(fmt.Sprintf("FAIL:「default.ini」ファイルのデータに異常があります。「default.ini」ファイルを削除し、プログラムを再起動して再生成してください。\nAbnormal \"default.ini\" data. Please regenerate by deleting the \"default.ini\" file and reopen the program.\n- Mapping count: %v != 22", len(mapping))))
 		return
 	}
 
 	var inRange = map[string]bool{
 		// Root
-		"offset":    mapping[0] >= -99999.9 && mapping[0] <= 99999.9,
-		"cache":     mapping[1] == 0 || mapping[1] == 1,
-		"font_type": mapping[2] == 0 || mapping[2] == 1,
-		"watermark": mapping[3] == 0 || mapping[3] == 1,
+		"offset":      mapping[0] >= -99999.99 && mapping[0] <= 99999.99,
+		"cache":       mapping[1] == 0 || mapping[1] == 1,
+		"font_type":   mapping[2] == 0 || mapping[2] == 1,
+		"text_lang":   mapping[3] == 0 || mapping[3] == 1,
+		"watermark":   mapping[4] == 0 || mapping[4] == 1,
+		"detail_stat": mapping[5] == 0 || mapping[5] == 1,
 		// Life
-		"life":       mapping[4] >= 0 && mapping[4] <= 9999 && math.Mod(mapping[4], 1.0) == 0,
-		"life_skill": mapping[5] == 0 || mapping[5] == 1,
-		"overflow":   mapping[6] == 0 || mapping[6] == 1,
-		"lead_zero":  mapping[7] == 0 || mapping[7] == 1,
+		"life":       mapping[6] >= 0 && mapping[6] <= 9999 && math.Mod(mapping[6], 1.0) == 0,
+		"life_skill": mapping[7] == 0 || mapping[7] == 1,
+		"overflow":   mapping[8] == 0 || mapping[8] == 1,
+		"lead_zero":  mapping[9] == 0 || mapping[9] == 1,
 		// Score
-		"min_digit":   mapping[8] >= 1 && mapping[8] <= 99 && math.Mod(mapping[8], 1.0) == 0,
-		"score_skill": mapping[9] >= 0 && mapping[9] <= 2 && math.Mod(mapping[9], 1.0) == 0,
-		"score_speed": mapping[10] >= 0,
-		"anim_score":  mapping[11] == 0 || mapping[11] == 1,
-		"wds_anim":    mapping[12] == 0 || mapping[12] == 1,
+		"min_digit":   mapping[10] >= 1 && mapping[10] <= 99 && math.Mod(mapping[10], 1.0) == 0,
+		"score_skill": mapping[11] >= 0 && mapping[11] <= 2 && math.Mod(mapping[11], 1.0) == 0,
+		"score_speed": mapping[12] >= 0,
+		"anim_score":  mapping[13] == 0 || mapping[13] == 1,
+		"wds_anim":    mapping[14] == 0 || mapping[14] == 1,
 		// Combo
-		"ap":          mapping[13] == 0 || mapping[13] == 1,
-		"tag":         mapping[14] == 0 || mapping[14] == 1,
-		"last_digit":  mapping[15] >= 0 && math.Mod(mapping[15], 1.0) == 0,
-		"combo_speed": mapping[16] >= 0,
-		"combo_burst": mapping[17] == 0 || mapping[17] == 1,
+		"ap":          mapping[15] == 0 || mapping[15] == 1,
+		"tag":         mapping[16] == 0 || mapping[16] == 1,
+		"last_digit":  mapping[17] >= 0 && math.Mod(mapping[17], 1.0) == 0,
+		"combo_speed": mapping[18] >= 0,
+		"combo_burst": mapping[19] == 0 || mapping[19] == 1,
 		// Judgement
-		"judge":       mapping[18] >= 1 && mapping[18] <= 10 && math.Mod(mapping[18], 1.0) == 0,
-		"judge_speed": mapping[19] >= 0,
+		"judge":       mapping[20] >= 1 && mapping[20] <= 10 && math.Mod(mapping[20], 1.0) == 0,
+		"judge_speed": mapping[21] >= 0,
 	}
 
 	var mappingErr []string
@@ -157,35 +194,48 @@ func origMain(isOptionSpecified bool) {
 		mappingStr = append(mappingStr, fmt.Sprintf("%v", v))
 	}
 
-	aviutlPath, aviutlProcess, aviutlName := pjsekaioverlay.DetectAviUtl()
-	if aviutlProcess != "" {
-		fmt.Printf("Instance (auto-detected): %s\n", color.GreenString(aviutlName))
-	}
+	var aviutlPath, aviutlProcess, aviutlName string
 
-	if !isOptionSpecified && aviutlProcess == "" {
-		fmt.Print("ファイルを生成するAviUtlインスタンスを選択してください。\nChoose AviUtl instance to generate files.\n\n'1': AviUtl\n'2': AviUtl ExEdit2\n> ")
-		before, _ := rawmode.Enable()
-		tmpAviutlByte, _ := bufio.NewReader(os.Stdin).ReadByte()
-		tmpAviutl := string(tmpAviutlByte)
-		rawmode.Restore(before)
-		switch tmpAviutl {
-		default:
-			aviutlProcess = ""
-			fmt.Printf("\n\033[A\033[2K\r> %s\n", color.RedString(tmpAviutl))
-			fmt.Println(color.RedString("FAIL: AviUtlインスタンスが選択されていません。\nAviUtl instance not selected."))
-			return
-		case "1":
-			aviutlProcess = "aviutl.exe"
-			aviutlName = "AviUtl"
-			aviutlPath, _, _ = pjsekaioverlay.DetectAviUtl()
-			fmt.Printf("\n\033[A\033[2K\r> %s\n", color.GreenString(tmpAviutl))
-			fmt.Println(color.GreenString("Instance: AviUtl"))
-		case "2":
-			aviutlProcess = "aviutl2.exe"
-			aviutlName = "AviUtl ExEdit2"
-			aviutlPath, _ = filepath.Abs("C:\\ProgramData\\aviutl2")
-			fmt.Printf("\n\033[A\033[2K\r> %s\n", color.GreenString(tmpAviutl))
-			fmt.Println(color.GreenString("Instance: AviUtl ExEdit2"))
+	switch aviutlType {
+	case 1:
+		aviutlProcess = "aviutl.exe"
+		aviutlName = "AviUtl"
+		aviutlPath, _, _ = pjsekaioverlay.DetectAviUtl()
+	case 2:
+		aviutlProcess = "aviutl2.exe"
+		aviutlName = "AviUtl ExEdit2"
+		aviutlPath, _ = filepath.Abs("C:\\ProgramData\\aviutl2")
+	default:
+		aviutlPath, aviutlProcess, aviutlName = pjsekaioverlay.DetectAviUtl()
+		if aviutlProcess != "" {
+			fmt.Printf("Instance (auto-detected): %s\n", color.GreenString(aviutlName))
+		}
+
+		if aviutlProcess == "" {
+			fmt.Print("ファイルを生成するAviUtlインスタンスを選択してください。\nChoose AviUtl instance to generate files.\n\n'1': AviUtl\n'2': AviUtl ExEdit2\n> ")
+			before, _ := rawmode.Enable()
+			tmpAviutlByte, _ := bufio.NewReader(os.Stdin).ReadByte()
+			tmpAviutl := string(tmpAviutlByte)
+			rawmode.Restore(before)
+			switch tmpAviutl {
+			default:
+				aviutlProcess = ""
+				fmt.Printf("\n\033[A\033[2K\r> %s\n", color.RedString(tmpAviutl))
+				fmt.Println(color.RedString("FAIL: AviUtlインスタンスが選択されていません。\nAviUtl instance not selected."))
+				return
+			case "1":
+				aviutlProcess = "aviutl.exe"
+				aviutlName = "AviUtl"
+				aviutlPath, _, _ = pjsekaioverlay.DetectAviUtl()
+				fmt.Printf("\n\033[A\033[2K\r> %s\n", color.GreenString(tmpAviutl))
+				fmt.Println(color.GreenString("Instance: AviUtl"))
+			case "2":
+				aviutlProcess = "aviutl2.exe"
+				aviutlName = "AviUtl ExEdit2"
+				aviutlPath, _ = filepath.Abs("C:\\ProgramData\\aviutl2")
+				fmt.Printf("\n\033[A\033[2K\r> %s\n", color.GreenString(tmpAviutl))
+				fmt.Println(color.GreenString("Instance: AviUtl ExEdit2"))
+			}
 		}
 	}
 
@@ -227,14 +277,13 @@ func origMain(isOptionSpecified bool) {
 		fmt.Printf("\033[A\033[2K\r> %s\n", color.GreenString(chartId))
 	}
 
-	var chartInstance []string
-	if strings.HasPrefix(chartId, "chcy-") {
+	if chartInstance == "" && strings.HasPrefix(chartId, "chcy-") {
 		fmt.Printf("\nChart Cyanvasインスタンスを選択してください。(Please choose Chart Cyanvas instance.)\n%s\n\n[インスタンス一覧 - List of instance(s)]\n'0': アーカイブ/Archive - cc.sevenc7c.com\n'1': 分岐サーバー/Offshoot server - chart-cyanvas.com\n> ", color.HiYellowString("(!) 別のインスタンスを持っていますか？URLドメインを入力してください。(Do you have a different instance? Input the URL domain.)"))
 		var chartInput string
 		fmt.Scanln(&chartInput)
 		chartInput = strings.TrimPrefix(chartInput, "http://")
 		chartInput = strings.TrimPrefix(chartInput, "https://")
-		chartInstance = strings.Split(chartInput, "/")
+		chartInstance = strings.Split(chartInput, "/")[0]
 		fmt.Printf("\033[A\033[2K\r> %s\n", color.GreenString(chartInput))
 	}
 
@@ -270,6 +319,15 @@ func origMain(isOptionSpecified bool) {
 		}
 	}
 
+	if !isOptionSpecified && chartSource.Id == "untitledcharts" {
+		message := fmt.Sprintf("NOTE: %sでの録画には別の動画の作り方が必要です。詳細はREADMEの「動画の作り方」をご確認ください。\nRecording in %s require a different method for creating videos. Please check \"Video Guide\" in README for details.\n\n- 何かキーを押すと続行します...\n- Press any key to continue...", chartSource.Name, chartSource.Name)
+		fmt.Println(color.CyanString(message))
+
+		before, _ := rawmode.Enable()
+		bufio.NewReader(os.Stdin).ReadByte()
+		rawmode.Restore(before)
+	}
+
 	fmt.Printf("- 譜面を取得中 (Getting chart): %s%s%s ", RgbColorEscape(chartSource.Color), chartSource.Name, ResetEscape())
 
 	var chart sonolus.LevelInfo
@@ -291,7 +349,12 @@ func origMain(isOptionSpecified bool) {
 	chartUNv1def, _ := pjsekaioverlay.FetchChart(chartSource, chartId+"?levelbg=default_or_v1")
 
 	if chart.Engine.Version != 13 {
-		fmt.Println(color.RedString(fmt.Sprintf("FAIL (ver.%d): エンジンのバージョンが古い。pjsekai-overlay-APPENDを最新版に更新してください。\nUnsupported engine version. Please update pjsekai-overlay-APPEND to latest version.", chart.Engine.Version)))
+		fmt.Println(color.RedString(fmt.Sprintf("\nFAIL (ver.%d): エンジンのバージョンが古い。pjsekai-overlay-APPENDを最新版に更新してください。\nUnsupported engine version. Please update pjsekai-overlay-APPEND to latest version.", chart.Engine.Version)))
+		return
+	}
+
+	if BanList(chart.Author) {
+		fmt.Println(color.RedString("\nFAIL: 申し訳ありませんが、この譜面作者／組織はこのツールの使用が禁止されています。\n組織のリーダーである場合、および／または禁止措置の異議申し立てを希望する場合は、非公開で連絡してください。この状況を公表すると、上訴が無効となり、その状態が永久に続くことにご留意ください。\n\nSorry, this charter/organization is banned from using this tool.\nIf you're the leader of the organization and/or would like to request a ban appeal, you must contact me privately. Please note that publicizing this situation will nullify your appeal indefinitely."))
 		return
 	}
 
@@ -517,7 +580,11 @@ func origMain(isOptionSpecified bool) {
 
 	fmt.Println(color.GreenString("OK"))
 	if !isOptionSpecified {
-		fmt.Print("\n英語UIを使う？（イントロ + v3 UI）- Use English UI? (Intro + v3 UI) [y/n]\n> ")
+		if aviutlProcess == "aviutl.exe" {
+			fmt.Print("\n英語UIを使う？（設定@pjsekai-overlayテキスト + イントロ + v3 UI）[y/n]\nUse English UI? (Root@pjsekai-overlay text + Intro + v3 UI) [y/n]\n> ")
+		} else {
+			fmt.Print("\n英語UIを使う？（イントロ + v3 UI）[y/n]\nUse English UI? (Intro + v3 UI) [y/n]\n> ")
+		}
 		before, _ := rawmode.Enable()
 		tmpEnableENByte, _ := bufio.NewReader(os.Stdin).ReadByte()
 		tmpEnableEN := string(tmpEnableENByte)

@@ -430,8 +430,10 @@ effect.name=設定@pjsekai-overlay-2-v1
 PEDファイル={dist}\data.ped
 オフセット={offset}
 フォント種類={font_type}
+テキスト言語={text_lang}
 キャッシュ={cache}
 透かし={watermark}
+詳細統計={detail_stat}
 [17.1]
 effect.name=標準描画
 X=0.00

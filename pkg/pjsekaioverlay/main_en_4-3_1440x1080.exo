@@ -422,7 +422,7 @@ check0={watermark}
 type=0
 filter=0
 name=Root@pjsekai-overlay-en
-param=file="{dist}\\data.ped"
+param=file="{dist}/data.ped";text_lang={text_lang};detail_stat={detail_stat}
 [17.1]
 _name=Standard drawing
 X=0.0

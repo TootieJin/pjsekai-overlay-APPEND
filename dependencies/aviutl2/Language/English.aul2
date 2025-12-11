@@ -3,7 +3,7 @@
 ; Place in ProgramData\aviutl2\Language to add to Language Settings
 
 ; Original file: https://github.com/nagotown/aviutl2-EN
-; Version: b22
+; Version: b23a
 ; pjsekai-overlay language support by TootieJin
 
 [Effect]
@@ -356,6 +356,18 @@ GroundShadow2_S=Ground Shadow 2 (Script)
 ; PageRoll_S - https://github.com/sigma-axis/aviutl2_script_PageRoll_S
 PageRoll_S=Page Roll (Script)
 PageRoll_S(シーンチェンジ)=Page Roll (Script, Scene Change)
+太さ=Thickness
+カメラ設定=Camera Settings
+視点X=X-Viewpoint
+視点Y=Y-Viewpoint
+領域外も描画=Extend Drawing Area
+裏地設定=Lining Settings
+裏地=Lining
+指定画像=Specified Image
+裏地画像=Lining Image
+裏地向き=Lining Orientation
+180°反転=180° Flip
+その他=Others
 
 ; PixelSnap_S - https://github.com/sigma-axis/aviutl2_script_PixelSnap_S
 PixelSnap_S=Pixel Snap (Script)
@@ -363,6 +375,65 @@ PixelSnap_S=Pixel Snap (Script)
 ; Resize_S - https://github.com/sigma-axis/aviutl2_script_Resize_S
 リサイズσ@Resize_S=Resizeσ @ Resize (Script)
 ボックスリサイズσ@Resize_S=Box Resizeσ @ Resize (Script)
+拡大方法=Magnify Method
+縮小方法=Reduction Method
+最近傍法=Nearest Neighbour
+単純平均=Simple Average
+双線形=Bilinear
+内接最大=Max Inscription
+外接最小=Min Circumscription
+拡大縮小=Zoom Type
+拡縮両方=Zoom In/Out
+拡大のみ=Zoom In
+縮小のみ=Zoom Out
+余白/クリッピング=Margin/Clipping
+水平揃え=Horizontal Alignment
+垂直揃え=Vertical Alignment
+
+; AutoClipping_S - https://github.com/sigma-axis/aviutl2_script_AutoClipping_S
+AutoClipping_S=Auto Clipping
+αしきい値=Threshold (α)
+余白=Margin
+上余白=Top Margin
+下余白=Bottom Margin
+左余白=Left Margin
+右余白=Right Margin
+有効無効=Enable/Disable
+上除去=Remove Top
+下除去=Remove Bottom
+左除去=Remove Left
+右除去=Remove Right
+
+; Author: azurite (https://x.com/azurite49824)
+
+; ColorHalftone - https://github.com/azurite581/AviUtl2-ColorHalftone
+カラーハーフトーン=Halftone
+ドットサイズ=Dot Size
+ドット回転=Dot Rotate
+滑らかさ=Smoothness
+星形=5-Point Star
+線=Stripe
+段違い=Uneven
+背景色透過=Transparent Background Color
+色1表示=Display Color 1
+色1スクリーン角度=Color 1 Screen [°]
+色2表示=Display Color 2
+色2スクリーン角度=Color 2 Screen [°]
+色3表示=Display Color 3
+色3スクリーン角度=Color 3 Screen [°]
+
+; GradientPlus - https://github.com/azurite581/AviUtl2-GradientPlus
+グラデーション+=Gradient+
+短形=Rectangular
+角丸短形=Round Rectangular
+円形ループ=Circular Loop
+短形ループ=Rectangular Loop
+凸形ループ=Convex Loop
+角丸短形ループ=Round Rectangular Loop
+色空間=Color Space
+補間経路=Interpolation Path
+短経路=Short Path
+長経路=Long Path
 
 ; Author: korarei (https://github.com/korarei)
 ; _K is likely the author's watermark. Not sure how to translate this without going overboard on the naming scheme.
@@ -387,8 +458,10 @@ ObjectMotionBlur_LK=Object Motion Blur_LK
 PEDファイル=PED File
 オフセット=Offset
 フォント種類=Font Type
+テキスト言語=Text Language
 キャッシュ=Cache
 透かし=Watermark
+詳細統計=Detailed Stats
 ; Life
 ライフ=LIFE
 過剰なライフバー=Overflow LIFE Bar
@@ -851,6 +924,7 @@ Z軸回転=Rotate Z
 輝度をアルファ値として上書き=Overwrite Luminance as Alpha
 輝度をアルファ値として乗算=Multiply Luminance as Alpha
 画像=Image
+領域外を透過=Transparent Outside 
 
 ; Extras (Originally untranslated)
 超点X=Diffuse X
@@ -1135,7 +1209,7 @@ YUVレンジ=YUV Color Range
 ウィンドウを統合=Docking Window
 ウィンドウのグループ化=Grouping Window
 音声波形を絶対値で表示=Display Audio Waveform as Absolute Value
-動画ファイルのドラッグ＆ドロップ時に音声を分離=Separate Audio when Drag And Dropping Video File
+動画ファイルのドラッグ＆ドロップ時に音声を分離=Separate Audio when Drag and Dropping Video File
 空のシーンへのドラッグ＆ドロップ時にシーン設定を合わせる=Adjust Scene when Drag and Dropping To Empty Scene
 プラグイン=Plugin
 レイヤーのロック=Lock Layer
@@ -1156,6 +1230,13 @@ YUVレンジ=YUV Color Range
 画像ファイルから選択=Select Image File
 動画ファイルから選択=Select Video File
 シーン=Scene
+プロジェクトを閉じる=Close Project
+シーンをファイルから作成=Create Scene From File
+シーンをファイルに保存=Save Scene File
+インポート=Import
+エクスポート=Export
+プラグイン設定=Plugin
+オブジェクト名を変更=Change Object Name
 
 ; Third-Party Export Plugins
 
@@ -1170,7 +1251,6 @@ AviUtlのお部屋=AviUtl Room (Japanese Homepage)
 メディアエクスプローラー:5=Media Explorer:5
 メディアエクスプローラー:6=Media Explorer:6
 音声波形を絶対値で表示=Display Audio Waveform at Absolute Values
-プロジェクトを閉じる=Close Project
 
 [Message]
 ; Tooltips, message boxes, and other dialogs
@@ -1262,6 +1342,8 @@ YUVの設定=YUV Settings
 プリセットを適用=Apply Preset
 プリセットの読み込みに失敗しました=Failed to load preset
 現在の編集データは更新されています\nプロジェクトを保存しますか？=Current editing data has been updated.\nSave project?
+シーンの読み込みに失敗しました=Failed to load scene
+シーンの保存に失敗しました=Failed to save scene
 
 [Dialog]
 ; Dialog box names
@@ -1418,6 +1500,8 @@ Alt+左クリックドラックで右クリックドラック操作=Alt+Left Cli
 対象項目から外すとプリセット適用時に元の値が維持されます=When unchecked, original value remains
 背景色=Background Color
 パレット名を変更=Rename Palette
+レイヤー名を変更=Change Layer Name
+オブジェクト名を変更=Change Object Name
 ;OK=OK
 ;Cancel=Cancel
 

@@ -1,15 +1,23 @@
 -- pjsekai-overlay-APPEND {version} by TootieJin + ぴぃまん + 名無し｡ ----------------------------------
 
 @設定
---file:
---track0:オフセット,-99999.9,99999.9,{offset},0.1
+--dialog:PEDファイルパス,file="";テキスト言語,text_lang={text_lang};詳細統計/chk,detail_stat={detail_stat}
+--track0:オフセット,-99999.99,99999.99,{offset},0.01
 --track1:キャッシュ,0,1,{cache},1
 --track2:ﾌｫﾝﾄ種類,0,1,{font_type},1
 --check0:透かし,{watermark}
 
+local font = ""
+if obj.track2 == 0 then
+  font = "メイリオ"
+else
+  font = "FOT-RodinNTLG Pro EB"
+end
+
 if obj.track1 ~= 1 or not PED_DATA or PED_DATA.file ~= file then
   debug_print("[pjsekai-overlay] Loading ped data in " .. file)
   local time = os.clock()
+  MAX_w, MAX_h = obj.getinfo("image_max")
   PED_DATA = {}
   PED_DATA.frames = {}
   PED_DATA.combo = {}
@@ -22,6 +30,7 @@ if obj.track1 ~= 1 or not PED_DATA or PED_DATA.file ~= file then
   PED_DATA.cache_number = obj.track1
   PED_DATA.current = nil
   PED_DATA.previous = nil
+  PED_DATA.next = nil
   PED_DATA.burst = nil
   PED_DATA.skill = nil
   local fp, err = io.open(file, "r")
@@ -68,6 +77,7 @@ if obj.track1 ~= 1 or not PED_DATA or PED_DATA.file ~= file then
     debug_print("[pjsekai-overlay] # of frames: " .. #PED_DATA.frames)
     debug_print("[pjsekai-overlay] # of combo bursts: " .. #PED_DATA.combo)
     fp:close()
+    ERROR = nil
   else
     PED_DATA.loaded = "cannot_open"
     debug_print("[pjsekai-overlay] " .. err)
@@ -75,7 +85,7 @@ if obj.track1 ~= 1 or not PED_DATA or PED_DATA.file ~= file then
     ERROR = err
   end
 end
-if PED_DATA.version == "{version}" or "{version}" == "0.0.0" then
+if (PED_DATA.version == "{version}" or "{version}" == "0.0.0") and (MAX_w >= 2560 and MAX_h >= 2048) and ERROR == nil then
   OFFSET = obj.track0
   PED_DATA.current = {
     time = 0,
@@ -126,6 +136,17 @@ if PED_DATA.version == "{version}" or "{version}" == "0.0.0" then
       end
     end
   end
+  if PED_DATA.current and PED_DATA.current.time then
+    for i = 1, #PED_DATA.frames do
+      local next = PED_DATA.frames[i]
+      if next.time > PED_DATA.current.time then
+        PED_DATA.next = next
+        break
+      end
+    end
+  else
+    PED_DATA.next = PED_DATA.frames[1]
+  end
   for i = #PED_DATA.combo, 1, -1 do
     local combo = PED_DATA.combo[i]
     if (combo.time * obj.framerate) < (obj.frame - OFFSET) then
@@ -144,59 +165,142 @@ if PED_DATA.version == "{version}" or "{version}" == "0.0.0" then
 else
   obj.setfont("メイリオ", 32)
   if PED_DATA.loaded == "cannot_open" then
-    obj.load(
-      "text",
-      "<s32,メイリオ,B>(! ERROR !)\n<s>"..
-      "pedファイルを開くことができません！\n"..
-      "Error log: ".. ERROR
-    )
+    if text_lang == 1 then
+      obj.load(
+        "text",
+        "<s32,メイリオ,B>(! ERROR !)\n<s>"..
+        "PED file unable to be opened!\n"..
+        "Error log: ".. ERROR
+      )
+    else
+      obj.load(
+        "text",
+        "<s32,メイリオ,B>(! ERROR !)\n<s>"..
+        "pedファイルを開くことができません！\n"..
+        "Error log: ".. ERROR
+      )
+    end
   elseif PED_DATA.loaded == "invalid" then
-    obj.load(
+    if text_lang == 1 then
+      obj.load(
       "text",
       "<s32,メイリオ,B>(! ERROR !)\n<s>"..
-      "pedファイルを読み取れません！\n"..
-      "- pjsekai-overlayを再生成してください。"
+      "Unable to read ped file!\n"..
+      "- Regenerate pjsekai-overlay."
     )
+    else
+      obj.load(
+        "text",
+        "<s32,メイリオ,B>(! ERROR !)\n<s>"..
+        "pedファイルを読み取れません！\n"..
+        "- pjsekai-overlayを再生成してください。"
+      )
+    end
   elseif PED_DATA.version == nil then
-    obj.load(
-      "text",
-      "<s32,メイリオ,B>(! ERROR !)\n<s>"..
-      "pedファイルのバージョンが設定されていません！\n"..
-      "- pjsekai-overlayを再生成してください。"
-    )
+    if PED_DATA>enUI then
+      obj.load(
+        "text",
+        "<s32,メイリオ,B>(! ERROR !)\n<s>"..
+        "Version of the ped file is not set!\n"..
+        "- Regenerate pjsekai-overlay."
+      )
+    else
+      obj.load(
+        "text",
+        "<s32,メイリオ,B>(! ERROR !)\n<s>"..
+        "pedファイルのバージョンが設定されていません！\n"..
+        "- pjsekai-overlayを再生成してください。"
+      )
+    end
+  elseif MAX_w < 2560 or MAX_h < 2048 then
+    if text_lang == 1 then
+      obj.load(
+        "text",
+        "<s32,メイリオ,B>(! ERROR !)\n<s>"..
+        "Max image size is too low!\n"..
+        "[Required size: 2560x2048]\n\n"..
+        "- Change the max image size in AviUtl. (File > SETTINGS > System > Max resolution)"
+      )
+    else
+      obj.load(
+        "text",
+        "<s32,メイリオ,B>(! ERROR !)\n<s>"..
+        "最大画像サイズが小さすぎます！\n"..
+        "[必要なサイズ: 2560x2048]\n\n"..
+        "- AviUtlの最大画像サイズを変更してください。(ファイル > 設定 > システム > 最大画像サイズ)"
+      )
+    end
   else
-    obj.load(
-      "text",
-      "<s32,メイリオ,B>(! ERROR !)\n<s>"..
-      "ファイルとのバージョンが違います！\n"..
-      "[.obj: {version}, .ped: "..PED_DATA.version.."]\n\n"..
-      "- <s32,メイリオ,B>.objが最新の場合:<s> pjsekai-overlayを再生成してください。\n"..
-      "- <s32,メイリオ,B>.pedが最新の場合:<s> オブジェクトファイルを再生成してください。(AviUtlを開き、pjsekai-overlay-APPENDを実行)\n"..
-      "<s32,メイリオ,B>pedバージョンの名前を変更しないでください！<s>"
-    )
+    if text_lang == 1 then
+      obj.load(
+        "text",
+        "<s32,メイリオ,B>(! ERROR !)\n<s>"..
+        "The version of the file is different!\n"..
+        "[.obj: {version}, .ped: "..PED_DATA.version.."]\n\n"..
+        "- <s32,メイリオ,B>If .obj is up to date:<s> Regenerate pjsekai-overlay.\n"..
+        "- <s32,メイリオ,B>If .ped is up to date:<s> Regenerate object file. (Open AviUtl, then pjsekai-overlay-APPEND)\n"..
+        "<s32,メイリオ,B>DO NOT RENAME ped VERSION!<s>"
+      )
+    else
+      obj.load(
+        "text",
+        "<s32,メイリオ,B>(! ERROR !)\n<s>"..
+        "ファイルとのバージョンが違います！\n"..
+        "[.obj: {version}, .ped: "..PED_DATA.version.."]\n\n"..
+        "- <s32,メイリオ,B>.objが最新の場合:<s> pjsekai-overlayを再生成してください。\n"..
+        "- <s32,メイリオ,B>.pedが最新の場合:<s> オブジェクトファイルを再生成してください。(AviUtlを開き、pjsekai-overlay-APPENDを実行)\n"..
+        "<s32,メイリオ,B>pedバージョンの名前を変更しないでください！<s>"
+      )
+    end
   end
   obj.draw()
   PED_DATA.version_status = "ng"
 end
+
 if obj.check0 and PED_DATA.version_status == "ok" then
-  if obj.track2 == 0 then
-    obj.setfont("メイリオ", 100)
+  obj.setfont(font, 100)
+  obj.load(
+      "text",
+      "<s100,"..font..",B>※TootieJin氏の「pjsekai-overlay-APPEND」を使用\n"..
+      "※Made with「pjsekai-overlay-APPEND」by TootieJin\n"..
+      "............................................................................<s>"
+  )
+  obj.draw(-614 - ((obj.screen_w/2) - (1920/2)), 513 + ((obj.screen_h/2) - (1080/2)), 0, 0.24, 0.5)
+end
+if detail_stat == 1 and PED_DATA.version_status == "ok" and not obj.getinfo("saving") then
+  obj.setfont(font, 100)
+  if text_lang == 1 then
     obj.load(
-        "text",
-        "<s100,メイリオ,B>※TootieJin氏の「pjsekai-overlay-APPEND」を使用\n"..
-        "※Made with「pjsekai-overlay-APPEND」by TootieJin\n"..
-        "............................................................................<s>"
+      "text",
+      "<s100,"..font..",B>"..
+      "--------------------------------------------------------------------------------------------\n"..
+      "※Detailed Stats (v"..PED_DATA.version.."):\n"..
+      "Frame (seconds) from current score: "..string.format("%.6f", (obj.frame - OFFSET) - (PED_DATA.current.time * obj.framerate)).." ("..string.format("%.6f", (obj.time - (OFFSET / obj.framerate)) - (PED_DATA.current.time))..")\n"..
+      "Frame (seconds) from current skill: "..string.format("%.6f", (obj.frame - OFFSET) - (PED_DATA.skill.time * obj.framerate)).." ("..string.format("%.6f", (obj.time - (OFFSET / obj.framerate)) - (PED_DATA.skill.time))..")\n"..
+      "Frame (seconds) from current combo burst: "..string.format("%.6f", (obj.frame - OFFSET) - (PED_DATA.burst.time * obj.framerate)).." ("..string.format("%.6f", (obj.time - (OFFSET / obj.framerate)) - (PED_DATA.burst.time))..")\n"..
+      "Frame (seconds) until next score: "..string.format("%.6f", (PED_DATA.next.time * obj.framerate) - ((obj.frame - OFFSET))).." ("..string.format("%.6f", ((PED_DATA.next.time) - (obj.time - (OFFSET / obj.framerate))))..")\n"..
+      "Displayed (actual) score difference: "..PED_DATA.current.offset.." ("..PED_DATA.current.score - PED_DATA.previous.score..")\n"..
+      "Frame vs. Time calculation difference (should be around 0): "..string.format("%.6f", (obj.frame / obj.framerate) - obj.time).."\n"..
+      "※This text will not be shown when exporting.\n"..
+      "--------------------------------------------------------------------------------------------<s>"
     )
   else
-    obj.setfont("FOT-ロダンNTLG Pro EB", 100)
     obj.load(
-        "text",
-        "<s100,FOT-ロダンNTLG Pro EB,B>※TootieJin氏の「pjsekai-overlay-APPEND」を使用\n"..
-        "※Made with「pjsekai-overlay-APPEND」by TootieJin\n"..
-        "............................................................................<s>"
+      "text",
+      "<s100,"..font..",B>"..
+      "--------------------------------------------------------------------------------------------\n"..
+      "※詳細な統計情報 (v"..PED_DATA.version.."):\n"..
+      "現在のスコアからのフレーム（秒）: "..string.format("%.6f", (obj.frame - OFFSET) - (PED_DATA.current.time * obj.framerate)).." ("..string.format("%.6f", (obj.time - (OFFSET / obj.framerate)) - (PED_DATA.current.time))..")\n"..
+      "現在のスキルからのフレーム（秒）: "..string.format("%.6f", (obj.frame - OFFSET) - (PED_DATA.skill.time * obj.framerate)).." ("..string.format("%.6f", (obj.time - (OFFSET / obj.framerate)) - (PED_DATA.skill.time))..")\n"..
+      "現在のコンボ効果からのフレーム（秒）: "..string.format("%.6f", (obj.frame - OFFSET) - (PED_DATA.burst.time * obj.framerate)).." ("..string.format("%.6f", (obj.time - (OFFSET / obj.framerate)) - (PED_DATA.burst.time))..")\n"..
+      "次のスコアまでのフレーム（秒）: "..string.format("%.6f", (PED_DATA.next.time * obj.framerate) - ((obj.frame - OFFSET))).." ("..string.format("%.6f", ((PED_DATA.next.time) - (obj.time - (OFFSET / obj.framerate))))..")\n"..
+      "表示されている（実際の）スコア差: "..PED_DATA.current.offset.." ("..PED_DATA.current.score - PED_DATA.previous.score..")\n"..
+      "フレーム対時間の計算差（約0である必要があります）: "..string.format("%.6f", (obj.frame / obj.framerate) - obj.time).."\n"..
+      "※出力時にはこのテキストは表示されません。\n"..
+      "--------------------------------------------------------------------------------------------<s>"
     )
   end
-  obj.draw(-614 - ((obj.screen_w/2) - (1920/2)), 513 + ((obj.screen_h/2) - (1080/2)), 0, 0.24, 0.5)
+  obj.draw(-490 - ((obj.screen_w/2) - (1920/2)), 0, 0, 0.22, 0.8)
 end
 ----------------------------------------------------------------
 @ライフ
@@ -408,7 +512,7 @@ if PED_DATA and PED_DATA.version_status == "ok" then
 
     local progress = ((obj.frame - OFFSET) - (PED_DATA.current.time * obj.framerate)) * speed
     local progress_combo = ((obj.frame - OFFSET) - (PED_DATA.burst.time * obj.framerate)) * speed
-    if progress < 1 then
+    if progress < 1 and PED_DATA.previous.combo > 0 then
       progress = ((obj.frame - OFFSET) - (PED_DATA.previous.time * obj.framerate)) * speed
     end
 
