@@ -206,11 +206,11 @@ AviUtl for whatever reason stops loading when importing for the first time. If t
 | **Name**      	| Description                                                                                                	| Default 	|        Range       	|
 |---------------	|------------------------------------------------------------------------------------------------------------	|:-------:	|:------------------:	|
 | **Offset**<br>`offset`    	| Number of frames to shift events<br>- Increase to shift timing later<br>- Decrease to shift timing earlier 	|  216.00  	| -99999.99 ~ 99999.99 	|
-| **Cache**<br>`cache`     	| When cache is set to 0, any change in the `data.ped` is applied immediately                               	|    1    	|        0 or 1       	|
+| **Cache**<br>`cache`     	| When cache is set to 0, any change in the `data.ped` is applied immediately<br>(`0` - OFF, `1` - ON)                               	|    1    	|        0 or 1       	|
 | **Font type**<br>`font_type` 	| Set font type configuration for the watermark & detailed stats text<br>(`0` - メイリオ, `1` - RodinNTLG EB)                 	|    0    	|        0 or 1       	|
 | **Text Language**<br>`text_lang` 	| Set text language configuration for the error & detailed stats text<br>(`0` - 日本語, `1` - English)                 	|    0    	|        0 or 1       	|
 | **Watermark**<br>`watermark` 	| Enable watermark text at the bottom-left corner                                                            	|   1 (ON)  	|          0 or 1         	|
-| **Detailed Stats**<br>`detail_stat` 	| <img width="auto" height="auto" alt="" src="https://github.com/user-attachments/assets/51c8d359-c6e4-4b11-9b5b-14afdfec7b8c" /><br>View detailed statistics (useful for measuring & analysing). _This text will not be shown when exporting_                 	|    0    	|        0 or 1       	|
+| **Detailed Stats**<br>`detail_stat` 	| <img width="auto" height="auto" alt="" src="https://github.com/user-attachments/assets/51c8d359-c6e4-4b11-9b5b-14afdfec7b8c" /><br>View detailed statistics (useful for measuring & analysing). _This text will not be shown when exporting_                 	|    0 (OFF)    	|        0 or 1       	|
 
 ### Life@pjsekai-overlay-en
 <img width="125" height="125" alt="LifeUP" src="https://github.com/user-attachments/assets/6f7a7db8-50bb-43cf-9463-5f46325c862e" /> <img width=30% height=30% alt="life-v1" src="https://github.com/user-attachments/assets/b467f932-fa04-4afa-bbf2-9aed811b0855" /> <img width=30% height=30% alt="life" src="https://github.com/user-attachments/assets/7aab3534-66cf-4dad-936e-3d423ecce615" />
@@ -447,11 +447,11 @@ AviUtlは、何らかの理由で初回インポート時に読み込みを停�
 | **名前**         | 説明                                                                                                    | デフォルト     |        範囲           |
 |---------------   |------------------------------------------------------------------------------------------------------------	|:-------:	|:------------------:	|
 | **オフセット**<br>`offset`    | タイミングをシフトするフレーム数<br>- 増加するとタイミングが遅くなる<br>- 減少するとタイミングが早くなる 	|  216.00  	| -99999.99 ~ 99999.99 	|
-| **キャッシュ**<br>`cache`    	| キャッシュが0に設定されている場合、`data.ped`の変更は即時反映されます                               	|    1    	|        0か1      	|
+| **キャッシュ**<br>`cache`    	| キャッシュが0に設定されている場合、`data.ped`の変更は即時反映されます<br>(`0` - OFF, `1` - ON)                               	|    1    	|        0か1      	|
 | **フォント種類**<br>`font_type`  | 透かしと詳細統計のテキストのフォント種類設定を設定する<br>(`0` - メイリオ, `1` - RodinNTLG EB)                 	|    0    	|        0か1      	|
 | **テキスト言語**<br>`text_lang`     | エラーと詳細統計のテキスト言語設定<br>(`0` - 日本語, `1` - English)                     |    0        |        0か1           |
 | **透かし**<br>`watermark` 	   | 左下隅に透かしテキストを表示する                                                            	|   1 (ON)  	|          0か1         	|
-| **詳細統計**<br>`detail_stat` 	| <img width="auto" height="auto" alt="" src="https://github.com/user-attachments/assets/51c8d359-c6e4-4b11-9b5b-14afdfec7b8c" /><br>詳細統計を表示（測定・分析に有用）。_このテキストは出力時に表示されません_                     |    0        |        0か1           |
+| **詳細統計**<br>`detail_stat` 	| <img width="auto" height="auto" alt="" src="https://github.com/user-attachments/assets/51c8d359-c6e4-4b11-9b5b-14afdfec7b8c" /><br>詳細統計を表示（測定・分析に有用）。_このテキストは出力時に表示されません_                     |    0 (OFF)        |        0か1           |
 
 ### ライフ@pjsekai-overlay
 <img width="125" height="125" alt="LifeUP" src="https://github.com/user-attachments/assets/6f7a7db8-50bb-43cf-9463-5f46325c862e" /> <img width=30% height=30% alt="life-v1" src="https://github.com/user-attachments/assets/b467f932-fa04-4afa-bbf2-9aed811b0855" /> <img width=30% height=30% alt="life" src="https://github.com/user-attachments/assets/7aab3534-66cf-4dad-936e-3d423ecce615" />
