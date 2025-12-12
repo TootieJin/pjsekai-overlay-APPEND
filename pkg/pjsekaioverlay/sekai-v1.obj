@@ -9,7 +9,7 @@
 
 local font = ""
 if obj.track2 == 0 then
-  font = "メイリオ"
+  font = "Meiryo"
 else
   font = "FOT-RodinNTLG Pro EB"
 end
@@ -77,15 +77,13 @@ if obj.track1 ~= 1 or not PED_DATA or PED_DATA.file ~= file then
     debug_print("[pjsekai-overlay] # of frames: " .. #PED_DATA.frames)
     debug_print("[pjsekai-overlay] # of combo bursts: " .. #PED_DATA.combo)
     fp:close()
-    ERROR = nil
   else
     PED_DATA.loaded = "cannot_open"
     debug_print("[pjsekai-overlay] " .. err)
     debug_print("[pjsekai-overlay] Couldn't open ped data file")
-    ERROR = err
   end
 end
-if (PED_DATA.version == "{version}" or "{version}" == "0.0.0") and (MAX_w >= 2560 and MAX_h >= 2048) and ERROR == nil then
+if (PED_DATA.version == "{version}" or "{version}" == "0.0.0") and (MAX_w >= 2560 and MAX_h >= 2048) then
   OFFSET = obj.track0
   PED_DATA.current = {
     time = 0,
@@ -163,51 +161,49 @@ if (PED_DATA.version == "{version}" or "{version}" == "0.0.0") and (MAX_w >= 256
   end
   PED_DATA.version_status = "ok"
 else
-  obj.setfont("メイリオ", 32)
+  obj.setfont("Meiryo", 32)
   if PED_DATA.loaded == "cannot_open" then
     if text_lang == 1 then
       obj.load(
         "text",
-        "<s32,メイリオ,B>(! ERROR !)\n<s>"..
-        "PED file unable to be opened!\n"..
-        "Error log: ".. ERROR
+        "<s32,Meiryo,B>(! ERROR !)\n<s>"..
+        "ped file unable to be opened!"
       )
     else
       obj.load(
         "text",
-        "<s32,メイリオ,B>(! ERROR !)\n<s>"..
-        "pedファイルを開くことができません！\n"..
-        "Error log: ".. ERROR
+        "<s32,Meiryo,B>(! ERROR !)\n<s>"..
+        "pedファイルを開くことができません！"
       )
     end
   elseif PED_DATA.loaded == "invalid" then
     if text_lang == 1 then
       obj.load(
       "text",
-      "<s32,メイリオ,B>(! ERROR !)\n<s>"..
+      "<s32,Meiryo,B>(! ERROR !)\n<s>"..
       "Unable to read ped file!\n"..
       "- Regenerate pjsekai-overlay."
     )
     else
       obj.load(
         "text",
-        "<s32,メイリオ,B>(! ERROR !)\n<s>"..
+        "<s32,Meiryo,B>(! ERROR !)\n<s>"..
         "pedファイルを読み取れません！\n"..
         "- pjsekai-overlayを再生成してください。"
       )
     end
   elseif PED_DATA.version == nil then
-    if PED_DATA>enUI then
+    if text_lang == 1 then
       obj.load(
         "text",
-        "<s32,メイリオ,B>(! ERROR !)\n<s>"..
+        "<s32,Meiryo,B>(! ERROR !)\n<s>"..
         "Version of the ped file is not set!\n"..
         "- Regenerate pjsekai-overlay."
       )
     else
       obj.load(
         "text",
-        "<s32,メイリオ,B>(! ERROR !)\n<s>"..
+        "<s32,Meiryo,B>(! ERROR !)\n<s>"..
         "pedファイルのバージョンが設定されていません！\n"..
         "- pjsekai-overlayを再生成してください。"
       )
@@ -216,7 +212,7 @@ else
     if text_lang == 1 then
       obj.load(
         "text",
-        "<s32,メイリオ,B>(! ERROR !)\n<s>"..
+        "<s32,Meiryo,B>(! ERROR !)\n<s>"..
         "Max image size is too low!\n"..
         "[Required size: 2560x2048]\n\n"..
         "- Change the max image size in AviUtl. (File > SETTINGS > System > Max resolution)"
@@ -224,7 +220,7 @@ else
     else
       obj.load(
         "text",
-        "<s32,メイリオ,B>(! ERROR !)\n<s>"..
+        "<s32,Meiryo,B>(! ERROR !)\n<s>"..
         "最大画像サイズが小さすぎます！\n"..
         "[必要なサイズ: 2560x2048]\n\n"..
         "- AviUtlの最大画像サイズを変更してください。(ファイル > 設定 > システム > 最大画像サイズ)"
@@ -234,22 +230,22 @@ else
     if text_lang == 1 then
       obj.load(
         "text",
-        "<s32,メイリオ,B>(! ERROR !)\n<s>"..
+        "<s32,Meiryo,B>(! ERROR !)\n<s>"..
         "The version of the file is different!\n"..
         "[.obj: {version}, .ped: "..PED_DATA.version.."]\n\n"..
-        "- <s32,メイリオ,B>If .obj is up to date:<s> Regenerate pjsekai-overlay.\n"..
-        "- <s32,メイリオ,B>If .ped is up to date:<s> Regenerate object file. (Open AviUtl, then pjsekai-overlay-APPEND)\n"..
-        "<s32,メイリオ,B>DO NOT RENAME ped VERSION!<s>"
+        "- <s32,Meiryo,B>If .obj is up to date:<s> Regenerate pjsekai-overlay.\n"..
+        "- <s32,Meiryo,B>If .ped is up to date:<s> Regenerate object file. (Open AviUtl, then pjsekai-overlay-APPEND)\n"..
+        "<s32,Meiryo,B>DO NOT RENAME ped VERSION!<s>"
       )
     else
       obj.load(
         "text",
-        "<s32,メイリオ,B>(! ERROR !)\n<s>"..
+        "<s32,Meiryo,B>(! ERROR !)\n<s>"..
         "ファイルとのバージョンが違います！\n"..
         "[.obj: {version}, .ped: "..PED_DATA.version.."]\n\n"..
-        "- <s32,メイリオ,B>.objが最新の場合:<s> pjsekai-overlayを再生成してください。\n"..
-        "- <s32,メイリオ,B>.pedが最新の場合:<s> オブジェクトファイルを再生成してください。(AviUtlを開き、pjsekai-overlay-APPENDを実行)\n"..
-        "<s32,メイリオ,B>pedバージョンの名前を変更しないでください！<s>"
+        "- <s32,Meiryo,B>.objが最新の場合:<s> pjsekai-overlayを再生成してください。\n"..
+        "- <s32,Meiryo,B>.pedが最新の場合:<s> オブジェクトファイルを再生成してください。(AviUtlを開き、pjsekai-overlay-APPENDを実行)\n"..
+        "<s32,Meiryo,B>pedバージョンの名前を変更しないでください！<s>"
       )
     end
   end
@@ -269,19 +265,19 @@ if obj.check0 and PED_DATA.version_status == "ok" then
 end
 if detail_stat == 1 and PED_DATA.version_status == "ok" and not obj.getinfo("saving") then
   obj.setfont(font, 100)
-  if text_lang == 1 then
+  if text_lang == 0 then
     obj.load(
       "text",
       "<s100,"..font..",B>"..
       "--------------------------------------------------------------------------------------------\n"..
-      "※Detailed Stats (v"..PED_DATA.version.."):\n"..
-      "Frame (seconds) from current score: "..string.format("%.6f", (obj.frame - OFFSET) - (PED_DATA.current.time * obj.framerate)).." ("..string.format("%.6f", (obj.time - (OFFSET / obj.framerate)) - (PED_DATA.current.time))..")\n"..
-      "Frame (seconds) from current skill: "..string.format("%.6f", (obj.frame - OFFSET) - (PED_DATA.skill.time * obj.framerate)).." ("..string.format("%.6f", (obj.time - (OFFSET / obj.framerate)) - (PED_DATA.skill.time))..")\n"..
-      "Frame (seconds) from current combo burst: "..string.format("%.6f", (obj.frame - OFFSET) - (PED_DATA.burst.time * obj.framerate)).." ("..string.format("%.6f", (obj.time - (OFFSET / obj.framerate)) - (PED_DATA.burst.time))..")\n"..
-      "Frame (seconds) until next score: "..string.format("%.6f", (PED_DATA.next.time * obj.framerate) - ((obj.frame - OFFSET))).." ("..string.format("%.6f", ((PED_DATA.next.time) - (obj.time - (OFFSET / obj.framerate))))..")\n"..
-      "Displayed (actual) score difference: "..PED_DATA.current.offset.." ("..PED_DATA.current.score - PED_DATA.previous.score..")\n"..
-      "Frame vs. Time calculation difference (should be around 0): "..string.format("%.6f", (obj.frame / obj.framerate) - obj.time).."\n"..
-      "※This text will not be shown when exporting.\n"..
+      "※詳細な統計情報 (v"..PED_DATA.version.."):\n"..
+      "現在のスコアからのフレーム: "..string.format("%.2f", (obj.frame - OFFSET) - (PED_DATA.current.time * obj.framerate)).." ("..string.format("%.6f", (obj.time - (OFFSET / obj.framerate)) - (PED_DATA.current.time)).."秒)\n"..
+      "現在のスキルからのフレーム: "..string.format("%.2f", (obj.frame - OFFSET) - (PED_DATA.skill.time * obj.framerate)).." ("..string.format("%.6f", (obj.time - (OFFSET / obj.framerate)) - (PED_DATA.skill.time)).."秒)\n"..
+      "現在のコンボ効果からのフレーム: "..string.format("%.2f", (obj.frame - OFFSET) - (PED_DATA.burst.time * obj.framerate)).." ("..string.format("%.6f", (obj.time - (OFFSET / obj.framerate)) - (PED_DATA.burst.time)).."秒)\n"..
+      "次のスコアまでのフレーム: "..string.format("%.2f", (PED_DATA.next.time * obj.framerate) - ((obj.frame - OFFSET))).." ("..string.format("%.6f", ((PED_DATA.next.time) - (obj.time - (OFFSET / obj.framerate)))).."秒)\n"..
+      "表示されている（実際の）スコア差: "..PED_DATA.current.offset.." ("..PED_DATA.current.score - PED_DATA.previous.score..")\n"..
+      "フレーム対時間の計算差（約0である必要があります）: "..string.format("%.6f", (obj.frame / obj.framerate) - obj.time).."\n"..
+      "※出力時にはこのテキストは表示されません。\n"..
       "--------------------------------------------------------------------------------------------<s>"
     )
   else
@@ -289,14 +285,14 @@ if detail_stat == 1 and PED_DATA.version_status == "ok" and not obj.getinfo("sav
       "text",
       "<s100,"..font..",B>"..
       "--------------------------------------------------------------------------------------------\n"..
-      "※詳細な統計情報 (v"..PED_DATA.version.."):\n"..
-      "現在のスコアからのフレーム（秒）: "..string.format("%.6f", (obj.frame - OFFSET) - (PED_DATA.current.time * obj.framerate)).." ("..string.format("%.6f", (obj.time - (OFFSET / obj.framerate)) - (PED_DATA.current.time))..")\n"..
-      "現在のスキルからのフレーム（秒）: "..string.format("%.6f", (obj.frame - OFFSET) - (PED_DATA.skill.time * obj.framerate)).." ("..string.format("%.6f", (obj.time - (OFFSET / obj.framerate)) - (PED_DATA.skill.time))..")\n"..
-      "現在のコンボ効果からのフレーム（秒）: "..string.format("%.6f", (obj.frame - OFFSET) - (PED_DATA.burst.time * obj.framerate)).." ("..string.format("%.6f", (obj.time - (OFFSET / obj.framerate)) - (PED_DATA.burst.time))..")\n"..
-      "次のスコアまでのフレーム（秒）: "..string.format("%.6f", (PED_DATA.next.time * obj.framerate) - ((obj.frame - OFFSET))).." ("..string.format("%.6f", ((PED_DATA.next.time) - (obj.time - (OFFSET / obj.framerate))))..")\n"..
-      "表示されている（実際の）スコア差: "..PED_DATA.current.offset.." ("..PED_DATA.current.score - PED_DATA.previous.score..")\n"..
-      "フレーム対時間の計算差（約0である必要があります）: "..string.format("%.6f", (obj.frame / obj.framerate) - obj.time).."\n"..
-      "※出力時にはこのテキストは表示されません。\n"..
+      "※Detailed Stats (v"..PED_DATA.version.."):\n"..
+      "Frame from current score: "..string.format("%.2f", (obj.frame - OFFSET) - (PED_DATA.current.time * obj.framerate)).." ("..string.format("%.6f", (obj.time - (OFFSET / obj.framerate)) - (PED_DATA.current.time)).."s)\n"..
+      "Frame from current skill: "..string.format("%.2f", (obj.frame - OFFSET) - (PED_DATA.skill.time * obj.framerate)).." ("..string.format("%.6f", (obj.time - (OFFSET / obj.framerate)) - (PED_DATA.skill.time)).."s)\n"..
+      "Frame from current combo burst: "..string.format("%.2f", (obj.frame - OFFSET) - (PED_DATA.burst.time * obj.framerate)).." ("..string.format("%.6f", (obj.time - (OFFSET / obj.framerate)) - (PED_DATA.burst.time)).."s)\n"..
+      "Frame until next score: "..string.format("%.2f", (PED_DATA.next.time * obj.framerate) - ((obj.frame - OFFSET))).." ("..string.format("%.6f", ((PED_DATA.next.time) - (obj.time - (OFFSET / obj.framerate)))).."s)\n"..
+      "Displayed (actual) score difference: "..PED_DATA.current.offset.." ("..PED_DATA.current.score - PED_DATA.previous.score..")\n"..
+      "Frame vs. Time calculation difference (should be around 0): "..string.format("%.6f", (obj.frame / obj.framerate) - obj.time).."\n"..
+      "※This text will not be shown when exporting.\n"..
       "--------------------------------------------------------------------------------------------<s>"
     )
   end

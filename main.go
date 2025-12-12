@@ -589,11 +589,7 @@ func origMain(isOptionSpecified bool) {
 
 	fmt.Println(color.GreenString("OK"))
 	if !isOptionSpecified {
-		if aviutlProcess == "aviutl.exe" {
-			fmt.Print("\n英語UIを使う？（設定@pjsekai-overlayテキスト + イントロ + v3 UI）[y/n]\nUse English UI? (Root@pjsekai-overlay text + Intro + v3 UI) [y/n]\n> ")
-		} else {
-			fmt.Print("\n英語UIを使う？（イントロ + v3 UI）[y/n]\nUse English UI? (Intro + v3 UI) [y/n]\n> ")
-		}
+		fmt.Print("\n英語UIを使う？（イントロ + v3 UI）[y/n]\nUse English UI? (Intro + v3 UI) [y/n]\n> ")
 		before, _ := rawmode.Enable()
 		tmpEnableENByte, _ := bufio.NewReader(os.Stdin).ReadByte()
 		tmpEnableEN := string(tmpEnableENByte)

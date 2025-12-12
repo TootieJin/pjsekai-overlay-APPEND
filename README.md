@@ -1,7 +1,7 @@
 [**English Section**](#pjsekai-overlay-append--forked-pjsekai-style-video-creation-tool) | [**日本語セクション**](#pjsekai-overlay-append--フォークプロセカ風動画作成補助ツール)
 
-**Last README updated:** December 11th 2025, 12:53 AM (EST)\
-**最終README更新日:** 2025年12月11日 午後2時53分（JST）
+**Last README updated:** December 12th 2025, 12:35 PM (EST)\
+**最終README更新日:** 2025年12月13日 午前2時35分（JST）
 
 [![Releases](https://img.shields.io/github/downloads/TootieJin/pjsekai-overlay-APPEND/total?style=plastic)](https://github.com/TootieJin/pjsekai-overlay-APPEND/releases/) [![Stargazers](https://img.shields.io/github/stars/TootieJin/pjsekai-overlay-APPEND?style=plastic&color=yellow)](https://github.com/TootieJin/pjsekai-overlay-APPEND/stargazers)
 # pjsekai-overlay-APPEND / Forked PJSekai-style video creation tool
@@ -178,7 +178,7 @@ Go to `File > New Project` and set frame rate to 60. The change will be reflecte
 
 <img width="418" height="178" alt="image" src="https://github.com/user-attachments/assets/6bff30c3-fb67-4169-931f-b3df7c7d65f6" />
 
-### The UI doesn't show anything!
+### The UI doesn't show anything / PED file unable to be opened
 You likely haven't selected a **`data.ped` file.** 
 - **AviUtl:** Locate your `data.ped` in the `pjsekai-overlay-APPEND\dist\[Chart ID]` directory & copy the path to the `Root@pjsekai-overlay-en > Setting > PED File Path`. **(Make sure to replace `\ (¥)` with either `\\ (¥¥)` or `/`).**
 
@@ -207,10 +207,10 @@ AviUtl for whatever reason stops loading when importing for the first time. If t
 |---------------	|------------------------------------------------------------------------------------------------------------	|:-------:	|:------------------:	|
 | **Offset**<br>`offset`    	| Number of frames to shift events<br>- Increase to shift timing later<br>- Decrease to shift timing earlier 	|  216.00  	| -99999.99 ~ 99999.99 	|
 | **Cache**<br>`cache`     	| When cache is set to 0, any change in the `data.ped` is applied immediately<br>(`0` - OFF, `1` - ON)                               	|    1    	|        0 or 1       	|
-| **Font type**<br>`font_type` 	| Set font type configuration for the watermark & detailed stats text<br>(`0` - メイリオ, `1` - RodinNTLG EB)                 	|    0    	|        0 or 1       	|
+| **Font type**<br>`font_type` 	| Set font type configuration for the watermark & detailed stats text<br>(`0` - Meiryo, `1` - FOT-RodinNTLG EB)                 	|    0    	|        0 or 1       	|
 | **Text Language**<br>`text_lang` 	| Set text language configuration for the error & detailed stats text<br>(`0` - 日本語, `1` - English)                 	|    0    	|        0 or 1       	|
 | **Watermark**<br>`watermark` 	| Enable watermark text at the bottom-left corner                                                            	|   1 (ON)  	|          0 or 1         	|
-| **Detailed Stats**<br>`detail_stat` 	| <img width="auto" height="auto" alt="" src="https://github.com/user-attachments/assets/51c8d359-c6e4-4b11-9b5b-14afdfec7b8c" /><br>View detailed statistics (useful for measuring & analysing). _This text will not be shown when exporting_                 	|    0 (OFF)    	|        0 or 1       	|
+| **Detailed Stats**<br>`detail_stat` 	| <img width="auto" height="auto" alt="image" src="https://github.com/user-attachments/assets/9e916e51-d888-497e-b649-b6e9b4a3b760" /><br>View detailed statistics (useful for measuring & analysing). _This text will not be shown when exporting_                 	|    0 (OFF)    	|        0 or 1       	|
 
 ### Life@pjsekai-overlay-en
 <img width="125" height="125" alt="LifeUP" src="https://github.com/user-attachments/assets/6f7a7db8-50bb-43cf-9463-5f46325c862e" /> <img width=30% height=30% alt="life-v1" src="https://github.com/user-attachments/assets/b467f932-fa04-4afa-bbf2-9aed811b0855" /> <img width=30% height=30% alt="life" src="https://github.com/user-attachments/assets/7aab3534-66cf-4dad-936e-3d423ecce615" />
@@ -419,7 +419,7 @@ PJSekai-style video creation tool:
 
 <img width="420" height="178" alt="image" src="https://github.com/user-attachments/assets/a8015d9e-9024-486f-9182-571911f11c1c" />
 
-### UIに何も表示されない！
+### UIに何も表示されない / PEDファイルを開くことができません
 おそらく **`data.ped`ファイル** を選択していません。
 - **AviUtl:** `pjsekai-overlay-APPEND\dist\[譜面ID]` ディレクトリ内の `data.ped` を特定し、そのパスを `設定@pjsekai-overlay > 設定 > PEDファイルパス` にコピーしてください。**(`\ (¥)` を `\\ (¥¥)` か `/` に置き換えることを必ず確認してください)。**
 
@@ -448,10 +448,10 @@ AviUtlは、何らかの理由で初回インポート時に読み込みを停�
 |---------------   |------------------------------------------------------------------------------------------------------------	|:-------:	|:------------------:	|
 | **オフセット**<br>`offset`    | タイミングをシフトするフレーム数<br>- 増加するとタイミングが遅くなる<br>- 減少するとタイミングが早くなる 	|  216.00  	| -99999.99 ~ 99999.99 	|
 | **キャッシュ**<br>`cache`    	| キャッシュが0に設定されている場合、`data.ped`の変更は即時反映されます<br>(`0` - OFF, `1` - ON)                               	|    1    	|        0か1      	|
-| **フォント種類**<br>`font_type`  | 透かしと詳細統計のテキストのフォント種類設定を設定する<br>(`0` - メイリオ, `1` - RodinNTLG EB)                 	|    0    	|        0か1      	|
+| **フォント種類**<br>`font_type`  | 透かしと詳細統計のテキストのフォント種類設定を設定する<br>(`0` - Meiryo, `1` - FOT-RodinNTLG EB)                 	|    0    	|        0か1      	|
 | **テキスト言語**<br>`text_lang`     | エラーと詳細統計のテキスト言語設定<br>(`0` - 日本語, `1` - English)                     |    0        |        0か1           |
 | **透かし**<br>`watermark` 	   | 左下隅に透かしテキストを表示する                                                            	|   1 (ON)  	|          0か1         	|
-| **詳細統計**<br>`detail_stat` 	| <img width="auto" height="auto" alt="" src="https://github.com/user-attachments/assets/51c8d359-c6e4-4b11-9b5b-14afdfec7b8c" /><br>詳細統計を表示（測定・分析に有用）。_このテキストは出力時に表示されません_                     |    0 (OFF)        |        0か1           |
+| **詳細統計**<br>`detail_stat` 	| <img width="auto" height="auto" alt="image" src="https://github.com/user-attachments/assets/9e916e51-d888-497e-b649-b6e9b4a3b760" /><br>詳細統計を表示（測定・分析に有用）。_このテキストは出力時に表示されません_                     |    0 (OFF)        |        0か1           |
 
 ### ライフ@pjsekai-overlay
 <img width="125" height="125" alt="LifeUP" src="https://github.com/user-attachments/assets/6f7a7db8-50bb-43cf-9463-5f46325c862e" /> <img width=30% height=30% alt="life-v1" src="https://github.com/user-attachments/assets/b467f932-fa04-4afa-bbf2-9aed811b0855" /> <img width=30% height=30% alt="life" src="https://github.com/user-attachments/assets/7aab3534-66cf-4dad-936e-3d423ecce615" />
