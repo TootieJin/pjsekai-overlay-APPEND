@@ -88,6 +88,7 @@
 枠線=Frame Line
 拡張色設定=Extended Color Settings
 画像合成=Image Composition
+モーションブラー=Motion Blur
 
 ; Extras (Originally untranslated)
 逆光=Backlight
@@ -924,7 +925,9 @@ Z軸回転=Rotate Z
 輝度をアルファ値として上書き=Overwrite Luminance as Alpha
 輝度をアルファ値として乗算=Multiply Luminance as Alpha
 画像=Image
-領域外を透過=Transparent Outside 
+領域外を透過=Transparent Outside
+分解能=Resolution
+残像=Afterimage
 
 ; Extras (Originally untranslated)
 超点X=Diffuse X
@@ -1237,6 +1240,8 @@ YUVレンジ=YUV Color Range
 エクスポート=Export
 プラグイン設定=Plugin
 オブジェクト名を変更=Change Object Name
+メディアオブジェクトを追加=Add Media Object
+フィルタオブジェクトを追加=Add Filter Object
 
 ; Third-Party Export Plugins
 
