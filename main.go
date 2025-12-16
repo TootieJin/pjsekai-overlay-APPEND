@@ -363,7 +363,7 @@ func origMain(isOptionSpecified bool) {
 	}
 
 	if BanList(chart.Author) {
-		fmt.Println(color.RedString("\nFAIL: 申し訳ありませんが、この譜面作者／組織はこのツールの使用が禁止されています。\n組織のリーダーである場合、および／または禁止措置の異議申し立てを希望する場合は、非公開で連絡してください。この状況を公表すると、上訴が無効となり、その状態が永久に続くことにご留意ください。\n\nSorry, this charter/organization is banned from using this tool.\nIf you're the leader of the organization and/or would like to request a ban appeal, you must contact me privately. Please note that publicizing this situation will nullify your appeal indefinitely."))
+		fmt.Println(color.RedString("\nFAIL: 申し訳ありませんが、この譜面作者／組織はこのツールの使用が禁止されています。\nSorry, this charter/organization is banned from using this tool."))
 		return
 	}
 

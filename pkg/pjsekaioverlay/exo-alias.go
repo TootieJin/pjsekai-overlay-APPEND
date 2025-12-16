@@ -304,7 +304,7 @@ func WriteAliasFiles(assets string, destDir string, title string, description []
 	if mappingFile[2] == "1" {
 		fontName = "FOT-RodinNTLG Pro EB"
 	} else {
-		fontName = "Meiryo"
+		fontName = "Yu Gothic UI"
 	}
 
 	var textLang string
