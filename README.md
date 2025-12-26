@@ -44,7 +44,6 @@ This is a forked version of pjsekai-overlay with additional features originally 
   - Ability to use the English AviUtl
   - v1 UI skin (Full support)
   - Automatically changes chart difficulty to generate in AviUtl based on chart tag (or title)
-  - Additional support for more servers
   - **(AviUtl ExEdit2 ONLY)** Supports very big number (~ 1.7e+307) using [lua-bignumber](https://github.com/thenumbernine/lua-bignumber)
   - **[Various UI customization](https://github.com/TootieJin/pjsekai-overlay-APPEND/wiki/Start-Here!#ui-customization-specifications)**
     - Animated Scoring
@@ -52,6 +51,18 @@ This is a forked version of pjsekai-overlay with additional features originally 
     - Interchangable AP Combo
     - Interchangable judgement type (PERFECT/GREAT/GOOD/etc.)
     - Interchangable LIFE value
+  - **Additional support for more servers:**
+    - `chcy-`: Chart Cyanvas
+      - `0`: Archive ([cc.sevenc7c.com](https://cc.sevenc7c.com))
+      - `1`: Offshoot server ([chart-cyanvas.com](https://chart-cyanvas.com))
+      - `Others (URL domain)`: Different Cyanvas instance
+    - `ptlv-`: Potato Leaves ([ptlv.sevenc7c.com](https://ptlv.sevenc7c.com))
+    - ~~`utsk-`: Untitled Sekai ([us.pim4n-net.com](https://us.pim4n-net.com))~~
+    - `UnCh-`: UntitledCharts ([untitledcharts.com](https://untitledcharts.com))
+    - `coconut-next-sekai-`: Next SEKAI ([coconut.sonolus.com/next-sekai](https://coconut.sonolus.com/next-sekai))
+    - `lalo-`: [laoloser](https://www.youtube.com/@laoloserr)'s server ([sonolus.laoloser.com](https://laoloser.com/sonolus))
+    - `sync-`: Local Server ([ScoreSync](https://github.com/Piliman22/ScoreSync))
+
 
 ## Terms of Use
 
@@ -121,7 +132,6 @@ PJSekai-style video creation tool:
   - 英語版AviUtlの使用機能
   - v1 UIスキン（フル対応）
   - 譜面のタグ（またはタイトル）に基づいて、AviUtlで生成される譜面の難易度を自動的に変更する
-  - 追加サーバーの対応
   - **(AviUtl ExEdit2 のみ)** [lua-bignumber](https://github.com/thenumbernine/lua-bignumber)を使用して非常に大きな数値（~ 1.7e+307）を対応
   - **[各種UIカスタマイズ](https://github.com/TootieJin/pjsekai-overlay-APPEND/wiki/%E3%81%93%E3%81%93%E3%81%8B%E3%82%89%E5%A7%8B%E3%82%81%E3%82%88%E3%81%86%EF%BC%81#ui%E3%82%AB%E3%82%B9%E3%82%BF%E3%83%9E%E3%82%A4%E3%82%BA%E4%BB%95%E6%A7%98%E6%9B%B8)**
     - アニメーション付きスコア表示
@@ -129,6 +139,17 @@ PJSekai-style video creation tool:
     - 交換可能なAPコンボ
     - 交換可能な判定タイプ（PERFECT/GREAT/GOODなど）
     - 交換可能なライフ値
+  - **追加サーバーの対応：**
+    - `chcy-`: Chart Cyanvas
+      - `0`: アーカイブ([cc.sevenc7c.com](https://cc.sevenc7c.com))
+      - `1`: 分岐サーバー([chart-cyanvas.com](https://chart-cyanvas.com))
+      - `その他(URLドメイン)`: 異なるCyanvasインスタンス
+    - `ptlv-`: Potato Leaves ([ptlv.sevenc7c.com](https://ptlv.sevenc7c.com))
+    - ~~`utsk-`: Untitled Sekai ([us.pim4n-net.com](https://us.pim4n-net.com))~~
+    - `UnCh-`: UntitledCharts ([untitledcharts.com](https://untitledcharts.com))
+    - `coconut-next-sekai-`: Next SEKAI ([coconut.sonolus.com/next-sekai](https://coconut.sonolus.com/next-sekai))
+    - `lalo-`: [laoloser](https://www.youtube.com/@laoloserr)のサーバー([sonolus.laoloser.com](https://laoloser.com/sonolus))
+    - `sync-`: ローカルサーバー([ScoreSync](https://github.com/Piliman22/ScoreSync))
 
 ## 利用規約
 
