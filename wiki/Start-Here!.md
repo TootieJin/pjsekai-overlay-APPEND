@@ -30,7 +30,7 @@ Follow the steps below:
 5. Once done, refer to the usage guide below.
 
 # Usage Guide
-0. [Install AviUtl](#requirements)
+0. [Install AviUtl & other plugins](#requirements)
 1. Download the latest version of pjsekai-overlay-APPEND [here](https://github.com/TootieJin/pjsekai-overlay-APPEND/releases/latest/).
    - **(optional)** You can download `extra-assets.zip` for use of non-essential assets.
 2. Unzip the file in a directory that **doesn't contain non-ASCII characters nor require administrative permissions** (see [#5](https://github.com/TootieJin/pjsekai-overlay-APPEND/issues/5))

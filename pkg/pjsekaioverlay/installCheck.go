@@ -625,13 +625,8 @@ func FontInstalled() bool {
 
 	terms := []string{
 		"RodinNTLGPro-EB",
-		"RodinNTLGPro-DB",
 		"FOT-RodinNTLG Pro EB",
-		"FOT-RodinNTLG Pro DB",
-		"FOT-RodinNTLG Pro EB",
-		"FOT-RodinNTLG Pro DB",
 		"FOT-ロダンNTLG Pro EB",
-		"FOT-ロダンNTLG Pro DB",
 	}
 
 	for _, term := range terms {
