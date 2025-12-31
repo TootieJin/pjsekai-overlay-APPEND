@@ -12,6 +12,7 @@ import (
 	wapi "github.com/iamacarpet/go-win64api"
 	so "github.com/iamacarpet/go-win64api/shared"
 
+	"github.com/adrg/sysfont"
 	"golang.org/x/text/encoding/japanese"
 	"golang.org/x/text/transform"
 )
@@ -72,6 +73,13 @@ func TryInstallObject(aviutlPath string, aviutlProcess string, mappingObj []stri
 
 	switch aviutlProcess {
 	case "aviutl.exe":
+		var font string
+		if FontInstalled() {
+			font = "FOT-RodinNTLG Pro EB"
+		} else {
+			font = "Meiryo"
+		}
+
 		var exeditRoot string
 		if _, err := os.Stat(filepath.Join(aviutlPath, "exedit.auf")); err == nil {
 			exeditRoot = filepath.Join(aviutlPath)
@@ -164,30 +172,31 @@ func TryInstallObject(aviutlPath string, aviutlProcess string, mappingObj []stri
 			"\r", "\r\n",
 			"\n", "\r\n",
 			"{version}", Version,
+			"{font}", font,
 			// Root
 			"{offset}", mappingObj[0],
 			"{cache}", mappingObj[1],
-			"{font_type}", mappingObj[2],
-			"{text_lang}", mappingObj[3],
-			"{watermark}", mappingObj[4],
-			"{detail_stat}", mappingObj[5],
+			"{text_lang}", mappingObj[2],
+			"{watermark}", mappingObj[3],
+			"{detail_stat}", mappingObj[4],
 			// Life
-			"{life}", mappingObj[6],
-			"{life_skill}", mappingObj[7],
-			"{overflow}", mappingObj[8],
-			"{lead_zero}", mappingObj[9],
+			"{life}", mappingObj[5],
+			"{life_skill}", mappingObj[6],
+			"{overflow}", mappingObj[7],
+			"{lead_zero}", mappingObj[8],
 			// Score
-			"{min_digit}", mappingObj[10],
-			"{score_skill}", mappingObj[11],
-			"{score_speed}", mappingObj[12],
-			"{anim_score}", mappingObj[13],
-			"{wds_anim}", mappingObj[14],
+			"{min_digit}", mappingObj[9],
+			"{score_skill}", mappingObj[10],
+			"{score_speed}", mappingObj[11],
+			"{anim_score}", mappingObj[12],
+			"{wds_anim}", mappingObj[13],
 			// Combo
-			"{ap}", mappingObj[15],
-			"{tag}", mappingObj[16],
-			"{last_digit}", mappingObj[17],
-			"{combo_speed}", mappingObj[18],
-			"{combo_burst}", mappingObj[19],
+			"{ap}", mappingObj[14],
+			"{tag}", mappingObj[15],
+			"{last_digit}", mappingObj[16],
+			"{combo_speed}", mappingObj[17],
+			"{combo_burst}", mappingObj[18],
+			"{achievement_rate}", mappingObj[19],
 			// Judgement
 			"{judge}", mappingObj[20],
 			"{judge_speed}", mappingObj[21],
@@ -198,30 +207,31 @@ func TryInstallObject(aviutlPath string, aviutlProcess string, mappingObj []stri
 			"\r", "\r\n",
 			"\n", "\r\n",
 			"{version}", Version,
+			"{font}", font,
 			// Root
 			"{offset}", mappingObj[0],
 			"{cache}", mappingObj[1],
-			"{font_type}", mappingObj[2],
-			"{text_lang}", mappingObj[3],
-			"{watermark}", mappingObj[4],
-			"{detail_stat}", mappingObj[5],
+			"{text_lang}", mappingObj[2],
+			"{watermark}", mappingObj[3],
+			"{detail_stat}", mappingObj[4],
 			// Life
-			"{life}", mappingObj[6],
-			"{life_skill}", mappingObj[7],
-			"{overflow}", mappingObj[8],
-			"{lead_zero}", mappingObj[9],
+			"{life}", mappingObj[5],
+			"{life_skill}", mappingObj[6],
+			"{overflow}", mappingObj[7],
+			"{lead_zero}", mappingObj[8],
 			// Score
-			"{min_digit}", mappingObj[10],
-			"{score_skill}", mappingObj[11],
-			"{score_speed}", mappingObj[12],
-			"{anim_score}", mappingObj[13],
-			"{wds_anim}", mappingObj[14],
+			"{min_digit}", mappingObj[9],
+			"{score_skill}", mappingObj[10],
+			"{score_speed}", mappingObj[11],
+			"{anim_score}", mappingObj[12],
+			"{wds_anim}", mappingObj[13],
 			// Combo
-			"{ap}", mappingObj[15],
-			"{tag}", mappingObj[16],
-			"{last_digit}", mappingObj[17],
-			"{combo_speed}", mappingObj[18],
-			"{combo_burst}", mappingObj[19],
+			"{ap}", mappingObj[14],
+			"{tag}", mappingObj[15],
+			"{last_digit}", mappingObj[16],
+			"{combo_speed}", mappingObj[17],
+			"{combo_burst}", mappingObj[18],
+			"{achievement_rate}", mappingObj[19],
 			// Judgement
 			"{judge}", mappingObj[20],
 			"{judge_speed}", mappingObj[21],
@@ -232,30 +242,31 @@ func TryInstallObject(aviutlPath string, aviutlProcess string, mappingObj []stri
 			"\r", "\r\n",
 			"\n", "\r\n",
 			"{version}", Version,
+			"{font}", font,
 			// Root
 			"{offset}", mappingObj[0],
 			"{cache}", mappingObj[1],
-			"{font_type}", mappingObj[2],
-			"{text_lang}", mappingObj[3],
-			"{watermark}", mappingObj[4],
-			"{detail_stat}", mappingObj[5],
+			"{text_lang}", mappingObj[2],
+			"{watermark}", mappingObj[3],
+			"{detail_stat}", mappingObj[4],
 			// Life
-			"{life}", mappingObj[6],
-			"{life_skill}", mappingObj[7],
-			"{overflow}", mappingObj[8],
-			"{lead_zero}", mappingObj[9],
+			"{life}", mappingObj[5],
+			"{life_skill}", mappingObj[6],
+			"{overflow}", mappingObj[7],
+			"{lead_zero}", mappingObj[8],
 			// Score
-			"{min_digit}", mappingObj[10],
-			"{score_skill}", mappingObj[11],
-			"{score_speed}", mappingObj[12],
-			"{anim_score}", mappingObj[13],
-			"{wds_anim}", mappingObj[14],
+			"{min_digit}", mappingObj[9],
+			"{score_skill}", mappingObj[10],
+			"{score_speed}", mappingObj[11],
+			"{anim_score}", mappingObj[12],
+			"{wds_anim}", mappingObj[13],
 			// Combo
-			"{ap}", mappingObj[15],
-			"{tag}", mappingObj[16],
-			"{last_digit}", mappingObj[17],
-			"{combo_speed}", mappingObj[18],
-			"{combo_burst}", mappingObj[19],
+			"{ap}", mappingObj[14],
+			"{tag}", mappingObj[15],
+			"{last_digit}", mappingObj[16],
+			"{combo_speed}", mappingObj[17],
+			"{combo_burst}", mappingObj[18],
+			"{achievement_rate}", mappingObj[19],
 			// Judgement
 			"{judge}", mappingObj[20],
 			"{judge_speed}", mappingObj[21],
@@ -266,36 +277,44 @@ func TryInstallObject(aviutlPath string, aviutlProcess string, mappingObj []stri
 			"\r", "\r\n",
 			"\n", "\r\n",
 			"{version}", Version,
+			"{font}", font,
 			// Root
 			"{offset}", mappingObj[0],
 			"{cache}", mappingObj[1],
-			"{font_type}", mappingObj[2],
-			"{text_lang}", mappingObj[3],
-			"{watermark}", mappingObj[4],
-			"{detail_stat}", mappingObj[5],
+			"{text_lang}", mappingObj[2],
+			"{watermark}", mappingObj[3],
+			"{detail_stat}", mappingObj[4],
 			// Life
-			"{life}", mappingObj[6],
-			"{life_skill}", mappingObj[7],
-			"{overflow}", mappingObj[8],
-			"{lead_zero}", mappingObj[9],
+			"{life}", mappingObj[5],
+			"{life_skill}", mappingObj[6],
+			"{overflow}", mappingObj[7],
+			"{lead_zero}", mappingObj[8],
 			// Score
-			"{min_digit}", mappingObj[10],
-			"{score_skill}", mappingObj[11],
-			"{score_speed}", mappingObj[12],
-			"{anim_score}", mappingObj[13],
-			"{wds_anim}", mappingObj[14],
+			"{min_digit}", mappingObj[9],
+			"{score_skill}", mappingObj[10],
+			"{score_speed}", mappingObj[11],
+			"{anim_score}", mappingObj[12],
+			"{wds_anim}", mappingObj[13],
 			// Combo
-			"{ap}", mappingObj[15],
-			"{tag}", mappingObj[16],
-			"{last_digit}", mappingObj[17],
-			"{combo_speed}", mappingObj[18],
-			"{combo_burst}", mappingObj[19],
+			"{ap}", mappingObj[14],
+			"{tag}", mappingObj[15],
+			"{last_digit}", mappingObj[16],
+			"{combo_speed}", mappingObj[17],
+			"{combo_burst}", mappingObj[18],
+			"{achievement_rate}", mappingObj[19],
 			// Judgement
 			"{judge}", mappingObj[20],
 			"{judge_speed}", mappingObj[21],
 		).Replace(string(sekaiObjEnv1))).WriteTo(sekaiObjWriterEnv1)
 
 	case "aviutl2.exe":
+		var font string
+		if FontInstalled() {
+			font = "FOT-RodinNTLG Pro EB"
+		} else {
+			font = "Yu Gothic UI"
+		}
+
 		sekaiObj2Path := filepath.Join(aviutlPath, "Script", "@pjsekai-overlay-2.obj2")
 		sekaiObj2v1Path := filepath.Join(aviutlPath, "Script", "@pjsekai-overlay-2-v1.obj2")
 
@@ -331,30 +350,31 @@ func TryInstallObject(aviutlPath string, aviutlProcess string, mappingObj []stri
 			"\r", "\r\n",
 			"\n", "\r\n",
 			"{version}", Version,
+			"{font}", font,
 			// Root
 			"{offset}", mappingObj[0],
 			"{cache}", mappingObj[1],
-			"{font_type}", mappingObj[2],
-			"{text_lang}", mappingObj[3],
-			"{watermark}", mappingObj[4],
-			"{detail_stat}", mappingObj[5],
+			"{text_lang}", mappingObj[2],
+			"{watermark}", mappingObj[3],
+			"{detail_stat}", mappingObj[4],
 			// Life
-			"{life}", mappingObj[6],
-			"{life_skill}", mappingObj[7],
-			"{overflow}", mappingObj[8],
-			"{lead_zero}", mappingObj[9],
+			"{life}", mappingObj[5],
+			"{life_skill}", mappingObj[6],
+			"{overflow}", mappingObj[7],
+			"{lead_zero}", mappingObj[8],
 			// Score
-			"{min_digit}", mappingObj[10],
-			"{score_skill}", mappingObj[11],
-			"{score_speed}", mappingObj[12],
-			"{anim_score}", mappingObj[13],
-			"{wds_anim}", mappingObj[14],
+			"{min_digit}", mappingObj[9],
+			"{score_skill}", mappingObj[10],
+			"{score_speed}", mappingObj[11],
+			"{anim_score}", mappingObj[12],
+			"{wds_anim}", mappingObj[13],
 			// Combo
-			"{ap}", mappingObj[15],
-			"{tag}", mappingObj[16],
-			"{last_digit}", mappingObj[17],
-			"{combo_speed}", mappingObj[18],
-			"{combo_burst}", mappingObj[19],
+			"{ap}", mappingObj[14],
+			"{tag}", mappingObj[15],
+			"{last_digit}", mappingObj[16],
+			"{combo_speed}", mappingObj[17],
+			"{combo_burst}", mappingObj[18],
+			"{achievement_rate}", mappingObj[19],
 			// Judgement
 			"{judge}", mappingObj[20],
 			"{judge_speed}", mappingObj[21],
@@ -364,30 +384,31 @@ func TryInstallObject(aviutlPath string, aviutlProcess string, mappingObj []stri
 			"\r", "\r\n",
 			"\n", "\r\n",
 			"{version}", Version,
+			"{font}", font,
 			// Root
 			"{offset}", mappingObj[0],
 			"{cache}", mappingObj[1],
-			"{font_type}", mappingObj[2],
-			"{text_lang}", mappingObj[3],
-			"{watermark}", mappingObj[4],
-			"{detail_stat}", mappingObj[5],
+			"{text_lang}", mappingObj[2],
+			"{watermark}", mappingObj[3],
+			"{detail_stat}", mappingObj[4],
 			// Life
-			"{life}", mappingObj[6],
-			"{life_skill}", mappingObj[7],
-			"{overflow}", mappingObj[8],
-			"{lead_zero}", mappingObj[9],
+			"{life}", mappingObj[5],
+			"{life_skill}", mappingObj[6],
+			"{overflow}", mappingObj[7],
+			"{lead_zero}", mappingObj[8],
 			// Score
-			"{min_digit}", mappingObj[10],
-			"{score_skill}", mappingObj[11],
-			"{score_speed}", mappingObj[12],
-			"{anim_score}", mappingObj[13],
-			"{wds_anim}", mappingObj[14],
+			"{min_digit}", mappingObj[9],
+			"{score_skill}", mappingObj[10],
+			"{score_speed}", mappingObj[11],
+			"{anim_score}", mappingObj[12],
+			"{wds_anim}", mappingObj[13],
 			// Combo
-			"{ap}", mappingObj[15],
-			"{tag}", mappingObj[16],
-			"{last_digit}", mappingObj[17],
-			"{combo_speed}", mappingObj[18],
-			"{combo_burst}", mappingObj[19],
+			"{ap}", mappingObj[14],
+			"{tag}", mappingObj[15],
+			"{last_digit}", mappingObj[16],
+			"{combo_speed}", mappingObj[17],
+			"{combo_burst}", mappingObj[18],
+			"{achievement_rate}", mappingObj[19],
 			// Judgement
 			"{judge}", mappingObj[20],
 			"{judge_speed}", mappingObj[21],
@@ -405,7 +426,7 @@ func TryInstallObject(aviutlPath string, aviutlProcess string, mappingObj []stri
 	return true
 }
 
-func SetOverlayDefault() ([]string, []float64) {
+func SetOverlayDefault() ([]string, []string) {
 	execPath, err := os.Executable()
 	if err != nil {
 		panic(err)
@@ -433,7 +454,7 @@ func SetOverlayDefault() ([]string, []float64) {
 
 	scanner := bufio.NewScanner(file)
 	var name []string
-	var result []float64
+	var result []string
 
 	for scanner.Scan() {
 		line := scanner.Text()
@@ -442,10 +463,7 @@ func SetOverlayDefault() ([]string, []float64) {
 			if len(parts) != 2 {
 				continue
 			}
-			value, err := strconv.ParseFloat(strings.TrimSpace(parts[1]), 64)
-			if err != nil {
-				return nil, nil
-			}
+			value := strings.TrimSpace(parts[1])
 			name = append(name, strings.TrimSpace(parts[0]))
 			result = append(result, value)
 		}
@@ -600,4 +618,30 @@ func TryInstallScript(aviutlPath string, aviutlProcess string) bool {
 		}
 	}
 	return true
+}
+
+func FontInstalled() bool {
+	finder := sysfont.NewFinder(nil)
+
+	terms := []string{
+		"RodinNTLGPro-EB",
+		"RodinNTLGPro-DB",
+		"FOT-RodinNTLG Pro EB",
+		"FOT-RodinNTLG Pro DB",
+		"FOT-RodinNTLG Pro EB",
+		"FOT-RodinNTLG Pro DB",
+		"FOT-ロダンNTLG Pro EB",
+		"FOT-ロダンNTLG Pro DB",
+	}
+
+	for _, term := range terms {
+		font := finder.Match(term)
+		if font == nil {
+			continue
+		} else {
+			return true
+		}
+	}
+
+	return false
 }

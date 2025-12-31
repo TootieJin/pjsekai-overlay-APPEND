@@ -206,7 +206,7 @@ func FetchLevelData(source Source, level sonolus.LevelInfo) (sonolus.LevelData, 
 	return data, nil
 }
 
-func DownloadCover(source Source, level sonolus.LevelInfo, destPath string) error {
+func DownloadJacket(source Source, level sonolus.LevelInfo, destPath string) error {
 	var url string
 	var err error
 
@@ -336,7 +336,7 @@ func DownloadBackground(source Source, level sonolus.LevelInfo, destPath string,
 	if level.UseBackground.UseDefault || source.Name == "Chart Cyanvas Archive" || source.Id == "potato_leaves" || source.Id == "local_server" || source.Id == "next_sekai" {
 		coverPath := path.Join(destPath, "cover.png")
 		if _, err := os.Stat(coverPath); os.IsNotExist(err) {
-			return fmt.Errorf("カバー画像が見つかりません。先にカバー画像をダウンロードしてください。(Jacket image not found. Download jacket image first.)")
+			return fmt.Errorf("ジャケット画像が見つかりません。先にジャケット画像をダウンロードしてください。(Jacket image not found. Download jacket image first.)")
 		}
 
 		executablePath, err := os.Executable()
@@ -368,7 +368,7 @@ func DownloadBackground(source Source, level sonolus.LevelInfo, destPath string,
 
 		absCoverPath, err := filepath.Abs(coverPath)
 		if err != nil {
-			return fmt.Errorf("カバー画像のパス解決に失敗しました。(Failed to resolve path for jacket image.) [%s]", err)
+			return fmt.Errorf("ジャケット画像のパス解決に失敗しました。(Failed to resolve path for jacket image.) [%s]", err)
 		}
 
 		cmd := exec.Command(absBackgroundGenPath, absCoverPath, arg)

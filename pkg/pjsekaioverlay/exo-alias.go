@@ -93,27 +93,27 @@ func WriteExoFiles(assets string, destDir string, title string, description []st
 		// Root
 		"{offset}", mappingFile[0], // track0
 		"{cache}", mappingFile[1], // track1
-		"{font_type}", mappingFile[2], // track2
-		"{text_lang}", mappingFile[3], // dialog: text_lang=
-		"{watermark}", mappingFile[4], // check0
-		"{detail_stat}", mappingFile[5], // dialog: detail_stat=
+		"{text_lang}", mappingFile[2], // dialog: text_lang=
+		"{watermark}", mappingFile[3], // check0
+		"{detail_stat}", mappingFile[4], // dialog: detail_stat=
 		// Life
-		"{life}", mappingFile[6], // track1
-		"{life_skill}", mappingFile[7], // track2
-		"{overflow}", mappingFile[8], // dialog: overflow=
-		"{lead_zero}", mappingFile[9], // dialog: lead_zero=
+		"{life}", mappingFile[5], // track1
+		"{life_skill}", mappingFile[6], // track2
+		"{overflow}", mappingFile[7], // dialog: overflow=
+		"{lead_zero}", mappingFile[8], // dialog: lead_zero=
 		// Score
-		"{min_digit}", mappingFile[10], // track1
-		"{score_skill}", mappingFile[11], // track2
-		"{score_speed}", mappingFile[12], // dialog: speed=
-		"{anim_score}", mappingFile[13], // check0
-		"{wds_anim}", mappingFile[14], // dialog: wds_anim=
+		"{min_digit}", mappingFile[9], // track1
+		"{score_skill}", mappingFile[10], // track2
+		"{score_speed}", mappingFile[11], // dialog: speed=
+		"{anim_score}", mappingFile[12], // check0
+		"{wds_anim}", mappingFile[13], // dialog: wds_anim=
 		// Combo
-		"{ap}", mappingFile[15], // track1
-		"{tag}", mappingFile[16], // track2
-		"{last_digit}", mappingFile[17], // dialog: digits=
-		"{combo_speed}", mappingFile[18], // dialog: speed=
-		"{combo_burst}", mappingFile[19], // dialog: combo_burst=
+		"{ap}", mappingFile[14], // track1
+		"{tag}", mappingFile[15], // track2
+		"{last_digit}", mappingFile[16], // dialog: digits=
+		"{combo_speed}", mappingFile[17], // dialog: speed=
+		"{combo_burst}", mappingFile[18], // dialog: combo_burst=
+		"{achievement_rate}", mappingFile[19], // dialog: achievement_rate=
 		// Judgement
 		"{judge}", mappingFile[20], // track0
 		"{judge_speed}", mappingFile[21], // dialog: speed=
@@ -133,27 +133,27 @@ func WriteExoFiles(assets string, destDir string, title string, description []st
 		// Root
 		"{offset}", mappingFile[0], // track0
 		"{cache}", mappingFile[1], // track1
-		"{font_type}", mappingFile[2], // track2
-		"{text_lang}", mappingFile[3], // dialog: text_lang=
-		"{watermark}", mappingFile[4], // check0
-		"{detail_stat}", mappingFile[5], // dialog: detail_stat=
+		"{text_lang}", mappingFile[2], // dialog: text_lang=
+		"{watermark}", mappingFile[3], // check0
+		"{detail_stat}", mappingFile[4], // dialog: detail_stat=
 		// Life
-		"{life}", mappingFile[6], // track1
-		"{life_skill}", mappingFile[7], // track2
-		"{overflow}", mappingFile[8], // dialog: overflow=
-		"{lead_zero}", mappingFile[9], // dialog: lead_zero=
+		"{life}", mappingFile[5], // track1
+		"{life_skill}", mappingFile[6], // track2
+		"{overflow}", mappingFile[7], // dialog: overflow=
+		"{lead_zero}", mappingFile[8], // dialog: lead_zero=
 		// Score
-		"{min_digit}", mappingFile[10], // track1
-		"{score_skill}", mappingFile[11], // track2
-		"{score_speed}", mappingFile[12], // dialog: speed=
-		"{anim_score}", mappingFile[13], // check0
-		"{wds_anim}", mappingFile[14], // dialog: wds_anim=
+		"{min_digit}", mappingFile[9], // track1
+		"{score_skill}", mappingFile[10], // track2
+		"{score_speed}", mappingFile[11], // dialog: speed=
+		"{anim_score}", mappingFile[12], // check0
+		"{wds_anim}", mappingFile[13], // dialog: wds_anim=
 		// Combo
-		"{ap}", mappingFile[15], // track1
-		"{tag}", mappingFile[16], // track2
-		"{last_digit}", mappingFile[17], // dialog: digits=
-		"{combo_speed}", mappingFile[18], // dialog: speed=
-		"{combo_burst}", mappingFile[19], // dialog: combo_burst=
+		"{ap}", mappingFile[14], // track1
+		"{tag}", mappingFile[15], // track2
+		"{last_digit}", mappingFile[16], // dialog: digits=
+		"{combo_speed}", mappingFile[17], // dialog: speed=
+		"{combo_burst}", mappingFile[18], // dialog: combo_burst=
+		"{achievement_rate}", mappingFile[19], // dialog: achievement_rate=
 		// Judgement
 		"{judge}", mappingFile[20], // track0
 		"{judge_speed}", mappingFile[21], // dialog: speed=
@@ -200,15 +200,6 @@ func WriteExoFiles(assets string, destDir string, title string, description []st
 		baseExoENv1 = strings.ReplaceAll(baseExoENv1, mappingv1[i-1], mappingv1[i])
 		baseExoEN43v1 = strings.ReplaceAll(baseExoEN43v1, mappingv1[i-1], mappingv1[i])
 	}
-
-	baseExoJP = strings.ReplaceAll(baseExoJP, "\n", "\r\n")
-	baseExoJP43 = strings.ReplaceAll(baseExoJP43, "\n", "\r\n")
-	baseExoEN = strings.ReplaceAll(baseExoEN, "\n", "\r\n")
-	baseExoEN43 = strings.ReplaceAll(baseExoEN43, "\n", "\r\n")
-	baseExoJPv1 = strings.ReplaceAll(baseExoJPv1, "\n", "\r\n")
-	baseExoJP43v1 = strings.ReplaceAll(baseExoJP43v1, "\n", "\r\n")
-	baseExoENv1 = strings.ReplaceAll(baseExoENv1, "\n", "\r\n")
-	baseExoEN43v1 = strings.ReplaceAll(baseExoEN43v1, "\n", "\r\n")
 
 	encodedExoJP, err := io.ReadAll(transform.NewReader(
 		strings.NewReader(baseExoJP), japanese.ShiftJIS.NewEncoder()))
@@ -300,15 +291,8 @@ func WriteAliasFiles(assets string, destDir string, title string, description []
 	baseAliasv1 := string(rawBaseAliasv1)
 	baseAlias43v1 := string(rawBaseAlias43v1)
 
-	var fontName string
-	if mappingFile[2] == "1" {
-		fontName = "FOT-RodinNTLG Pro EB"
-	} else {
-		fontName = "Yu Gothic UI"
-	}
-
 	var textLang string
-	if mappingFile[3] == "1" {
+	if mappingFile[2] == "1" {
 		textLang = "English"
 	} else {
 		textLang = "日本語"
@@ -328,27 +312,27 @@ func WriteAliasFiles(assets string, destDir string, title string, description []
 		// Root
 		"{offset}", mappingFile[0],
 		"{cache}", mappingFile[1],
-		"{font_type}", fontName,
 		"{text_lang}", textLang,
-		"{watermark}", mappingFile[4],
-		"{detail_stat}", mappingFile[5],
+		"{watermark}", mappingFile[3],
+		"{detail_stat}", mappingFile[4],
 		// Life
-		"{life}", mappingFile[6],
-		"{life_skill}", mappingFile[7],
-		"{overflow}", mappingFile[8],
-		"{lead_zero}", mappingFile[9],
+		"{life}", mappingFile[5],
+		"{life_skill}", mappingFile[6],
+		"{overflow}", mappingFile[7],
+		"{lead_zero}", mappingFile[8],
 		// Score
-		"{min_digit}", mappingFile[10],
-		"{score_skill}", mappingFile[11],
-		"{score_speed}", mappingFile[12],
-		"{anim_score}", mappingFile[13],
-		"{wds_anim}", mappingFile[14],
+		"{min_digit}", mappingFile[9],
+		"{score_skill}", mappingFile[10],
+		"{score_speed}", mappingFile[11],
+		"{anim_score}", mappingFile[12],
+		"{wds_anim}", mappingFile[13],
 		// Combo
-		"{ap}", mappingFile[15],
-		"{tag}", mappingFile[16],
-		"{last_digit}", mappingFile[17],
-		"{combo_speed}", mappingFile[18],
-		"{combo_burst}", mappingFile[19],
+		"{ap}", mappingFile[14],
+		"{tag}", mappingFile[15],
+		"{last_digit}", mappingFile[16],
+		"{combo_speed}", mappingFile[17],
+		"{combo_burst}", mappingFile[18],
+		"{achievement_rate}", mappingFile[19],
 		// Judgement
 		"{judge}", mappingFile[20],
 		"{judge_speed}", mappingFile[21],
@@ -368,27 +352,27 @@ func WriteAliasFiles(assets string, destDir string, title string, description []
 		// Root
 		"{offset}", mappingFile[0],
 		"{cache}", mappingFile[1],
-		"{font_type}", fontName,
 		"{text_lang}", textLang,
-		"{watermark}", mappingFile[4],
-		"{detail_stat}", mappingFile[5],
+		"{watermark}", mappingFile[3],
+		"{detail_stat}", mappingFile[4],
 		// Life
-		"{life}", mappingFile[6],
-		"{life_skill}", mappingFile[7],
-		"{overflow}", mappingFile[8],
-		"{lead_zero}", mappingFile[9],
+		"{life}", mappingFile[5],
+		"{life_skill}", mappingFile[6],
+		"{overflow}", mappingFile[7],
+		"{lead_zero}", mappingFile[8],
 		// Score
-		"{min_digit}", mappingFile[10],
-		"{score_skill}", mappingFile[11],
-		"{score_speed}", mappingFile[12],
-		"{anim_score}", mappingFile[13],
-		"{wds_anim}", mappingFile[14],
+		"{min_digit}", mappingFile[9],
+		"{score_skill}", mappingFile[10],
+		"{score_speed}", mappingFile[11],
+		"{anim_score}", mappingFile[12],
+		"{wds_anim}", mappingFile[13],
 		// Combo
-		"{ap}", mappingFile[15],
-		"{tag}", mappingFile[16],
-		"{last_digit}", mappingFile[17],
-		"{combo_speed}", mappingFile[18],
-		"{combo_burst}", mappingFile[19],
+		"{ap}", mappingFile[14],
+		"{tag}", mappingFile[15],
+		"{last_digit}", mappingFile[16],
+		"{combo_speed}", mappingFile[17],
+		"{combo_burst}", mappingFile[18],
+		"{achievement_rate}", mappingFile[19],
 		// Judgement
 		"{judge}", mappingFile[20],
 		"{judge_speed}", mappingFile[21],
@@ -419,11 +403,6 @@ func WriteAliasFiles(assets string, destDir string, title string, description []
 		baseAliasv1 = strings.ReplaceAll(baseAliasv1, mappingv1[i-1], mappingv1[i])
 		baseAlias43v1 = strings.ReplaceAll(baseAlias43v1, mappingv1[i-1], mappingv1[i])
 	}
-
-	baseAlias = strings.ReplaceAll(baseAlias, "\n", "\r\n")
-	baseAlias43 = strings.ReplaceAll(baseAlias43, "\n", "\r\n")
-	baseAliasv1 = strings.ReplaceAll(baseAliasv1, "\n", "\r\n")
-	baseAlias43v1 = strings.ReplaceAll(baseAlias43v1, "\n", "\r\n")
 
 	if err := os.WriteFile(filepath.Join(destDir, "main2_16-9_1920x1080.object"),
 		[]byte(baseAlias),

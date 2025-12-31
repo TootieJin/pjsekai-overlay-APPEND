@@ -340,7 +340,7 @@ _name=音声ファイル
 再生位置=0.00
 再生速度=100.0
 ループ再生=0
-動画ファイルと連携=0
+動画ファイルと連携=1
 file=
 [15.1]
 _name=標準再生
@@ -427,7 +427,7 @@ camera=0
 _name=カスタムオブジェクト
 track0={offset}
 track1={cache}
-track2={font_type}
+track2=0.00
 track3=0.00
 check0={watermark}
 type=0
@@ -600,7 +600,7 @@ check0=0
 type=0
 filter=0
 name=コンボ@pjsekai-overlay-v1
-param=last_digit={last_digit};speed={combo_speed};combo_burst={combo_burst}
+param=last_digit={last_digit};speed={combo_speed};combo_burst={combo_burst};achievement_rate="{achievement_rate}"
 [26.1]
 _name=標準描画
 X=684.0

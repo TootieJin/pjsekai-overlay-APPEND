@@ -340,7 +340,7 @@ _name=Audio file
 Playback position=0.00
 vPlay=100.0
 Loop playback=0
-Sync with video files=0
+Sync with video files=1
 file=
 [15.1]
 _name=Standard playback
@@ -427,7 +427,7 @@ camera=0
 _name=Custom object
 track0={offset}
 track1={cache}
-track2={font_type}
+track2=0.00
 track3=0.00
 check0={watermark}
 type=0
@@ -600,7 +600,7 @@ check0=0
 type=0
 filter=0
 name=Combo@pjsekai-overlay-en-v1
-param=last_digit={last_digit};speed={combo_speed};combo_burst={combo_burst}
+param=last_digit={last_digit};speed={combo_speed};combo_burst={combo_burst};achievement_rate="{achievement_rate}"
 [26.1]
 _name=Standard drawing
 X=684.0

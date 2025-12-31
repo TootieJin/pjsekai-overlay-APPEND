@@ -3,7 +3,7 @@
 ; Place in ProgramData\aviutl2\Language to add to Language Settings
 
 ; Original file: https://github.com/nagotown/aviutl2-EN
-; Version: b25
+; Version: b26
 ; pjsekai-overlay language support by TootieJin
 
 [Effect]
@@ -89,6 +89,7 @@
 拡張色設定=Extended Color Settings
 画像合成=Image Composition
 モーションブラー=Motion Blur
+ローテーション=Rotation
 
 ; Extras (Originally untranslated)
 逆光=Backlight
@@ -459,7 +460,6 @@ ObjectMotionBlur_LK=Object Motion Blur_LK
 ; Root
 PEDファイル=PED File
 オフセット=Offset
-フォント種類=Font Type
 テキスト言語=Text Language
 キャッシュ=Cache
 透かし=Watermark
@@ -477,6 +477,7 @@ APコンボ=AP Combo
 コンボタグ=Combo Tag
 n00コンボ効果=n00 Combo Burst
 最後のX桁を表示=Show the last X digit(s)
+達成率表示=Achievement Rate
 ; Judgement
 判定タイプ=Judge Type
 ; Multi-use variable
@@ -935,6 +936,8 @@ Z軸回転=Rotate Z
 深度ぼけ=Depth Blur
 水平回転=Rotate Horizontal
 垂直回転=Rotate Vertical
+90度回転=Rotate 90 Degrees
+タイル風=Tile
 
 ; Extras (Originally untranslated)
 超点X=Diffuse X
@@ -1260,6 +1263,16 @@ YUVレンジ=YUV Color Range
 メディアを右回転=Rotate Media Right
 テキストを編集=Edit Text
 カーソル移動のスナップ(レイヤー)=Snap Cursor Move (Layer)
+シーン再生=Scene Playback
+音量レベルメーターの表示(プレビュー)=Show Volume Level Meter (Preview)
+音量レベルメーターの表示(シーン再生)=Show Volume Level Meter (Scene Playback)
+シーン再生・停止=Play/Stop Scene
+シーン再生・一時停止=Play/Pause Scene
+再生バッファの最大まで取得してシーン再生=Play Scene when buffer is full
+ショートカットキー操作の再生はシーン再生を優先=Prioritize shortcut key for scene playback
+オブジェクト複数選択=Select Multiple Objects
+開始終了点移動時に隣接オブジェクトを移動=Move adjacent objects when moving start/end points
+カーソルをフレーム範囲で表示=Display cursor within frame range
 
 ; Third-Party Export Plugins
 
@@ -1367,6 +1380,7 @@ YUVの設定=YUV Settings
 現在の編集データは更新されています\nプロジェクトを保存しますか？=Current editing data has been updated.\nSave project?
 シーンの読み込みに失敗しました=Failed to load scene
 シーンの保存に失敗しました=Failed to save scene
+シーンを選択=Select scene
 
 [Dialog]
 ; Dialog box names

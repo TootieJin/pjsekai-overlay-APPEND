@@ -382,7 +382,7 @@ func WritePedFile(frames []PedFrame, assets string, path string, levelInfo sonol
 	rating := math.Max(5, math.Min(float64(levelInfo.Rating), 40))
 	for i, frame := range frames {
 		score := frame.Score
-		frameScore := score - lastScore
+		frameScore := math.Trunc(score - lastScore)
 		lastScore = frame.Score
 
 		rank := "n"

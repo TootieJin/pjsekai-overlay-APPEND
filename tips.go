@@ -288,7 +288,10 @@ func Tips() {
 		"If you achieve a Full Combo or All Perfect, you will hear a special voice line on the results screen.",
 
 		"難易度「APPEND」は、3本指以上でのプレイが必要な特別な難易度です。",
-		"Extra difficulty is a mode that requires three or more fingers to play.", // localization error reference
+		"Append difficulty is a mode that requires three or more fingers to play.",
+
+		"難易度「APPEND」は、3本指以上でのプレイが必要な特別な難易度です。",
+		"Extra (what) difficulty is a mode that requires three or more fingers to play.", // localization error reference
 
 		"ご存知ですか？穂波さんの家族は、父親の床屋さんの上に住んでいます。",
 		"Did you know? Honami’s family lives above her father’s hair salon.",
@@ -323,8 +326,53 @@ func Tips() {
 		"いないいないいないいないいないいない",
 		"いないいないいないいないいないいない",
 
-		"コンソールでこれを使って素早く生成: pjsekai-overlay-APPEND [譜面ID] [オプション]",
-		"Generate quickly using this in the console: pjsekai-overlay-APPEND [Chart ID] [Options]",
+		"コンソールでこれを使って素早く生成: pjsekai-overlay-APPEND [オプション] [譜面ID]",
+		"Generate quickly using this in the console: pjsekai-overlay-APPEND [Options] [Chart ID]",
+
+		"達成率表示を0に設定することで、達成率の表示をオフにできます。",
+		"You can turn off the Achievement Rate display by setting Achievement Rate to 0.",
+
+		"達成率表示に「+」接尾辞を追加すると、アニメーション採点と同様に段階的に増加させることができます！",
+		"You can add the \"+\" suffix in the Achievement Rate to increase incrementally, just like Animated Scoring!",
+
+		"達成率表示の「-」接尾辞は下降率を全く反映していません。譜面全体に対して達成率の値をそのまま表示しているだけです。",
+		"The \"-\" suffix in the Achievement Rate doesn't even do the descend rate at all. We just display whatever Achievement Rate value for the whole chart.",
+
+		"正直、セガは達成率機能を追加すべきだ…",
+		"Honestly, SEGA should just add the Achievement Rate feature...",
+
+		"ノーツ数: ???",
+		"Note count: ???",
+
+		"スコアが満足のいくものでない？総合力を上げればよい。",
+		"Scores not satisfactory? Just increase your team power.",
+
+		"手は便利だ。もっと掴みに行け。",
+		"Hands are useful. Go grab some more.",
+
+		"ポップアップ通知を無効にしていますか？",
+		"Have you disabled your pop-up notifications?",
+
+		"\n⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⡀⠐⣒⣾⣯⡯⠤⠤⠬⣼⣿⣖⣢⢤⣄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\n⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣤⣖⣿⠗⠋⠉⠁⠀⠀⠀⠀⠀⠀⠀⠉⠉⠛⠶⣭⣶⢆⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀\n⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣴⣿⠞⠉⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠙⠷⣌⠢⡀⠀⠀⠀⠀⠀⠀⠀\n⠀⠀⠀⠀⠀⠀⠀⠀⣴⣿⠟⠁⠀⠀⢀⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⢷⡱⣄⠀⠀⠀⠀⠀⠀\n⠀⠀⠀⠀⠀⠀⢠⣾⡿⠁⠀⠀⠀⣠⡞⠀⢠⠄⠀⠀⠀⠀⠀⠀⠀⠀⣀⠀⠀⠀⠀⠀⠀⠀⠀⠻⣾⡆⠀⠀⠀⠀⠀\n⠀⠀⠀⠀⠀⢀⣾⡟⠀⠀⠀⠀⣴⣿⠁⢠⣿⠀⠀⠀⠀⠀⠀⠀⠀⠀⣿⡀⠠⡆⠀⠀⠀⠀⠀⠀⢹⣿⡄⠀⠀⠀⠀\n⠀⠀⠀⠀⣀⣼⡿⠃⠀⠀⠀⣰⠏⣿⢀⣿⣧⣀⠀⠀⠀⠀⡄⢀⡇⢀⡿⡇⠀⣿⠀⠀⠀⠀⠀⠀⠀⢿⣷⠀⠀⠀⠀\n⢀⡖⣲⣶⡿⠛⢁⠀⠀⢀⣴⡇⠀⠟⠚⢹⡇⠀⠀⠀⠀⣰⠇⣸⣧⣾⠀⢱⠀⣿⠀⠀⠀⠀⠀⠀⠀⠸⣿⡆⠀⠀⠀\n⠀⠻⢿⣷⣤⣴⡏⠀⠀⢸⣿⣁⣰⣾⣿⣾⣤⡀⠀⠀⠀⠿⠾⢿⡟⠁⠀⠸⠶⠟⣇⠀⠀⠀⠀⠀⠀⢤⣿⣇⠀⠀⠀\n⠀⠀⠀⠉⣿⣿⠀⠀⠀⢸⣿⡿⠛⣟⢙⡿⢿⡛⠀⠀⠀⠀⠀⣤⣷⣿⡶⣦⡄⠀⣿⠀⠀⠀⠀⠠⡄⠈⠻⣿⣧⣄⡀\n⠀⠀⠀⠀⣿⣿⠀⠀⠀⢸⣿⡇⠀⣿⠛⠻⣾⠇⠀⠀⠀⠀⠀⣾⢉⣿⠿⣾⢻⣦⣿⠀⠀⠀⠀⠀⣿⢦⣤⣈⣙⣿⣿\n⠀⠀⠀⠀⠹⣿⡆⣧⠀⠈⣿⡅⠀⠙⠓⠚⠋⠀⠀⠀⠀⠀⠀⢿⡘⠛⢣⡏⢸⠿⡟⠀⠀⣿⠀⠀⣿⠀⣿⡏⠙⠋⠁\n⠀⠀⠀⠀⠀⢻⣿⣜⣆⠀⢹⣷⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠻⠶⠛⠁⠀⢰⠃⠀⢰⡟⠀⢀⣏⣼⣿⠃⠀⠀⠀\n⠀⠀⠀⠀⠀⠀⠙⢿⣿⣦⡈⢿⣿⣷⣤⣀⡀⠀⠠⣄⣀⠀⠀⠀⠀⠀⠀⢀⣴⡟⠀⢠⡟⠀⠀⣾⣿⣿⠋⠀⠀⠀⠀\n⠀⠀⠀⠀⠀⠀⠀⠀⠛⢮⣟⣶⣿⣻⣷⣿⣿⠓⣶⣶⡶⠶⣶⣶⣶⣶⣾⣿⡟⢀⣴⡟⢁⣠⣾⣿⠟⠁⠀⠀⠀⠀⠀\n⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠉⠉⠛⣿⣿⣿⣰⣟⠙⠳⠖⣿⠇⢿⣧⣿⣯⣴⣿⣿⣾⣿⡽⠋⠁⠀⠀⠀⠀⠀⠀⠀\n⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣼⢿⡿⢿⣿⡿⠶⠲⢶⣿⣇⣼⡿⠿⣿⡏⠉⠉⠉⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\n⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢠⣾⠋⢸⡇⢈⣿⠁⠀⠀⠀⣿⣿⣏⠀⠀⠹⣿⡄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\n⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢰⣿⡁⠀⣿⠁⢀⣿⠦⢤⣤⣤⣿⡇⠹⣦⠀⠀⠘⣿⡄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\n⠀⠀⠀⠀⠀⠀⠀⠀⠀⣤⣿⡉⢛⣿⡇⠀⢸⣿⠛⢻⡷⠶⢿⣇⠀⠻⣦⠀⠀⢙⣿⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\n⠀⠀⠀⠀⠀⠀⠀⠀⠀⣧⣈⣿⠿⣿⡗⠀⢸⠿⠀⢸⡇⠀⠘⣿⠀⠀⠹⣧⡶⠛⢻⡄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\n⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠉⠁⠠⣿⡏⠁⣾⣦⣀⣸⣷⣦⡀⣿⡇⠀⠀⢿⣿⡶⠿⠃⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\n⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠛⠷⠶⣿⠉⠛⠋⠹⣿⠛⢿⣧⣤⣤⣾⡿⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\n⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⡄⠀⠀⢸⣿⠀⠀⠉⣹⡟⠉⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\n⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣇⠀⢀⣸⣿⡀⠀⠀⣸⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\n⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣿⠉⠉⣿⣿⡗⠒⠲⣿⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\n⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠙⠻⠿⢏⣸⡷⡴⣶⠿⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+		"Otori Emu",
+
+		"Yooooooooooooooooooo",
+		"Yooooooooooooooooooo",
+
+		"頭を打っても更新は早くなりません。",
+		"Hitting your head won’t speed up updates.",
+
+		"7278843337433678633778263464",
+		"7278843337433678633778263464",
+
+		"おかけになった番号は存在しません",
+		"Sorry, the number you dialed does not exist",
+
+		"この文章を読んでいるとき、君がきっとこの文章を読んでいるに違いないと私は知っている。",
+		"When you read this sentence, I know that you must be reading this sentence.",
+
+		"連続プレイの後は、目を休ませてあげましょう！",
+		"Give your eyes some rest after consecutive plays!",
 	}
 
 	// これを見て何か追加したいTipsがあれば、PRを送ってください

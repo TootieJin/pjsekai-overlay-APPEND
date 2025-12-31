@@ -111,8 +111,8 @@ func origMain(isOptionSpecified bool) {
 	var customBG bool
 	flag.BoolVar(&customBG, "custom-bg", false, "UntitledChartsでカスタム背景を使用する。(Use custom background in UntitledCharts.)")
 
-	var scoreMode string
-	flag.StringVar(&scoreMode, "score-mode", "default", "採点モードを指定します。(Specify scoring mode.)")
+	var scoreModeInt int
+	flag.IntVar(&scoreModeInt, "score-mode", 1, "採点モードを指定します。(Specify scoring mode.)\n'1': デフォルト/Default\n'2': 大会モード/Tournament Mode (PERFECT = +3)\n'3': Sonolusスコア/Arcade Score (MAX: 1000000)")
 
 	var teamPower float64
 	flag.Float64Var(&teamPower, "power", 250000, "総合力を指定します。(Specify the team's power.)")
@@ -121,7 +121,7 @@ func origMain(isOptionSpecified bool) {
 	flag.BoolVar(&enUI, "en-ui", false, "英語版を使う(イントロ + v3 UI) - Use English version (Intro + v3 UI)")
 
 	flag.Usage = func() {
-		fmt.Println("Usage: pjsekai-overlay-APPEND [譜面ID (Chart ID)] [オプション (Options)]")
+		fmt.Println("Usage: pjsekai-overlay-APPEND [オプション (Options)] [譜面ID (Chart ID)]")
 		flag.PrintDefaults()
 	}
 
@@ -135,54 +135,132 @@ func origMain(isOptionSpecified bool) {
 		return
 	}
 
+	fmt.Printf("- 前提条件を確認中 (Checking prerequisites)... ")
+
 	locale := func() string {
 		cmd := exec.Command("powershell", "-Command", "Get-WinSystemLocale | Select-Object -ExpandProperty Name")
 		output, err := cmd.Output()
 		if err != nil {
-			return ""
+			panic(err)
 		}
 		return strings.TrimSpace(string(output))
 	}
 	if locale() != "ja-JP" {
-		fmt.Println(color.RedString(fmt.Sprintf("FAIL: お使いのシステムロケールが「日本語（日本）」に設定されていません。変更方法についてはREADMEを参照してください。\nYour system locale is not set to \"Japanese (Japan)\". Refer to README for how to change it.\n- System locale: %v", locale())))
+		fmt.Println(color.RedString(fmt.Sprintf("\nFAIL: お使いのシステムロケールが「日本語（日本）」に設定されていません。変更方法についてはWikiを参照してください。\nYour system locale is not set to \"Japanese (Japan)\". Refer to the wiki for how to change it.\n- System locale: %v", locale())))
+		return
+	}
+
+	langPackCheck := func() string {
+		cmd := exec.Command("powershell", "-Command", "Get-InstalledLanguage")
+		output, err := cmd.Output()
+		if err != nil {
+			panic(err)
+		}
+		return strings.TrimSpace(string(output))
+	}
+	if !strings.Contains(langPackCheck(), "und-Jpan") || !strings.Contains(langPackCheck(), "ja-JP") {
+		fmt.Println(color.RedString("\nFAIL: 日本語言語パックがインストールされていません。変更方法についてはWikiを参照してください。\nJapanese language pack is not installed. Refer to the wiki for how to install it."))
+		return
+	}
+
+	cwd, err := os.Getwd()
+
+	if err != nil {
+		fmt.Println(color.RedString(fmt.Sprintf("FAIL: %s", err.Error())))
+		return
+	}
+
+	isAdminPerm := func(path string) bool {
+		created := false
+		if _, err := os.Stat(path); os.IsNotExist(err) {
+			if err := os.MkdirAll(path, 0755); err != nil {
+				return true
+			}
+			created = true
+		}
+
+		testFile := filepath.Join(path, ".test_access")
+		if err := os.WriteFile(testFile, []byte("test"), 0644); err != nil {
+			return true
+		}
+
+		// cleanup test file
+		_ = os.Remove(testFile)
+
+		if created {
+			_ = os.Remove(path)
+		}
+
+		return false
+	}
+	if isAdminPerm(cwd) {
+		fmt.Println(color.RedString(fmt.Sprintf("\nFAIL: ディレクトリには管理者権限が必要です。pjsekai-overlay-APPENDを「C:\\」または別の場所に移動してください。\nYour directory requires administrative permissions. Please move pjsekai-overlay-APPEND to \"C:\\\" or somewhere else.\n\n出力先ディレクトリ (Output path): %s", cwd)))
+		return
+	}
+
+	isASCII := func(s string) bool {
+		for i := 0; i < len(s); i++ {
+			if s[i] > 127 {
+				return false
+			}
+		}
+		return true
+	}
+	if !isASCII(cwd) {
+		fmt.Println(color.RedString(fmt.Sprintf("\nFAIL: ディレクトリに非ASCII文字が含まれています。pjsekai-overlay-APPENDを「C:\\」または別の場所に移動してください。\nYour directory contains non-ASCII characters. Please move pjsekai-overlay-APPEND to \"C:\\\" or somewhere else.\n\n出力先ディレクトリ (Output path): %s", cwd)))
 		return
 	}
 
 	mappingName, mapping := pjsekaioverlay.SetOverlayDefault()
 
 	if len(mapping) != 22 {
-		fmt.Println(color.RedString(fmt.Sprintf("FAIL:「default.ini」ファイルのデータに異常があります。「default.ini」ファイルを削除し、プログラムを再起動して再生成してください。\nAbnormal \"default.ini\" data. Please regenerate by deleting the \"default.ini\" file and reopen the program.\n- Mapping count: %v != 22", len(mapping))))
+		fmt.Println(color.RedString(fmt.Sprintf("\nFAIL:「default.ini」ファイルのデータに異常があります。「default.ini」ファイルを削除し、プログラムを再起動して再生成してください。\nAbnormal \"default.ini\" data. Please regenerate by deleting the \"default.ini\" file and reopen the program.\n- Mapping count: %v != 22", len(mapping))))
 		return
+	}
+
+	var mappingFloat64 []float64
+	for _, v := range mapping {
+		v = strings.TrimRightFunc(v, func(r rune) bool {
+			return strings.HasSuffix(string(r), "+") || strings.HasSuffix(string(r), "-") || strings.HasSuffix(string(r), ".") || (r < '0' || r > '9')
+		})
+		mappingFloat64 = append(mappingFloat64, func() float64 {
+			f, _ := strconv.ParseFloat(v, 64)
+			return f
+		}())
+	}
+
+	var float64Pointer = func(f float64) *float64 {
+		return &f
 	}
 
 	var inRange = map[string]bool{
 		// Root
-		"offset":      mapping[0] >= -99999.99 && mapping[0] <= 99999.99,
-		"cache":       mapping[1] == 0 || mapping[1] == 1,
-		"font_type":   mapping[2] == 0 || mapping[2] == 1,
-		"text_lang":   mapping[3] == 0 || mapping[3] == 1,
-		"watermark":   mapping[4] == 0 || mapping[4] == 1,
-		"detail_stat": mapping[5] == 0 || mapping[5] == 1,
+		"offset":      mappingFloat64[0] >= -99999.99 && mappingFloat64[0] <= 99999.99,
+		"cache":       mappingFloat64[1] == 0 || mappingFloat64[1] == 1,
+		"text_lang":   mappingFloat64[2] == 0 || mappingFloat64[2] == 1,
+		"watermark":   mappingFloat64[3] == 0 || mappingFloat64[3] == 1,
+		"detail_stat": mappingFloat64[4] == 0 || mappingFloat64[4] == 1,
 		// Life
-		"life":       mapping[6] >= 0 && mapping[6] <= 9999 && math.Mod(mapping[6], 1.0) == 0,
-		"life_skill": mapping[7] == 0 || mapping[7] == 1,
-		"overflow":   mapping[8] == 0 || mapping[8] == 1,
-		"lead_zero":  mapping[9] == 0 || mapping[9] == 1,
+		"life":       mappingFloat64[5] >= 0 && mappingFloat64[5] <= 9999 && math.Mod(mappingFloat64[5], 1.0) == 0,
+		"life_skill": mappingFloat64[6] == 0 || mappingFloat64[6] == 1,
+		"overflow":   mappingFloat64[7] == 0 || mappingFloat64[7] == 1,
+		"lead_zero":  mappingFloat64[8] == 0 || mappingFloat64[8] == 1,
 		// Score
-		"min_digit":   mapping[10] >= 1 && mapping[10] <= 99 && math.Mod(mapping[10], 1.0) == 0,
-		"score_skill": mapping[11] >= 0 && mapping[11] <= 2 && math.Mod(mapping[11], 1.0) == 0,
-		"score_speed": mapping[12] >= 0,
-		"anim_score":  mapping[13] == 0 || mapping[13] == 1,
-		"wds_anim":    mapping[14] == 0 || mapping[14] == 1,
+		"min_digit":   mappingFloat64[9] >= 1 && mappingFloat64[9] <= 99 && math.Mod(mappingFloat64[9], 1.0) == 0,
+		"score_skill": mappingFloat64[10] >= 0 && mappingFloat64[10] <= 2 && math.Mod(mappingFloat64[10], 1.0) == 0,
+		"score_speed": mappingFloat64[11] >= 0,
+		"anim_score":  mappingFloat64[12] == 0 || mappingFloat64[12] == 1,
+		"wds_anim":    mappingFloat64[13] == 0 || mappingFloat64[13] == 1,
 		// Combo
-		"ap":          mapping[15] == 0 || mapping[15] == 1,
-		"tag":         mapping[16] == 0 || mapping[16] == 1,
-		"last_digit":  mapping[17] >= 0 && math.Mod(mapping[17], 1.0) == 0,
-		"combo_speed": mapping[18] >= 0,
-		"combo_burst": mapping[19] == 0 || mapping[19] == 1,
+		"ap":               mappingFloat64[14] == 0 || mappingFloat64[14] == 1,
+		"tag":              mappingFloat64[15] == 0 || mappingFloat64[15] == 1,
+		"last_digit":       mappingFloat64[16] >= 0 && math.Mod(mappingFloat64[16], 1.0) == 0,
+		"combo_speed":      mappingFloat64[17] >= 0,
+		"combo_burst":      mappingFloat64[18] == 0 || mappingFloat64[18] == 1,
+		"achievement_rate": float64Pointer(mappingFloat64[19]) != nil,
 		// Judgement
-		"judge":       mapping[20] >= 1 && mapping[20] <= 10 && math.Mod(mapping[20], 1.0) == 0,
-		"judge_speed": mapping[21] >= 0,
+		"judge":       mappingFloat64[20] >= 1 && mappingFloat64[20] <= 10 && math.Mod(mappingFloat64[20], 1.0) == 0,
+		"judge_speed": mappingFloat64[21] >= 0,
 	}
 
 	var mappingErr []string
@@ -202,6 +280,8 @@ func origMain(isOptionSpecified bool) {
 	for _, v := range mapping {
 		mappingStr = append(mappingStr, fmt.Sprintf("%v", v))
 	}
+
+	fmt.Println(color.GreenString("OK"))
 
 	var aviutlPath, aviutlProcess, aviutlName string
 
@@ -297,7 +377,6 @@ func origMain(isOptionSpecified bool) {
 	}
 
 	var chartSource pjsekaioverlay.Source
-	var err error
 	if strings.HasPrefix(chartId, "sync") {
 		chartSource, err = pjsekaioverlay.DetectLocalChartSource()
 		if err != nil {
@@ -329,7 +408,7 @@ func origMain(isOptionSpecified bool) {
 	}
 
 	if !isOptionSpecified && chartSource.Id == "untitledcharts" {
-		message := fmt.Sprintf("NOTE: %sでの録画には別の動画の作り方が必要です。詳細はREADMEの「動画の作り方」をご確認ください。\nRecording in %s require a different method for creating videos. Please check \"Video Guide\" in README for details.\n\n- 何かキーを押すと続行します...\n- Press any key to continue...", chartSource.Name, chartSource.Name)
+		message := fmt.Sprintf("NOTE: %sでの録画には別の動画の作り方が必要です。詳細はWikiの「動画の作り方」をご確認ください。\nRecording in %s require a different method for creating videos. Please check \"Video Guide\" in the wiki for details.\n\n- 何かキーを押すと続行します...\n- Press any key to continue...", chartSource.Name, chartSource.Name)
 		fmt.Println(color.CyanString(message))
 
 		before, _ := rawmode.Enable()
@@ -382,62 +461,14 @@ func origMain(isOptionSpecified bool) {
 		return
 	}
 
-	cwd, err := os.Getwd()
-
-	if err != nil {
-		fmt.Println(color.RedString(fmt.Sprintf("FAIL: %s", err.Error())))
-		return
-	}
-
 	formattedOutDir := filepath.Join(cwd, strings.ReplaceAll(outDir, "_chartId_", chartId))
 	resultDir := filepath.Dir(formattedOutDir) + "\\" + chartId
-
-	isAdminPerm := func(path string) bool {
-		created := false
-		if _, err := os.Stat(path); os.IsNotExist(err) {
-			if err := os.MkdirAll(path, 0755); err != nil {
-				return true
-			}
-			created = true
-		}
-
-		testFile := filepath.Join(path, ".test_access")
-		if err := os.WriteFile(testFile, []byte("test"), 0644); err != nil {
-			return true
-		}
-
-		// cleanup test file
-		_ = os.Remove(testFile)
-
-		if created {
-			_ = os.Remove(path)
-		}
-
-		return false
-	}
-	if isAdminPerm(formattedOutDir) {
-		fmt.Println(color.RedString(fmt.Sprintf("\nFAIL: ディレクトリには管理者権限が必要です。pjsekai-overlay-APPENDを「C:\\」または別の場所に移動してください。\nYour directory requires administrative permissions. Please move pjsekai-overlay-APPEND to \"C:\\\" or somewhere else.\n\n出力先ディレクトリ (Output path): %s", resultDir)))
-		return
-	}
-
-	isASCII := func(s string) bool {
-		for i := 0; i < len(s); i++ {
-			if s[i] > 127 {
-				return false
-			}
-		}
-		return true
-	}
-	if !isASCII(formattedOutDir) {
-		fmt.Println(color.RedString(fmt.Sprintf("\nFAIL: ディレクトリに非ASCII文字が含まれています。pjsekai-overlay-APPENDを「C:\\」または別の場所に移動してください。\nYour directory contains non-ASCII characters. Please move pjsekai-overlay-APPEND to \"C:\\\" or somewhere else.\n\n出力先ディレクトリ (Output path): %s", resultDir)))
-		return
-	}
 
 	fmt.Println(color.GreenString("OK"))
 	fmt.Printf("- 出力先ディレクトリ (Output path): %s\n", color.CyanString(resultDir))
 
 	fmt.Print("- ジャケットをダウンロード中 (Downloading jacket)... ")
-	err = pjsekaioverlay.DownloadCover(chartSource, chart, formattedOutDir)
+	err = pjsekaioverlay.DownloadJacket(chartSource, chart, formattedOutDir)
 	if err != nil {
 		fmt.Println(color.RedString(fmt.Sprintf("FAIL: %s", err.Error())))
 		return
@@ -541,6 +572,15 @@ func origMain(isOptionSpecified bool) {
 
 	fmt.Println(color.GreenString("OK"))
 
+	var scoreMode string
+	switch scoreModeInt {
+	default:
+		scoreMode = "default"
+	case 2:
+		scoreMode = "tournament"
+	case 3:
+		scoreMode = "sonolus"
+	}
 	if !isOptionSpecified {
 		fmt.Print("\n採点モードを選択してください。(Choose scoring mode.)\n'1': デフォルト/Default\n'2': 大会モード/Tournament Mode (PERFECT = +3)\n'3': Sonolusスコア/Arcade Score (MAX: 1000000)\n> ")
 		before, _ := rawmode.Enable()

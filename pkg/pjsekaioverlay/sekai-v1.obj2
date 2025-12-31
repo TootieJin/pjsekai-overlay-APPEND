@@ -4,19 +4,12 @@
 --label:カスタムオブジェクト
 --file@file:PEDファイル
 --track@offset:オフセット,-99999.99,99999.99,{offset},0.01
---select@font_type:フォント種類={font_type},Yu Gothic UI=0,FOT-RodinNTLG Pro EB=1
---select@text_lang:テキスト言語={text_lang},日本語=0,English=1
 --check@cache:キャッシュ,{cache}
+--select@text_lang:テキスト言語={text_lang},日本語=0,English=1
 --check@watermark:透かし,{watermark}
 --check@detail_stat:詳細統計,{detail_stat}
 
-local font = ""
-if font_type == 0 then
-  font = "Yu Gothic UI"
-else
-  font = "FOT-RodinNTLG Pro EB"
-end
-
+local font = "{font}"
 local big = require("bignumber")
 if cache ~= 1 or not PED_DATA or PED_DATA.file ~= file then
   debug_print("[debug] Loading ped data in " .. file)
@@ -163,18 +156,18 @@ if PED_DATA.version == "{version}" or "{version}" == "0.0.0" then
   end
   PED_DATA.version_status = "ok"
 else
-  obj.setfont("Yu Gothic UI", 32)
+  obj.setfont(font, 32)
   if PED_DATA.loaded == "cannot_open" then
     if text_lang == 1 then
       obj.load(
         "text",
-        "<s32,Yu Gothic UI,B>(! ERROR !)\n<s>"..
+        "<s32,"..font..",B>(! ERROR !)\n<s>"..
         "ped file unable to be opened!"
       )
     else
       obj.load(
         "text",
-        "<s32,Yu Gothic UI,B>(! ERROR !)\n<s>"..
+        "<s32,"..font..",B>(! ERROR !)\n<s>"..
         "pedファイルを開くことができません！"
       )
     end
@@ -182,14 +175,14 @@ else
     if text_lang == 1 then
       obj.load(
         "text",
-        "<s32,Yu Gothic UI,B>(! ERROR !)\n<s>"..
+        "<s32,"..font..",B>(! ERROR !)\n<s>"..
         "Unable to read ped file!\n"..
         "- Regenerate pjsekai-overlay."
       )
     else
       obj.load(
         "text",
-        "<s32,Yu Gothic UI,B>(! ERROR !)\n<s>"..
+        "<s32,"..font..",B>(! ERROR !)\n<s>"..
         "pedファイルを読み取れません！\n"..
         "- pjsekai-overlayを再生成してください。"
       )
@@ -198,14 +191,14 @@ else
     if text_lang == 1 then
       obj.load(
         "text",
-        "<s32,Yu Gothic UI,B>(! ERROR !)\n<s>"..
+        "<s32,"..font..",B>(! ERROR !)\n<s>"..
         "Version of the ped file is not set!\n"..
         "- Regenerate pjsekai-overlay."
       )
     else
       obj.load(
         "text",
-        "<s32,Yu Gothic UI,B>(! ERROR !)\n<s>"..
+        "<s32,"..font..",B>(! ERROR !)\n<s>"..
         "pedファイルのバージョンが設定されていません！\n"..
         "- pjsekai-overlayを再生成してください。"
       )
@@ -214,22 +207,22 @@ else
     if text_lang == 1 then
       obj.load(
         "text",
-        "<s32,Yu Gothic UI,B>(! ERROR !)\n<s>"..
+        "<s32,"..font..",B>(! ERROR !)\n<s>"..
         "The version of the file is different!\n"..
         "[.obj: {version}, .ped: "..PED_DATA.version.."]\n\n"..
-        "- <s32,Yu Gothic UI,B>If .obj is up to date:<s> Regenerate pjsekai-overlay.\n"..
-        "- <s32,Yu Gothic UI,B>If .ped is up to date:<s> Regenerate object file. (Open AviUtl ExEdit2, then pjsekai-overlay-APPEND)\n"..
-        "<s32,Yu Gothic UI,B>DO NOT RENAME ped VERSION!<s>"
+        "- <s32,"..font..",B>If .obj is up to date:<s> Regenerate pjsekai-overlay.\n"..
+        "- <s32,"..font..",B>If .ped is up to date:<s> Regenerate object file. (Open AviUtl ExEdit2, then pjsekai-overlay-APPEND)\n"..
+        "<s32,"..font..",B>DO NOT RENAME ped VERSION!<s>"
       )
     else
       obj.load(
         "text",
-        "<s32,Yu Gothic UI,B>(! ERROR !)\n<s>"..
+        "<s32,"..font..",B>(! ERROR !)\n<s>"..
         "ファイルとのバージョンが違います！\n"..
         "[.obj: {version}, .ped: "..PED_DATA.version.."]\n\n"..
-        "- <s32,Yu Gothic UI,B>.objが最新の場合:<s> pjsekai-overlayを再生成してください。\n"..
-        "- <s32,Yu Gothic UI,B>.pedが最新の場合:<s> オブジェクトファイルを再生成してください。(AviUtl ExEdit2を開き、pjsekai-overlay-APPENDを実行)\n"..
-        "<s32,Yu Gothic UI,B>pedバージョンの名前を変更しないでください！<s>"
+        "- <s32,"..font..",B>.objが最新の場合:<s> pjsekai-overlayを再生成してください。\n"..
+        "- <s32,"..font..",B>.pedが最新の場合:<s> オブジェクトファイルを再生成してください。(AviUtl ExEdit2を開き、pjsekai-overlay-APPENDを実行)\n"..
+        "<s32,"..font..",B>pedバージョンの名前を変更しないでください！<s>"
       )
     end
   end
@@ -242,7 +235,7 @@ if watermark == 1 and PED_DATA.version_status == "ok" then
   local y_axis1 = 545 + ((obj.screen_h/2) - (1080/2))
   local y_axis2 = 550 + ((obj.screen_h/2) - (1080/2))
   local size = 0.26
-  if font_type == 0 then
+  if font == "Yu Gothic UI" then
     x_axis = -540 - ((obj.screen_w/2) - (1920/2))
     y_axis1 = 525 + ((obj.screen_h/2) - (1080/2))
     y_axis2 = 540 + ((obj.screen_h/2) - (1080/2))
@@ -267,7 +260,7 @@ end
 if detail_stat == 1 and PED_DATA.version_status == "ok" and not obj.getinfo("saving") then
   local x_axis = -360 - ((obj.screen_w/2) - (1920/2))
   local size = 0.26
-  if font_type == 0 then
+  if font == "Yu Gothic UI" then
     x_axis = -360 - ((obj.screen_w/2) - (1920/2))
     size = 0.312
   end
@@ -483,15 +476,73 @@ end
 --track@x_boundary:X軸境界,0,9999,6000,1
 --track@ap:APコンボ,0,1,{ap},1
 --track@tag:コンボタグ,0,1,{tag},1
---check@combo_burst:n00コンボ効果,{combo_burst}
 --value@last_digit:最後のX桁を表示,{last_digit}
 --value@speed:アニメーション速度,{combo_speed}
+--check@combo_burst:n00コンボ効果,{combo_burst}
+--value@achievement_rate:達成率表示,"{achievement_rate}"
 
+local function convertToNumber(s)
+  return s:match("([%-0-9.]+)")
+end
+local function endsWith(s, suffix)
+  return s:sub(-#suffix) == suffix
+end
+local achievement_value = tonumber(convertToNumber(achievement_rate)) or 0
 if PED_DATA and PED_DATA.version_status == "ok" then
   local ap_alpha = math.min(1, (math.sin(obj.time * math.pi * 4/3) + 1) * (1 / 2))
-  if PED_DATA.current.combo > 0 then
-    obj.setoption("drawtarget", "tempbuffer", x_boundary, 200)
+  local progress_frame = ((obj.frame - OFFSET) - (PED_DATA.current.time * obj.framerate))
+  local progress_offset = math.min(1, (progress_frame / 30))
+  obj.setoption("drawtarget", "tempbuffer", x_boundary, 400)
 
+  if achievement_value ~= 0 then
+    local achievement_str = string.format("%8.4f", (PED_DATA.current.combo / PED_DATA.frames[#PED_DATA.frames].combo) * achievement_value) .. "%"
+    if endsWith(achievement_rate, "+") then
+      achievement_str = string.format("%8.4f", ((PED_DATA.current.combo - ((PED_DATA.current.combo - PED_DATA.previous.combo) * (1 - progress_offset)^3)) / PED_DATA.frames[#PED_DATA.frames].combo) * achievement_value) .. "%"
+    elseif endsWith(achievement_rate, "-") then
+      achievement_str = string.format("%8.4f", achievement_value) .. "%"
+    end
+
+    local shift_period_x = 0
+    for i = 1, #achievement_str do
+      local digit = achievement_str:sub(i, i)
+      if digit ~= " " then
+        local shift = -(#achievement_str / 2) + (i + 1) - 0.5
+        local shift_period_y = 0
+        local shift_small_x = 0
+        local shift_small_y = 0
+        local size = 0.23
+
+        if digit == "." then
+          shift_period_x = shift_period_x - 6
+          shift_period_y = 12
+        end
+        if achievement_str:sub(i-1, i-1) == "." then
+          shift_period_x = shift_period_x - 6
+        end
+        if i >= #achievement_str - 2 then
+          shift = shift - (0.5 * (i - (#achievement_str - 2)))
+          shift_small_x = -5
+          shift_small_y = 7
+          size = 0.115
+        end
+        if digit == "%" then
+          shift = shift + 0.1
+        end
+
+        if ap == 1 then
+          obj.load("image", PED_DATA.path.."/combo/b_"..digit..".png")
+          obj.setoption("blend", 0)
+          obj.draw(shift * 23.65 + shift_period_x + shift_small_x, -125 + shift_period_y + shift_small_y, 0, size, ap_alpha)
+          obj.load("image", PED_DATA.path.."/combo/p_"..digit..".png")
+        else
+          obj.load("image", PED_DATA.path.."/combo/n_"..digit..".png")
+        end
+        obj.draw(shift * 23.65 + shift_period_x + shift_small_x, -125 + shift_period_y + shift_small_y, 0, size)
+      end
+    end
+  end
+
+  if PED_DATA.current.combo ~= 0 then
     if tag == 1 then
       if ap == 1 then
         obj.load("image", PED_DATA.path.."/combo/b_c.png")
@@ -508,9 +559,10 @@ if PED_DATA and PED_DATA.version_status == "ok" then
     local combo_str = tostring(PED_DATA.current.combo)
     local combo_burst_str = tostring(PED_DATA.burst.combo)
 
-    local progress = ((obj.frame - OFFSET) - (PED_DATA.current.time * obj.framerate)) * speed
-    local progress_combo = ((obj.frame - OFFSET) - (PED_DATA.burst.time * obj.framerate)) * speed
-    if progress < 1 and PED_DATA.previous.combo > 0 then
+    local progress = progress_frame * speed
+    local progress_burst = ((obj.frame - OFFSET) - (PED_DATA.burst.time * obj.framerate)) * speed
+
+    if progress < 1 and PED_DATA.previous.combo ~= 0 then
       progress = ((obj.frame - OFFSET) - (PED_DATA.previous.time * obj.framerate)) * speed
     end
 
@@ -569,14 +621,14 @@ if PED_DATA and PED_DATA.version_status == "ok" then
         end
       end
     end
-    if progress_combo < 14 and combo_burst == 1 then
+    if progress_burst < 14 and combo_burst == 1 then
       for i = 1, #combo_burst_str do
         if #combo_burst_str - last_digit < i then
           local digit = combo_burst_str:sub(i, i)
           local shift = -(#combo_burst_str / 2) + i - 0.5
-          local shift_fax_burst = 1.75 - (1.077 - (progress_combo / 14))^3
-          local alpha_burst = ((progress_combo + 6) / 20) * -1 + 1
-          if progress_combo < 1 then
+          local shift_fax_burst = 1.75 - (1.077 - (progress_burst / 14))^3
+          local alpha_burst = ((progress_burst + 6) / 20) * -1 + 1
+          if progress_burst < 1 then
             shift_fax_burst = 1.75
             alpha_burst = 0.7
           end
@@ -596,9 +648,9 @@ if PED_DATA and PED_DATA.version_status == "ok" then
         end
       end
     end
-    obj.setoption("blend", 0)
-    obj.copybuffer("obj", "tmp")
   end
+  obj.setoption("blend", 0)
+  obj.copybuffer("obj", "tmp")
 end
 ----------------------------------------------------------------
 @判定
