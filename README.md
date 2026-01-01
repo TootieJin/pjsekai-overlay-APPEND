@@ -14,27 +14,6 @@ Fork of [pjsekai-overlay](https://github.com/sevenc-nanashi/pjsekai-overlay) by 
 > 
 > - *P.S. To [a certain someone](https://discordid.netlify.app/?id=1370076899404939327) (a.k.a [this person](https://discordid.netlify.app/?id=919036186473947187)) with the mindset of `"Just switch to a different editing software since I don’t even know how to install aviutl"` [(image source)](https://github.com/user-attachments/assets/4850442d-3f3a-438a-92d9-97d052f2fba0): I suggest you **make your own pjsekai-overlay that supports your desired editing software.** (if you can even find a video editor that is as versatile and extensible as AviUtl, that is).*
 
-- **16:9**
-
-https://github.com/user-attachments/assets/dda7225a-a7f3-41d4-bbf4-9cec9b03b840
-
-- **4:3 (Tournament Mode ON)**
-
-https://github.com/user-attachments/assets/ab4ee52c-2ffa-4941-b916-87e1f3559d72
-
-- **v1 Skin (1e+30 power)**
-
-https://github.com/user-attachments/assets/3efab743-246a-4da7-8d80-a02b2f09f5b3
-
-- **AviUtl ExEdit2 Preview**
-
-<img width="auto" height="auto" alt="AviUtl ExEdit2 Preview" src="https://github.com/user-attachments/assets/18f6d16b-5ba4-4953-aa7d-5ceebb87348a" />
-
-- **Video Example**
-
-*(Click the image to watch it)*\
-<a href="https://youtu.be/uXx1OZDQZOI"><img width=49.5% height=49.5% alt="【Project Sekai x Honkai: Star Rail】Nameless Faces - HOYO-MiX feat. Lilas Ikuta (Fanmade)" src="https://img.youtube.com/vi/uXx1OZDQZOI/maxresdefault.jpg" /></a> <a href="https://youtu.be/BHVNuwxA1ek"><img width=49.5% height=49.5% alt="【Project Sekai Fanmade? (v3→v1)】Hello, SEKAI - DECO*27【ETERNAL Lv32】" src="https://img.youtube.com/vi/BHVNuwxA1ek/maxresdefault.jpg" /></a>
-
 This is a forked version of pjsekai-overlay with additional features originally not in the main repo, including:
   - **AviUtl ExEdit2 Full Support**
   - [Extra assets](./extra-assets)
@@ -64,6 +43,42 @@ This is a forked version of pjsekai-overlay with additional features originally 
     - `lalo-`: [laoloser](https://www.youtube.com/@laoloserr)'s server ([sonolus.laoloser.com](https://laoloser.com/sonolus))
     - `sync-`: Local Server ([ScoreSync](https://github.com/Piliman22/ScoreSync))
 
+### • 16:9 Preview
+
+https://github.com/user-attachments/assets/dda7225a-a7f3-41d4-bbf4-9cec9b03b840
+
+### • 4:3 Preview (Tournament Mode ON)
+
+https://github.com/user-attachments/assets/ab4ee52c-2ffa-4941-b916-87e1f3559d72
+
+### • v1 Skin (1e+30 power)
+
+https://github.com/user-attachments/assets/3efab743-246a-4da7-8d80-a02b2f09f5b3
+
+### • AviUtl ExEdit2 Preview
+
+<img width=70% height=70% alt="AviUtl ExEdit2 Preview" src="https://github.com/user-attachments/assets/18f6d16b-5ba4-4953-aa7d-5ceebb87348a" /><br>
+
+## Video Example (Click image to watch)
+  - TootieJin
+
+<a href="https://youtu.be/uXx1OZDQZOI"><img width=32% height=32% alt="【Project Sekai x Honkai: Star Rail】Nameless Faces - HOYO-MiX feat. Lilas Ikuta (Fanmade)" src="https://img.youtube.com/vi/uXx1OZDQZOI/maxresdefault.jpg" /></a> <a href="https://youtu.be/BHVNuwxA1ek"><img width=32% height=32% alt="【Project Sekai Fanmade? (v3→v1)】Hello, SEKAI - DECO*27【ETERNAL Lv32】" src="https://img.youtube.com/vi/BHVNuwxA1ek/maxresdefault.jpg" /></a> <a href="https://youtu.be/O2GxrLWbwlY"><img width=32% height=32% alt="【Project Sekai Fanmade】Confessions of a Rotten Girl - SAWTOWNE (APPEND Lv36)" src="https://img.youtube.com/vi/O2GxrLWbwlY/maxresdefault.jpg" /></a>
+
+  - Hydrogen
+
+<a href="https://youtu.be/aXAeV8nggPs"><img width=32% height=32% alt="【創作譜面】思いついてしまったんだ...... 曲: オーバーライド - 作: 吉田夜世" src="https://img.youtube.com/vi/aXAeV8nggPs/maxresdefault.jpg" /></a> <a href="https://youtu.be/Jqf5eb8neOA"><img width=32% height=32% alt="【創作譜面】易しいギミック 曲: OCO LIMBO - 作: MYUKKE." src="https://img.youtube.com/vi/Jqf5eb8neOA/maxresdefault.jpg" /></a> <a href="https://youtu.be/zOqBCZKK5IY"><img width=32% height=32% alt="【創作譜面】久々の公式レギュ 曲: カルチャー - 作: キタニタツヤ" src="https://img.youtube.com/vi/zOqBCZKK5IY/maxresdefault.jpg" /></a>
+
+  - まてぃ
+
+<a href="https://youtu.be/D0VD5fdQq3M"><img width=32% height=32% alt="マシュマロ / Marshmallow Master Lv33 【プロセカ創作譜面】" src="https://img.youtube.com/vi/D0VD5fdQq3M/maxresdefault.jpg" /></a> <a href="https://youtu.be/yvdWJUD1D9A"><img width=32% height=32% alt="アベリア APPEND Lv35 【プロセカ創作譜面】" src="https://img.youtube.com/vi/yvdWJUD1D9A/maxresdefault.jpg" /></a>
+
+  - ReiyuN
+
+<a href="https://youtu.be/R4jHeilZ3uk"><img width=32% height=32% alt="【 プロセカ 創作譜面 】wiege | Alien Stage x Project SEKAI【 APPEND 27 】" src="https://img.youtube.com/vi/R4jHeilZ3uk/maxresdefault.jpg" /></a> <a href="https://youtu.be/PTuaPc2vSyo"><img width=32% height=32% alt="【 Project SEKAI Fanmade 】Static【 MASTER 30 】" src="https://img.youtube.com/vi/PTuaPc2vSyo/maxresdefault.jpg" /></a>
+
+  - Runakkushia
+
+<a href="https://youtu.be/X4HoJvo6xRE"><img width=32% height=32% alt="【Project Sekai Fanmade】Don’t Believe in T feat. Hatsune Miku & Kasane Teto - PinocchioP" src="https://img.youtube.com/vi/X4HoJvo6xRE/maxresdefault.jpg" /></a>
 
 ## Terms of Use
 
@@ -153,6 +168,27 @@ PJSekai-style video creation tool:
     - `coconut-next-sekai-`: Next SEKAI ([coconut.sonolus.com/next-sekai](https://coconut.sonolus.com/next-sekai))
     - `lalo-`: [laoloser](https://www.youtube.com/@laoloserr)のサーバー([sonolus.laoloser.com](https://laoloser.com/sonolus))
     - `sync-`: ローカルサーバー([ScoreSync](https://github.com/Piliman22/ScoreSync))
+
+## 動画例（画像をクリックして視聴）
+  - TootieJin
+
+<a href="https://youtu.be/uXx1OZDQZOI"><img width=32% height=32% alt="【Project Sekai x Honkai: Star Rail】Nameless Faces - HOYO-MiX feat. Lilas Ikuta (Fanmade)" src="https://img.youtube.com/vi/uXx1OZDQZOI/maxresdefault.jpg" /></a> <a href="https://youtu.be/BHVNuwxA1ek"><img width=32% height=32% alt="【Project Sekai Fanmade? (v3→v1)】Hello, SEKAI - DECO*27【ETERNAL Lv32】" src="https://img.youtube.com/vi/BHVNuwxA1ek/maxresdefault.jpg" /></a> <a href="https://youtu.be/O2GxrLWbwlY"><img width=32% height=32% alt="【Project Sekai Fanmade】Confessions of a Rotten Girl - SAWTOWNE (APPEND Lv36)" src="https://img.youtube.com/vi/O2GxrLWbwlY/maxresdefault.jpg" /></a>
+
+  - Hydrogen
+
+<a href="https://youtu.be/aXAeV8nggPs"><img width=32% height=32% alt="【創作譜面】思いついてしまったんだ...... 曲: オーバーライド - 作: 吉田夜世" src="https://img.youtube.com/vi/aXAeV8nggPs/maxresdefault.jpg" /></a> <a href="https://youtu.be/Jqf5eb8neOA"><img width=32% height=32% alt="【創作譜面】易しいギミック 曲: OCO LIMBO - 作: MYUKKE." src="https://img.youtube.com/vi/Jqf5eb8neOA/maxresdefault.jpg" /></a> <a href="https://youtu.be/zOqBCZKK5IY"><img width=32% height=32% alt="【創作譜面】久々の公式レギュ 曲: カルチャー - 作: キタニタツヤ" src="https://img.youtube.com/vi/zOqBCZKK5IY/maxresdefault.jpg" /></a>
+
+  - まてぃ
+
+<a href="https://youtu.be/D0VD5fdQq3M"><img width=32% height=32% alt="マシュマロ / Marshmallow Master Lv33 【プロセカ創作譜面】" src="https://img.youtube.com/vi/D0VD5fdQq3M/maxresdefault.jpg" /></a> <a href="https://youtu.be/yvdWJUD1D9A"><img width=32% height=32% alt="アベリア APPEND Lv35 【プロセカ創作譜面】" src="https://img.youtube.com/vi/yvdWJUD1D9A/maxresdefault.jpg" /></a>
+
+  - ReiyuN
+
+<a href="https://youtu.be/R4jHeilZ3uk"><img width=32% height=32% alt="【 プロセカ 創作譜面 】wiege | Alien Stage x Project SEKAI【 APPEND 27 】" src="https://img.youtube.com/vi/R4jHeilZ3uk/maxresdefault.jpg" /></a> <a href="https://youtu.be/PTuaPc2vSyo"><img width=32% height=32% alt="【 Project SEKAI Fanmade 】Static【 MASTER 30 】" src="https://img.youtube.com/vi/PTuaPc2vSyo/maxresdefault.jpg" /></a>
+
+  - Runakkushia
+
+<a href="https://youtu.be/X4HoJvo6xRE"><img width=32% height=32% alt="【Project Sekai Fanmade】Don’t Believe in T feat. Hatsune Miku & Kasane Teto - PinocchioP" src="https://img.youtube.com/vi/X4HoJvo6xRE/maxresdefault.jpg" /></a>
 
 ## 利用規約
 
