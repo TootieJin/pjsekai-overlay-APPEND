@@ -1,17 +1,18 @@
 name: Publish wiki
-
-on: [push]
-
+on:
+  push:
+    branches: [main]
+    paths:
+      - wiki/**
+      - .github/workflows/publish-wiki.yml
+concurrency:
+  group: publish-wiki
+  cancel-in-progress: true
+permissions:
+  contents: write
 jobs:
-  build:
+  publish-wiki:
     runs-on: ubuntu-latest
-
     steps:
-      - uses: actions/checkout@v1
-      # Additional steps to generate documentation in "wiki" directory
-      - name: Publish wiki
-        uses: SwiftDocOrg/github-wiki-publish-action@v1
-        with:
-          path: "wiki"
-        env:
-          GH_PERSONAL_ACCESS_TOKEN: ${{ secrets.GH_PERSONAL_ACCESS_TOKEN }}
+      - uses: actions/checkout@v3
+      - uses: Andrew-Chen-Wang/github-wiki-action@v5.0.3
