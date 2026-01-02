@@ -43,11 +43,11 @@ This is a forked version of pjsekai-overlay with additional features originally 
     - `lalo-`: [laoloser](https://www.youtube.com/@laoloserr)'s server ([sonolus.laoloser.com](https://laoloser.com/sonolus))
     - `sync-`: Local Server ([ScoreSync](https://github.com/Piliman22/ScoreSync))
 
-### • 16:9 Preview
+### • 16:9
 
 https://github.com/user-attachments/assets/dda7225a-a7f3-41d4-bbf4-9cec9b03b840
 
-### • 4:3 Preview (Tournament Mode ON)
+### • 4:3 (Tournament Mode ON)
 
 https://github.com/user-attachments/assets/ab4ee52c-2ffa-4941-b916-87e1f3559d72
 
@@ -63,6 +63,7 @@ https://github.com/user-attachments/assets/3efab743-246a-4da7-8d80-a02b2f09f5b3
   - TootieJin
 
 <a href="https://youtu.be/uXx1OZDQZOI"><img width=32% height=32% alt="【Project Sekai x Honkai: Star Rail】Nameless Faces - HOYO-MiX feat. Lilas Ikuta (Fanmade)" src="https://img.youtube.com/vi/uXx1OZDQZOI/maxresdefault.jpg" /></a> <a href="https://youtu.be/BHVNuwxA1ek"><img width=32% height=32% alt="【Project Sekai Fanmade? (v3→v1)】Hello, SEKAI - DECO*27【ETERNAL Lv32】" src="https://img.youtube.com/vi/BHVNuwxA1ek/maxresdefault.jpg" /></a> <a href="https://youtu.be/O2GxrLWbwlY"><img width=32% height=32% alt="【Project Sekai Fanmade】Confessions of a Rotten Girl - SAWTOWNE (APPEND Lv36)" src="https://img.youtube.com/vi/O2GxrLWbwlY/maxresdefault.jpg" /></a>
+<a href="https://youtu.be/yyoTAJx-6ok"><img width=32% height=32% alt="【Project Sekai Fanmade (?)】Anonymous M - PinocchioP (CO-OP CHART)" src="https://img.youtube.com/vi/yyoTAJx-6ok/maxresdefault.jpg" /></a>
 
   - Hydrogen
 
@@ -173,6 +174,7 @@ PJSekai-style video creation tool:
   - TootieJin
 
 <a href="https://youtu.be/uXx1OZDQZOI"><img width=32% height=32% alt="【Project Sekai x Honkai: Star Rail】Nameless Faces - HOYO-MiX feat. Lilas Ikuta (Fanmade)" src="https://img.youtube.com/vi/uXx1OZDQZOI/maxresdefault.jpg" /></a> <a href="https://youtu.be/BHVNuwxA1ek"><img width=32% height=32% alt="【Project Sekai Fanmade? (v3→v1)】Hello, SEKAI - DECO*27【ETERNAL Lv32】" src="https://img.youtube.com/vi/BHVNuwxA1ek/maxresdefault.jpg" /></a> <a href="https://youtu.be/O2GxrLWbwlY"><img width=32% height=32% alt="【Project Sekai Fanmade】Confessions of a Rotten Girl - SAWTOWNE (APPEND Lv36)" src="https://img.youtube.com/vi/O2GxrLWbwlY/maxresdefault.jpg" /></a>
+<a href="https://youtu.be/yyoTAJx-6ok"><img width=32% height=32% alt="【Project Sekai Fanmade (?)】Anonymous M - PinocchioP (CO-OP CHART)" src="https://img.youtube.com/vi/yyoTAJx-6ok/maxresdefault.jpg" /></a>
 
   - Hydrogen
 
