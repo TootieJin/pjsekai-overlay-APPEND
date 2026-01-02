@@ -60,24 +60,29 @@ https://github.com/user-attachments/assets/3efab743-246a-4da7-8d80-a02b2f09f5b3
 <img width=70% height=70% alt="AviUtl ExEdit2 Preview" src="https://github.com/user-attachments/assets/18f6d16b-5ba4-4953-aa7d-5ceebb87348a" /><br>
 
 ## Video Example (Click image to watch)
-  - TootieJin
+  - TootieJin\
+    [![](https://img.shields.io/youtube/channel/subscribers/UCKBUuZx2leOsRqE-iXayBtA?style=flat&logo=YouTube)](https://www.youtube.com/channel/UCKBUuZx2leOsRqE-iXayBtA)
 
 <a href="https://youtu.be/uXx1OZDQZOI"><img width=32% height=32% alt="【Project Sekai x Honkai: Star Rail】Nameless Faces - HOYO-MiX feat. Lilas Ikuta (Fanmade)" src="https://img.youtube.com/vi/uXx1OZDQZOI/maxresdefault.jpg" /></a> <a href="https://youtu.be/BHVNuwxA1ek"><img width=32% height=32% alt="【Project Sekai Fanmade? (v3→v1)】Hello, SEKAI - DECO*27【ETERNAL Lv32】" src="https://img.youtube.com/vi/BHVNuwxA1ek/maxresdefault.jpg" /></a> <a href="https://youtu.be/O2GxrLWbwlY"><img width=32% height=32% alt="【Project Sekai Fanmade】Confessions of a Rotten Girl - SAWTOWNE (APPEND Lv36)" src="https://img.youtube.com/vi/O2GxrLWbwlY/maxresdefault.jpg" /></a>
 <a href="https://youtu.be/yyoTAJx-6ok"><img width=32% height=32% alt="【Project Sekai Fanmade (?)】Anonymous M - PinocchioP (CO-OP CHART)" src="https://img.youtube.com/vi/yyoTAJx-6ok/maxresdefault.jpg" /></a>
 
-  - Hydrogen
+  - Hydrogen\
+    [![](https://img.shields.io/youtube/channel/subscribers/UCtQa1khvAPiZ-ralYgGFhsg?style=flat&logo=YouTube)](https://www.youtube.com/channel/UCtQa1khvAPiZ-ralYgGFhsg)
 
 <a href="https://youtu.be/aXAeV8nggPs"><img width=32% height=32% alt="【創作譜面】思いついてしまったんだ...... 曲: オーバーライド - 作: 吉田夜世" src="https://img.youtube.com/vi/aXAeV8nggPs/maxresdefault.jpg" /></a> <a href="https://youtu.be/Jqf5eb8neOA"><img width=32% height=32% alt="【創作譜面】易しいギミック 曲: OCO LIMBO - 作: MYUKKE." src="https://img.youtube.com/vi/Jqf5eb8neOA/maxresdefault.jpg" /></a> <a href="https://youtu.be/zOqBCZKK5IY"><img width=32% height=32% alt="【創作譜面】久々の公式レギュ 曲: カルチャー - 作: キタニタツヤ" src="https://img.youtube.com/vi/zOqBCZKK5IY/maxresdefault.jpg" /></a>
 
-  - まてぃ
+  - まてぃ\
+    [![](https://img.shields.io/youtube/channel/subscribers/UCgtH_bk7ehUCEJjOO7FIByg?style=flat&logo=YouTube)](https://www.youtube.com/channel/UCgtH_bk7ehUCEJjOO7FIByg)
 
 <a href="https://youtu.be/D0VD5fdQq3M"><img width=32% height=32% alt="マシュマロ / Marshmallow Master Lv33 【プロセカ創作譜面】" src="https://img.youtube.com/vi/D0VD5fdQq3M/maxresdefault.jpg" /></a> <a href="https://youtu.be/yvdWJUD1D9A"><img width=32% height=32% alt="アベリア APPEND Lv35 【プロセカ創作譜面】" src="https://img.youtube.com/vi/yvdWJUD1D9A/maxresdefault.jpg" /></a>
 
-  - ReiyuN
+  - ReiyuN\
+    [![](https://img.shields.io/youtube/channel/subscribers/UCd4G2Fs8vnjJPP9yjGmHubw?style=flat&logo=YouTube)](https://www.youtube.com/channel/UCd4G2Fs8vnjJPP9yjGmHubw)
 
 <a href="https://youtu.be/R4jHeilZ3uk"><img width=32% height=32% alt="【 プロセカ 創作譜面 】wiege | Alien Stage x Project SEKAI【 APPEND 27 】" src="https://img.youtube.com/vi/R4jHeilZ3uk/maxresdefault.jpg" /></a> <a href="https://youtu.be/PTuaPc2vSyo"><img width=32% height=32% alt="【 Project SEKAI Fanmade 】Static【 MASTER 30 】" src="https://img.youtube.com/vi/PTuaPc2vSyo/maxresdefault.jpg" /></a>
 
-  - Runakkushia
+  - Runakkushia\
+    [![](https://img.shields.io/youtube/channel/subscribers/UCbeguR_tBZXRqJG86xrvxXw?style=flat&logo=YouTube)](https://www.youtube.com/channel/UCbeguR_tBZXRqJG86xrvxXw)
 
 <a href="https://youtu.be/X4HoJvo6xRE"><img width=32% height=32% alt="【Project Sekai Fanmade】Don’t Believe in T feat. Hatsune Miku & Kasane Teto - PinocchioP" src="https://img.youtube.com/vi/X4HoJvo6xRE/maxresdefault.jpg" /></a>
 
@@ -171,24 +176,29 @@ PJSekai-style video creation tool:
     - `sync-`: ローカルサーバー([ScoreSync](https://github.com/Piliman22/ScoreSync))
 
 ## 動画例（画像をクリックして視聴）
-  - TootieJin
+  - TootieJin\
+    [![](https://img.shields.io/youtube/channel/subscribers/UCKBUuZx2leOsRqE-iXayBtA?style=flat&logo=YouTube)](https://www.youtube.com/channel/UCKBUuZx2leOsRqE-iXayBtA)
 
 <a href="https://youtu.be/uXx1OZDQZOI"><img width=32% height=32% alt="【Project Sekai x Honkai: Star Rail】Nameless Faces - HOYO-MiX feat. Lilas Ikuta (Fanmade)" src="https://img.youtube.com/vi/uXx1OZDQZOI/maxresdefault.jpg" /></a> <a href="https://youtu.be/BHVNuwxA1ek"><img width=32% height=32% alt="【Project Sekai Fanmade? (v3→v1)】Hello, SEKAI - DECO*27【ETERNAL Lv32】" src="https://img.youtube.com/vi/BHVNuwxA1ek/maxresdefault.jpg" /></a> <a href="https://youtu.be/O2GxrLWbwlY"><img width=32% height=32% alt="【Project Sekai Fanmade】Confessions of a Rotten Girl - SAWTOWNE (APPEND Lv36)" src="https://img.youtube.com/vi/O2GxrLWbwlY/maxresdefault.jpg" /></a>
 <a href="https://youtu.be/yyoTAJx-6ok"><img width=32% height=32% alt="【Project Sekai Fanmade (?)】Anonymous M - PinocchioP (CO-OP CHART)" src="https://img.youtube.com/vi/yyoTAJx-6ok/maxresdefault.jpg" /></a>
 
-  - Hydrogen
+  - Hydrogen\
+    [![](https://img.shields.io/youtube/channel/subscribers/UCtQa1khvAPiZ-ralYgGFhsg?style=flat&logo=YouTube)](https://www.youtube.com/channel/UCtQa1khvAPiZ-ralYgGFhsg)
 
 <a href="https://youtu.be/aXAeV8nggPs"><img width=32% height=32% alt="【創作譜面】思いついてしまったんだ...... 曲: オーバーライド - 作: 吉田夜世" src="https://img.youtube.com/vi/aXAeV8nggPs/maxresdefault.jpg" /></a> <a href="https://youtu.be/Jqf5eb8neOA"><img width=32% height=32% alt="【創作譜面】易しいギミック 曲: OCO LIMBO - 作: MYUKKE." src="https://img.youtube.com/vi/Jqf5eb8neOA/maxresdefault.jpg" /></a> <a href="https://youtu.be/zOqBCZKK5IY"><img width=32% height=32% alt="【創作譜面】久々の公式レギュ 曲: カルチャー - 作: キタニタツヤ" src="https://img.youtube.com/vi/zOqBCZKK5IY/maxresdefault.jpg" /></a>
 
-  - まてぃ
+  - まてぃ\
+    [![](https://img.shields.io/youtube/channel/subscribers/UCgtH_bk7ehUCEJjOO7FIByg?style=flat&logo=YouTube)](https://www.youtube.com/channel/UCgtH_bk7ehUCEJjOO7FIByg)
 
 <a href="https://youtu.be/D0VD5fdQq3M"><img width=32% height=32% alt="マシュマロ / Marshmallow Master Lv33 【プロセカ創作譜面】" src="https://img.youtube.com/vi/D0VD5fdQq3M/maxresdefault.jpg" /></a> <a href="https://youtu.be/yvdWJUD1D9A"><img width=32% height=32% alt="アベリア APPEND Lv35 【プロセカ創作譜面】" src="https://img.youtube.com/vi/yvdWJUD1D9A/maxresdefault.jpg" /></a>
 
-  - ReiyuN
+  - ReiyuN\
+    [![](https://img.shields.io/youtube/channel/subscribers/UCd4G2Fs8vnjJPP9yjGmHubw?style=flat&logo=YouTube)](https://www.youtube.com/channel/UCd4G2Fs8vnjJPP9yjGmHubw)
 
 <a href="https://youtu.be/R4jHeilZ3uk"><img width=32% height=32% alt="【 プロセカ 創作譜面 】wiege | Alien Stage x Project SEKAI【 APPEND 27 】" src="https://img.youtube.com/vi/R4jHeilZ3uk/maxresdefault.jpg" /></a> <a href="https://youtu.be/PTuaPc2vSyo"><img width=32% height=32% alt="【 Project SEKAI Fanmade 】Static【 MASTER 30 】" src="https://img.youtube.com/vi/PTuaPc2vSyo/maxresdefault.jpg" /></a>
 
-  - Runakkushia
+  - Runakkushia\
+    [![](https://img.shields.io/youtube/channel/subscribers/UCbeguR_tBZXRqJG86xrvxXw?style=flat&logo=YouTube)](https://www.youtube.com/channel/UCbeguR_tBZXRqJG86xrvxXw)
 
 <a href="https://youtu.be/X4HoJvo6xRE"><img width=32% height=32% alt="【Project Sekai Fanmade】Don’t Believe in T feat. Hatsune Miku & Kasane Teto - PinocchioP" src="https://img.youtube.com/vi/X4HoJvo6xRE/maxresdefault.jpg" /></a>
 
