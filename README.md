@@ -69,7 +69,8 @@ https://github.com/user-attachments/assets/3efab743-246a-4da7-8d80-a02b2f09f5b3
   - Hydrogen\
     [![](https://img.shields.io/youtube/channel/subscribers/UCtQa1khvAPiZ-ralYgGFhsg?style=flat&logo=YouTube)](https://www.youtube.com/channel/UCtQa1khvAPiZ-ralYgGFhsg)
 
-<a href="https://youtu.be/aXAeV8nggPs"><img width=32% height=32% alt="【創作譜面】思いついてしまったんだ...... 曲: オーバーライド - 作: 吉田夜世" src="https://img.youtube.com/vi/aXAeV8nggPs/maxresdefault.jpg" /></a> <a href="https://youtu.be/Jqf5eb8neOA"><img width=32% height=32% alt="【創作譜面】易しいギミック 曲: OCO LIMBO - 作: MYUKKE." src="https://img.youtube.com/vi/Jqf5eb8neOA/maxresdefault.jpg" /></a> <a href="https://youtu.be/zOqBCZKK5IY"><img width=32% height=32% alt="【創作譜面】久々の公式レギュ 曲: カルチャー - 作: キタニタツヤ" src="https://img.youtube.com/vi/zOqBCZKK5IY/maxresdefault.jpg" /></a>
+<a href="https://youtu.be/441v1qr_Gzo"><img width=32% height=32% alt="【創作譜面】魔改造譜面  曲: 化けの花  - 作: なきそ" src="https://img.youtube.com/vi/441v1qr_Gzo/maxresdefault.jpg" /></a> <a href="https://youtu.be/aXAeV8nggPs"><img width=32% height=32% alt="【創作譜面】思いついてしまったんだ...... 曲: オーバーライド - 作: 吉田夜世" src="https://img.youtube.com/vi/aXAeV8nggPs/maxresdefault.jpg" /></a> <a href="https://youtu.be/Jqf5eb8neOA"><img width=32% height=32% alt="【創作譜面】易しいギミック 曲: OCO LIMBO - 作: MYUKKE." src="https://img.youtube.com/vi/Jqf5eb8neOA/maxresdefault.jpg" /></a>
+<a href="https://youtu.be/zOqBCZKK5IY"><img width=32% height=32% alt="【創作譜面】久々の公式レギュ 曲: カルチャー - 作: キタニタツヤ" src="https://img.youtube.com/vi/zOqBCZKK5IY/maxresdefault.jpg" /></a>
 
   - まてぃ\
     [![](https://img.shields.io/youtube/channel/subscribers/UCgtH_bk7ehUCEJjOO7FIByg?style=flat&logo=YouTube)](https://www.youtube.com/channel/UCgtH_bk7ehUCEJjOO7FIByg)
@@ -185,7 +186,8 @@ PJSekai-style video creation tool:
   - Hydrogen\
     [![](https://img.shields.io/youtube/channel/subscribers/UCtQa1khvAPiZ-ralYgGFhsg?style=flat&logo=YouTube)](https://www.youtube.com/channel/UCtQa1khvAPiZ-ralYgGFhsg)
 
-<a href="https://youtu.be/aXAeV8nggPs"><img width=32% height=32% alt="【創作譜面】思いついてしまったんだ...... 曲: オーバーライド - 作: 吉田夜世" src="https://img.youtube.com/vi/aXAeV8nggPs/maxresdefault.jpg" /></a> <a href="https://youtu.be/Jqf5eb8neOA"><img width=32% height=32% alt="【創作譜面】易しいギミック 曲: OCO LIMBO - 作: MYUKKE." src="https://img.youtube.com/vi/Jqf5eb8neOA/maxresdefault.jpg" /></a> <a href="https://youtu.be/zOqBCZKK5IY"><img width=32% height=32% alt="【創作譜面】久々の公式レギュ 曲: カルチャー - 作: キタニタツヤ" src="https://img.youtube.com/vi/zOqBCZKK5IY/maxresdefault.jpg" /></a>
+<a href="https://youtu.be/441v1qr_Gzo"><img width=32% height=32% alt="【創作譜面】魔改造譜面  曲: 化けの花  - 作: なきそ" src="https://img.youtube.com/vi/441v1qr_Gzo/maxresdefault.jpg" /></a> <a href="https://youtu.be/aXAeV8nggPs"><img width=32% height=32% alt="【創作譜面】思いついてしまったんだ...... 曲: オーバーライド - 作: 吉田夜世" src="https://img.youtube.com/vi/aXAeV8nggPs/maxresdefault.jpg" /></a> <a href="https://youtu.be/Jqf5eb8neOA"><img width=32% height=32% alt="【創作譜面】易しいギミック 曲: OCO LIMBO - 作: MYUKKE." src="https://img.youtube.com/vi/Jqf5eb8neOA/maxresdefault.jpg" /></a>
+<a href="https://youtu.be/zOqBCZKK5IY"><img width=32% height=32% alt="【創作譜面】久々の公式レギュ 曲: カルチャー - 作: キタニタツヤ" src="https://img.youtube.com/vi/zOqBCZKK5IY/maxresdefault.jpg" /></a>
 
   - まてぃ\
     [![](https://img.shields.io/youtube/channel/subscribers/UCgtH_bk7ehUCEJjOO7FIByg?style=flat&logo=YouTube)](https://www.youtube.com/channel/UCgtH_bk7ehUCEJjOO7FIByg)
