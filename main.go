@@ -205,8 +205,9 @@ func origMain(isOptionSpecified bool) {
 
 	langPackCheck, err := langPackCheck()
 	if err != nil {
-		fmt.Println(color.RedString(fmt.Sprintf("FAIL: %s", err.Error())))
-		return
+		fmt.Println(color.HiYellowString(fmt.Sprintf("WARN: 言語パックを確認できません。(Unable to check language pack.)\n%s", err.Error())))
+		// return
+		// (temporary pass)
 	} else if !strings.Contains(langPackCheck, "und-Jpan") || !strings.Contains(langPackCheck, "ja-JP") {
 		fmt.Println(color.RedString("\nFAIL: 日本語言語パックがインストールされていません。変更方法についてはWikiを参照してください。\nJapanese language pack is not installed. Refer to the wiki for how to install it."))
 		return
