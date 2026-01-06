@@ -515,7 +515,7 @@ if PED_DATA and PED_DATA.version_status == "ok" then
 
         if digit == "." then
           shift_period_x = shift_period_x - 6
-          shift_period_y = 10
+          shift_period_y = 10 -- (!!) this variablle is different in v1!
         end
         if achievement_str:sub(i-1, i-1) == "." then
           shift_period_x = shift_period_x - 6
@@ -661,7 +661,7 @@ end
 local judge = obj.track0
 if PED_DATA and PED_DATA.version_status == "ok" then
   if PED_DATA.current.time > 0 then
-    obj.setoption("drawtarget", "tempbuffer", 310, 82)
+    obj.setoption("drawtarget", "tempbuffer", obj.screen_w, 82)
     local progress = ((obj.frame - OFFSET) - (PED_DATA.current.time * obj.framerate)) * speed
 
     if progress < 2 then
