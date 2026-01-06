@@ -3,7 +3,7 @@
 ; Place in ProgramData\aviutl2\Language to add to Language Settings
 
 ; Original file: https://github.com/nagotown/aviutl2-EN
-; Version: b26
+; Version: b27
 ; pjsekai-overlay language support by TootieJin
 
 [Effect]
@@ -1273,6 +1273,9 @@ YUVレンジ=YUV Color Range
 オブジェクト複数選択=Select Multiple Objects
 開始終了点移動時に隣接オブジェクトを移動=Move adjacent objects when moving start/end points
 カーソルをフレーム範囲で表示=Display cursor within frame range
+マウスホイールの拡大縮小を現在のフレーム基準にする=MouseWheelZoomByCursorFrame
+同じシーンのフレーム移動に連動=LinkedToSameSceneFrameMove
+参照シーンのフレーム移動に連動=LinkedToReferenceSceneFrameMove
 
 ; Third-Party Export Plugins
 
@@ -1542,6 +1545,7 @@ Alt+左クリックドラックで右クリックドラック操作=Alt+Left Cli
 メディア移動量(ショートカットキー)=Media Move Amount (ShortcutKey)
 メディア拡大量(ショートカットキー)=Media Zoom Amount (ShortcutKey)
 メディア回転量(ショートカットキー)=Media Rotate Amount (ShortcutKey)
+ドラッグ時の自動スクロール速度=AutoScrollSpeedWhenDrag
 ;OK=OK
 ;Cancel=Cancel
 
