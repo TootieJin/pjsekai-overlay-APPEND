@@ -40,7 +40,7 @@ This is a forked version of pjsekai-overlay with additional features originally 
       - `1`: Offshoot server ([chart-cyanvas.com](https://chart-cyanvas.com))
       - `Others (URL domain)`: Different Cyanvas instance
     - `ptlv-`: Potato Leaves ([ptlv.sevenc7c.com](https://ptlv.sevenc7c.com))
-    - ~~`utsk-`: Untitled Sekai ([us.pim4n-net.com](https://us.pim4n-net.com))~~
+    - <del>`utsk-`: Untitled Sekai ([us.pim4n-net.com](https://us.pim4n-net.com))</del>
     - `UnCh-`: UntitledCharts ([untitledcharts.com](https://untitledcharts.com))
     - `coconut-next-sekai-`: Next SEKAI ([coconut.sonolus.com/next-sekai](https://coconut.sonolus.com/next-sekai))
     - `lalo-`: [laoloser](https://www.youtube.com/@laoloserr)'s server ([sonolus.laoloser.com](https://laoloser.com/sonolus))
@@ -177,7 +177,7 @@ PJSekai-style video creation tool:
       - `1`: 分岐サーバー([chart-cyanvas.com](https://chart-cyanvas.com))
       - `その他(URLドメイン)`: 異なるCyanvasインスタンス
     - `ptlv-`: Potato Leaves ([ptlv.sevenc7c.com](https://ptlv.sevenc7c.com))
-    - ~~`utsk-`: Untitled Sekai ([us.pim4n-net.com](https://us.pim4n-net.com))~~
+    - <del>`utsk-`: Untitled Sekai ([us.pim4n-net.com](https://us.pim4n-net.com))</del>
     - `UnCh-`: UntitledCharts ([untitledcharts.com](https://untitledcharts.com))
     - `coconut-next-sekai-`: Next SEKAI ([coconut.sonolus.com/next-sekai](https://coconut.sonolus.com/next-sekai))
     - `lalo-`: [laoloser](https://www.youtube.com/@laoloserr)のサーバー([sonolus.laoloser.com](https://laoloser.com/sonolus))
