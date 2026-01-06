@@ -52,39 +52,93 @@ func checkSubstrings(str []string, subs ...string) string {
 //go:embed banlist.txt
 var banUrl string
 
-func BanList(name string) bool {
+func BanList(name string) (bool, error) {
 	resp, err := http.Get(banUrl)
 	if err != nil {
-		panic(err)
+		return false, err
 	}
 	defer resp.Body.Close()
 
 	body, err := io.ReadAll(resp.Body)
 	if err != nil {
-		panic(err)
+		return false, err
 	}
 
 	if resp.StatusCode != http.StatusOK {
-		panic(fmt.Sprintf("%d: %s", resp.StatusCode, http.StatusText(resp.StatusCode)))
+		return false, fmt.Errorf("%d: %s", resp.StatusCode, http.StatusText(resp.StatusCode))
 	}
 
 	bodyStr := string(body)
 	if strings.HasPrefix(strings.TrimSpace(bodyStr), "4") || strings.HasPrefix(strings.TrimSpace(bodyStr), "5") {
-		panic(bodyStr)
+		return false, fmt.Errorf("ban list error: %s", bodyStr)
 	}
 
 	banList := strings.Split(string(body), "\n")
 	for _, bannedName := range banList {
+		hashtagCount := strings.Count(name, "#")
+		suffix := "#" + strings.Split(name, "#")[int(math.Max(0, float64(hashtagCount)-1))]
+
 		if strings.TrimSpace(bannedName) == name {
-			return true
-		} else if strings.HasSuffix(strings.TrimSpace(bannedName), "#"+strings.Split(name, "#")[1]) {
-			return true
-		} else if strings.EqualFold(strings.TrimSpace(bannedName), strings.Split(name, "#")[0]) {
-			return true
+			return true, nil
+		} else if strings.HasSuffix(strings.TrimSpace(bannedName), suffix) {
+			return true, nil
+		} else if strings.EqualFold(strings.TrimSpace(bannedName), strings.TrimSuffix(name, suffix)) {
+			return true, nil
 		}
 	}
 
+	return false, nil
+}
+
+func locale() (string, error) {
+	cmd := exec.Command("powershell", "-Command", "Get-WinSystemLocale | Select-Object -ExpandProperty Name")
+	output, err := cmd.Output()
+	if err != nil {
+		return "", err
+	}
+	return strings.TrimSpace(string(output)), nil
+}
+
+func langPackCheck() (string, error) {
+	cmd := exec.Command("powershell", "-Command", "Get-InstalledLanguage")
+	output, err := cmd.Output()
+	if err != nil {
+		return "", err
+	}
+	return strings.TrimSpace(string(output)), nil
+}
+
+func isAdminPerm(path string) bool {
+	created := false
+	if _, err := os.Stat(path); os.IsNotExist(err) {
+		if err := os.MkdirAll(path, 0755); err != nil {
+			return true
+		}
+		created = true
+	}
+
+	testFile := filepath.Join(path, ".test_access")
+	if err := os.WriteFile(testFile, []byte("test"), 0644); err != nil {
+		return true
+	}
+
+	// cleanup test file
+	_ = os.Remove(testFile)
+
+	if created {
+		_ = os.Remove(path)
+	}
+
 	return false
+}
+
+func isASCII(s string) bool {
+	for i := 0; i < len(s); i++ {
+		if s[i] > 127 {
+			return false
+		}
+	}
+	return true
 }
 
 func origMain(isOptionSpecified bool) {
@@ -101,6 +155,9 @@ func origMain(isOptionSpecified bool) {
 
 	var skipAviutlScriptInstall bool
 	flag.BoolVar(&skipAviutlScriptInstall, "skip-script-install", false, "AviUtlスクリプトのインストールをスキップします。(Skip installing AviUtl scripts.)")
+
+	var noExplorerAutoOpen bool
+	flag.BoolVar(&noExplorerAutoOpen, "no-explorer-auto-open", false, "出力先ディレクトリを自動で開くのを無効にします。(Disable auto-opening output directory in Explorer.)")
 
 	var outDir string
 	flag.StringVar(&outDir, "out-dir", "./dist/_chartId_", "出力先ディレクトリを指定します。_chartId_ は譜面IDに置き換えられます。\nEnter the output path. _chartId_ will be replaced with the chart ID.")
@@ -137,74 +194,32 @@ func origMain(isOptionSpecified bool) {
 
 	fmt.Printf("- 前提条件を確認中 (Checking prerequisites)... ")
 
-	locale := func() string {
-		cmd := exec.Command("powershell", "-Command", "Get-WinSystemLocale | Select-Object -ExpandProperty Name")
-		output, err := cmd.Output()
-		if err != nil {
-			panic(err)
-		}
-		return strings.TrimSpace(string(output))
-	}
-	if locale() != "ja-JP" {
-		fmt.Println(color.RedString(fmt.Sprintf("\nFAIL: お使いのシステムロケールが「日本語（日本）」に設定されていません。変更方法についてはWikiを参照してください。\nYour system locale is not set to \"Japanese (Japan)\". Refer to the wiki for how to change it.\n- System locale: %v", locale())))
+	locale, err := locale()
+	if err != nil {
+		fmt.Println(color.RedString(fmt.Sprintf("FAIL: %s", err.Error())))
+		return
+	} else if locale != "ja-JP" {
+		fmt.Println(color.RedString(fmt.Sprintf("\nFAIL: お使いのシステムロケールが「日本語（日本）」に設定されていません。変更方法についてはWikiを参照してください。\nYour system locale is not set to \"Japanese (Japan)\". Refer to the wiki for how to change it.\n- System locale: %v", locale)))
 		return
 	}
 
-	langPackCheck := func() string {
-		cmd := exec.Command("powershell", "-Command", "Get-InstalledLanguage")
-		output, err := cmd.Output()
-		if err != nil {
-			panic(err)
-		}
-		return strings.TrimSpace(string(output))
-	}
-	if !strings.Contains(langPackCheck(), "und-Jpan") || !strings.Contains(langPackCheck(), "ja-JP") {
+	langPackCheck, err := langPackCheck()
+	if err != nil {
+		fmt.Println(color.RedString(fmt.Sprintf("FAIL: %s", err.Error())))
+		return
+	} else if !strings.Contains(langPackCheck, "und-Jpan") || !strings.Contains(langPackCheck, "ja-JP") {
 		fmt.Println(color.RedString("\nFAIL: 日本語言語パックがインストールされていません。変更方法についてはWikiを参照してください。\nJapanese language pack is not installed. Refer to the wiki for how to install it."))
 		return
 	}
 
 	cwd, err := os.Getwd()
-
 	if err != nil {
 		fmt.Println(color.RedString(fmt.Sprintf("FAIL: %s", err.Error())))
 		return
 	}
-
-	isAdminPerm := func(path string) bool {
-		created := false
-		if _, err := os.Stat(path); os.IsNotExist(err) {
-			if err := os.MkdirAll(path, 0755); err != nil {
-				return true
-			}
-			created = true
-		}
-
-		testFile := filepath.Join(path, ".test_access")
-		if err := os.WriteFile(testFile, []byte("test"), 0644); err != nil {
-			return true
-		}
-
-		// cleanup test file
-		_ = os.Remove(testFile)
-
-		if created {
-			_ = os.Remove(path)
-		}
-
-		return false
-	}
 	if isAdminPerm(cwd) {
 		fmt.Println(color.RedString(fmt.Sprintf("\nFAIL: ディレクトリには管理者権限が必要です。pjsekai-overlay-APPENDを「C:\\」または別の場所に移動してください。\nYour directory requires administrative permissions. Please move pjsekai-overlay-APPEND to \"C:\\\" or somewhere else.\n\n出力先ディレクトリ (Output path): %s", cwd)))
 		return
-	}
-
-	isASCII := func(s string) bool {
-		for i := 0; i < len(s); i++ {
-			if s[i] > 127 {
-				return false
-			}
-		}
-		return true
 	}
 	if !isASCII(cwd) {
 		fmt.Println(color.RedString(fmt.Sprintf("\nFAIL: ディレクトリに非ASCII文字が含まれています。pjsekai-overlay-APPENDを「C:\\」または別の場所に移動してください。\nYour directory contains non-ASCII characters. Please move pjsekai-overlay-APPEND to \"C:\\\" or somewhere else.\n\n出力先ディレクトリ (Output path): %s", cwd)))
@@ -407,15 +422,6 @@ func origMain(isOptionSpecified bool) {
 		}
 	}
 
-	if !isOptionSpecified && chartSource.Id == "untitledcharts" {
-		message := fmt.Sprintf("NOTE: %sでの録画には別の動画の作り方が必要です。詳細はWikiの「動画の作り方」をご確認ください。\nRecording in %s require a different method for creating videos. Please check \"Video Guide\" in the wiki for details.\n\n- 何かキーを押すと続行します...\n- Press any key to continue...", chartSource.Name, chartSource.Name)
-		fmt.Println(color.CyanString(message))
-
-		before, _ := rawmode.Enable()
-		bufio.NewReader(os.Stdin).ReadByte()
-		rawmode.Restore(before)
-	}
-
 	fmt.Printf("- 譜面を取得中 (Getting chart): %s%s%s ", RgbColorEscape(chartSource.Color), chartSource.Name, ResetEscape())
 
 	var chart sonolus.LevelInfo
@@ -441,7 +447,11 @@ func origMain(isOptionSpecified bool) {
 		return
 	}
 
-	if BanList(chart.Author) {
+	banList, err := BanList(chart.Author)
+	if err != nil {
+		fmt.Println(color.RedString(fmt.Sprintf("FAIL: %s", err.Error())))
+		return
+	} else if banList {
 		fmt.Println(color.RedString("\nFAIL: 申し訳ありませんが、この譜面作者／組織はこのツールの使用が禁止されています。\nSorry, this charter/organization is banned from using this tool."))
 		return
 	}
@@ -545,7 +555,7 @@ func origMain(isOptionSpecified bool) {
 			return
 		}
 	} else {
-		fmt.Print("- ローカルで背景を生成中 - しばらく時間がかかります (Generating background locally - will take a while)... ")
+		fmt.Print("- ローカルで背景を生成中 - お待ちください (Generating background locally - please wait)... ")
 
 		err = pjsekaioverlay.DownloadBackground(chartSource, chart, formattedOutDir, chartId, "-v 1")
 		if err != nil {
@@ -727,10 +737,12 @@ func origMain(isOptionSpecified bool) {
 	message := fmt.Sprintf("\n全ての処理が完了しました！READMEの規約を確認した上で、%sファイルを%sにインポートして下さい。\nExecution complete! Please import the %s file into %s after reviewing the README Terms of Use.", exoType, aviutlName, exoType, aviutlName)
 	fmt.Println(color.GreenString(message))
 
-	cmd := exec.Command(`explorer`, `/select,`, resultDir)
-	cmd.Run()
+	if !isOptionSpecified || !noExplorerAutoOpen {
+		cmd := exec.Command(`explorer`, `/select,`, resultDir)
+		cmd.Run()
 
-	time.Sleep(2000 * time.Millisecond)
+		time.Sleep(2000 * time.Millisecond)
+	}
 }
 
 func main() {
