@@ -51,10 +51,9 @@ func JoinUrl(base string, path string) (string, error) {
 	if strings.HasPrefix(path, "http") {
 		return path, nil
 	}
-	u, err := url.Parse(base)
+	u, err := url.Parse(base + path)
 	if err != nil {
 		return "", err
 	}
-	u.Path = path
 	return u.String(), nil
 }

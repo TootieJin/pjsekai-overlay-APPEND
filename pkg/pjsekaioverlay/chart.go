@@ -87,12 +87,12 @@ func FetchChart(source Source, chartId string) (sonolus.LevelInfo, error) {
 
 func DetectChartSource(chartId string, chartInstance string) (Source, error) {
 	var source Source
-	if strings.HasPrefix(chartId, "ptlv-") {
+	if strings.HasPrefix(chartId, "sekai-rush-") {
 		source = Source{
-			Id:     "potato_leaves",
-			Name:   "Potato Leaves",
-			Color:  0x88cb7f,
-			Host:   "ptlv.sevenc7c.com",
+			Id:     "proseka_rush",
+			Name:   "Proseka Rush",
+			Color:  0x02cbbd,
+			Host:   "sekairush.shop",
 			Status: 0,
 		}
 	} else if strings.HasPrefix(chartId, "chcy-") {
@@ -121,6 +121,14 @@ func DetectChartSource(chartId string, chartInstance string) (Source, error) {
 				Host:   chartInstance,
 				Status: 0,
 			}
+		}
+	} else if strings.HasPrefix(chartId, "ptlv-") {
+		source = Source{
+			Id:     "potato_leaves",
+			Name:   "Potato Leaves",
+			Color:  0x88cb7f,
+			Host:   "ptlv.sevenc7c.com",
+			Status: 0,
 		}
 	} else if strings.HasPrefix(chartId, "utsk-") {
 		source = Source{
@@ -333,7 +341,7 @@ func CopyFile(src, dst string) error {
 }
 
 func DownloadBackground(source Source, level sonolus.LevelInfo, destPath string, chartId string, arg string) error {
-	if level.UseBackground.UseDefault || source.Name == "Chart Cyanvas Archive" || source.Id == "potato_leaves" || source.Id == "local_server" || source.Id == "next_sekai" {
+	if level.UseBackground.UseDefault || source.Id == "proseka_rush" || source.Name == "Chart Cyanvas Archive" || source.Id == "potato_leaves" || source.Id == "local_server" || source.Id == "next_sekai" {
 		coverPath := path.Join(destPath, "cover.png")
 		if _, err := os.Stat(coverPath); os.IsNotExist(err) {
 			return fmt.Errorf("ジャケット画像が見つかりません。先にジャケット画像をダウンロードしてください。(Jacket image not found. Download jacket image first.)")

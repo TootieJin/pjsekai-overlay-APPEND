@@ -265,6 +265,8 @@ func CalculateScore(levelInfo sonolus.LevelInfo, levelData sonolus.LevelData, po
 				Beat: beat,
 				Bpm:  bpm,
 			})
+		} else if entity.Archetype == "Skill" {
+			noteEntities = append(noteEntities, entity)
 		}
 	}
 	slices.SortStableFunc(noteEntities, func(a, b sonolus.LevelDataEntity) int {
@@ -295,7 +297,6 @@ func CalculateScore(levelInfo sonolus.LevelInfo, levelData sonolus.LevelData, po
 		// get beat/time early so skillFax can be applied to this event
 		beat, err := getValueFromData(entity.Data, "#BEAT")
 		if err != nil {
-			entityCounter += 1
 			continue
 		}
 		eventTime := getTimeFromBpmChanges(bpmChanges, beat)
@@ -380,6 +381,7 @@ func WritePedFile(frames []PedFrame, assets string, path string, levelInfo sonol
 
 	lastScore := 0.0
 	rating := math.Max(5, math.Min(float64(levelInfo.Rating), 40))
+	procCount := 0
 	for i, frame := range frames {
 		score := frame.Score
 		frameScore := math.Trunc(score - lastScore)
@@ -461,6 +463,7 @@ func WritePedFile(frames []PedFrame, assets string, path string, levelInfo sonol
 			// only emit when this frame is the actual activation frame and avoid duplicates
 			if i == 0 || frames[i-1].SkillTime != skillTime {
 				writer.Write(fmt.Appendf(nil, "s|%f\n", skillTime))
+				procCount++
 			}
 		}
 		if i%100 == 0 && i > 0 {
@@ -473,7 +476,9 @@ func WritePedFile(frames []PedFrame, assets string, path string, levelInfo sonol
 			time = frames[i-1].Time + 0.000001
 		}
 
-		writer.Write(fmt.Appendf(nil, "d|%f:%.0f:%.0f:%f:%f:%s:%d\n", time, score, frameScore, scoreX, scoreXv1, rank, i))
+		combo := i - procCount
+
+		writer.Write(fmt.Appendf(nil, "d|%f:%.0f:%.0f:%f:%f:%s:%d\n", time, score, frameScore, scoreX, scoreXv1, rank, combo))
 	}
 
 	return nil

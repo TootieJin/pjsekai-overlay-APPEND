@@ -3,6 +3,7 @@
 | AviUtl                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     | **AviUtl ExEdit2 (Recommended)**                                                                                                                                                                                                                                                                                                                                                                                                            |
 | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | [AviUtl](http://spring-fragrance.mints.ne.jp/aviutl/) + [Advanced Editing plug-in](http://spring-fragrance.mints.ne.jp/aviutl/) + [L-SMASH Works](https://github.com/Mr-Ojii/L-SMASH-Works-Auto-Builds/releases/latest) + [easymp4](https://aoytsk.blog.jp/aviutl/easymp4.zip) ([JP Installation Guide](https://aviutl.info/dl-innsuto-ru/))<br>- **JP installer:** [AviUtl JP Installer Script](https://github.com/menndouyukkuri/aviutl-installer-script)<br>- **EN installer:** [AviUtl EN Extra Pack](https://www.videohelp.com/download/AviUtl_setup_1.14.exe)<br><br>*Import all plugins to `aviutl\Plugins` folder* | [AviUtl ExEdit2 **(via installer)**](http://spring-fragrance.mints.ne.jp/aviutl/) + [L-SMASH Works](https://github.com/Mr-Ojii/L-SMASH-Works-Auto-Builds/releases/latest) + [MP4Exporter](https://apps.esugo.net/aviutl2-mp4exporter/)<br>- English language can be selected in `設定 > 言語の設定 > English` (`Settings > Language > English`)<br><br>*Import `AviUtl2\lwinput.aui2` & `MP4Exporter.auo2` plugin to `C:\ProgramData\aviutl2\Plugin` folder* |
+- **[PowerShell](https://github.com/PowerShell/PowerShell)**
 - **Fonts:** RodinNTLG [DB](https://en.fontworks.co.jp/fontsearch/rodinntlgpro-db/) + [EB](https://en.fontworks.co.jp/fontsearch/rodinntlgpro-eb/)
 - Your system locale **must be `Japanese (Japan)`** [(Go here for how to change it)](#changing-system-locale)
 - **Japanese Language Pack** must be installed [(Go here for installation instructions)](https://support.microsoft.com/en-us/windows/language-packs-for-windows-a5094319-a92d-18de-5b53-1cfc697cfca8)
@@ -41,16 +42,19 @@ Follow the steps below:
 | 1. **While `aviutl.exe` is open**, open `pjsekai-overlay-APPEND.exe`<br>2. **Restart AviUtl to apply changes.** 	| 1. Open `pjsekai-overlay-APPEND.exe`<br>2. Press `2` to choose the AviUtl ExEdit2 instance 	|
 
 4. In your `pjsekai-overlay-APPEND.exe` command prompt, input the chart ID including the prefix.
-   - `chcy-`: Chart Cyanvas
+   - **Official servers:**
+      - `sekai-rush-`: Proseka Rush ([sekairush.shop](https://sekairush.shop))
+   - **Custom servers:**
+      - `chcy-`: Chart Cyanvas
       - `0`: Archive ([cc.sevenc7c.com](https://cc.sevenc7c.com))
       - `1`: Offshoot server ([chart-cyanvas.com](https://chart-cyanvas.com))
       - `Others (URL domain)`: Different Cyanvas instance
-   - `ptlv-`: Potato Leaves ([ptlv.sevenc7c.com](https://ptlv.sevenc7c.com))
-   - <del>`utsk-`: Untitled Sekai ([us.pim4n-net.com](https://us.pim4n-net.com))</del>
-   - `UnCh-`: UntitledCharts ([untitledcharts.com](https://untitledcharts.com))
-   - `coconut-next-sekai-`: Next SEKAI ([coconut.sonolus.com/next-sekai](https://coconut.sonolus.com/next-sekai))
-   - `lalo-`: [laoloser](https://www.youtube.com/@laoloserr)'s server ([sonolus.laoloser.com](https://laoloser.com/sonolus))
-   - `sync-`: Local Server ([ScoreSync](https://github.com/Piliman22/ScoreSync))
+      - `ptlv-`: Potato Leaves ([ptlv.sevenc7c.com](https://ptlv.sevenc7c.com))
+      - ~~`utsk-`: Untitled Sekai ([us.pim4n-net.com](https://us.pim4n-net.com))~~
+      - `UnCh-`: UntitledCharts ([untitledcharts.com](https://untitledcharts.com))
+      - `coconut-next-sekai-`: Next SEKAI ([coconut.sonolus.com/next-sekai](https://coconut.sonolus.com/next-sekai))
+      - `lalo-`: [laoloser](https://www.youtube.com/@laoloserr)'s server ([sonolus.laoloser.com](https://laoloser.com/sonolus))
+      - `sync-`: Local Server ([ScoreSync](https://github.com/Piliman22/ScoreSync))
 
 5. Create a new project in AviUtl with **Image size 1920x1080 (or 1440x1080) & Frame rate 60**
 
@@ -116,7 +120,7 @@ Follow the steps below:
 | **Name**             	| Description                                    	| Default 	|  Range 	|
 |----------------------	|------------------------------------------------	|:-------:	|:------:	|
 | **Min Digit**<br>`min_digit`        	| Render the minimum amount of digits in score   	|    8    	| 1 ~ 99 (Integer)	|
-| **Skill Effect**<br>`score_skill`        	| Toggle skill glow effect<br>`0`: OFF<br>`1`: AUTO **(Beta)** - For each skill event, show skill glow effect for 5 seconds<br>`2`: ON   	|    1  	| 0 ~ 2 (Integer)	|
+| **Skill Effect**<br>`score_skill`        	| Toggle skill glow effect<br>`0`: OFF<br>`1`: AUTO - For each skill event, show skill glow effect for 5 seconds<br>`2`: ON   	|    1  	| 0 ~ 2 (Integer)	|
 | **Animation Speed**<br>`score_speed`   | Adjust animation speed                       	   |   1.00     |    >= 0 	   |
 | **Animated Scoring**<br>`anim_score` 	| Increase incrementally rather than all at once 	|  0 (OFF)  	|    0 or 1   	|
 | **WDS animation**<br>`wds_anim` 	| Toggle World Dai Star's added score animation 	|  0 (OFF)  	|    0 or 1   	|

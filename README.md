@@ -15,23 +15,26 @@ Fork of [pjsekai-overlay](https://github.com/sevenc-nanashi/pjsekai-overlay) by 
 > - *P.S. To [a certain someone](https://discordid.netlify.app/?id=1370076899404939327) (a.k.a [this person](https://discordid.netlify.app/?id=919036186473947187)) with the mindset of `"Just switch to a different editing software since I don’t even know how to install aviutl"` [(image source)](https://github.com/user-attachments/assets/4850442d-3f3a-438a-92d9-97d052f2fba0): I suggest you **make your own pjsekai-overlay that supports your desired editing software.** (if you can even find a video editor that is as versatile and extensible as AviUtl, that is).*
 
 This is a forked version of pjsekai-overlay with additional features originally not in the main repo, including:
-  - **AviUtl ExEdit2 Full Support**
-  - [Extra assets](./extra-assets)
-  - Added/adjusted elements to look identical to the official photography
-  - Quickly make 1080p videos
-  - iPad (4:3) video support
-  - Ability to use the English AviUtl
-  - v1 UI skin (Full support)
-  - Automatically changes chart difficulty to generate in AviUtl based on chart tag (or title)
-  - **(AviUtl ExEdit2 ONLY)** Supports very big number (~ 1.7e+307) using [lua-bignumber](https://github.com/thenumbernine/lua-bignumber)
-  - **[Various UI customization](https://github.com/TootieJin/pjsekai-overlay-APPEND/wiki/Start-Here!#ui-customization-specifications)**
-    - Animated Scoring
-    - Adjust animation speed in different elements
-    - Interchangable AP Combo
-    - Interchangable judgement type (PERFECT/GREAT/GOOD/etc.)
-    - Interchangable LIFE value
-    - Achievement Rate
-  - **Additional support for more servers:**
+- **AviUtl ExEdit2 Full Support**
+- [Extra assets](./extra-assets)
+- Added/adjusted elements to look identical to the official photography
+- Quickly make 1080p videos
+- iPad (4:3) video support
+- Ability to use the English AviUtl
+- v1 UI skin (Full support)
+- Automatically changes chart difficulty to generate in AviUtl based on chart tag (or title)
+- **(AviUtl ExEdit2 ONLY)** Supports very big number (~ 1.7e+307) using [lua-bignumber](https://github.com/thenumbernine/lua-bignumber)
+- **[Various UI customization](https://github.com/TootieJin/pjsekai-overlay-APPEND/wiki/Start-Here!#ui-customization-specifications)**
+  - Animated Scoring
+  - Adjust animation speed in different elements
+  - Interchangable AP Combo
+  - Interchangable judgement type (PERFECT/GREAT/GOOD/etc.)
+  - Interchangable LIFE value
+  - Achievement Rate
+- **Additional support for more servers:**
+  - **Official servers:**
+    - `sekai-rush-`: Proseka Rush ([sekairush.shop](https://sekairush.shop))
+  - **Custom servers:**
     - `chcy-`: Chart Cyanvas
       - `0`: Archive ([cc.sevenc7c.com](https://cc.sevenc7c.com))
       - `1`: Offshoot server ([chart-cyanvas.com](https://chart-cyanvas.com))
@@ -115,6 +118,7 @@ PJSekai-style video creation tool:
 | AviUtl                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     | **AviUtl ExEdit2 (Recommended)**                                                                                                                                                                                                                                                                                                                                                                                                            |
 | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | [AviUtl](http://spring-fragrance.mints.ne.jp/aviutl/) + [Advanced Editing plug-in](http://spring-fragrance.mints.ne.jp/aviutl/) + [L-SMASH Works](https://github.com/Mr-Ojii/L-SMASH-Works-Auto-Builds/releases/latest) + [easymp4](https://aoytsk.blog.jp/aviutl/easymp4.zip) ([JP Installation Guide](https://aviutl.info/dl-innsuto-ru/))<br>- **JP installer:** [AviUtl JP Installer Script](https://github.com/menndouyukkuri/aviutl-installer-script)<br>- **EN installer:** [AviUtl EN Extra Pack](https://www.videohelp.com/download/AviUtl_setup_1.14.exe)<br><br>*Import all plugins to `aviutl\Plugins` folder* | [AviUtl ExEdit2 **(via installer)**](http://spring-fragrance.mints.ne.jp/aviutl/) + [L-SMASH Works](https://github.com/Mr-Ojii/L-SMASH-Works-Auto-Builds/releases/latest) + [MP4Exporter](https://apps.esugo.net/aviutl2-mp4exporter/)<br>- English language can be selected in `設定 > 言語の設定 > English` (`Settings > Language > English`)<br><br>*Import `AviUtl2\lwinput.aui2` & `MP4Exporter.auo2` plugin to `C:\ProgramData\aviutl2\Plugin` folder* |
+- **[PowerShell](https://github.com/PowerShell/PowerShell)**
 - **Fonts:** RodinNTLG [DB](https://en.fontworks.co.jp/fontsearch/rodinntlgpro-db/) + [EB](https://en.fontworks.co.jp/fontsearch/rodinntlgpro-eb/)
 - Your system locale **must be `Japanese (Japan)`** [(Go here for how to change it)](https://github.com/TootieJin/pjsekai-overlay-APPEND/wiki/Start-Here!#changing-system-locale)
 - **Japanese Language Pack** must be installed [(Go here for installation instructions)](https://support.microsoft.com/en-us/windows/language-packs-for-windows-a5094319-a92d-18de-5b53-1cfc697cfca8)
@@ -148,23 +152,26 @@ PJSekai-style video creation tool:
 > ツール使用後は、[利用規約](#利用規約)も必ずお読みください。
 
 これはpjsekai-overlayのフォーク版で、元々メインレポにはない以下のような追加機能があります：
-  - **AviUtl ExEdit2 フル対応**
-  - [追加アセット](./extra-assets/)
-  - 本家撮影と同じように見えるように要素を追加/調整
-  - 1080p動画を素早く作成
-  - iPad（4:3）動画対応
-  - 英語版AviUtlの使用機能
-  - v1 UIスキン（フル対応）
-  - 譜面のタグ（またはタイトル）に基づいて、AviUtlで生成される譜面の難易度を自動的に変更する
-  - **(AviUtl ExEdit2 のみ)** [lua-bignumber](https://github.com/thenumbernine/lua-bignumber)を使用して非常に大きな数値（~ 1.7e+307）を対応
-  - **[各種UIカスタマイズ](https://github.com/TootieJin/pjsekai-overlay-APPEND/wiki/%E3%81%93%E3%81%93%E3%81%8B%E3%82%89%E5%A7%8B%E3%82%81%E3%82%88%E3%81%86%EF%BC%81#ui%E3%82%AB%E3%82%B9%E3%82%BF%E3%83%9E%E3%82%A4%E3%82%BA%E4%BB%95%E6%A7%98%E6%9B%B8)**
-    - アニメーション付きスコア表示
-    - 異なる要素でアニメーション速度を調整する
-    - 交換可能なAPコンボ
-    - 交換可能な判定タイプ（PERFECT/GREAT/GOODなど）
-    - 交換可能なライフ値
-    - 達成率表示
-  - **追加サーバーの対応：**
+- **AviUtl ExEdit2 フル対応**
+- [追加アセット](./extra-assets/)
+- 本家撮影と同じように見えるように要素を追加/調整
+- 1080p動画を素早く作成
+- iPad（4:3）動画対応
+- 英語版AviUtlの使用機能
+- v1 UIスキン（フル対応）
+- 譜面のタグ（またはタイトル）に基づいて、AviUtlで生成される譜面の難易度を自動的に変更する
+- **(AviUtl ExEdit2 のみ)** [lua-bignumber](https://github.com/thenumbernine/lua-bignumber)を使用して非常に大きな数値（~ 1.7e+307）を対応
+- **[各種UIカスタマイズ](https://github.com/TootieJin/pjsekai-overlay-APPEND/wiki/%E3%81%93%E3%81%93%E3%81%8B%E3%82%89%E5%A7%8B%E3%82%81%E3%82%88%E3%81%86%EF%BC%81#ui%E3%82%AB%E3%82%B9%E3%82%BF%E3%83%9E%E3%82%A4%E3%82%BA%E4%BB%95%E6%A7%98%E6%9B%B8)**
+  - アニメーション付きスコア表示
+  - 異なる要素でアニメーション速度を調整する
+  - 交換可能なAPコンボ
+  - 交換可能な判定タイプ（PERFECT/GREAT/GOODなど）
+  - 交換可能なライフ値
+  - 達成率表示
+- **追加サーバーの対応：**
+  - **公式サーバー：**
+    - `sekai-rush-`: Proseka Rush ([sekairush.shop](https://sekairush.shop))
+  - **カスタムサーバー：**
     - `chcy-`: Chart Cyanvas
       - `0`: アーカイブ([cc.sevenc7c.com](https://cc.sevenc7c.com))
       - `1`: 分岐サーバー([chart-cyanvas.com](https://chart-cyanvas.com))
@@ -231,6 +238,7 @@ PJSekai-style video creation tool:
 | AviUtl                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     | **AviUtl ExEdit2 (推奨)**                                                                                                                                                                                                                                                                                                                                                                                                            |
 | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | [AviUtl](http://spring-fragrance.mints.ne.jp/aviutl/) + [拡張編集プラグイン](http://spring-fragrance.mints.ne.jp/aviutl/) + [L-SMASH Works](https://github.com/Mr-Ojii/L-SMASH-Works-Auto-Builds/releases/latest) + [easymp4](https://aoytsk.blog.jp/aviutl/easymp4.zip)<br>- **インストーラー：** [AviUtl インストーラースクリプト](https://github.com/menndouyukkuri/aviutl-installer-script)<br><br>*すべてのプラグインを `aviutl\Plugins` フォルダにインポートする* | [AviUtl ExEdit2 **(インストーラ版)**](http://spring-fragrance.mints.ne.jp/aviutl/) + [L-SMASH Works](https://github.com/Mr-Ojii/L-SMASH-Works-Auto-Builds/releases/latest) + [MP4Exporter](https://apps.esugo.net/aviutl2-mp4exporter/)<br><br>*`AviUtl2\lwinput.aui2`と`MP4Exporter.auo2`プラグインを`C:\ProgramData\aviutl2\Plugin`フォルダにインポートする* |
+- **[PowerShell](https://github.com/PowerShell/PowerShell)**
 - **フォント：** ロダンNTLG [DB](https://en.fontworks.co.jp/fontsearch/rodinntlgpro-db/) + [EB](https://en.fontworks.co.jp/fontsearch/rodinntlgpro-eb/)
 - システムロケールは **必ず「日本語（日本）」** に設定してください [(変更方法はこちら)](https://github.com/TootieJin/pjsekai-overlay-APPEND/wiki/%E3%81%93%E3%81%93%E3%81%8B%E3%82%89%E5%A7%8B%E3%82%81%E3%82%88%E3%81%86%EF%BC%81#%E3%82%B7%E3%82%B9%E3%83%86%E3%83%A0%E3%83%AD%E3%82%B1%E3%83%BC%E3%83%AB%E3%81%AE%E5%A4%89%E6%9B%B4)
 - **日本語言語パック**をインストールする必要があります [(インストール手順はこちら)](https://support.microsoft.com/ja-jp/windows/windows-%E7%94%A8%E8%A8%80%E8%AA%9E%E3%83%91%E3%83%83%E3%82%AF-a5094319-a92d-18de-5b53-1cfc697cfca8)

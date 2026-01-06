@@ -99,7 +99,7 @@ func TryInstallObject(aviutlPath string, aviutlProcess string, mappingObj []stri
 			defer sekaiObjFile.Close()
 			var sekaiObjDecoder = japanese.ShiftJIS.NewDecoder()
 			var existingSekaiObj, _ = io.ReadAll(transform.NewReader(sekaiObjFile, sekaiObjDecoder))
-			if strings.Contains(string(existingSekaiObj), "--version: "+Version) && Version != "0.0.0" {
+			if strings.Contains(string(existingSekaiObj), "-- pjsekai-overlay-APPEND "+Version) && Version != "0.0.0" {
 				return false
 			}
 		}
@@ -109,7 +109,7 @@ func TryInstallObject(aviutlPath string, aviutlProcess string, mappingObj []stri
 			defer sekaiObjFileEn.Close()
 			var sekaiObjDecoderEn = japanese.ShiftJIS.NewDecoder()
 			var existingSekaiObjEn, _ = io.ReadAll(transform.NewReader(sekaiObjFileEn, sekaiObjDecoderEn))
-			if strings.Contains(string(existingSekaiObjEn), "--version: "+Version) && Version != "0.0.0" {
+			if strings.Contains(string(existingSekaiObjEn), "-- pjsekai-overlay-APPEND "+Version) && Version != "0.0.0" {
 				return false
 			}
 		}
@@ -119,7 +119,7 @@ func TryInstallObject(aviutlPath string, aviutlProcess string, mappingObj []stri
 			defer sekaiObjFilev1.Close()
 			var sekaiObjDecoderv1 = japanese.ShiftJIS.NewDecoder()
 			var existingSekaiObjv1, _ = io.ReadAll(transform.NewReader(sekaiObjFilev1, sekaiObjDecoderv1))
-			if strings.Contains(string(existingSekaiObjv1), "--version: "+Version) && Version != "0.0.0" {
+			if strings.Contains(string(existingSekaiObjv1), "-- pjsekai-overlay-APPEND "+Version) && Version != "0.0.0" {
 				return false
 			}
 		}
@@ -129,7 +129,7 @@ func TryInstallObject(aviutlPath string, aviutlProcess string, mappingObj []stri
 			defer sekaiObjFileEnv1.Close()
 			var sekaiObjDecoderEnv1 = japanese.ShiftJIS.NewDecoder()
 			var existingSekaiObjEnv1, _ = io.ReadAll(transform.NewReader(sekaiObjFileEnv1, sekaiObjDecoderEnv1))
-			if strings.Contains(string(existingSekaiObjEnv1), "--version: "+Version) && Version != "0.0.0" {
+			if strings.Contains(string(existingSekaiObjEnv1), "-- pjsekai-overlay-APPEND "+Version) && Version != "0.0.0" {
 				return false
 			}
 		}
@@ -323,12 +323,12 @@ func TryInstallObject(aviutlPath string, aviutlProcess string, mappingObj []stri
 		}
 
 		if data, err := os.ReadFile(sekaiObj2Path); err == nil {
-			if strings.Contains(string(data), "--version: "+Version) && Version != "0.0.0" {
+			if strings.Contains(string(data), "-- pjsekai-overlay-APPEND "+Version) && Version != "0.0.0" {
 				return false
 			}
 		}
 		if data, err := os.ReadFile(sekaiObj2v1Path); err == nil {
-			if strings.Contains(string(data), "--version: "+Version) && Version != "0.0.0" {
+			if strings.Contains(string(data), "-- pjsekai-overlay-APPEND "+Version) && Version != "0.0.0" {
 				return false
 			}
 		}
