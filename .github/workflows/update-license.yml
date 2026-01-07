@@ -1,0 +1,35 @@
+name: Update License Year
+
+on:
+    schedule:
+        - cron: '0 0 1 1 *'  # Runs at midnight on January 1st
+    workflow_dispatch:
+
+jobs:
+    update-license:
+        runs-on: ubuntu-latest
+        permissions:
+            contents: write
+            pull-requests: write
+
+        steps:
+            - uses: actions/checkout@v4
+
+            - name: Update license year
+              # Replace START_YEAR with your starting year
+              run: |
+                  CURRENT_YEAR=$(date +%Y)
+                  START_YEAR=2024
+                  find . -name "LICENSE*" -o -name "*.md" | while read file; do
+                      if [ -f "$file" ]; then
+                          sed -i "s/[0-9] - [0-9]\{4\}/$START_YEAR - $CURRENT_YEAR/g" "$file"
+                      fi
+                  done
+
+            - name: Create Pull Request
+              uses: peter-evans/create-pull-request@v5
+              with:
+                  commit-message: "chore: update license year to ${{ env.CURRENT_YEAR }}"
+                  title: "Update license year to ${{ env.CURRENT_YEAR }}"
+                  body: "Automated license year update for ${{ env.CURRENT_YEAR }}"
+                  branch: update-license-year
