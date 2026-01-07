@@ -19,6 +19,7 @@ jobs:
               # Replace START_YEAR with your starting year
               run: |
                   CURRENT_YEAR=$(date +%Y)
+                  echo "CURRENT_YEAR=$CURRENT_YEAR" >> $GITHUB_ENV
                   START_YEAR=2024
                   find . -name "LICENSE*" -o -name "*.md" | while read file; do
                       if [ -f "$file" ]; then
