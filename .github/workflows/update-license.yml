@@ -19,10 +19,10 @@ jobs:
               # Replace START_YEAR with your starting year
               run: |
                   CURRENT_YEAR=$(date +%Y)
-                  START_YEAR="2024"
+                  START_YEAR=2024
                   find . -name "LICENSE*" -o -name "*.md" | while read file; do
                       if [ -f "$file" ]; then
-                          sed -i "s/[0-9] - [0-9]\{4\}/$START_YEAR - $CURRENT_YEAR/g" "$file"
+                          sed -i "s/[0-9]\{4\} - [0-9]\{4\}/$START_YEAR - $CURRENT_YEAR/g" "$file"
                       fi
                   done
 
