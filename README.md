@@ -60,7 +60,7 @@ https://github.com/user-attachments/assets/3efab743-246a-4da7-8d80-a02b2f09f5b3
 
 ### • AviUtl ExEdit2 Preview
 
-<img width=70% height=70% alt="AviUtl ExEdit2 Preview" src="https://github.com/user-attachments/assets/18f6d16b-5ba4-4953-aa7d-5ceebb87348a" /><br>
+<img width=auto height=auto alt="AviUtl ExEdit2 Preview" src="https://github.com/user-attachments/assets/18f6d16b-5ba4-4953-aa7d-5ceebb87348a" /><br>
 
 ## Video Example (Click image to watch)
   - TootieJin\
