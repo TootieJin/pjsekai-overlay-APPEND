@@ -42,19 +42,22 @@ Follow the steps below:
 | 1. **While `aviutl.exe` is open**, open `pjsekai-overlay-APPEND.exe`<br>2. **Restart AviUtl to apply changes.** 	| 1. Open `pjsekai-overlay-APPEND.exe`<br>2. Press `2` to choose the AviUtl ExEdit2 instance 	|
 
 4. In your `pjsekai-overlay-APPEND.exe` command prompt, input the chart ID including the prefix.
-   - **Official servers:**
-      - `sekai-rush-`: Proseka Rush ([sekairush.shop](https://sekairush.shop))
-   - **Custom servers:**
-      - `chcy-`: Chart Cyanvas
-      - `0`: Archive ([cc.sevenc7c.com](https://cc.sevenc7c.com))
-      - `1`: Offshoot server ([chart-cyanvas.com](https://chart-cyanvas.com))
-      - `Others (URL domain)`: Different Cyanvas instance
-      - `ptlv-`: Potato Leaves ([ptlv.sevenc7c.com](https://ptlv.sevenc7c.com))
-      - <del>`utsk-`: Untitled Sekai ([us.pim4n-net.com](https://us.pim4n-net.com))</del>
-      - `UnCh-`: UntitledCharts ([untitledcharts.com](https://untitledcharts.com))
-      - `coconut-next-sekai-`: Next SEKAI ([coconut.sonolus.com/next-sekai](https://coconut.sonolus.com/next-sekai))
-      - `lalo-`: [laoloser](https://www.youtube.com/@laoloserr)'s server ([sonolus.laoloser.com](https://laoloser.com/sonolus))
-      - `sync-`: Local Server ([ScoreSync](https://github.com/Piliman22/ScoreSync))
+- **Official server(s):**
+   - `sekai-rush-`: Proseka Rush ([sekairush.shop](https://sekairush.shop))
+- **Custom server(s):**
+   - `chcy-`: Chart Cyanvas
+   - `0`: Archive ([cc.sevenc7c.com](https://cc.sevenc7c.com))
+   - `1`: Offshoot server ([chart-cyanvas.com](https://chart-cyanvas.com))
+   - `Others (URL domain)`: Different Cyanvas instance
+   - `ptlv-`: Potato Leaves ([ptlv.sevenc7c.com](https://ptlv.sevenc7c.com))
+   - <del>`utsk-`: Untitled Sekai ([us.pim4n-net.com](https://us.pim4n-net.com))</del>
+   - `UnCh-`: UntitledCharts ([untitledcharts.com](https://untitledcharts.com))
+   - `coconut-next-sekai-`: Next SEKAI ([coconut.sonolus.com/next-sekai](https://coconut.sonolus.com/next-sekai))
+- **Independent server(s):**
+   - `lalo-`: [laoloser](https://www.youtube.com/@laoloserr)'s server ([sonolus.laoloser.com](https://laoloser.com/sonolus))
+   - `skyra-`: [osciris](https://www.tiktok.com/@oscirissss)'s server ([Skyra](https://plumnet.live/)) **(LICENSE REQUIRED)**
+- **Local server(s):**
+   - `sync-`: Local Server ([ScoreSync](https://github.com/Piliman22/ScoreSync))
 
 5. Create a new project in AviUtl with **Image size 1920x1080 (or 1440x1080) & Frame rate 60**
 

@@ -32,9 +32,9 @@ This is a forked version of pjsekai-overlay with additional features originally 
   - Interchangable LIFE value
   - Achievement Rate
 - **Additional support for more servers:**
-  - **Official servers:**
+  - **Official server(s):**
     - `sekai-rush-`: Proseka Rush ([sekairush.shop](https://sekairush.shop))
-  - **Custom servers:**
+  - **Custom server(s):**
     - `chcy-`: Chart Cyanvas
       - `0`: Archive ([cc.sevenc7c.com](https://cc.sevenc7c.com))
       - `1`: Offshoot server ([chart-cyanvas.com](https://chart-cyanvas.com))
@@ -43,7 +43,10 @@ This is a forked version of pjsekai-overlay with additional features originally 
     - <del>`utsk-`: Untitled Sekai ([us.pim4n-net.com](https://us.pim4n-net.com))</del>
     - `UnCh-`: UntitledCharts ([untitledcharts.com](https://untitledcharts.com))
     - `coconut-next-sekai-`: Next SEKAI ([coconut.sonolus.com/next-sekai](https://coconut.sonolus.com/next-sekai))
+  - **Independent server(s):**
     - `lalo-`: [laoloser](https://www.youtube.com/@laoloserr)'s server ([sonolus.laoloser.com](https://laoloser.com/sonolus))
+    - `skyra-`: [osciris](https://www.tiktok.com/@oscirissss)'s server ([Skyra](https://plumnet.live/)) **(LICENSE REQUIRED)**
+  - **Local server(s):**
     - `sync-`: Local Server ([ScoreSync](https://github.com/Piliman22/ScoreSync))
 
 ### • 16:9
@@ -181,7 +184,11 @@ PJSekai-style video creation tool:
     - `UnCh-`: UntitledCharts ([untitledcharts.com](https://untitledcharts.com))
     - `coconut-next-sekai-`: Next SEKAI ([coconut.sonolus.com/next-sekai](https://coconut.sonolus.com/next-sekai))
     - `lalo-`: [laoloser](https://www.youtube.com/@laoloserr)のサーバー([sonolus.laoloser.com](https://laoloser.com/sonolus))
-    - `sync-`: ローカルサーバー([ScoreSync](https://github.com/Piliman22/ScoreSync))
+  - **独立サーバー:**
+    - `lalo-`: [laoloser](https://www.youtube.com/@laoloserr)のサーバー ([sonolus.laoloser.com](https://laoloser.com/sonolus))
+    - `skyra-`: [osciris](https://www.tiktok.com/@oscirissss)のサーバー ([Skyra](https://plumnet.live/)) **(ライセンス必須)**
+  - **ローカルサーバー:**
+    - `sync-`: ローカルサーバー ([ScoreSync](https://github.com/Piliman22/ScoreSync))
 
 ## 動画例（画像をクリックして視聴）
   - TootieJin\

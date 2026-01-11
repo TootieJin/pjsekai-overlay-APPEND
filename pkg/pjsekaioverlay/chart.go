@@ -162,6 +162,17 @@ func DetectChartSource(chartId string, chartInstance string) (Source, error) {
 			Host:   "sonolus.laoloser.com",
 			Status: 0,
 		}
+	} else if strings.HasPrefix(chartId, "skyra-") {
+		switch chartInstance {
+		default:
+			source = Source{
+				Id:     "skyra",
+				Name:   "Skyra (" + chartInstance + ")",
+				Color:  0x9c4edc,
+				Host:   "auth.skyra.live/u/" + chartInstance,
+				Status: 0,
+			}
+		}
 	}
 	if source.Id == "" {
 		return Source{
@@ -340,8 +351,8 @@ func CopyFile(src, dst string) error {
 	return nil
 }
 
-func DownloadBackground(source Source, level sonolus.LevelInfo, destPath string, chartId string, arg string) error {
-	if level.UseBackground.UseDefault || source.Id == "proseka_rush" || source.Name == "Chart Cyanvas Archive" || source.Id == "potato_leaves" || source.Id == "local_server" || source.Id == "next_sekai" {
+func DownloadBackground(source Source, level sonolus.LevelInfo, destPath string, chartId string, arg string, customBG bool) error {
+	if source.Id == "proseka_rush" || source.Name == "Chart Cyanvas Archive" || source.Id == "potato_leaves" || source.Id == "local_server" || source.Id == "next_sekai" || (source.Id == "skyra" && !customBG) {
 		coverPath := path.Join(destPath, "cover.png")
 		if _, err := os.Stat(coverPath); os.IsNotExist(err) {
 			return fmt.Errorf("ジャケット画像が見つかりません。先にジャケット画像をダウンロードしてください。(Jacket image not found. Download jacket image first.)")
@@ -404,7 +415,14 @@ func DownloadBackground(source Source, level sonolus.LevelInfo, destPath string,
 			return fmt.Errorf("背景ファイルのリネームに失敗しました。(Failed to rename background file.) [%s]", err)
 		}
 	} else {
-		backgroundUrl, err := sonolus.JoinUrl("https://"+source.Host, level.UseBackground.Item.Image.Url)
+		var backgroundUrl string
+		var err error
+
+		if level.UseBackground.UseDefault {
+			backgroundUrl, err = sonolus.JoinUrl("https://"+source.Host, level.Engine.Background.Image.Url)
+		} else {
+			backgroundUrl, err = sonolus.JoinUrl("https://"+source.Host, level.UseBackground.Item.Image.Url)
+		}
 
 		if err != nil {
 			return fmt.Errorf("URLの解析に失敗しました。(URL parsing failed.) [%s]", err)
@@ -424,7 +442,7 @@ func DownloadBackground(source Source, level sonolus.LevelInfo, destPath string,
 		var file *os.File
 		var filev1 *os.File
 
-		if strings.Contains(chartId, "?c_background=v1") || strings.Contains(chartId, "?levelbg=default_or_v1") || strings.Contains(chartId, "?levelbg=v1") { // v1 BG (or custom)
+		if strings.Contains(chartId, "?c_background=v1") || strings.Contains(chartId, "?levelbg=default_or_v1") || strings.Contains(chartId, "?levelbg=v1") || strings.HasSuffix(chartId, "/") { // v1 BG (or custom)
 			filev1, err = os.Create(path.Join(destPath, "background-v1.png"))
 			file = nil
 		} else {

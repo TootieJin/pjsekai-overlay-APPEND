@@ -377,11 +377,12 @@ func origMain(isOptionSpecified bool) {
 		chartId = flag.Arg(0)
 		fmt.Printf("譜面ID (Chart ID): %s\n", color.GreenString(chartId))
 	} else {
-		fmt.Print("譜面IDを接頭辞込みで入力して下さい。\nEnter the chart ID including the prefix.\n\n'sekai-rush-': Proseka Rush (sekairush.shop)\n'chcy-': Chart Cyanvas\n'ptlv-': Potato Leaves (ptlv.sevenc7c.com)\n'utsk-': Untitled Sekai (us.pim4n-net.com)\n'UnCh-': UntitledCharts (untitledcharts.com)\n'coconut-next-sekai-': Next SEKAI (coconut.sonolus.com/next-sekai)\n'lalo-': laoloser's server (sonolus.laoloser.com)\n'sync-': Local Server (ScoreSync)\n> ")
+		fmt.Print("譜面IDを接頭辞込みで入力して下さい。\nEnter the chart ID including the prefix.\n\n'sekai-rush-': Proseka Rush (sekairush.shop)\n'chcy-': Chart Cyanvas\n'ptlv-': Potato Leaves (ptlv.sevenc7c.com)\n'utsk-': Untitled Sekai (us.pim4n-net.com)\n'UnCh-': UntitledCharts (untitledcharts.com)\n'coconut-next-sekai-': Next SEKAI (coconut.sonolus.com/next-sekai)\n'lalo-': laoloser's server (sonolus.laoloser.com)\n'skyra-': osciris's server (Skyra)\n'sync-': Local Server (ScoreSync)\n> ")
 		fmt.Scanln(&chartId)
 		fmt.Printf("\033[A\033[2K\r> %s\n", color.GreenString(chartId))
 	}
 
+	// Instance section
 	if chartInstance == "" && strings.HasPrefix(chartId, "chcy-") {
 		fmt.Printf("\nChart Cyanvasインスタンスを選択してください。(Please choose Chart Cyanvas instance.)\n%s\n\n[インスタンス一覧 - List of instance(s)]\n'0': アーカイブ/Archive - cc.sevenc7c.com\n'1': 分岐サーバー/Offshoot server - chart-cyanvas.com\n> ", color.HiYellowString("(!) 別のインスタンスを持っていますか？URLドメインを入力してください。(Do you have a different instance? Input the URL domain.)"))
 		var chartInput string
@@ -389,6 +390,12 @@ func origMain(isOptionSpecified bool) {
 		chartInput = strings.TrimPrefix(chartInput, "http://")
 		chartInput = strings.TrimPrefix(chartInput, "https://")
 		chartInstance = strings.Split(chartInput, "/")[0]
+		fmt.Printf("\033[A\033[2K\r> %s\n", color.GreenString(chartInput))
+	} else if chartInstance == "" && strings.HasPrefix(chartId, "skyra-") {
+		fmt.Printf("\nSkyraトークンを入力してください。(Please enter your Skyra token.)\n%s\n> ", color.HiYellowString("(!) トークンには「S-」という接頭辞が必要です。(Token must have a prefix of 'S-'.)"))
+		var chartInput string
+		fmt.Scanln(&chartInput)
+		chartInstance = chartInput
 		fmt.Printf("\033[A\033[2K\r> %s\n", color.GreenString(chartInput))
 	}
 
@@ -426,11 +433,8 @@ func origMain(isOptionSpecified bool) {
 	fmt.Printf("- 譜面を取得中 (Getting chart): %s%s%s ", RgbColorEscape(chartSource.Color), chartSource.Name, ResetEscape())
 
 	var chart sonolus.LevelInfo
-	if strings.HasPrefix(chartId, "lalo-") {
-		chart, err = pjsekaioverlay.FetchChart(chartSource, chartId[5:])
-	} else {
-		chart, err = pjsekaioverlay.FetchChart(chartSource, chartId)
-	}
+	prefixTrim := checkSubstrings([]string{chartId}, "lalo-", "skyra-")
+	chart, err = pjsekaioverlay.FetchChart(chartSource, strings.TrimPrefix(chartId, prefixTrim))
 
 	if err != nil {
 		fmt.Println(color.RedString(fmt.Sprintf("FAIL: %s", err.Error())))
@@ -496,7 +500,7 @@ func origMain(isOptionSpecified bool) {
 
 	// fmt.Println(color.GreenString("OK"))
 
-	if !isOptionSpecified && chartSource.Id == "untitledcharts" {
+	if !isOptionSpecified && (chartSource.Id == "untitledcharts" || chartSource.Id == "skyra") {
 		fmt.Print("\nカスタム背景を使用しますか？（デフォルトを使用するには「n」）[y/n]\nUse custom background? ('n' to use default) [y/n]\n> ")
 		before, _ := rawmode.Enable()
 		tmpCustomBGByte, _ := bufio.NewReader(os.Stdin).ReadByte()
@@ -516,27 +520,35 @@ func origMain(isOptionSpecified bool) {
 	if customBG {
 		fmt.Print("- 背景をダウンロード中 (Downloading background)... ")
 
-		err = pjsekaioverlay.DownloadBackground(chartSource, chart, formattedOutDir, chartId, "")
+		err = pjsekaioverlay.DownloadBackground(chartSource, chart, formattedOutDir, chartId, "", customBG)
 		if err != nil {
 			fmt.Println(color.RedString(fmt.Sprintf("FAIL: %s", err.Error())))
 			return
 		}
 
-		err = pjsekaioverlay.DownloadBackground(chartSource, chartUNv1def, formattedOutDir, chartId+"?levelbg=default_or_v1", "")
-		if err != nil {
-			fmt.Println(color.RedString(fmt.Sprintf("FAIL: %s", err.Error())))
-			return
+		if chartSource.Id == "untitledcharts" {
+			err = pjsekaioverlay.DownloadBackground(chartSource, chartUNv1def, formattedOutDir, chartId+"?levelbg=default_or_v1", "", customBG)
+			if err != nil {
+				fmt.Println(color.RedString(fmt.Sprintf("FAIL: %s", err.Error())))
+				return
+			}
+		} else {
+			err = pjsekaioverlay.DownloadBackground(chartSource, chart, formattedOutDir, chartId+"/", "", customBG)
+			if err != nil {
+				fmt.Println(color.RedString(fmt.Sprintf("FAIL: %s", err.Error())))
+				return
+			}
 		}
 	} else if chartSource.Id == "untitledcharts" {
 		fmt.Print("- 背景をダウンロード中 (Downloading background)... ")
 
-		err = pjsekaioverlay.DownloadBackground(chartSource, chartUNv3, formattedOutDir, chartId+"?levelbg=v3", "")
+		err = pjsekaioverlay.DownloadBackground(chartSource, chartUNv3, formattedOutDir, chartId+"?levelbg=v3", "", customBG)
 		if err != nil {
 			fmt.Println(color.RedString(fmt.Sprintf("FAIL: %s", err.Error())))
 			return
 		}
 
-		err = pjsekaioverlay.DownloadBackground(chartSource, chartUNv1, formattedOutDir, chartId+"?levelbg=v1", "")
+		err = pjsekaioverlay.DownloadBackground(chartSource, chartUNv1, formattedOutDir, chartId+"?levelbg=v1", "", customBG)
 		if err != nil {
 			fmt.Println(color.RedString(fmt.Sprintf("FAIL: %s", err.Error())))
 			return
@@ -544,13 +556,13 @@ func origMain(isOptionSpecified bool) {
 	} else if chartSource.Id == "chart_cyanvas" && chartSource.Name != "Chart Cyanvas Archive" {
 		fmt.Print("- 背景をダウンロード中 (Downloading background)... ")
 
-		err = pjsekaioverlay.DownloadBackground(chartSource, chart, formattedOutDir, chartId, "")
+		err = pjsekaioverlay.DownloadBackground(chartSource, chart, formattedOutDir, chartId, "", customBG)
 		if err != nil {
 			fmt.Println(color.RedString(fmt.Sprintf("FAIL: %s", err.Error())))
 			return
 		}
 
-		err = pjsekaioverlay.DownloadBackground(chartSource, chartCCv1, formattedOutDir, chartId+"?c_background=v1", "")
+		err = pjsekaioverlay.DownloadBackground(chartSource, chartCCv1, formattedOutDir, chartId+"?c_background=v1", "", customBG)
 		if err != nil {
 			fmt.Println(color.RedString(fmt.Sprintf("FAIL: %s", err.Error())))
 			return
@@ -558,13 +570,13 @@ func origMain(isOptionSpecified bool) {
 	} else {
 		fmt.Print("- ローカルで背景を生成中 - お待ちください (Generating background locally - please wait)... ")
 
-		err = pjsekaioverlay.DownloadBackground(chartSource, chart, formattedOutDir, chartId, "-v 1")
+		err = pjsekaioverlay.DownloadBackground(chartSource, chart, formattedOutDir, chartId, "-v 1", customBG)
 		if err != nil {
 			fmt.Println(color.RedString(fmt.Sprintf("FAIL: %s", err.Error())))
 			return
 		}
 
-		err = pjsekaioverlay.DownloadBackground(chartSource, chart, formattedOutDir, chartId, "-v 3")
+		err = pjsekaioverlay.DownloadBackground(chartSource, chart, formattedOutDir, chartId, "-v 3", customBG)
 		if err != nil {
 			fmt.Println(color.RedString(fmt.Sprintf("FAIL: %s", err.Error())))
 			return
