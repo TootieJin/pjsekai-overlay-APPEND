@@ -1,6 +1,17 @@
 [**English Section**](#pjsekai-overlay-append--forked-pjsekai-style-video-creation-tool) | [**日本語セクション**](#pjsekai-overlay-append--フォークプロセカ風動画作成補助ツール)
 
-[![Releases](https://img.shields.io/github/downloads/TootieJin/pjsekai-overlay-APPEND/total?style=plastic)](https://github.com/TootieJin/pjsekai-overlay-APPEND/releases/) [![Stargazers](https://img.shields.io/github/stars/TootieJin/pjsekai-overlay-APPEND?style=plastic&color=yellow)](https://github.com/TootieJin/pjsekai-overlay-APPEND/stargazers)
+<p align="center">
+  <a href="https://github.com/TootieJin/pjsekai-overlay-APPEND/blob/main/LICENSE"><img src="https://img.shields.io/github/license/TootieJin/pjsekai-overlay-APPEND" alt="License"></a> 
+  <a href="https://github.com/TootieJin/pjsekai-overlay-APPEND/releases/"><img src="https://img.shields.io/github/downloads/TootieJin/pjsekai-overlay-APPEND/total" alt="Releases"></a> 
+  <a href="https://github.com/TootieJin/pjsekai-overlay-APPEND/stargazers"><img src="https://img.shields.io/github/stars/TootieJin/pjsekai-overlay-APPEND?style=flat&amp;color=yellow" alt="Stargazers"></a>
+</p>
+
+<p align="center">
+    <a href="https://ko-fi.com/TootieJin">
+      <img width="400px" src="https://cdn.prod.website-files.com/5c14e387dab576fe667689cf/64f1a9ddd0246590df69ea0b_kofi_long_button_red%402x.png"/>
+    </a>
+</p>
+
 # pjsekai-overlay-APPEND / Forked PJSekai-style video creation tool
 
 [![pjsekai-overlay-APPEND thumbnail](https://github.com/user-attachments/assets/dcc037f7-1c2b-4b83-b17b-b3c5155d670c)]()
@@ -47,7 +58,7 @@ This is a forked version of pjsekai-overlay with additional features originally 
     - `lalo-`: [laoloser](https://www.youtube.com/@laoloserr)'s server ([sonolus.laoloser.com](https://laoloser.com/sonolus))
     - `skyra-`: [osciris](https://www.tiktok.com/@oscirissss)'s server ([Skyra](https://plumnet.live/)) **(LICENSE REQUIRED)**
   - **Local server(s):**
-    - `sync-`: Local Server ([ScoreSync](https://github.com/Piliman22/ScoreSync))
+    - `sync-`: Local Server ([ScoreSync](https://github.com/Piliman22/ScoreSync) + [ScoreSync Modern](https://github.com/UntitledCharts/ScoreSync-Modern))
 
 ### • 16:9
 
@@ -188,7 +199,7 @@ PJSekai-style video creation tool:
     - `lalo-`: [laoloser](https://www.youtube.com/@laoloserr)のサーバー ([sonolus.laoloser.com](https://laoloser.com/sonolus))
     - `skyra-`: [osciris](https://www.tiktok.com/@oscirissss)のサーバー ([Skyra](https://plumnet.live/)) **(ライセンス必須)**
   - **ローカルサーバー:**
-    - `sync-`: ローカルサーバー ([ScoreSync](https://github.com/Piliman22/ScoreSync))
+    - `sync-`: ローカルサーバー ([ScoreSync](https://github.com/Piliman22/ScoreSync) + [ScoreSync Modern](https://github.com/UntitledCharts/ScoreSync-Modern))
 
 ## 動画例（画像をクリックして視聴）
   - TootieJin\
