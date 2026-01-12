@@ -1,4 +1,6 @@
-[**English Section**](#pjsekai-overlay-append--forked-pjsekai-style-video-creation-tool) | [**日本語セクション**](#pjsekai-overlay-append--フォークプロセカ風動画作成補助ツール)
+<p align="center">
+  <a href="#pjsekai-overlay-append--forked-pjsekai-style-video-creation-tool"><strong>English Section</strong></a> | <a href="#pjsekai-overlay-append--フォークプロセカ風動画作成補助ツール"><strong>日本語セクション</strong></a>
+</p>
 
 <p align="center">
   <a href="https://github.com/TootieJin/pjsekai-overlay-APPEND/blob/main/LICENSE"><img src="https://img.shields.io/github/license/TootieJin/pjsekai-overlay-APPEND" alt="License"></a> 
