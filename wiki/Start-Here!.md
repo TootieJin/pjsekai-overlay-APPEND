@@ -57,7 +57,7 @@ Follow the steps below:
    - `lalo-`: [laoloser](https://www.youtube.com/@laoloserr)'s server ([sonolus.laoloser.com](https://laoloser.com/sonolus))
    - `skyra-`: [osciris](https://www.tiktok.com/@oscirissss)'s server ([Skyra](https://plumnet.live/)) **(LICENSE REQUIRED)**
 - **Local server(s):**
-   - `sync-`: Local Server ([ScoreSync](https://github.com/Piliman22/ScoreSync))
+   - `sync-`: Local Server ([ScoreSync](https://github.com/Piliman22/ScoreSync) + [ScoreSync Modern](https://github.com/UntitledCharts/ScoreSync-Modern))
 
 5. Create a new project in AviUtl with **Image size 1920x1080 (or 1440x1080) & Frame rate 60**
 
