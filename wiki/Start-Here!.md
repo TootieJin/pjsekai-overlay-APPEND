@@ -46,9 +46,9 @@ Follow the steps below:
    - `sekai-rush-`: Proseka Rush ([sekairush.shop](https://sekairush.shop))
 - **Custom server(s):**
    - `chcy-`: Chart Cyanvas
-   - `0`: Archive ([cc.sevenc7c.com](https://cc.sevenc7c.com))
-   - `1`: Offshoot server ([chart-cyanvas.com](https://chart-cyanvas.com))
-   - `Others (URL domain)`: Different Cyanvas instance
+      - `0`: Archive ([cc.sevenc7c.com](https://cc.sevenc7c.com))
+      - `1`: Offshoot server ([chart-cyanvas.com](https://chart-cyanvas.com))
+      - `Others (URL domain)`: Different Cyanvas instance
    - `ptlv-`: Potato Leaves ([ptlv.sevenc7c.com](https://ptlv.sevenc7c.com))
    - <del>`utsk-`: Untitled Sekai ([us.pim4n-net.com](https://us.pim4n-net.com))</del>
    - `UnCh-`: UntitledCharts ([untitledcharts.com](https://untitledcharts.com))
