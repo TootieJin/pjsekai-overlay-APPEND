@@ -444,47 +444,6 @@ AutoClipping_S=Auto Clipping
 ; ObjectMotionBlur_K - https://github.com/korarei/AviUtl2_ObjectMotionBlur_LK_Script
 ObjectMotionBlur_LK=Object Motion Blur_LK
 
-; TootieJin's pjsekai-overlay-APPEND - https://github.com/TootieJin/pjsekai-overlay-APPEND
-設定@pjsekai-overlay-2=Root@pjsekai-overlay-2
-ライフ@pjsekai-overlay-2=Life@pjsekai-overlay-2
-スコア@pjsekai-overlay-2=Score@pjsekai-overlay-2
-コンボ@pjsekai-overlay-2=Combo@pjsekai-overlay-2
-判定@pjsekai-overlay-2=Judgement@pjsekai-overlay-2
-オート@pjsekai-overlay-2=Auto@pjsekai-overlay-2
-設定@pjsekai-overlay-2-v1=Root@pjsekai-overlay-2-v1
-ライフ@pjsekai-overlay-2-v1=Life@pjsekai-overlay-2-v1
-スコア@pjsekai-overlay-2-v1=Score@pjsekai-overlay-2-v1
-コンボ@pjsekai-overlay-2-v1=Combo@pjsekai-overlay-2-v1
-判定@pjsekai-overlay-2-v1=Judgement@pjsekai-overlay-2-v1
-オート@pjsekai-overlay-2-v1=Auto@pjsekai-overlay-2-v1
-; Root
-PEDファイル=PED File
-オフセット=Offset
-テキスト言語=Text Language
-キャッシュ=Cache
-透かし=Watermark
-詳細統計=Detailed Stats
-; Life
-ライフ=LIFE
-過剰なライフバー=Overflow LIFE Bar
-先行ゼロ=Leading Zero
-; Score
-最小桁数=Min Digit
-アニメーション採点=Animated Scoring
-「ユメステ」アニメーション=WDS Animation
-; Combo
-APコンボ=AP Combo
-コンボタグ=Combo Tag
-n00コンボ効果=n00 Combo Burst
-最後のX桁を表示=Show the last X digit(s)
-達成率表示=Achievement Rate
-; Judgement
-判定タイプ=Judge Type
-; Multi-use variable
-アニメーション速度=Animation Speed
-X軸境界=X-axis Boundary
-スキル効果=Skill Effect
-
 ; Label Names * Only popup menu names are translated
 基本効果=Basic Effect
 音声効果=Audio Effect

@@ -1,0 +1,45 @@
+; TootieJin's pjsekai-overlay-APPEND - https://github.com/TootieJin/pjsekai-overlay-APPEND
+
+[設定@pjsekai-overlay-2]
+設定@pjsekai-overlay-2=Root@pjsekai-overlay-2
+PEDファイル=PED File
+オフセット=Offset
+テキスト言語=Text Language
+キャッシュ=Cache
+透かし=Watermark
+詳細統計=Detailed Stats
+
+[ライフ@pjsekai-overlay-2]
+ライフ@pjsekai-overlay-2=Life@pjsekai-overlay-2
+X軸境界=X-axis Boundary
+ライフ=LIFE
+スキル効果=Skill Effect
+過剰なライフバー=Overflow LIFE Bar
+先行ゼロ=Leading Zero
+
+[スコア@pjsekai-overlay-2]
+スコア@pjsekai-overlay-2=Score@pjsekai-overlay-2
+X軸境界=X-axis Boundary
+最小桁数=Min Digit
+スキル効果=Skill Effect
+アニメーション速度=Animation Speed
+アニメーション採点=Animated Scoring
+「ユメステ」アニメーション=WDS Animation
+
+[コンボ@pjsekai-overlay-2]
+コンボ@pjsekai-overlay-2=Combo@pjsekai-overlay-2
+X軸境界=X-axis Boundary
+APコンボ=AP Combo
+コンボタグ=Combo Tag
+n00コンボ効果=n00 Combo Burst
+最後のX桁を表示=Show the last X digit(s)
+アニメーション速度=Animation Speed
+達成率表示=Achievement Rate
+
+[判定@pjsekai-overlay-2]
+判定@pjsekai-overlay-2=Judgement@pjsekai-overlay-2
+判定タイプ=Judge Type
+アニメーション速度=Animation Speed
+
+[オート@pjsekai-overlay-2]
+オート@pjsekai-overlay-2=Auto@pjsekai-overlay-2

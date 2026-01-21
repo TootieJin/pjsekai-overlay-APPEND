@@ -57,7 +57,7 @@ This is a forked version of pjsekai-overlay with additional features originally 
     - `UnCh-`: UntitledCharts ([untitledcharts.com](https://untitledcharts.com))
     - `coconut-next-sekai-`: Next SEKAI ([coconut.sonolus.com/next-sekai](https://coconut.sonolus.com/next-sekai))
   - **Independent server(s):**
-    - `lalo-`: [laoloser](https://www.youtube.com/@laoloserr)'s server ([sonolus.laoloser.com](https://laoloser.com/sonolus))
+    - <del>`lalo-`: [laoloser](https://www.youtube.com/@laoloserr)'s server ([sonolus.laoloser.com](https://laoloser.com/sonolus))</del>
     - `skyra-`: [osciris](https://www.tiktok.com/@oscirissss)'s server ([Skyra](https://plumnet.live/)) **(LICENSE REQUIRED)**
   - **Local server(s):**
     - `sync-`: Local Server ([ScoreSync](https://github.com/Piliman22/ScoreSync) + [ScoreSync Modern](https://github.com/UntitledCharts/ScoreSync-Modern))
@@ -198,7 +198,7 @@ PJSekai-style video creation tool:
     - `coconut-next-sekai-`: Next SEKAI ([coconut.sonolus.com/next-sekai](https://coconut.sonolus.com/next-sekai))
     - `lalo-`: [laoloser](https://www.youtube.com/@laoloserr)のサーバー([sonolus.laoloser.com](https://laoloser.com/sonolus))
   - **独立サーバー:**
-    - `lalo-`: [laoloser](https://www.youtube.com/@laoloserr)のサーバー ([sonolus.laoloser.com](https://laoloser.com/sonolus))
+    - <del>`lalo-`: [laoloser](https://www.youtube.com/@laoloserr)のサーバー ([sonolus.laoloser.com](https://laoloser.com/sonolus))</del>
     - `skyra-`: [osciris](https://www.tiktok.com/@oscirissss)のサーバー ([Skyra](https://plumnet.live/)) **(ライセンス必須)**
   - **ローカルサーバー:**
     - `sync-`: ローカルサーバー ([ScoreSync](https://github.com/Piliman22/ScoreSync) + [ScoreSync Modern](https://github.com/UntitledCharts/ScoreSync-Modern))
