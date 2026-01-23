@@ -466,8 +466,11 @@ func WritePedFile(frames []PedFrame, assets string, path string, levelInfo sonol
 				procCount++
 			}
 		}
-		if i%100 == 0 && i > 0 {
-			writer.Write(fmt.Appendf(nil, "c|%f:%d\n", time, i))
+
+		combo := i - procCount
+
+		if combo%100 == 0 && combo > 0 {
+			writer.Write(fmt.Appendf(nil, "c|%f:%d\n", time, combo))
 		}
 		if i < len(frames)-1 && time == frames[i+1].Time {
 			continue
@@ -475,8 +478,6 @@ func WritePedFile(frames []PedFrame, assets string, path string, levelInfo sonol
 		if time == 0 && i > 0 {
 			time = frames[i-1].Time + 0.000001
 		}
-
-		combo := i - procCount
 
 		writer.Write(fmt.Appendf(nil, "d|%f:%.0f:%.0f:%f:%f:%s:%d\n", time, score, frameScore, scoreX, scoreXv1, rank, combo))
 	}
