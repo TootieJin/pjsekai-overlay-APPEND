@@ -43,6 +43,7 @@ This is a forked version of pjsekai-overlay with additional features originally 
   - Interchangable AP Combo
   - Interchangable judgement type (PERFECT/GREAT/GOOD/etc.)
   - Interchangable LIFE value
+  - Skill Effects (v1 + v3)
   - Achievement Rate
 - **Additional support for more servers:**
   - **Official server(s):**
@@ -83,7 +84,7 @@ https://github.com/user-attachments/assets/3efab743-246a-4da7-8d80-a02b2f09f5b3
     [![](https://img.shields.io/youtube/channel/subscribers/UCKBUuZx2leOsRqE-iXayBtA?style=flat&logo=YouTube)](https://www.youtube.com/channel/UCKBUuZx2leOsRqE-iXayBtA)
 
 <a href="https://youtu.be/uXx1OZDQZOI"><img width=32% height=32% alt="【Project Sekai x Honkai: Star Rail】Nameless Faces - HOYO-MiX feat. Lilas Ikuta (Fanmade)" src="https://img.youtube.com/vi/uXx1OZDQZOI/maxresdefault.jpg" /></a> <a href="https://youtu.be/BHVNuwxA1ek"><img width=32% height=32% alt="【Project Sekai Fanmade? (v3→v1)】Hello, SEKAI - DECO*27【ETERNAL Lv32】" src="https://img.youtube.com/vi/BHVNuwxA1ek/maxresdefault.jpg" /></a> <a href="https://youtu.be/O2GxrLWbwlY"><img width=32% height=32% alt="【Project Sekai Fanmade】Confessions of a Rotten Girl - SAWTOWNE (APPEND Lv36)" src="https://img.youtube.com/vi/O2GxrLWbwlY/maxresdefault.jpg" /></a>
-<a href="https://youtu.be/yyoTAJx-6ok"><img width=32% height=32% alt="【Project Sekai Fanmade (?)】Anonymous M - PinocchioP (CO-OP CHART)" src="https://img.youtube.com/vi/yyoTAJx-6ok/maxresdefault.jpg" /></a>
+<a href="https://youtu.be/yyoTAJx-6ok"><img width=32% height=32% alt="【Project Sekai Fanmade (?)】Anonymous M - PinocchioP (CO-OP CHART)" src="https://img.youtube.com/vi/yyoTAJx-6ok/maxresdefault.jpg" /></a> <a href="https://youtu.be/jT7KFU5gc4Q"><img width=32% height=32% alt="【Project Sekai x Blue Archive (MEGACOLLAB)】Unwelcome School.Remix - Genre change every 4 bars" src="https://img.youtube.com/vi/jT7KFU5gc4Q/maxresdefault.jpg" /></a>
 
   - Hydrogen\
     [![](https://img.shields.io/youtube/channel/subscribers/UCtQa1khvAPiZ-ralYgGFhsg?style=flat&logo=YouTube)](https://www.youtube.com/channel/UCtQa1khvAPiZ-ralYgGFhsg)
@@ -154,6 +155,7 @@ PJSekai-style video creation tool:
 - [@Khronophobia](https://github.com/Khronophobia) for the customized lane assets in Blender!
 - [@nagotown](https://github.com/nagotown) for the [aviutl2-EN](https://github.com/nagotown/aviutl2-EN) translation script!
 - [@MattMayuga](https://github.com/MattMayuga) for the [customized judgement fonts](https://github.com/Tiny-Foxes/JudgeFonts-by-MattMayuga)!
+- **Sponsors/Donators (thank you!):** Osciris (US$20), Nexint (US$5)
 - And everyone who used my tool, thank you all so much.
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -183,6 +185,7 @@ PJSekai-style video creation tool:
   - 交換可能なAPコンボ
   - 交換可能な判定タイプ（PERFECT/GREAT/GOODなど）
   - 交換可能なライフ値
+  - スキル効果（v1 + v3）
   - 達成率表示
 - **追加サーバーの対応：**
   - **公式サーバー：**
@@ -197,10 +200,10 @@ PJSekai-style video creation tool:
     - `UnCh-`: UntitledCharts ([untitledcharts.com](https://untitledcharts.com))
     - `coconut-next-sekai-`: Next SEKAI ([coconut.sonolus.com/next-sekai](https://coconut.sonolus.com/next-sekai))
     - `lalo-`: [laoloser](https://www.youtube.com/@laoloserr)のサーバー([sonolus.laoloser.com](https://laoloser.com/sonolus))
-  - **独立サーバー:**
+  - **独立サーバー：**
     - <del>`lalo-`: [laoloser](https://www.youtube.com/@laoloserr)のサーバー ([sonolus.laoloser.com](https://laoloser.com/sonolus))</del>
     - `skyra-`: [osciris](https://www.tiktok.com/@oscirissss)のサーバー ([Skyra](https://plumnet.live/)) **(ライセンス必須)**
-  - **ローカルサーバー:**
+  - **ローカルサーバー：**
     - `sync-`: ローカルサーバー ([ScoreSync](https://github.com/Piliman22/ScoreSync) + [ScoreSync Modern](https://github.com/UntitledCharts/ScoreSync-Modern))
 
 ## 動画例（画像をクリックして視聴）
@@ -208,7 +211,7 @@ PJSekai-style video creation tool:
     [![](https://img.shields.io/youtube/channel/subscribers/UCKBUuZx2leOsRqE-iXayBtA?style=flat&logo=YouTube)](https://www.youtube.com/channel/UCKBUuZx2leOsRqE-iXayBtA)
 
 <a href="https://youtu.be/uXx1OZDQZOI"><img width=32% height=32% alt="【Project Sekai x Honkai: Star Rail】Nameless Faces - HOYO-MiX feat. Lilas Ikuta (Fanmade)" src="https://img.youtube.com/vi/uXx1OZDQZOI/maxresdefault.jpg" /></a> <a href="https://youtu.be/BHVNuwxA1ek"><img width=32% height=32% alt="【Project Sekai Fanmade? (v3→v1)】Hello, SEKAI - DECO*27【ETERNAL Lv32】" src="https://img.youtube.com/vi/BHVNuwxA1ek/maxresdefault.jpg" /></a> <a href="https://youtu.be/O2GxrLWbwlY"><img width=32% height=32% alt="【Project Sekai Fanmade】Confessions of a Rotten Girl - SAWTOWNE (APPEND Lv36)" src="https://img.youtube.com/vi/O2GxrLWbwlY/maxresdefault.jpg" /></a>
-<a href="https://youtu.be/yyoTAJx-6ok"><img width=32% height=32% alt="【Project Sekai Fanmade (?)】Anonymous M - PinocchioP (CO-OP CHART)" src="https://img.youtube.com/vi/yyoTAJx-6ok/maxresdefault.jpg" /></a>
+<a href="https://youtu.be/yyoTAJx-6ok"><img width=32% height=32% alt="【Project Sekai Fanmade (?)】Anonymous M - PinocchioP (CO-OP CHART)" src="https://img.youtube.com/vi/yyoTAJx-6ok/maxresdefault.jpg" /></a> <a href="https://youtu.be/jT7KFU5gc4Q"><img width=32% height=32% alt="【Project Sekai x Blue Archive (MEGACOLLAB)】Unwelcome School.Remix - Genre change every 4 bars" src="https://img.youtube.com/vi/jT7KFU5gc4Q/maxresdefault.jpg" /></a>
 
   - Hydrogen\
     [![](https://img.shields.io/youtube/channel/subscribers/UCtQa1khvAPiZ-ralYgGFhsg?style=flat&logo=YouTube)](https://www.youtube.com/channel/UCtQa1khvAPiZ-ralYgGFhsg)
@@ -278,4 +281,5 @@ PJSekai-style video creation tool:
 - [@Khronophobia](https://github.com/Khronophobia)氏にはBlenderでのカスタムレーンアセットを提供いただきました！
 - [@nagotown](https://github.com/nagotown)氏による[aviutl2-EN](https://github.com/nagotown/aviutl2-EN)翻訳スクリプト！
 - [@MattMayuga](https://github.com/MattMayuga)氏による[カスタマイズされた判定フォント](https://github.com/Tiny-Foxes/JudgeFonts-by-MattMayuga)！
+- **スポンサー／寄付者（感謝！）：** Osciris (US$20), Nexint (US$5)
 - そして私のツールを使ってくださった皆様、本当にありがとうございます。

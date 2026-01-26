@@ -17,7 +17,7 @@ You'll need **a clean recording that has BLACK background & ALL UI hidden (inclu
 
 Follow the steps below:
 1. Go to [Sonolus](https://sonolus.com/) to find your chart.
-2. Screen record the video with **BLACK Background**, **`Stage` OFF**, **`Hide UI` ON or ALL** with **`Note Margin` >= 0.08**
+2. Screen record the video with **BLACK Background**, **`Stage` OFF**, **`Hide UI` ON or ALL**
 
 > [!NOTE]
 > To change the background, go to `Configuration > Background > Select`
