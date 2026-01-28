@@ -177,6 +177,9 @@ func origMain(isOptionSpecified bool) {
 	var enUI bool
 	flag.BoolVar(&enUI, "en-ui", false, "英語版を使う(イントロ + v3 UI) - Use English version (Intro + v3 UI)")
 
+	var allFlick bool
+	flag.BoolVar(&allFlick, "all-flick", false, "すべてのノーツをフリックとして扱います。(Treat all notes as flicks.)")
+
 	flag.Usage = func() {
 		fmt.Println("Usage: pjsekai-overlay-APPEND [オプション (Options)] [譜面ID (Chart ID)]")
 		flag.PrintDefaults()
@@ -648,7 +651,7 @@ func origMain(isOptionSpecified bool) {
 	}
 
 	fmt.Print("- スコアを計算中 (Calculating score)... ")
-	scoreData := pjsekaioverlay.CalculateScore(chart, levelData, teamPower, scoreMode)
+	scoreData := pjsekaioverlay.CalculateScore(chart, levelData, teamPower, scoreMode, allFlick)
 
 	fmt.Println(color.GreenString("OK"))
 	if !isOptionSpecified {

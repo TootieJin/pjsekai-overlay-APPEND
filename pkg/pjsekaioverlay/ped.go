@@ -170,6 +170,29 @@ var WEIGHT_MAP = map[string]float64{
 	"FeverStart":  0,
 }
 
+var ALL_FLICK = map[string]string{
+	// Nanashi's Archetype
+	"NormalTapNote":   "NormalFlickNote",
+	"CriticalTapNote": "CriticalFlickNote",
+
+	"NormalSlideEndNote":   "NormalSlideEndFlickNote",
+	"CriticalSlideEndNote": "CriticalSlideEndFlickNote",
+
+	"NormalTraceNote":   "NormalTraceFlickNote",
+	"CriticalTraceNote": "CriticalTraceFlickNote",
+
+	"NormalTraceSlideEndNote":   "NormalTraceSlideEndFlickNote",
+	"CriticalTraceSlideEndNote": "CriticalTraceSlideEndFlickNote",
+
+	// Next SEKAI's Archetype
+	"NormalTailTapNote":       "NormalTailFlickNote",
+	"CriticalTailTapNote":     "CriticalTailFlickNote",
+	"NormalTailTraceNote":     "NormalTailTraceFlickNote",
+	"CriticalTailTraceNote":   "CriticalTailTraceFlickNote",
+	"NormalTailReleaseNote":   "NormalTailFlickNote",
+	"CriticalTailReleaseNote": "CriticalTailFlickNote",
+}
+
 func getValueFromData(data []sonolus.LevelDataEntityValue, name string) (float64, error) {
 	for _, value := range data {
 		if value.Name == name {
@@ -199,11 +222,21 @@ func getTimeFromBpmChanges(bpmChanges []BpmChange, beat float64) float64 {
 	return ret
 }
 
-func CalculateScore(levelInfo sonolus.LevelInfo, levelData sonolus.LevelData, power float64, scoreMode string) []PedFrame {
+func CalculateScore(levelInfo sonolus.LevelInfo, levelData sonolus.LevelData, power float64, scoreMode string, allFlick bool) []PedFrame {
 	rating := levelInfo.Rating
 	var weightedNotesCount float64 = 0
 	for _, entity := range levelData.Entities {
 		weight := WEIGHT_MAP[entity.Archetype]
+		if allFlick {
+			if flickArchetype, ok := ALL_FLICK[entity.Archetype]; ok {
+				weight = WEIGHT_MAP[flickArchetype]
+			}
+		}
+		if allFlick {
+			if flickArchetype, ok := ALL_FLICK[entity.Archetype]; ok {
+				weight = WEIGHT_MAP[flickArchetype]
+			}
+		}
 		if weight == 0 {
 			continue
 		}
@@ -231,6 +264,11 @@ func CalculateScore(levelInfo sonolus.LevelInfo, levelData sonolus.LevelData, po
 	if scoreMode == "sonolus" {
 		for _, entity := range levelData.Entities {
 			weight := WEIGHT_MAP[entity.Archetype]
+			if allFlick {
+				if flickArchetype, ok := ALL_FLICK[entity.Archetype]; ok {
+					weight = WEIGHT_MAP[flickArchetype]
+				}
+			}
 			if weight == 0 {
 				continue
 			}
@@ -250,6 +288,11 @@ func CalculateScore(levelInfo sonolus.LevelInfo, levelData sonolus.LevelData, po
 
 	for _, entity := range levelData.Entities {
 		weight := WEIGHT_MAP[entity.Archetype]
+		if allFlick {
+			if flickArchetype, ok := ALL_FLICK[entity.Archetype]; ok {
+				weight = WEIGHT_MAP[flickArchetype]
+			}
+		}
 		if weight > 0.0 && len(entity.Data) > 0 {
 			noteEntities = append(noteEntities, entity)
 		} else if entity.Archetype == "#BPM_CHANGE" {
@@ -293,6 +336,11 @@ func CalculateScore(levelInfo sonolus.LevelInfo, levelData sonolus.LevelData, po
 	skillActiveUntil := 0.0
 	for _, entity := range noteEntities {
 		weight := WEIGHT_MAP[entity.Archetype]
+		if allFlick {
+			if flickArchetype, ok := ALL_FLICK[entity.Archetype]; ok {
+				weight = WEIGHT_MAP[flickArchetype]
+			}
+		}
 
 		// get beat/time early so skillFax can be applied to this event
 		beat, err := getValueFromData(entity.Data, "#BEAT")
@@ -367,6 +415,7 @@ func WritePedFile(frames []PedFrame, assets string, path string, levelInfo sonol
 	fmt.Fprintf(writer, "v|%s\n", Version)
 	fmt.Fprintf(writer, "u|%d\n", time.Now().Unix())
 
+	// running this again for tournament mode
 	var weightedNotesCount float64 = 0
 	for _, entity := range levelData.Entities {
 		weight := WEIGHT_MAP[entity.Archetype]
