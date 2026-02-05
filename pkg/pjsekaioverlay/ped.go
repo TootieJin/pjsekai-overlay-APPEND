@@ -256,9 +256,8 @@ func CalculateScore(levelInfo sonolus.LevelInfo, levelData sonolus.LevelData, po
 	comboCounterFax := 1.0
 
 	score := 0.0
-	entityCounter := 0
 	comboCounter := 0
-	noteEntities := ([]sonolus.LevelDataEntity{})
+	dataEntities := ([]sonolus.LevelDataEntity{})
 
 	var weightedComboFax float64
 	if scoreMode == "sonolus" {
@@ -294,7 +293,7 @@ func CalculateScore(levelInfo sonolus.LevelInfo, levelData sonolus.LevelData, po
 			}
 		}
 		if weight > 0.0 && len(entity.Data) > 0 {
-			noteEntities = append(noteEntities, entity)
+			dataEntities = append(dataEntities, entity)
 		} else if entity.Archetype == "#BPM_CHANGE" {
 			beat, err := getValueFromData(entity.Data, "#BEAT")
 			if err != nil {
@@ -309,10 +308,10 @@ func CalculateScore(levelInfo sonolus.LevelInfo, levelData sonolus.LevelData, po
 				Bpm:  bpm,
 			})
 		} else if entity.Archetype == "Skill" {
-			noteEntities = append(noteEntities, entity)
+			dataEntities = append(dataEntities, entity)
 		}
 	}
-	slices.SortStableFunc(noteEntities, func(a, b sonolus.LevelDataEntity) int {
+	slices.SortStableFunc(dataEntities, func(a, b sonolus.LevelDataEntity) int {
 		aBeat, _ := getValueFromData(a.Data, "#BEAT")
 		bBeat, _ := getValueFromData(b.Data, "#BEAT")
 		if aBeat < bBeat {
@@ -334,7 +333,7 @@ func CalculateScore(levelInfo sonolus.LevelInfo, levelData sonolus.LevelData, po
 	})
 
 	skillActiveUntil := 0.0
-	for _, entity := range noteEntities {
+	for _, entity := range dataEntities {
 		weight := WEIGHT_MAP[entity.Archetype]
 		if allFlick {
 			if flickArchetype, ok := ALL_FLICK[entity.Archetype]; ok {
@@ -349,12 +348,14 @@ func CalculateScore(levelInfo sonolus.LevelInfo, levelData sonolus.LevelData, po
 		}
 		eventTime := getTimeFromBpmChanges(bpmChanges, beat)
 
-		entityCounter += 1
-		if entityCounter%100 == 1 && entityCounter > 1 {
-			comboFax += 0.01
-		}
-		if comboFax > 1.1 {
-			comboFax = 1.1
+		if entity.Archetype != "Skill" {
+			comboCounter += 1
+			if comboCounter%100 == 1 && comboCounter > 1 {
+				comboFax += 0.01
+			}
+			if comboFax > 1.1 {
+				comboFax = 1.1
+			}
 		}
 
 		if eventTime <= skillActiveUntil {
