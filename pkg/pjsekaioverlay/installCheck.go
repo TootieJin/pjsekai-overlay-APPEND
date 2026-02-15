@@ -4,6 +4,7 @@ import (
 	"bufio"
 	_ "embed"
 	"io"
+	"net/http"
 	"os"
 	"path/filepath"
 	"strconv"
@@ -616,6 +617,9 @@ func TryInstallScript(aviutlPath string, aviutlProcess string) bool {
 		if err := copyDir(depDir2, aviutlPath); err != nil {
 			return false
 		}
+		if installENLang := DownloadENLang(filepath.Join(langDest, "English.aul2")); !installENLang {
+			return false
+		}
 	}
 	return true
 }
@@ -639,4 +643,39 @@ func FontInstalled() bool {
 	}
 
 	return false
+}
+
+func DownloadENLang(destPath string) bool {
+	resp, err := http.Get("https://raw.githubusercontent.com/aviutl2/aviutl2_community_translation/refs/heads/main/locales/community_en.aul2")
+	if err != nil {
+		return false
+	}
+	defer resp.Body.Close()
+
+	body, err := io.ReadAll(resp.Body)
+	if err != nil {
+		return false
+	}
+
+	if resp.StatusCode != http.StatusOK {
+		return false
+	}
+
+	bodyStr := string(body)
+	if strings.HasPrefix(strings.TrimSpace(bodyStr), "4") || strings.HasPrefix(strings.TrimSpace(bodyStr), "5") {
+		return false
+	}
+
+	file, err := os.Create(destPath)
+	if err != nil {
+		return false
+	}
+	defer file.Close()
+
+	_, err = file.WriteString(bodyStr)
+	if err != nil {
+		return false
+	}
+
+	return true
 }
