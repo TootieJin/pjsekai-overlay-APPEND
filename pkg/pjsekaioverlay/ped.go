@@ -321,7 +321,7 @@ func CalculateScore(levelInfo sonolus.LevelInfo, levelData sonolus.LevelData, po
 		}
 		eventTime := getTimeFromBpmChanges(bpmChanges, beat)
 
-		if entity.Archetype != "Skill" {
+		if entity.Archetype != "Skill" && entity.Archetype != "FeverChance" && entity.Archetype != "FeverStart" {
 			comboCounter += 1
 			if comboCounter%100 == 1 && comboCounter > 1 {
 				comboFax += 0.01
