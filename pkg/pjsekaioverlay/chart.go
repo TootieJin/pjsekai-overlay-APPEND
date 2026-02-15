@@ -167,10 +167,10 @@ func DetectChartSource(chartId string, chartInstance string) (Source, error) {
 		default:
 			source = Source{
 				Id:     "skyra",
-				Name:   "Skyra (" + chartInstance + ")",
+				Name:   "Skyra",
 				Color:  0x9c4edc,
-				Host:   "auth.skyra.live/u/" + chartInstance,
-				Status: 0,
+				Host:   "skyra.plumnet.live",
+				Status: 1,
 			}
 		}
 	}

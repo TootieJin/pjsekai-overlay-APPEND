@@ -394,12 +394,6 @@ func origMain(isOptionSpecified bool) {
 		chartInput = strings.TrimPrefix(chartInput, "https://")
 		chartInstance = strings.Split(chartInput, "/")[0]
 		fmt.Printf("\033[A\033[2K\r> %s\n", color.GreenString(chartInput))
-	} else if chartInstance == "" && strings.HasPrefix(chartId, "skyra-") {
-		fmt.Printf("\nSkyraトークンを入力してください。(Please enter your Skyra token.)\n%s\n> ", color.HiYellowString("(!) トークンには「S-」という接頭辞が必要です。(Token must have a prefix of 'S-'.)"))
-		var chartInput string
-		fmt.Scanln(&chartInput)
-		chartInstance = chartInput
-		fmt.Printf("\033[A\033[2K\r> %s\n", color.GreenString(chartInput))
 	}
 
 	var chartSource pjsekaioverlay.Source

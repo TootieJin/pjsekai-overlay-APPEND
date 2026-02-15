@@ -55,7 +55,7 @@ Follow the steps below:
    - `coconut-next-sekai-`: Next SEKAI ([coconut.sonolus.com/next-sekai](https://coconut.sonolus.com/next-sekai))
 - **Independent server(s):**
    - <del>`lalo-`: [laoloser](https://www.youtube.com/@laoloserr)'s server ([sonolus.laoloser.com](https://laoloser.com/sonolus))</del>
-   - `skyra-`: [osciris](https://www.tiktok.com/@oscirissss)'s server ([Skyra](https://plumnet.live/)) **(LICENSE REQUIRED)**
+   - <del>`skyra-`: [osciris](https://www.tiktok.com/@oscirissss)'s server ([Skyra](https://plumnet.live/))</del>
 - **Local server(s):**
    - `sync-`: Local Server ([ScoreSync](https://github.com/Piliman22/ScoreSync) + [ScoreSync Modern](https://github.com/UntitledCharts/ScoreSync-Modern))
 

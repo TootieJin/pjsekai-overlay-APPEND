@@ -59,7 +59,7 @@ This is a forked version of pjsekai-overlay with additional features originally 
     - `coconut-next-sekai-`: Next SEKAI ([coconut.sonolus.com/next-sekai](https://coconut.sonolus.com/next-sekai))
   - **Independent server(s):**
     - <del>`lalo-`: [laoloser](https://www.youtube.com/@laoloserr)'s server ([sonolus.laoloser.com](https://laoloser.com/sonolus))</del>
-    - `skyra-`: [osciris](https://www.tiktok.com/@oscirissss)'s server ([Skyra](https://plumnet.live/)) **(LICENSE REQUIRED)**
+    - <del>`skyra-`: [osciris](https://www.tiktok.com/@oscirissss)'s server ([Skyra](https://plumnet.live/))</del>
   - **Local server(s):**
     - `sync-`: Local Server ([ScoreSync](https://github.com/Piliman22/ScoreSync) + [ScoreSync Modern](https://github.com/UntitledCharts/ScoreSync-Modern))
 
@@ -153,7 +153,7 @@ PJSekai-style video creation tool:
 - [@Piliman22](https://github.com/Piliman22) for contribution to make [ScoreSync](https://github.com/Piliman22/ScoreSync) in pjsekai-overlay possible!
 - [@Reiyunkun](https://github.com/Reiyunkun), [@gaven1880](https://github.com/gaven1880), and [@YumYummity](https://github.com/YumYummity) for providing [additional PJSK assets](./extra-assets)!
 - [@Khronophobia](https://github.com/Khronophobia) for the customized lane assets in Blender!
-- [@nagotown](https://github.com/nagotown) for the [aviutl2-EN](https://github.com/nagotown/aviutl2-EN) translation script!
+- [@sevenc-nanashi](https://github.com/sevenc-nanashi) for the [AviUtl2 Community Translation](https://github.com/aviutl2/aviutl2_community_translation) script!
 - [@MattMayuga](https://github.com/MattMayuga) for the [customized judgement fonts](https://github.com/Tiny-Foxes/JudgeFonts-by-MattMayuga)!
 - **Sponsors/Donators (thank you!):** Osciris (US$20), Nexint (US$5)
 - And everyone who used my tool, thank you all so much.
@@ -202,7 +202,7 @@ PJSekai-style video creation tool:
     - `lalo-`: [laoloser](https://www.youtube.com/@laoloserr)のサーバー([sonolus.laoloser.com](https://laoloser.com/sonolus))
   - **独立サーバー：**
     - <del>`lalo-`: [laoloser](https://www.youtube.com/@laoloserr)のサーバー ([sonolus.laoloser.com](https://laoloser.com/sonolus))</del>
-    - `skyra-`: [osciris](https://www.tiktok.com/@oscirissss)のサーバー ([Skyra](https://plumnet.live/)) **(ライセンス必須)**
+    - <del>`skyra-`: [osciris](https://www.tiktok.com/@oscirissss)のサーバー ([Skyra](https://plumnet.live/))</del>
   - **ローカルサーバー：**
     - `sync-`: ローカルサーバー ([ScoreSync](https://github.com/Piliman22/ScoreSync) + [ScoreSync Modern](https://github.com/UntitledCharts/ScoreSync-Modern))
 
@@ -279,7 +279,7 @@ PJSekai-style video creation tool:
 - [@Piliman22](https://github.com/Piliman22)氏、pjsekai-overlayにおける[ScoreSync](https://github.com/Piliman22/ScoreSync)の実現に貢献いただき感謝申し上げます！
 - [@Reiyunkun](https://github.com/Reiyunkun)氏、[@gaven1880](https://github.com/gaven1880)氏、[@YumYummity](https://github.com/YumYummity)氏による[追加のプロセカアセット](./extra-assets)の提供に感謝します！
 - [@Khronophobia](https://github.com/Khronophobia)氏にはBlenderでのカスタムレーンアセットを提供いただきました！
-- [@nagotown](https://github.com/nagotown)氏による[aviutl2-EN](https://github.com/nagotown/aviutl2-EN)翻訳スクリプト！
+- [@sevenc-nanashi](https://github.com/sevenc-nanashi)氏による[AviUtl2の非公式多言語翻訳](https://github.com/aviutl2/aviutl2_community_translation)スクリプト！
 - [@MattMayuga](https://github.com/MattMayuga)氏による[カスタマイズされた判定フォント](https://github.com/Tiny-Foxes/JudgeFonts-by-MattMayuga)！
 - **スポンサー／寄付者（感謝！）：** Osciris (US$20), Nexint (US$5)
 - そして私のツールを使ってくださった皆様、本当にありがとうございます。
