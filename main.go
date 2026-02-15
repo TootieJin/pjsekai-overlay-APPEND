@@ -169,7 +169,7 @@ func origMain(isOptionSpecified bool) {
 	flag.BoolVar(&customBG, "custom-bg", false, "UntitledChartsでカスタム背景を使用する。(Use custom background in UntitledCharts.)")
 
 	var scoreModeInt int
-	flag.IntVar(&scoreModeInt, "score-mode", 1, "採点モードを指定します。(Specify scoring mode.)\n'1': デフォルト/Default\n'2': 大会モード/Tournament Mode (PERFECT = +3)\n'3': Sonolusスコア/Arcade Score (MAX: 1000000)")
+	flag.IntVar(&scoreModeInt, "score-mode", 1, "採点モードを指定します。(Specify scoring mode.)\n'1': デフォルト/Default\n'2': 大会モード/Tournament Mode (PERFECT = +3)")
 
 	var teamPower float64
 	flag.Float64Var(&teamPower, "power", 250000, "総合力を指定します。(Specify the team's power.)")
@@ -598,11 +598,9 @@ func origMain(isOptionSpecified bool) {
 		scoreMode = "default"
 	case 2:
 		scoreMode = "tournament"
-	case 3:
-		scoreMode = "sonolus"
 	}
 	if !isOptionSpecified {
-		fmt.Print("\n採点モードを選択してください。(Choose scoring mode.)\n'1': デフォルト/Default\n'2': 大会モード/Tournament Mode (PERFECT = +3)\n'3': Sonolusスコア/Arcade Score (MAX: 1000000)\n> ")
+		fmt.Print("\n採点モードを選択してください。(Choose scoring mode.)\n'1': デフォルト/Default\n'2': 大会モード/Tournament Mode (PERFECT = +3)\n> ")
 		before, _ := rawmode.Enable()
 		tmpScoreModeByte, _ := bufio.NewReader(os.Stdin).ReadByte()
 		tmpScoreMode := string(tmpScoreModeByte)
@@ -616,10 +614,6 @@ func origMain(isOptionSpecified bool) {
 			scoreMode = "tournament"
 			fmt.Printf("\n\033[A\033[2K\r> %s\n", color.GreenString(tmpScoreMode))
 			fmt.Println(color.GreenString("Score Mode: 大会/Tournament"))
-		case "3":
-			scoreMode = "sonolus"
-			fmt.Printf("\n\033[A\033[2K\r> %s\n", color.GreenString(tmpScoreMode))
-			fmt.Println(color.GreenString("Score Mode: Sonolusスコア/Arcade Score"))
 		}
 	}
 

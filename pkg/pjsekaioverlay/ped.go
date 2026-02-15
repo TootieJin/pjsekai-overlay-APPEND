@@ -253,37 +253,10 @@ func CalculateScore(levelInfo sonolus.LevelInfo, levelData sonolus.LevelData, po
 	levelFax := float64(rating-5)*0.005 + 1
 	comboFax := 1.0
 	skillFax := 1.0
-	comboCounterFax := 1.0
 
 	score := 0.0
 	comboCounter := 0
 	dataEntities := ([]sonolus.LevelDataEntity{})
-
-	var weightedComboFax float64
-	if scoreMode == "sonolus" {
-		for _, entity := range levelData.Entities {
-			weight := WEIGHT_MAP[entity.Archetype]
-			if allFlick {
-				if flickArchetype, ok := ALL_FLICK[entity.Archetype]; ok {
-					weight = WEIGHT_MAP[flickArchetype]
-				}
-			}
-			if weight == 0 {
-				continue
-			}
-			weight = 1
-
-			comboCounter += int(weight)
-			if comboCounter%100 == 1 && comboCounter > 1 {
-				comboCounterFax += 0.01
-			}
-			if comboCounterFax > 1.1 {
-				comboCounterFax = 1.1
-			}
-
-			weightedComboFax += comboCounterFax
-		}
-	}
 
 	for _, entity := range levelData.Entities {
 		weight := WEIGHT_MAP[entity.Archetype]
@@ -388,8 +361,6 @@ func CalculateScore(levelInfo sonolus.LevelInfo, levelData sonolus.LevelData, po
 				skillFax) // Skill fax
 		case "tournament":
 			score += 3
-		case "sonolus":
-			score += 1000000 * (comboFax / weightedComboFax)
 		}
 
 		frames = append(frames, PedFrame{
@@ -423,9 +394,6 @@ func WritePedFile(frames []PedFrame, assets string, path string, levelInfo sonol
 		if weight == 0 {
 			continue
 		}
-		if scoreMode == "tournament" {
-			weight = 3
-		}
 		weightedNotesCount += weight
 	}
 
@@ -441,25 +409,20 @@ func WritePedFile(frames []PedFrame, assets string, path string, levelInfo sonol
 		scoreX := 0.0
 		scoreXv1 := 0.0
 
-		rankBorder := float64(1200000 + (rating-5)*4100)
-		rankS := float64(1040000 + (rating-5)*5200)
-		rankA := float64(840000 + (rating-5)*4200)
-		rankB := float64(400000 + (rating-5)*2000)
-		rankC := float64(20000 + (rating-5)*100)
-
+		var rankBorder, rankS, rankA, rankB, rankC float64
 		switch scoreMode {
+		default:
+			rankBorder = float64(1200000 + (rating-5)*4100)
+			rankS = float64(1040000 + (rating-5)*5200)
+			rankA = float64(840000 + (rating-5)*4200)
+			rankB = float64(400000 + (rating-5)*2000)
+			rankC = float64(20000 + (rating-5)*100)
 		case "tournament":
 			rankBorder = math.Floor(weightedNotesCount)
 			rankS = math.Floor(weightedNotesCount * 0.800)
 			rankA = math.Floor(weightedNotesCount * 0.666)
 			rankB = math.Floor(weightedNotesCount * 0.533)
 			rankC = math.Floor(weightedNotesCount * 0.400)
-		case "sonolus":
-			rankBorder = 1000000
-			rankS = 900000
-			rankA = 750000
-			rankB = 600000
-			rankC = 450000
 		}
 
 		// bar
