@@ -43,7 +43,7 @@ Follow the steps below:
 
 4. In your `pjsekai-overlay-APPEND.exe` command prompt, input the chart ID including the prefix.
 - **Official server(s):**
-   - `sekai-rush-`: Proseka Rush ([sekairush.shop](https://sekairush.shop))
+   - `sekai-rush-`: Proseka Rush ([sekairush.com](https://sekairush.com))
 - **Custom server(s):**
    - `chcy-`: Chart Cyanvas
       - `0`: Archive ([cc.sevenc7c.com](https://cc.sevenc7c.com))
