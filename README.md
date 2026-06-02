@@ -24,8 +24,6 @@ Fork of [pjsekai-overlay](https://github.com/sevenc-nanashi/pjsekai-overlay) by 
 > **Before using pjsekai-overlay-APPEND:** This tool is primary only for people with **technical know-how and basic knowledge of AviUtl.** \
 > Only use this tool if you can figure it out yourself. If problems arise, **please [make a discussion thread.](https://github.com/TootieJin/pjsekai-overlay-APPEND/discussions)** \
 > Please also read the [Terms of Use](#terms-of-use) after using the tool.
-> 
-> - *P.S. To [a certain someone](https://discordid.netlify.app/?id=1370076899404939327) (a.k.a [this person](https://discordid.netlify.app/?id=919036186473947187)) with the mindset of `"Just switch to a different editing software since I don’t even know how to install aviutl"` [(image source)](https://github.com/user-attachments/assets/4850442d-3f3a-438a-92d9-97d052f2fba0): I suggest you **make your own pjsekai-overlay that supports your desired editing software.** (if you can even find a video editor that is as versatile and extensible as AviUtl, that is).*
 
 This is a forked version of pjsekai-overlay with additional features originally not in the main repo, including:
 - **AviUtl ExEdit2 Full Support**
@@ -82,8 +80,8 @@ https://github.com/user-attachments/assets/3efab743-246a-4da7-8d80-a02b2f09f5b3
   - TootieJin\
     [![](https://img.shields.io/youtube/channel/subscribers/UCKBUuZx2leOsRqE-iXayBtA?style=flat&logo=YouTube)](https://www.youtube.com/channel/UCKBUuZx2leOsRqE-iXayBtA)
 
-<a href="https://youtu.be/uXx1OZDQZOI"><img width=32% height=32% alt="【Project Sekai x Honkai: Star Rail】Nameless Faces - HOYO-MiX feat. Lilas Ikuta (Fanmade)" src="https://img.youtube.com/vi/uXx1OZDQZOI/maxresdefault.jpg" /></a> <a href="https://youtu.be/BHVNuwxA1ek"><img width=32% height=32% alt="【Project Sekai Fanmade? (v3→v1)】Hello, SEKAI - DECO*27【ETERNAL Lv32】" src="https://img.youtube.com/vi/BHVNuwxA1ek/maxresdefault.jpg" /></a> <a href="https://youtu.be/O2GxrLWbwlY"><img width=32% height=32% alt="【Project Sekai Fanmade】Confessions of a Rotten Girl - SAWTOWNE (APPEND Lv36)" src="https://img.youtube.com/vi/O2GxrLWbwlY/maxresdefault.jpg" /></a>
-<a href="https://youtu.be/yyoTAJx-6ok"><img width=32% height=32% alt="【Project Sekai Fanmade (?)】Anonymous M - PinocchioP (CO-OP CHART)" src="https://img.youtube.com/vi/yyoTAJx-6ok/maxresdefault.jpg" /></a> <a href="https://youtu.be/jT7KFU5gc4Q"><img width=32% height=32% alt="【Project Sekai x Blue Archive (MEGACOLLAB)】Unwelcome School.Remix - Genre change every 4 bars" src="https://img.youtube.com/vi/jT7KFU5gc4Q/maxresdefault.jpg" /></a>
+<a href="https://youtu.be/DInse-Ykisk"><img width=32% height=32% alt="【Project Sekai x Honkai: Star Rail】HoYoHoYoにしてあげる♪ - Hatsune Miku × Silver Wolf LV.999 (CO-OP CHART)" src="https://img.youtube.com/vi/DInse-Ykisk/maxresdefault.jpg" /></a> <a href="https://youtu.be/uXx1OZDQZOI"><img width=32% height=32% alt="【Project Sekai x Honkai: Star Rail】Nameless Faces - HOYO-MiX feat. Lilas Ikuta (Fanmade)" src="https://img.youtube.com/vi/uXx1OZDQZOI/maxresdefault.jpg" /></a> <a href="https://youtu.be/BHVNuwxA1ek"><img width=32% height=32% alt="【Project Sekai Fanmade? (v3→v1)】Hello, SEKAI - DECO*27【ETERNAL Lv32】" src="https://img.youtube.com/vi/BHVNuwxA1ek/maxresdefault.jpg" /></a> 
+<a href="https://youtu.be/O2GxrLWbwlY"><img width=32% height=32% alt="【Project Sekai Fanmade】Confessions of a Rotten Girl - SAWTOWNE (APPEND Lv36)" src="https://img.youtube.com/vi/O2GxrLWbwlY/maxresdefault.jpg" /></a> <a href="https://youtu.be/yyoTAJx-6ok"><img width=32% height=32% alt="【Project Sekai Fanmade (?)】Anonymous M - PinocchioP (CO-OP CHART)" src="https://img.youtube.com/vi/yyoTAJx-6ok/maxresdefault.jpg" /></a> <a href="https://youtu.be/jT7KFU5gc4Q"><img width=32% height=32% alt="【Project Sekai x Blue Archive (MEGACOLLAB)】Unwelcome School.Remix - Genre change every 4 bars" src="https://img.youtube.com/vi/jT7KFU5gc4Q/maxresdefault.jpg" /></a>
 
   - Runakkushia\
     [![](https://img.shields.io/youtube/channel/subscribers/UCbeguR_tBZXRqJG86xrvxXw?style=flat&logo=YouTube)](https://www.youtube.com/channel/UCbeguR_tBZXRqJG86xrvxXw)
@@ -134,7 +132,7 @@ PJSekai-style video creation tool:
 ## Special Thanks
 - **[@sevenc-nanashi](https://github.com/sevenc-nanashi) for developing the [pjsekai-overlay](https://github.com/sevenc-nanashi/pjsekai-overlay) & [pjsekai-background-gen-rust](https://github.com/sevenc-nanashi/pjsekai-background-gen-rust) tool!**
 - [@Piliman22](https://github.com/Piliman22) for contribution to make [ScoreSync](https://github.com/Piliman22/ScoreSync) in pjsekai-overlay possible!
-- [@Reiyunkun](https://github.com/Reiyunkun), [@gaven1880](https://github.com/gaven1880), and [@YumYummity](https://github.com/YumYummity) for providing [additional PJSK assets](./extra-assets)!
+- [@Reiyunkun](https://github.com/Reiyunkun) and [@gaven1880](https://github.com/gaven1880) for providing [additional PJSK assets](./extra-assets)!
 - [@Khronophobia](https://github.com/Khronophobia) for the customized lane assets in Blender!
 - [@sevenc-nanashi](https://github.com/sevenc-nanashi) for the [AviUtl2 Community Translation](https://github.com/aviutl2/aviutl2_community_translation) script!
 - [@MattMayuga](https://github.com/MattMayuga) for the [customized judgement fonts](https://github.com/Tiny-Foxes/JudgeFonts-by-MattMayuga)!
@@ -190,8 +188,8 @@ PJSekai-style video creation tool:
   - TootieJin\
     [![](https://img.shields.io/youtube/channel/subscribers/UCKBUuZx2leOsRqE-iXayBtA?style=flat&logo=YouTube)](https://www.youtube.com/channel/UCKBUuZx2leOsRqE-iXayBtA)
 
-<a href="https://youtu.be/uXx1OZDQZOI"><img width=32% height=32% alt="【Project Sekai x Honkai: Star Rail】Nameless Faces - HOYO-MiX feat. Lilas Ikuta (Fanmade)" src="https://img.youtube.com/vi/uXx1OZDQZOI/maxresdefault.jpg" /></a> <a href="https://youtu.be/BHVNuwxA1ek"><img width=32% height=32% alt="【Project Sekai Fanmade? (v3→v1)】Hello, SEKAI - DECO*27【ETERNAL Lv32】" src="https://img.youtube.com/vi/BHVNuwxA1ek/maxresdefault.jpg" /></a> <a href="https://youtu.be/O2GxrLWbwlY"><img width=32% height=32% alt="【Project Sekai Fanmade】Confessions of a Rotten Girl - SAWTOWNE (APPEND Lv36)" src="https://img.youtube.com/vi/O2GxrLWbwlY/maxresdefault.jpg" /></a>
-<a href="https://youtu.be/yyoTAJx-6ok"><img width=32% height=32% alt="【Project Sekai Fanmade (?)】Anonymous M - PinocchioP (CO-OP CHART)" src="https://img.youtube.com/vi/yyoTAJx-6ok/maxresdefault.jpg" /></a> <a href="https://youtu.be/jT7KFU5gc4Q"><img width=32% height=32% alt="【Project Sekai x Blue Archive (MEGACOLLAB)】Unwelcome School.Remix - Genre change every 4 bars" src="https://img.youtube.com/vi/jT7KFU5gc4Q/maxresdefault.jpg" /></a>
+<a href="https://youtu.be/DInse-Ykisk"><img width=32% height=32% alt="【Project Sekai x Honkai: Star Rail】HoYoHoYoにしてあげる♪ - Hatsune Miku × Silver Wolf LV.999 (CO-OP CHART)" src="https://img.youtube.com/vi/DInse-Ykisk/maxresdefault.jpg" /></a> <a href="https://youtu.be/uXx1OZDQZOI"><img width=32% height=32% alt="【Project Sekai x Honkai: Star Rail】Nameless Faces - HOYO-MiX feat. Lilas Ikuta (Fanmade)" src="https://img.youtube.com/vi/uXx1OZDQZOI/maxresdefault.jpg" /></a> <a href="https://youtu.be/BHVNuwxA1ek"><img width=32% height=32% alt="【Project Sekai Fanmade? (v3→v1)】Hello, SEKAI - DECO*27【ETERNAL Lv32】" src="https://img.youtube.com/vi/BHVNuwxA1ek/maxresdefault.jpg" /></a> 
+<a href="https://youtu.be/O2GxrLWbwlY"><img width=32% height=32% alt="【Project Sekai Fanmade】Confessions of a Rotten Girl - SAWTOWNE (APPEND Lv36)" src="https://img.youtube.com/vi/O2GxrLWbwlY/maxresdefault.jpg" /></a> <a href="https://youtu.be/yyoTAJx-6ok"><img width=32% height=32% alt="【Project Sekai Fanmade (?)】Anonymous M - PinocchioP (CO-OP CHART)" src="https://img.youtube.com/vi/yyoTAJx-6ok/maxresdefault.jpg" /></a> <a href="https://youtu.be/jT7KFU5gc4Q"><img width=32% height=32% alt="【Project Sekai x Blue Archive (MEGACOLLAB)】Unwelcome School.Remix - Genre change every 4 bars" src="https://img.youtube.com/vi/jT7KFU5gc4Q/maxresdefault.jpg" /></a>
 
   - Runakkushia\
     [![](https://img.shields.io/youtube/channel/subscribers/UCbeguR_tBZXRqJG86xrvxXw?style=flat&logo=YouTube)](https://www.youtube.com/channel/UCbeguR_tBZXRqJG86xrvxXw)
@@ -241,7 +239,7 @@ PJSekai-style video creation tool:
 ## 特別なお礼
 - **[@sevenc-nanashi](https://github.com/sevenc-nanashi)氏による[pjsekai-overlay](https://github.com/sevenc-nanashi/pjsekai-overlay)と[pjsekai-background-gen-rust](https://github.com/sevenc-nanashi/pjsekai-background-gen-rust)ツールの開発に感謝します！**
 - [@Piliman22](https://github.com/Piliman22)氏、pjsekai-overlayにおける[ScoreSync](https://github.com/Piliman22/ScoreSync)の実現に貢献いただき感謝申し上げます！
-- [@Reiyunkun](https://github.com/Reiyunkun)氏、[@gaven1880](https://github.com/gaven1880)氏、[@YumYummity](https://github.com/YumYummity)氏による[追加のプロセカアセット](./extra-assets)の提供に感謝します！
+- [@Reiyunkun](https://github.com/Reiyunkun)氏、[@gaven1880](https://github.com/gaven1880)氏による[追加のプロセカアセット](./extra-assets)の提供に感謝します！
 - [@Khronophobia](https://github.com/Khronophobia)氏にはBlenderでのカスタムレーンアセットを提供いただきました！
 - [@sevenc-nanashi](https://github.com/sevenc-nanashi)氏による[AviUtl2の非公式多言語翻訳](https://github.com/aviutl2/aviutl2_community_translation)スクリプト！
 - [@MattMayuga](https://github.com/MattMayuga)氏による[カスタマイズされた判定フォント](https://github.com/Tiny-Foxes/JudgeFonts-by-MattMayuga)！
