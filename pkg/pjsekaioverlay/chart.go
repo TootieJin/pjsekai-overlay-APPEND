@@ -93,7 +93,7 @@ func DetectChartSource(chartId string, chartInstance string) (Source, error) {
 			Name:   "Proseka Rush",
 			Color:  0x02cbbd,
 			Host:   "sekairush.com",
-			Status: 0,
+			Status: 1,
 		}
 	} else if strings.HasPrefix(chartId, "chcy-") {
 		switch chartInstance {
