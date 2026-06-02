@@ -56,7 +56,6 @@ This is a forked version of pjsekai-overlay with additional features originally 
     - `ptlv-`: Potato Leaves ([ptlv.sevenc7c.com](https://ptlv.sevenc7c.com))
     - <del>`utsk-`: Untitled Sekai ([us.pim4n-net.com](https://us.pim4n-net.com))</del>
     - `UnCh-`: UntitledCharts ([untitledcharts.com](https://untitledcharts.com))
-    - `coconut-next-sekai-`: Next SEKAI ([coconut.sonolus.com/next-sekai](https://coconut.sonolus.com/next-sekai))
   - **Independent server(s):**
     - <del>`lalo-`: [laoloser](https://www.youtube.com/@laoloserr)'s server ([sonolus.laoloser.com](https://laoloser.com/sonolus))</del>
     - <del>`skyra-`: [osciris](https://www.tiktok.com/@oscirissss)'s server ([Skyra](https://plumnet.live/))</del>
@@ -181,8 +180,6 @@ PJSekai-style video creation tool:
     - `ptlv-`: Potato Leaves ([ptlv.sevenc7c.com](https://ptlv.sevenc7c.com))
     - <del>`utsk-`: Untitled Sekai ([us.pim4n-net.com](https://us.pim4n-net.com))</del>
     - `UnCh-`: UntitledCharts ([untitledcharts.com](https://untitledcharts.com))
-    - `coconut-next-sekai-`: Next SEKAI ([coconut.sonolus.com/next-sekai](https://coconut.sonolus.com/next-sekai))
-    - `lalo-`: [laoloser](https://www.youtube.com/@laoloserr)のサーバー([sonolus.laoloser.com](https://laoloser.com/sonolus))
   - **独立サーバー：**
     - <del>`lalo-`: [laoloser](https://www.youtube.com/@laoloserr)のサーバー ([sonolus.laoloser.com](https://laoloser.com/sonolus))</del>
     - <del>`skyra-`: [osciris](https://www.tiktok.com/@oscirissss)のサーバー ([Skyra](https://plumnet.live/))</del>

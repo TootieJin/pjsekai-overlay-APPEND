@@ -146,14 +146,6 @@ func DetectChartSource(chartId string, chartInstance string) (Source, error) {
 			Host:   "untitledcharts.com",
 			Status: 0,
 		}
-	} else if strings.HasPrefix(chartId, "coconut-next-sekai-") {
-		source = Source{
-			Id:     "next_sekai",
-			Name:   "Next SEKAI",
-			Color:  0x5b5c7c,
-			Host:   "coconut.sonolus.com/next-sekai",
-			Status: 0,
-		}
 	} else if strings.HasPrefix(chartId, "lalo-") {
 		source = Source{
 			Id:     "laoloser",
