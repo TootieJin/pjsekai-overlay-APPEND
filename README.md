@@ -50,7 +50,7 @@ This is a forked version of pjsekai-overlay with additional features originally 
     - `sekai-rush-`: Proseka Rush ([sekairush.com](https://sekairush.com))
   - **Custom server(s):**
     - `chcy-`: Chart Cyanvas
-      - `0`: Archive ([cc.sevenc7c.com](https://cc.sevenc7c.com))
+      - `0`: Archive <del>([cc.sevenc7c.com](https://cc.sevenc7c.com))</del>([cc.milkbun.org](https://cc.milkbun.org))
       - `1`: Offshoot server ([chart-cyanvas.com](https://chart-cyanvas.com))
       - `Others (URL domain)`: Different Cyanvas instance
     - `ptlv-`: Potato Leaves ([ptlv.sevenc7c.com](https://ptlv.sevenc7c.com))
@@ -174,7 +174,7 @@ PJSekai-style video creation tool:
     - `sekai-rush-`: Proseka Rush ([sekairush.com](https://sekairush.com))
   - **カスタムサーバー：**
     - `chcy-`: Chart Cyanvas
-      - `0`: アーカイブ([cc.sevenc7c.com](https://cc.sevenc7c.com))
+      - `0`: アーカイブ<del>([cc.sevenc7c.com](https://cc.sevenc7c.com))</del>([cc.milkbun.org](https://cc.milkbun.org))
       - `1`: 分岐サーバー([chart-cyanvas.com](https://chart-cyanvas.com))
       - `その他(URLドメイン)`: 異なるCyanvasインスタンス
     - `ptlv-`: Potato Leaves ([ptlv.sevenc7c.com](https://ptlv.sevenc7c.com))

@@ -102,7 +102,7 @@ func DetectChartSource(chartId string, chartInstance string) (Source, error) {
 				Id:     "chart_cyanvas",
 				Name:   "Chart Cyanvas Archive",
 				Color:  0x83ccd2,
-				Host:   "cc.sevenc7c.com",
+				Host:   "cc.milkbun.org",
 				Status: 0,
 			}
 		case "1":

@@ -46,7 +46,7 @@ Follow the steps below:
    - `sekai-rush-`: Proseka Rush ([sekairush.com](https://sekairush.com))
 - **Custom server(s):**
    - `chcy-`: Chart Cyanvas
-      - `0`: Archive ([cc.sevenc7c.com](https://cc.sevenc7c.com))
+      - `0`: Archive <del>([cc.sevenc7c.com](https://cc.sevenc7c.com))</del>([cc.milkbun.org](https://cc.milkbun.org))
       - `1`: Offshoot server ([chart-cyanvas.com](https://chart-cyanvas.com))
       - `Others (URL domain)`: Different Cyanvas instance
    - `ptlv-`: Potato Leaves ([ptlv.sevenc7c.com](https://ptlv.sevenc7c.com))
