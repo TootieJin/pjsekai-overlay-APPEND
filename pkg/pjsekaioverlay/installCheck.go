@@ -10,6 +10,8 @@ import (
 	"strconv"
 	"strings"
 
+	"github.com/jeandeaual/go-locale"
+
 	wapi "github.com/iamacarpet/go-win64api"
 	so "github.com/iamacarpet/go-win64api/shared"
 
@@ -75,8 +77,13 @@ func TryInstallObject(aviutlPath string, aviutlProcess string, mappingObj []stri
 	switch aviutlProcess {
 	case "aviutl.exe":
 		var font string
-		if FontInstalled() {
+		fontInstalled, fontLang := FontInstalled()
+		if fontInstalled && fontLang == "ja" {
+			font = "FOT-ロダンNTLG Pro EB"
+		} else if fontInstalled && fontLang != "ja" {
 			font = "FOT-RodinNTLG Pro EB"
+		} else if !fontInstalled && fontLang == "ja" {
+			font = "メイリオ"
 		} else {
 			font = "Meiryo"
 		}
@@ -310,7 +317,10 @@ func TryInstallObject(aviutlPath string, aviutlProcess string, mappingObj []stri
 
 	case "aviutl2.exe":
 		var font string
-		if FontInstalled() {
+		fontInstalled, fontLang := FontInstalled()
+		if fontInstalled && fontLang == "ja" {
+			font = "FOT-ロダンNTLG Pro EB"
+		} else if fontInstalled && fontLang != "ja" {
 			font = "FOT-RodinNTLG Pro EB"
 		} else {
 			font = "Yu Gothic UI"
@@ -624,7 +634,8 @@ func TryInstallScript(aviutlPath string, aviutlProcess string) bool {
 	return true
 }
 
-func FontInstalled() bool {
+func FontInstalled() (bool, string) {
+	var fontInstalled bool
 	finder := sysfont.NewFinder(nil)
 
 	terms := []string{
@@ -638,11 +649,13 @@ func FontInstalled() bool {
 		if font == nil {
 			continue
 		} else {
-			return true
+			fontInstalled = true
 		}
 	}
 
-	return false
+	fontLang, _ := locale.GetLanguage()
+
+	return fontInstalled, fontLang
 }
 
 func DownloadENLang(destPath string) bool {

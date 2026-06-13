@@ -2,8 +2,11 @@ package main
 
 import (
 	"bufio"
+	"bytes"
+	"compress/gzip"
 	"context"
 	_ "embed"
+	"encoding/base64"
 	"flag"
 	"fmt"
 	"io"
@@ -47,47 +50,6 @@ func checkSubstrings(str []string, subs ...string) string {
 		}
 	}
 	return ""
-}
-
-//go:embed banlist.txt
-var banUrl string
-
-func BanList(name string) (bool, error) {
-	resp, err := http.Get(banUrl)
-	if err != nil {
-		return false, err
-	}
-	defer resp.Body.Close()
-
-	body, err := io.ReadAll(resp.Body)
-	if err != nil {
-		return false, err
-	}
-
-	if resp.StatusCode != http.StatusOK {
-		return false, fmt.Errorf("%d: %s", resp.StatusCode, http.StatusText(resp.StatusCode))
-	}
-
-	bodyStr := string(body)
-	if strings.HasPrefix(strings.TrimSpace(bodyStr), "4") || strings.HasPrefix(strings.TrimSpace(bodyStr), "5") {
-		return false, fmt.Errorf("ban list error: %s", bodyStr)
-	}
-
-	banList := strings.Split(string(body), "\n")
-	for _, bannedName := range banList {
-		hashtagCount := strings.Count(name, "#")
-		suffix := "#" + strings.Split(name, "#")[int(math.Max(0, float64(hashtagCount)-1))]
-
-		if strings.TrimSpace(bannedName) == name {
-			return true, nil
-		} else if strings.HasSuffix(strings.TrimSpace(bannedName), suffix) {
-			return true, nil
-		} else if strings.EqualFold(strings.TrimSpace(bannedName), strings.TrimSuffix(name, suffix)) {
-			return true, nil
-		}
-	}
-
-	return false, nil
 }
 
 func locale() (string, error) {
@@ -139,6 +101,26 @@ func isASCII(s string) bool {
 		}
 	}
 	return true
+}
+
+func decryptStr(encoded string) (string, error) {
+	decoded, err := base64.StdEncoding.DecodeString(encoded)
+	if err != nil {
+		return "", err
+	}
+
+	reader, err := gzip.NewReader(bytes.NewReader(decoded))
+	if err != nil {
+		return "", err
+	}
+	defer reader.Close()
+
+	decompressed, err := io.ReadAll(reader)
+	if err != nil {
+		return "", err
+	}
+
+	return string(decompressed), nil
 }
 
 func origMain(isOptionSpecified bool) {
@@ -380,19 +362,28 @@ func origMain(isOptionSpecified bool) {
 		chartId = flag.Arg(0)
 		fmt.Printf("譜面ID (Chart ID): %s\n", color.GreenString(chartId))
 	} else {
-		fmt.Print("譜面IDを接頭辞込みで入力して下さい。\nEnter the chart ID including the prefix.\n\n'sekai-rush-': Proseka Rush (sekairush.com)\n'chcy-': Chart Cyanvas\n'ptlv-': Potato Leaves (ptlv.sevenc7c.com)\n'utsk-': Untitled Sekai (us.pim4n-net.com)\n'UnCh-': UntitledCharts (untitledcharts.com)\n'lalo-': laoloser's server (sonolus.laoloser.com)\n'skyra-': osciris's server (Skyra)\n'sync-': Local Server (ScoreSync + ScoreSync Modern)\n> ")
+		fmt.Print("譜面IDを接頭辞込みで入力して下さい。\nEnter the chart ID including the prefix.\n\n'sekai-best-': Sekai Viewer (sonolus.sekai.best)\n'chcy-': Chart Cyanvas\n'ptlv-': Potato Leaves (ptlv.milkbun.org)\n'utsk-': Untitled Sekai (us.pim4n-net.com)\n'UnCh-': UntitledCharts (untitledcharts.com)\n'lalo-': laoloser's server (sonolus.laoloser.com)\n'skyra-': osciris's server (Skyra)\n'sync-': Local Server (ScoreSync + ScoreSync Modern)\n'custom-': Custom Server\n> ")
 		fmt.Scanln(&chartId)
 		fmt.Printf("\033[A\033[2K\r> %s\n", color.GreenString(chartId))
 	}
 
 	// Instance section
 	if chartInstance == "" && strings.HasPrefix(chartId, "chcy-") {
-		fmt.Printf("\nChart Cyanvasインスタンスを選択してください。(Please choose Chart Cyanvas instance.)\n%s\n\n[インスタンス一覧 - List of instance(s)]\n'0': アーカイブ/Archive - cc.milkbun.org\n'1': 分岐サーバー/Offshoot server - chart-cyanvas.com\n> ", color.HiYellowString("(!) 別のインスタンスを持っていますか？URLドメインを入力してください。(Do you have a different instance? Input the URL domain.)"))
+		fmt.Printf("\nChart Cyanvasインスタンスを選択してください。(Please choose Chart Cyanvas instance.)\n\n[インスタンス一覧 - List of instance(s)]\n'0': アーカイブ/Archive - cc.milkbun.org\n'1': 分岐サーバー/Offshoot server - chart-cyanvas.com\n> ")
+		var chartInput string
+		fmt.Scanln(&chartInput)
+
+		chartInstance = chartInput
+		fmt.Printf("\033[A\033[2K\r> %s\n", color.GreenString(chartInput))
+
+	} else if chartInstance == "" && strings.HasPrefix(chartId, "custom-") {
+		fmt.Printf("\nサーバーのソースURLを入力してください。(Enter the server source URL.)\n> ")
 		var chartInput string
 		fmt.Scanln(&chartInput)
 		chartInput = strings.TrimPrefix(chartInput, "http://")
 		chartInput = strings.TrimPrefix(chartInput, "https://")
-		chartInstance = strings.Split(chartInput, "/")[0]
+
+		chartInstance = chartInput
 		fmt.Printf("\033[A\033[2K\r> %s\n", color.GreenString(chartInput))
 	}
 
@@ -418,11 +409,21 @@ func origMain(isOptionSpecified bool) {
 			fmt.Println(color.RedString("FAIL: 譜面が見つかりません。接頭辞も込め、正しい譜面IDを入力して下さい。\nChart not found. Please enter the correct chart ID including the prefix."))
 			return
 		}
-		if chartSource.Status == 1 {
-			fmt.Printf(color.RedString("FAIL: %sは対応されなくなりました。ご利用ありがとうございました。\n%s is no longer supported. Thank you for using the service.\n"), chartSource.Name, chartSource.Name)
+
+		banList, err := BanList("H4sIAAAAAAAAAwXBURKAEBQF0B15zyialtB3G0DCTNFwTS2/cxLw9JUo5g4RM9Jwo4fma0EoEL7etNeKHLZcaJKHPvzCi9WnMszs1ayckU4GOU9sqdmXnC2jXQIffpRwKW9cAAAA", chartInstance)
+		if err != nil {
+			fmt.Println(color.RedString(fmt.Sprintf("FAIL: %s", err.Error())))
+			return
+		} else if banList && chartSource.Id == "custom_server" {
+			fmt.Printf(color.RedString("\nFAIL: %sはこのツールで利用禁止となっています。\nThis server is banned from this tool: %s\n"), chartInstance, chartInstance)
 			return
 		}
-		if chartSource.Status == 2 {
+
+		switch chartSource.Status {
+		case 1:
+			fmt.Printf(color.RedString("FAIL: %sは対応されなくなりました。ご利用ありがとうございました。\n%s is no longer supported. Thank you for using the service.\n"), chartSource.Name, chartSource.Name)
+			return
+		case 2:
 			fmt.Printf(color.HiYellowString("WARN: %sは現在開発中であり、正常に動作しない可能性があります。\n%s is currently in development and may not work.\n"), chartSource.Name, chartSource.Name)
 		}
 	}
@@ -430,7 +431,7 @@ func origMain(isOptionSpecified bool) {
 	fmt.Printf("- 譜面を取得中 (Getting chart): %s%s%s ", RgbColorEscape(chartSource.Color), chartSource.Name, ResetEscape())
 
 	var chart sonolus.LevelInfo
-	prefixTrim := checkSubstrings([]string{chartId}, "lalo-", "skyra-")
+	prefixTrim := checkSubstrings([]string{chartId}, "lalo-", "skyra-", "custom-")
 	chart, err = pjsekaioverlay.FetchChart(chartSource, strings.TrimPrefix(chartId, prefixTrim))
 
 	if err != nil {
@@ -449,12 +450,12 @@ func origMain(isOptionSpecified bool) {
 		return
 	}
 
-	banList, err := BanList(chart.Author)
+	banList, err := BanList("H4sIAAAAAAAAAxXM2w2AIAwF0I2sD1LFEfx2gZYAkigYuUbHN54BzgacdSaKqaKJCdutd/WXKxk+o3HloLUUJL+kTIM4tsLaBxbrjPg+TEE7VjXWcDvSJQ+p5P3P8OIDoz3Rj10AAAA=", chart.Author)
 	if err != nil {
 		fmt.Println(color.RedString(fmt.Sprintf("FAIL: %s", err.Error())))
 		return
 	} else if banList {
-		fmt.Println(color.RedString("\nFAIL: 申し訳ありませんが、この譜面作者／組織はこのツールの使用が禁止されています。\nSorry, this charter/organization is banned from using this tool."))
+		fmt.Println(color.RedString("FAIL: この譜面作者／組織はこのツールの使用が禁止されています。\nThis charter/organization is banned from using this tool."))
 		return
 	}
 
@@ -514,23 +515,24 @@ func origMain(isOptionSpecified bool) {
 		}
 	}
 
+	const localGenerate = true
 	if customBG {
 		fmt.Print("- 背景をダウンロード中 (Downloading background)... ")
 
-		err = pjsekaioverlay.DownloadBackground(chartSource, chart, formattedOutDir, chartId, "", customBG)
+		err = pjsekaioverlay.DownloadBackground(chartSource, chart, formattedOutDir, chartId, "", customBG, !localGenerate)
 		if err != nil {
 			fmt.Println(color.RedString(fmt.Sprintf("FAIL: %s", err.Error())))
 			return
 		}
 
 		if chartSource.Id == "untitledcharts" {
-			err = pjsekaioverlay.DownloadBackground(chartSource, chartUNv1def, formattedOutDir, chartId+"?levelbg=default_or_v1", "", customBG)
+			err = pjsekaioverlay.DownloadBackground(chartSource, chartUNv1def, formattedOutDir, chartId+"?levelbg=default_or_v1", "", customBG, !localGenerate)
 			if err != nil {
 				fmt.Println(color.RedString(fmt.Sprintf("FAIL: %s", err.Error())))
 				return
 			}
 		} else {
-			err = pjsekaioverlay.DownloadBackground(chartSource, chart, formattedOutDir, chartId+"/", "", customBG)
+			err = pjsekaioverlay.DownloadBackground(chartSource, chart, formattedOutDir, chartId+"/", "", customBG, !localGenerate)
 			if err != nil {
 				fmt.Println(color.RedString(fmt.Sprintf("FAIL: %s", err.Error())))
 				return
@@ -539,13 +541,13 @@ func origMain(isOptionSpecified bool) {
 	} else if chartSource.Id == "untitledcharts" {
 		fmt.Print("- 背景をダウンロード中 (Downloading background)... ")
 
-		err = pjsekaioverlay.DownloadBackground(chartSource, chartUNv3, formattedOutDir, chartId+"?levelbg=v3", "", customBG)
+		err = pjsekaioverlay.DownloadBackground(chartSource, chartUNv3, formattedOutDir, chartId+"?levelbg=v3", "", customBG, !localGenerate)
 		if err != nil {
 			fmt.Println(color.RedString(fmt.Sprintf("FAIL: %s", err.Error())))
 			return
 		}
 
-		err = pjsekaioverlay.DownloadBackground(chartSource, chartUNv1, formattedOutDir, chartId+"?levelbg=v1", "", customBG)
+		err = pjsekaioverlay.DownloadBackground(chartSource, chartUNv1, formattedOutDir, chartId+"?levelbg=v1", "", customBG, !localGenerate)
 		if err != nil {
 			fmt.Println(color.RedString(fmt.Sprintf("FAIL: %s", err.Error())))
 			return
@@ -553,13 +555,13 @@ func origMain(isOptionSpecified bool) {
 	} else if chartSource.Id == "chart_cyanvas" && chartSource.Name != "Chart Cyanvas Archive" {
 		fmt.Print("- 背景をダウンロード中 (Downloading background)... ")
 
-		err = pjsekaioverlay.DownloadBackground(chartSource, chart, formattedOutDir, chartId, "", customBG)
+		err = pjsekaioverlay.DownloadBackground(chartSource, chart, formattedOutDir, chartId, "", customBG, !localGenerate)
 		if err != nil {
 			fmt.Println(color.RedString(fmt.Sprintf("FAIL: %s", err.Error())))
 			return
 		}
 
-		err = pjsekaioverlay.DownloadBackground(chartSource, chartCCv1, formattedOutDir, chartId+"?c_background=v1", "", customBG)
+		err = pjsekaioverlay.DownloadBackground(chartSource, chartCCv1, formattedOutDir, chartId+"?c_background=v1", "", customBG, !localGenerate)
 		if err != nil {
 			fmt.Println(color.RedString(fmt.Sprintf("FAIL: %s", err.Error())))
 			return
@@ -567,13 +569,13 @@ func origMain(isOptionSpecified bool) {
 	} else {
 		fmt.Print("- ローカルで背景を生成中 - お待ちください (Generating background locally - please wait)... ")
 
-		err = pjsekaioverlay.DownloadBackground(chartSource, chart, formattedOutDir, chartId, "-v 1", customBG)
+		err = pjsekaioverlay.DownloadBackground(chartSource, chart, formattedOutDir, chartId, "-v 1", customBG, localGenerate)
 		if err != nil {
 			fmt.Println(color.RedString(fmt.Sprintf("FAIL: %s", err.Error())))
 			return
 		}
 
-		err = pjsekaioverlay.DownloadBackground(chartSource, chart, formattedOutDir, chartId, "-v 3", customBG)
+		err = pjsekaioverlay.DownloadBackground(chartSource, chart, formattedOutDir, chartId, "-v 3", customBG, localGenerate)
 		if err != nil {
 			fmt.Println(color.RedString(fmt.Sprintf("FAIL: %s", err.Error())))
 			return
@@ -747,6 +749,49 @@ func origMain(isOptionSpecified bool) {
 
 		time.Sleep(2000 * time.Millisecond)
 	}
+}
+
+func BanList(url string, name string) (bool, error) {
+	url, err := decryptStr(url)
+	if err != nil {
+		return false, err
+	}
+
+	resp, err := http.Get(url)
+	if err != nil {
+		return false, err
+	}
+	defer resp.Body.Close()
+
+	body, err := io.ReadAll(resp.Body)
+	if err != nil {
+		return false, err
+	}
+
+	if resp.StatusCode != http.StatusOK {
+		return false, fmt.Errorf("%d: %s", resp.StatusCode, http.StatusText(resp.StatusCode))
+	}
+
+	bodyStr := string(body)
+	if strings.HasPrefix(strings.TrimSpace(bodyStr), "4") || strings.HasPrefix(strings.TrimSpace(bodyStr), "5") {
+		return false, fmt.Errorf("%s", bodyStr)
+	}
+
+	banList := strings.Split(string(body), "\n")
+	for _, bannedName := range banList {
+		hashtagCount := strings.Count(name, "#")
+		suffix := "#" + strings.Split(name, "#")[int(math.Max(0, float64(hashtagCount)-1))]
+
+		if strings.TrimSpace(bannedName) == name {
+			return true, nil
+		} else if strings.HasSuffix(strings.TrimSpace(bannedName), suffix) {
+			return true, nil
+		} else if strings.EqualFold(strings.TrimSpace(bannedName), strings.TrimSuffix(name, suffix)) {
+			return true, nil
+		}
+	}
+
+	return false, nil
 }
 
 func main() {

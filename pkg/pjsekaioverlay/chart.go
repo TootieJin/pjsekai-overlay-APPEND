@@ -87,13 +87,13 @@ func FetchChart(source Source, chartId string) (sonolus.LevelInfo, error) {
 
 func DetectChartSource(chartId string, chartInstance string) (Source, error) {
 	var source Source
-	if strings.HasPrefix(chartId, "sekai-rush-") {
+	if strings.HasPrefix(chartId, "sekai-best-") {
 		source = Source{
-			Id:     "proseka_rush",
-			Name:   "Proseka Rush",
+			Id:     "sekai_viewer",
+			Name:   "Sekai Viewer",
 			Color:  0x02cbbd,
-			Host:   "sekairush.com",
-			Status: 1,
+			Host:   "sonolus.sekai.best",
+			Status: 0,
 		}
 	} else if strings.HasPrefix(chartId, "chcy-") {
 		switch chartInstance {
@@ -113,21 +113,13 @@ func DetectChartSource(chartId string, chartInstance string) (Source, error) {
 				Host:   "chart-cyanvas.com",
 				Status: 0,
 			}
-		default:
-			source = Source{
-				Id:     "chart_cyanvas",
-				Name:   "Chart Cyanvas (" + chartInstance + ")",
-				Color:  0x83ccd2,
-				Host:   chartInstance,
-				Status: 0,
-			}
 		}
 	} else if strings.HasPrefix(chartId, "ptlv-") {
 		source = Source{
 			Id:     "potato_leaves",
 			Name:   "Potato Leaves",
 			Color:  0x88cb7f,
-			Host:   "ptlv.sevenc7c.com",
+			Host:   "ptlv.milkbun.org",
 			Status: 0,
 		}
 	} else if strings.HasPrefix(chartId, "utsk-") {
@@ -164,6 +156,14 @@ func DetectChartSource(chartId string, chartInstance string) (Source, error) {
 				Host:   "skyra.plumnet.live",
 				Status: 1,
 			}
+		}
+	} else if strings.HasPrefix(chartId, "custom-") {
+		source = Source{
+			Id:     "custom_server",
+			Name:   "Custom Server (" + chartInstance + ")",
+			Color:  0xffffff,
+			Host:   chartInstance,
+			Status: 0,
 		}
 	}
 	if source.Id == "" {
@@ -343,8 +343,8 @@ func CopyFile(src, dst string) error {
 	return nil
 }
 
-func DownloadBackground(source Source, level sonolus.LevelInfo, destPath string, chartId string, arg string, customBG bool) error {
-	if source.Id == "proseka_rush" || source.Name == "Chart Cyanvas Archive" || source.Id == "potato_leaves" || source.Id == "local_server" || source.Id == "next_sekai" || (source.Id == "skyra" && !customBG) {
+func DownloadBackground(source Source, level sonolus.LevelInfo, destPath string, chartId string, arg string, customBG bool, localGenerate bool) error {
+	if localGenerate {
 		coverPath := path.Join(destPath, "cover.png")
 		if _, err := os.Stat(coverPath); os.IsNotExist(err) {
 			return fmt.Errorf("ジャケット画像が見つかりません。先にジャケット画像をダウンロードしてください。(Jacket image not found. Download jacket image first.)")

@@ -35,4 +35,3 @@ default-override.ini
 *.txt
 .update-check
 !dependencies/*
-banlist.txt
