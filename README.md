@@ -18,7 +18,7 @@
 
 [![pjsekai-overlay-APPEND thumbnail](https://github.com/user-attachments/assets/dcc037f7-1c2b-4b83-b17b-b3c5155d670c)]()
 
-Fork of [pjsekai-overlay](https://github.com/sevenc-nanashi/pjsekai-overlay) by [TootieJin](https://tootiejin.com), an open-sourced tool to make Project Sekai Fanmade (custom chart) videos - in other words... "Make your Sonolus look like Project Sekai."
+Fork of [pjsekai-overlay](https://github.com/sevenc-nanashi/pjsekai-overlay) by [TootieJin](https://tootiejin.com), an open-sourced tool to make Project Sekai Fanmade (custom chart) videos. This tool provides an identical look to how custom charts should look in the official game, while giving users the ability to 'manipulate' their UI using the video editor.
 
 > [!CAUTION]
 > **Before using pjsekai-overlay-APPEND:** This tool is primary only for people with **technical know-how and basic knowledge of AviUtl.** \
@@ -142,7 +142,7 @@ PJSekai-style video creation tool:
 
 # pjsekai-overlay-APPEND / フォークプロセカ風動画作成補助ツール
 
-[TootieJin](https://tootiejin.com)氏による[pjsekai-overlay](https://github.com/sevenc-nanashi/pjsekai-overlay)用フォーク。pjsekai-overlay(-APPEND) は、プロセカの創作譜面をプロセカ風の動画にするためのオープンソースのツールです。
+[TootieJin](https://tootiejin.com)氏による[pjsekai-overlay](https://github.com/sevenc-nanashi/pjsekai-overlay)用フォーク。pjsekai-overlay(-APPEND) は、プロセカの創作譜面をプロセカ風の動画にするためのオープンソースのツールです。このツールは、公式ゲーム内で創作譜面がどのように表示されるべきかと同じ見た目を再現すると同時に、ユーザーが動画編集ソフトを使ってUIを「操作」できるようにします。
 
 > [!CAUTION]
 > **pjsekai-overlay-APPEND使用前に：** このツールは主に、**技術的な知識とAviUtlの基本的な理解がある方**のみを対象としています。\
