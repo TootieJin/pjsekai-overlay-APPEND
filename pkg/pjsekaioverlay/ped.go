@@ -13,14 +13,23 @@ import (
 )
 
 type PedFrame struct {
-	Time      float64
-	SkillTime float64
-	Score     float64
+	Time        float64
+	Score       float64
+	SkillTime   float64
+	SkillEffect int
+	SkillLevel  int
+	Life        int
 }
 
 type BpmChange struct {
 	Beat float64
 	Bpm  float64
+}
+
+type SkillEffect struct {
+	Beat   float64
+	Effect int
+	Level  int
 }
 
 var WEIGHT_MAP = map[string]float64{
@@ -222,8 +231,10 @@ func getTimeFromBpmChanges(bpmChanges []BpmChange, beat float64) float64 {
 	return ret
 }
 
-func CalculateScore(levelInfo sonolus.LevelInfo, levelData sonolus.LevelData, power float64, scoreMode string, allFlick bool) []PedFrame {
+func CalculateScore(levelInfo sonolus.LevelInfo, levelData sonolus.LevelData, power float64, scoreMode string, allFlick bool, listing bool) []PedFrame {
 	rating := levelInfo.Rating
+	initialLife := 0
+	lifeHeal := 0
 	var weightedNotesCount float64 = 0
 	for _, entity := range levelData.Entities {
 		weight := WEIGHT_MAP[entity.Archetype]
@@ -245,9 +256,12 @@ func CalculateScore(levelInfo sonolus.LevelInfo, levelData sonolus.LevelData, po
 
 	frames := make([]PedFrame, 0, int(weightedNotesCount)+1)
 	frames = append(frames, PedFrame{
-		Time:      0,
-		SkillTime: 0,
-		Score:     0,
+		Time:        0,
+		Score:       0,
+		SkillTime:   0,
+		SkillEffect: -1,
+		SkillLevel:  0,
+		Life:        0,
 	})
 	bpmChanges := ([]BpmChange{})
 	levelFax := float64(rating-5)*0.005 + 1
@@ -257,8 +271,12 @@ func CalculateScore(levelInfo sonolus.LevelInfo, levelData sonolus.LevelData, po
 	score := 0.0
 	comboCounter := 0
 	dataEntities := ([]sonolus.LevelDataEntity{})
+	skillEffects := ([]SkillEffect{})
 
 	for _, entity := range levelData.Entities {
+		if listing {
+			break
+		}
 		weight := WEIGHT_MAP[entity.Archetype]
 		if allFlick {
 			if flickArchetype, ok := ALL_FLICK[entity.Archetype]; ok {
@@ -281,7 +299,33 @@ func CalculateScore(levelInfo sonolus.LevelInfo, levelData sonolus.LevelData, po
 				Bpm:  bpm,
 			})
 		} else if entity.Archetype == "Skill" {
-			dataEntities = append(dataEntities, entity)
+			beat, err := getValueFromData(entity.Data, "#BEAT")
+			if err != nil {
+				continue
+			}
+			effect, err := getValueFromData(entity.Data, "effect")
+			if err != nil {
+				effect = 0
+				// continue
+			}
+			level, err := getValueFromData(entity.Data, "level")
+			if err != nil {
+				level = 1
+				// continue
+			}
+			skillEffects = append(skillEffects, SkillEffect{
+				Beat:   beat,
+				Effect: int(effect),
+				Level:  int(level),
+			})
+		} else if entity.Archetype == "Initialization" {
+			initialLifeValue, err := getValueFromData(entity.Data, "InitialLife")
+			if err != nil {
+				initialLifeValue = 1000
+				// continue
+			}
+			initialLife = int(initialLifeValue)
+			frames[0].Life = int(initialLife)
 		}
 	}
 	slices.SortStableFunc(dataEntities, func(a, b sonolus.LevelDataEntity) int {
@@ -304,8 +348,21 @@ func CalculateScore(levelInfo sonolus.LevelInfo, levelData sonolus.LevelData, po
 		}
 		return 0
 	})
+	slices.SortStableFunc(skillEffects, func(a, b SkillEffect) int {
+		if a.Beat < b.Beat {
+			return -1
+		}
+		if a.Beat > b.Beat {
+			return 1
+		}
+		return 0
+	})
 
-	skillActiveUntil := 0.0
+	skillActiveUntil := -1.0
+	currentSkillEffect := 0
+	currentSkillLevel := 1
+	skillIndex := 0
+
 	for _, entity := range dataEntities {
 		weight := WEIGHT_MAP[entity.Archetype]
 		if allFlick {
@@ -321,6 +378,18 @@ func CalculateScore(levelInfo sonolus.LevelInfo, levelData sonolus.LevelData, po
 		}
 		eventTime := getTimeFromBpmChanges(bpmChanges, beat)
 
+		// Update current skill effect based on pre-sorted skillEffects
+		for skillIndex < len(skillEffects) && skillEffects[skillIndex].Beat <= beat {
+			currentSkillEffect = skillEffects[skillIndex].Effect
+			currentSkillLevel = skillEffects[skillIndex].Level
+			skillActiveUntil = eventTime + 5.0
+
+			if currentSkillEffect == 1 {
+				lifeHeal += 350 + (50 * (currentSkillLevel - 1))
+			}
+			skillIndex++
+		}
+
 		if entity.Archetype != "Skill" && entity.Archetype != "FeverChance" && entity.Archetype != "FeverStart" {
 			comboCounter += 1
 			if comboCounter%100 == 1 && comboCounter > 1 {
@@ -332,22 +401,31 @@ func CalculateScore(levelInfo sonolus.LevelInfo, levelData sonolus.LevelData, po
 		}
 
 		if eventTime <= skillActiveUntil {
-			skillFax = 2.0
+			if currentSkillEffect == 0 {
+				skillFax = 2.0 + (0.05 * ((float64(currentSkillLevel) - 1) + math.Max(0, (float64(currentSkillLevel)-3))))
+			} else {
+				skillFax = 1.8 + (0.05 * ((float64(currentSkillLevel) - 1) + math.Max(0, (float64(currentSkillLevel)-3))))
+			}
 		} else {
 			skillFax = 1.0
 		}
 
 		if entity.Archetype == "Skill" {
-			// activate skill for 5 seconds starting at eventTime
-			skillFax = 2.0
+			// Update skill values when skill is triggered
+			effect, err := getValueFromData(entity.Data, "effect")
+			if err != nil {
+				effect = 0
+			}
+			level, err := getValueFromData(entity.Data, "level")
+			if err != nil {
+				level = 1
+			}
+			currentSkillEffect = int(effect)
+			currentSkillLevel = int(level)
 			skillActiveUntil = eventTime + 5.0
-
-			frames = append(frames, PedFrame{
-				Time:      eventTime,
-				SkillTime: eventTime,
-				Score:     score,
-			})
-			continue
+			if currentSkillEffect == 1 {
+				lifeHeal += 350 + (50 * (currentSkillLevel - 1))
+			}
 		}
 
 		switch scoreMode {
@@ -363,17 +441,29 @@ func CalculateScore(levelInfo sonolus.LevelInfo, levelData sonolus.LevelData, po
 			score += 3
 		}
 
+		skillTime := 0.0
+		skillEffect := -1
+		skillLevel := 0
+		if eventTime <= skillActiveUntil {
+			skillTime = skillActiveUntil - 5.0
+			skillEffect = currentSkillEffect
+			skillLevel = currentSkillLevel
+		}
+
 		frames = append(frames, PedFrame{
-			Time:      eventTime,
-			SkillTime: 0,
-			Score:     score,
+			Time:        eventTime,
+			Score:       score,
+			SkillTime:   skillTime,
+			SkillEffect: skillEffect,
+			SkillLevel:  skillLevel,
+			Life:        initialLife + lifeHeal,
 		})
 	}
 
 	return frames
 }
 
-func WritePedFile(frames []PedFrame, assets string, path string, levelInfo sonolus.LevelInfo, levelData sonolus.LevelData, scoreMode string, enUI bool) error {
+func WritePedFile(frames []PedFrame, assets string, path string, levelInfo sonolus.LevelInfo, levelData sonolus.LevelData, scoreMode string, enUI bool, listing bool) error {
 	file, err := os.Create(path)
 	if err != nil {
 		return fmt.Errorf("ファイルの作成に失敗しました (Failed to create file.) [%s]", err)
@@ -384,8 +474,11 @@ func WritePedFile(frames []PedFrame, assets string, path string, levelInfo sonol
 
 	fmt.Fprintf(writer, "p|%s\n", assets)
 	fmt.Fprintf(writer, "e|%s\n", strconv.FormatBool(enUI))
+	fmt.Fprintf(writer, "b|%s\n", strconv.FormatBool(listing))
 	fmt.Fprintf(writer, "v|%s\n", Version)
 	fmt.Fprintf(writer, "u|%d\n", time.Now().Unix())
+
+	fmt.Fprintf(writer, "i|%d\n", frames[0].Life)
 
 	// running this again for tournament mode
 	var weightedNotesCount float64 = 0
@@ -471,12 +564,18 @@ func WritePedFile(frames []PedFrame, assets string, path string, levelInfo sonol
 
 		time := frame.Time
 		skillTime := frame.SkillTime
+		skillEffect := frame.SkillEffect
+		skillLevel := frame.SkillLevel
+		lifeHeal := frame.Life - frames[0].Life
 
 		if skillTime > 0 && skillTime == time {
 			// only emit when this frame is the actual activation frame and avoid duplicates
 			if i == 0 || frames[i-1].SkillTime != skillTime {
-				writer.Write(fmt.Appendf(nil, "s|%f\n", skillTime))
+				writer.Write(fmt.Appendf(nil, "s|%f:%d:%d\n", skillTime, skillEffect, skillLevel))
 				procCount++
+			}
+			if skillEffect == 1 {
+				writer.Write(fmt.Appendf(nil, "l|%f:%d\n", skillTime, lifeHeal))
 			}
 		}
 

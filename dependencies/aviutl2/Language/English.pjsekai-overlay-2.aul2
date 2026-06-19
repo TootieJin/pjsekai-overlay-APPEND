@@ -16,6 +16,7 @@ X軸境界=X-axis Boundary
 スキル効果=Skill Effect
 過剰なライフバー=Overflow LIFE Bar
 先行ゼロ=Leading Zero
+ライフバーアンロック=Unlock LIFE Bar
 
 [スコア@pjsekai-overlay-2]
 スコア@pjsekai-overlay-2=Score@pjsekai-overlay-2
@@ -35,6 +36,11 @@ n00コンボ効果=n00 Combo Burst
 最後のX桁を表示=Show the last X digit(s)
 アニメーション速度=Animation Speed
 達成率表示=Achievement Rate
+
+[スキル@pjsekai-overlay-2]
+スキル@pjsekai-overlay-2=Skill@pjsekai-overlay-2
+アニメーション速度=Animation Speed
+キャッシュのアイコン=Cache Icon
 
 [判定@pjsekai-overlay-2]
 判定@pjsekai-overlay-2=Judgement@pjsekai-overlay-2

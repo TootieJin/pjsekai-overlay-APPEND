@@ -7,6 +7,7 @@ import (
 
 type LevelInfo struct {
 	Name          string                  `json:"name"`
+	Source        string                  `json:"source"`
 	Title         string                  `json:"title"`
 	Artists       string                  `json:"artists"`
 	Author        string                  `json:"author"`

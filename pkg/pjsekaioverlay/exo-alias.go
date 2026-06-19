@@ -87,6 +87,8 @@ func WriteExoFiles(assets string, destDir string, title string, description []st
 		"{text:title}", encodeString(title),
 		"{text:description-1}", encodeString(description[0]),
 		"{text:description-2}", encodeString(description[1]),
+		"{text:description-3}", encodeString(description[2]),
+		"{text:description-4}", encodeString(description[3]),
 		"{image:tournament}", exFile,
 		"{opacity}", exFileOpacity,
 		"{difficulty}", strings.ToLower(difficulty),
@@ -101,22 +103,26 @@ func WriteExoFiles(assets string, destDir string, title string, description []st
 		"{life_skill}", mappingFile[6], // track2
 		"{overflow}", mappingFile[7], // dialog: overflow=
 		"{lead_zero}", mappingFile[8], // dialog: lead_zero=
+		"{unlock_life}", mappingFile[9], // dialog: unlock_life=
 		// Score
-		"{min_digit}", mappingFile[9], // track1
-		"{score_skill}", mappingFile[10], // track2
-		"{score_speed}", mappingFile[11], // dialog: speed=
-		"{anim_score}", mappingFile[12], // check0
-		"{wds_anim}", mappingFile[13], // dialog: wds_anim=
+		"{min_digit}", mappingFile[10], // track1
+		"{score_skill}", mappingFile[11], // track2
+		"{score_speed}", mappingFile[12], // dialog: speed=
+		"{anim_score}", mappingFile[13], // check0
+		"{wds_anim}", mappingFile[14], // dialog: wds_anim=
 		// Combo
-		"{ap}", mappingFile[14], // track1
-		"{tag}", mappingFile[15], // track2
-		"{last_digit}", mappingFile[16], // dialog: digits=
-		"{combo_speed}", mappingFile[17], // dialog: speed=
-		"{combo_burst}", mappingFile[18], // dialog: combo_burst=
-		"{achievement_rate}", mappingFile[19], // dialog: achievement_rate=
+		"{ap}", mappingFile[15], // track1
+		"{tag}", mappingFile[16], // track2
+		"{last_digit}", mappingFile[17], // dialog: digits=
+		"{combo_speed}", mappingFile[18], // dialog: speed=
+		"{combo_burst}", mappingFile[19], // dialog: combo_burst=
+		"{achievement_rate}", mappingFile[20], // dialog: achievement_rate=
+		// Skill
+		"{skill_speed}", mappingFile[21], // dialog: speed=
+		// "{skill_cache}", mappingFile[22], // check0
 		// Judgement
-		"{judge}", mappingFile[20], // track0
-		"{judge_speed}", mappingFile[21], // dialog: speed=
+		"{judge}", mappingFile[23], // track0
+		"{judge_speed}", mappingFile[24], // dialog: speed=
 	}
 
 	mappingv1 := []string{
@@ -127,6 +133,8 @@ func WriteExoFiles(assets string, destDir string, title string, description []st
 		"{text:title}", encodeString(title),
 		"{text:description-1}", encodeString(descriptionv1[0]),
 		"{text:description-2}", encodeString(descriptionv1[1]),
+		// "{text:description-3}", encodeString(descriptionv1[2]),
+		// "{text:description-4}", encodeString(descriptionv1[3]),
 		"{image:tournament}", exFile,
 		"{opacity}", exFileOpacity,
 		"{difficulty}", strings.ToLower(difficulty),
@@ -141,22 +149,26 @@ func WriteExoFiles(assets string, destDir string, title string, description []st
 		"{life_skill}", mappingFile[6], // track2
 		"{overflow}", mappingFile[7], // dialog: overflow=
 		"{lead_zero}", mappingFile[8], // dialog: lead_zero=
+		"{unlock_life}", mappingFile[9], // dialog: unlock_life=
 		// Score
-		"{min_digit}", mappingFile[9], // track1
-		"{score_skill}", mappingFile[10], // track2
-		"{score_speed}", mappingFile[11], // dialog: speed=
-		"{anim_score}", mappingFile[12], // check0
-		"{wds_anim}", mappingFile[13], // dialog: wds_anim=
+		"{min_digit}", mappingFile[10], // track1
+		"{score_skill}", mappingFile[11], // track2
+		"{score_speed}", mappingFile[12], // dialog: speed=
+		"{anim_score}", mappingFile[13], // check0
+		"{wds_anim}", mappingFile[14], // dialog: wds_anim=
 		// Combo
-		"{ap}", mappingFile[14], // track1
-		"{tag}", mappingFile[15], // track2
-		"{last_digit}", mappingFile[16], // dialog: digits=
-		"{combo_speed}", mappingFile[17], // dialog: speed=
-		"{combo_burst}", mappingFile[18], // dialog: combo_burst=
-		"{achievement_rate}", mappingFile[19], // dialog: achievement_rate=
+		"{ap}", mappingFile[15], // track1
+		"{tag}", mappingFile[16], // track2
+		"{last_digit}", mappingFile[17], // dialog: digits=
+		"{combo_speed}", mappingFile[18], // dialog: speed=
+		"{combo_burst}", mappingFile[19], // dialog: combo_burst=
+		"{achievement_rate}", mappingFile[20], // dialog: achievement_rate=
+		// Skill
+		// "{skill_speed}", mappingFile[21], // dialog: speed=
+		// "{skill_cache}", mappingFile[22], // check0
 		// Judgement
-		"{judge}", mappingFile[20], // track0
-		"{judge_speed}", mappingFile[21], // dialog: speed=
+		"{judge}", mappingFile[23], // track0
+		"{judge_speed}", mappingFile[24], // dialog: speed=
 	}
 	for i := range mapping {
 		if i%2 == 0 {
@@ -306,6 +318,8 @@ func WriteAliasFiles(assets string, destDir string, title string, description []
 		"{text:title}", title,
 		"{text:description-1}", description[0],
 		"{text:description-2}", description[1],
+		"{text:description-3}", description[2],
+		"{text:description-4}", description[3],
 		"{image:tournament}", exFile,
 		"{opacity}", exFileOpacity,
 		"{difficulty}", strings.ToLower(difficulty),
@@ -320,22 +334,26 @@ func WriteAliasFiles(assets string, destDir string, title string, description []
 		"{life_skill}", mappingFile[6],
 		"{overflow}", mappingFile[7],
 		"{lead_zero}", mappingFile[8],
+		"{unlock_life}", mappingFile[9],
 		// Score
-		"{min_digit}", mappingFile[9],
-		"{score_skill}", mappingFile[10],
-		"{score_speed}", mappingFile[11],
-		"{anim_score}", mappingFile[12],
-		"{wds_anim}", mappingFile[13],
+		"{min_digit}", mappingFile[10],
+		"{score_skill}", mappingFile[11],
+		"{score_speed}", mappingFile[12],
+		"{anim_score}", mappingFile[13],
+		"{wds_anim}", mappingFile[14],
 		// Combo
-		"{ap}", mappingFile[14],
-		"{tag}", mappingFile[15],
-		"{last_digit}", mappingFile[16],
-		"{combo_speed}", mappingFile[17],
-		"{combo_burst}", mappingFile[18],
-		"{achievement_rate}", mappingFile[19],
+		"{ap}", mappingFile[15],
+		"{tag}", mappingFile[16],
+		"{last_digit}", mappingFile[17],
+		"{combo_speed}", mappingFile[18],
+		"{combo_burst}", mappingFile[19],
+		"{achievement_rate}", mappingFile[20],
+		// Skill
+		"{skill_speed}", mappingFile[21],
+		"{skill_cache}", mappingFile[22],
 		// Judgement
-		"{judge}", mappingFile[20],
-		"{judge_speed}", mappingFile[21],
+		"{judge}", mappingFile[23],
+		"{judge_speed}", mappingFile[24],
 	}
 
 	mappingv1 := []string{
@@ -344,8 +362,10 @@ func WriteAliasFiles(assets string, destDir string, title string, description []
 		"{text:difficulty}", difficulty,
 		"{text:extra}", extra,
 		"{text:title}", title,
-		"{text:description-1}", description[0],
-		"{text:description-2}", description[1],
+		"{text:description-1}", descriptionv1[0],
+		"{text:description-2}", descriptionv1[1],
+		// "{text:description-3}", descriptionv1[2],
+		// "{text:description-4}", descriptionv1[3],
 		"{image:tournament}", exFile,
 		"{opacity}", exFileOpacity,
 		"{difficulty}", strings.ToLower(difficulty),
@@ -360,22 +380,26 @@ func WriteAliasFiles(assets string, destDir string, title string, description []
 		"{life_skill}", mappingFile[6],
 		"{overflow}", mappingFile[7],
 		"{lead_zero}", mappingFile[8],
+		"{unlock_life}", mappingFile[9],
 		// Score
-		"{min_digit}", mappingFile[9],
-		"{score_skill}", mappingFile[10],
-		"{score_speed}", mappingFile[11],
-		"{anim_score}", mappingFile[12],
-		"{wds_anim}", mappingFile[13],
+		"{min_digit}", mappingFile[10],
+		"{score_skill}", mappingFile[11],
+		"{score_speed}", mappingFile[12],
+		"{anim_score}", mappingFile[13],
+		"{wds_anim}", mappingFile[14],
 		// Combo
-		"{ap}", mappingFile[14],
-		"{tag}", mappingFile[15],
-		"{last_digit}", mappingFile[16],
-		"{combo_speed}", mappingFile[17],
-		"{combo_burst}", mappingFile[18],
-		"{achievement_rate}", mappingFile[19],
+		"{ap}", mappingFile[15],
+		"{tag}", mappingFile[16],
+		"{last_digit}", mappingFile[17],
+		"{combo_speed}", mappingFile[18],
+		"{combo_burst}", mappingFile[19],
+		"{achievement_rate}", mappingFile[20],
+		// Skill
+		// "{skill_speed}", mappingFile[21],
+		// "{skill_cache}", mappingFile[22],
 		// Judgement
-		"{judge}", mappingFile[20],
-		"{judge_speed}", mappingFile[21],
+		"{judge}", mappingFile[23],
+		"{judge_speed}", mappingFile[24],
 	}
 	for i := range mapping {
 		if i%2 == 0 {

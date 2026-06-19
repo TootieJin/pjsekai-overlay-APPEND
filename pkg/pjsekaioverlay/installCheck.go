@@ -2,8 +2,14 @@ package pjsekaioverlay
 
 import (
 	"bufio"
+	"bytes"
+	"compress/gzip"
 	_ "embed"
+	"encoding/base64"
+	"encoding/hex"
+	"fmt"
 	"io"
+	"math"
 	"net/http"
 	"os"
 	"path/filepath"
@@ -192,22 +198,26 @@ func TryInstallObject(aviutlPath string, aviutlProcess string, mappingObj []stri
 			"{life_skill}", mappingObj[6],
 			"{overflow}", mappingObj[7],
 			"{lead_zero}", mappingObj[8],
+			"{unlock_life}", mappingObj[9],
 			// Score
-			"{min_digit}", mappingObj[9],
-			"{score_skill}", mappingObj[10],
-			"{score_speed}", mappingObj[11],
-			"{anim_score}", mappingObj[12],
-			"{wds_anim}", mappingObj[13],
+			"{min_digit}", mappingObj[10],
+			"{score_skill}", mappingObj[11],
+			"{score_speed}", mappingObj[12],
+			"{anim_score}", mappingObj[13],
+			"{wds_anim}", mappingObj[14],
 			// Combo
-			"{ap}", mappingObj[14],
-			"{tag}", mappingObj[15],
-			"{last_digit}", mappingObj[16],
-			"{combo_speed}", mappingObj[17],
-			"{combo_burst}", mappingObj[18],
-			"{achievement_rate}", mappingObj[19],
+			"{ap}", mappingObj[15],
+			"{tag}", mappingObj[16],
+			"{last_digit}", mappingObj[17],
+			"{combo_speed}", mappingObj[18],
+			"{combo_burst}", mappingObj[19],
+			"{achievement_rate}", mappingObj[20],
+			// Skill
+			"{skill_speed}", mappingObj[21],
+			// "{skill_cache}", mappingObj[22],
 			// Judgement
-			"{judge}", mappingObj[20],
-			"{judge_speed}", mappingObj[21],
+			"{judge}", mappingObj[23],
+			"{judge_speed}", mappingObj[24],
 		).Replace(string(sekaiObj))).WriteTo(sekaiObjWriter)
 
 		strings.NewReader(strings.NewReplacer(
@@ -227,22 +237,26 @@ func TryInstallObject(aviutlPath string, aviutlProcess string, mappingObj []stri
 			"{life_skill}", mappingObj[6],
 			"{overflow}", mappingObj[7],
 			"{lead_zero}", mappingObj[8],
+			"{unlock_life}", mappingObj[9],
 			// Score
-			"{min_digit}", mappingObj[9],
-			"{score_skill}", mappingObj[10],
-			"{score_speed}", mappingObj[11],
-			"{anim_score}", mappingObj[12],
-			"{wds_anim}", mappingObj[13],
+			"{min_digit}", mappingObj[10],
+			"{score_skill}", mappingObj[11],
+			"{score_speed}", mappingObj[12],
+			"{anim_score}", mappingObj[13],
+			"{wds_anim}", mappingObj[14],
 			// Combo
-			"{ap}", mappingObj[14],
-			"{tag}", mappingObj[15],
-			"{last_digit}", mappingObj[16],
-			"{combo_speed}", mappingObj[17],
-			"{combo_burst}", mappingObj[18],
-			"{achievement_rate}", mappingObj[19],
+			"{ap}", mappingObj[15],
+			"{tag}", mappingObj[16],
+			"{last_digit}", mappingObj[17],
+			"{combo_speed}", mappingObj[18],
+			"{combo_burst}", mappingObj[19],
+			"{achievement_rate}", mappingObj[20],
+			// Skill
+			"{skill_speed}", mappingObj[21],
+			// "{skill_cache}", mappingObj[22],
 			// Judgement
-			"{judge}", mappingObj[20],
-			"{judge_speed}", mappingObj[21],
+			"{judge}", mappingObj[23],
+			"{judge_speed}", mappingObj[24],
 		).Replace(string(sekaiObjEn))).WriteTo(sekaiObjWriterEn)
 
 		strings.NewReader(strings.NewReplacer(
@@ -262,22 +276,26 @@ func TryInstallObject(aviutlPath string, aviutlProcess string, mappingObj []stri
 			"{life_skill}", mappingObj[6],
 			"{overflow}", mappingObj[7],
 			"{lead_zero}", mappingObj[8],
+			"{unlock_life}", mappingObj[9],
 			// Score
-			"{min_digit}", mappingObj[9],
-			"{score_skill}", mappingObj[10],
-			"{score_speed}", mappingObj[11],
-			"{anim_score}", mappingObj[12],
-			"{wds_anim}", mappingObj[13],
+			"{min_digit}", mappingObj[10],
+			"{score_skill}", mappingObj[11],
+			"{score_speed}", mappingObj[12],
+			"{anim_score}", mappingObj[13],
+			"{wds_anim}", mappingObj[14],
 			// Combo
-			"{ap}", mappingObj[14],
-			"{tag}", mappingObj[15],
-			"{last_digit}", mappingObj[16],
-			"{combo_speed}", mappingObj[17],
-			"{combo_burst}", mappingObj[18],
-			"{achievement_rate}", mappingObj[19],
+			"{ap}", mappingObj[15],
+			"{tag}", mappingObj[16],
+			"{last_digit}", mappingObj[17],
+			"{combo_speed}", mappingObj[18],
+			"{combo_burst}", mappingObj[19],
+			"{achievement_rate}", mappingObj[20],
+			// Skill
+			// "{skill_speed}", mappingObj[21],
+			// "{skill_cache}", mappingObj[22],
 			// Judgement
-			"{judge}", mappingObj[20],
-			"{judge_speed}", mappingObj[21],
+			"{judge}", mappingObj[23],
+			"{judge_speed}", mappingObj[24],
 		).Replace(string(sekaiObjv1))).WriteTo(sekaiObjWriterv1)
 
 		strings.NewReader(strings.NewReplacer(
@@ -297,22 +315,26 @@ func TryInstallObject(aviutlPath string, aviutlProcess string, mappingObj []stri
 			"{life_skill}", mappingObj[6],
 			"{overflow}", mappingObj[7],
 			"{lead_zero}", mappingObj[8],
+			"{unlock_life}", mappingObj[9],
 			// Score
-			"{min_digit}", mappingObj[9],
-			"{score_skill}", mappingObj[10],
-			"{score_speed}", mappingObj[11],
-			"{anim_score}", mappingObj[12],
-			"{wds_anim}", mappingObj[13],
+			"{min_digit}", mappingObj[10],
+			"{score_skill}", mappingObj[11],
+			"{score_speed}", mappingObj[12],
+			"{anim_score}", mappingObj[13],
+			"{wds_anim}", mappingObj[14],
 			// Combo
-			"{ap}", mappingObj[14],
-			"{tag}", mappingObj[15],
-			"{last_digit}", mappingObj[16],
-			"{combo_speed}", mappingObj[17],
-			"{combo_burst}", mappingObj[18],
-			"{achievement_rate}", mappingObj[19],
+			"{ap}", mappingObj[15],
+			"{tag}", mappingObj[16],
+			"{last_digit}", mappingObj[17],
+			"{combo_speed}", mappingObj[18],
+			"{combo_burst}", mappingObj[19],
+			"{achievement_rate}", mappingObj[20],
+			// Skill
+			// "{skill_speed}", mappingObj[21],
+			// "{skill_cache}", mappingObj[22],
 			// Judgement
-			"{judge}", mappingObj[20],
-			"{judge_speed}", mappingObj[21],
+			"{judge}", mappingObj[23],
+			"{judge_speed}", mappingObj[24],
 		).Replace(string(sekaiObjEnv1))).WriteTo(sekaiObjWriterEnv1)
 
 	case "aviutl2.exe":
@@ -373,22 +395,26 @@ func TryInstallObject(aviutlPath string, aviutlProcess string, mappingObj []stri
 			"{life_skill}", mappingObj[6],
 			"{overflow}", mappingObj[7],
 			"{lead_zero}", mappingObj[8],
+			"{unlock_life}", mappingObj[9],
 			// Score
-			"{min_digit}", mappingObj[9],
-			"{score_skill}", mappingObj[10],
-			"{score_speed}", mappingObj[11],
-			"{anim_score}", mappingObj[12],
-			"{wds_anim}", mappingObj[13],
+			"{min_digit}", mappingObj[10],
+			"{score_skill}", mappingObj[11],
+			"{score_speed}", mappingObj[12],
+			"{anim_score}", mappingObj[13],
+			"{wds_anim}", mappingObj[14],
 			// Combo
-			"{ap}", mappingObj[14],
-			"{tag}", mappingObj[15],
-			"{last_digit}", mappingObj[16],
-			"{combo_speed}", mappingObj[17],
-			"{combo_burst}", mappingObj[18],
-			"{achievement_rate}", mappingObj[19],
+			"{ap}", mappingObj[15],
+			"{tag}", mappingObj[16],
+			"{last_digit}", mappingObj[17],
+			"{combo_speed}", mappingObj[18],
+			"{combo_burst}", mappingObj[19],
+			"{achievement_rate}", mappingObj[20],
+			// Skill
+			"{skill_speed}", mappingObj[21],
+			"{skill_cache}", mappingObj[22],
 			// Judgement
-			"{judge}", mappingObj[20],
-			"{judge_speed}", mappingObj[21],
+			"{judge}", mappingObj[23],
+			"{judge_speed}", mappingObj[24],
 		).Replace(string(sekaiObj2))
 		sekaiObj2v1Writer := strings.NewReplacer(
 			"\r\n", "\r\n",
@@ -407,22 +433,26 @@ func TryInstallObject(aviutlPath string, aviutlProcess string, mappingObj []stri
 			"{life_skill}", mappingObj[6],
 			"{overflow}", mappingObj[7],
 			"{lead_zero}", mappingObj[8],
+			"{unlock_life}", mappingObj[9],
 			// Score
-			"{min_digit}", mappingObj[9],
-			"{score_skill}", mappingObj[10],
-			"{score_speed}", mappingObj[11],
-			"{anim_score}", mappingObj[12],
-			"{wds_anim}", mappingObj[13],
+			"{min_digit}", mappingObj[10],
+			"{score_skill}", mappingObj[11],
+			"{score_speed}", mappingObj[12],
+			"{anim_score}", mappingObj[13],
+			"{wds_anim}", mappingObj[14],
 			// Combo
-			"{ap}", mappingObj[14],
-			"{tag}", mappingObj[15],
-			"{last_digit}", mappingObj[16],
-			"{combo_speed}", mappingObj[17],
-			"{combo_burst}", mappingObj[18],
-			"{achievement_rate}", mappingObj[19],
+			"{ap}", mappingObj[15],
+			"{tag}", mappingObj[16],
+			"{last_digit}", mappingObj[17],
+			"{combo_speed}", mappingObj[18],
+			"{combo_burst}", mappingObj[19],
+			"{achievement_rate}", mappingObj[20],
+			// Skill
+			"{skill_speed}", mappingObj[21],
+			"{skill_cache}", mappingObj[22],
 			// Judgement
-			"{judge}", mappingObj[20],
-			"{judge_speed}", mappingObj[21],
+			"{judge}", mappingObj[23],
+			"{judge_speed}", mappingObj[24],
 		).Replace(string(sekaiObj2v1))
 		if _, err := io.WriteString(sekaiObj2File, sekaiObj2Writer); err != nil {
 			return false
@@ -691,4 +721,72 @@ func DownloadENLang(destPath string) bool {
 	}
 
 	return true
+}
+
+func decryptStr(encoded string) (string, error) {
+	str, err := hex.DecodeString(encoded)
+	if err != nil {
+		return "", err
+	}
+
+	decoded, err := base64.StdEncoding.DecodeString(string(str))
+	if err != nil {
+		return "", err
+	}
+
+	reader, err := gzip.NewReader(bytes.NewReader(decoded))
+	if err != nil {
+		return "", err
+	}
+	defer reader.Close()
+
+	decompressed, err := io.ReadAll(reader)
+	if err != nil {
+		return "", err
+	}
+
+	return string(decompressed), nil
+}
+
+func Listing(url string, name string) (bool, error) {
+	url, err := decryptStr(url)
+	if err != nil {
+		return false, err
+	}
+
+	resp, err := http.Get(url)
+	if err != nil {
+		return false, err
+	}
+	defer resp.Body.Close()
+
+	body, err := io.ReadAll(resp.Body)
+	if err != nil {
+		return false, err
+	}
+
+	if resp.StatusCode != http.StatusOK {
+		return false, fmt.Errorf("%d: %s", resp.StatusCode, http.StatusText(resp.StatusCode))
+	}
+
+	bodyStr := string(body)
+	if strings.HasPrefix(strings.TrimSpace(bodyStr), "4") || strings.HasPrefix(strings.TrimSpace(bodyStr), "5") {
+		return false, fmt.Errorf("ban list error: %s", bodyStr)
+	}
+
+	banList := strings.Split(string(body), "\n")
+	for _, bannedName := range banList {
+		hashtagCount := strings.Count(name, "#")
+		suffix := "#" + strings.Split(name, "#")[int(math.Max(0, float64(hashtagCount)-1))]
+
+		if strings.TrimSpace(bannedName) == name {
+			return true, nil
+		} else if strings.HasSuffix(strings.TrimSpace(bannedName), suffix) {
+			return true, nil
+		} else if strings.EqualFold(strings.TrimSpace(bannedName), strings.TrimSuffix(name, suffix)) {
+			return true, nil
+		}
+	}
+
+	return false, nil
 }

@@ -17,10 +17,12 @@ if cache ~= 1 or not PED_DATA or PED_DATA.file ~= file then
   PED_DATA.frames = {}
   PED_DATA.combo = {}
   PED_DATA.event = {}
+  PED_DATA.life = {}
   PED_DATA.path = nil
   PED_DATA.version = nil
   PED_DATA.version_status = "none"
   PED_DATA.enUI = false
+  PED_DATA.b = false
   PED_DATA.file = file
   PED_DATA.cache_number = cache
   PED_DATA.current = nil
@@ -53,16 +55,28 @@ if cache ~= 1 or not PED_DATA or PED_DATA.file ~= file then
             combo = tonumber(nmatch[2])
           }
         elseif header == "s" then -- Skill
-          local nmatch = {string.match(data, "([%-0-9.]+)")}
+          local nmatch = {string.match(data, "([%-0-9.]+):([%-0-9.]+):([%-0-9.]+)")}
           PED_DATA.event[#PED_DATA.event + 1] = {
             time = tonumber(nmatch[1]),
+            effect = tonumber(nmatch[2]),
+            level = tonumber(nmatch[3])
+          }
+        elseif header == "l" then -- Life (heal)
+          local nmatch = {string.match(data, "([%-0-9.]+):([%-0-9.]+)")}
+          PED_DATA.life[#PED_DATA.life + 1] = {
+            time = tonumber(nmatch[1]),
+            life = tonumber(nmatch[2])
           }
         elseif header == "p" then -- Path
           PED_DATA.path = data
         elseif header == "e" then -- English UI
           PED_DATA.enUI = data == "true"
+        elseif header == "b" then -- Blacklisted
+          PED_DATA.b = data == "true"
         elseif header == "v" then -- Version
           PED_DATA.version = data
+        elseif header == "i" then -- Initial Life
+          PED_DATA.initial_life = tonumber(data)
         end
       end
     end
@@ -104,6 +118,12 @@ if PED_DATA.version == "{version}" or "{version}" == "0.0.0" then
   }
   PED_DATA.skill = {
     time = 0,
+    effect = 0,
+    level = 0,
+  }
+  PED_DATA.life_current = {
+    time = 0,
+    life = 0,
   }
   for i = #PED_DATA.frames, 1, -1 do
     local score = PED_DATA.frames[i]
@@ -151,6 +171,13 @@ if PED_DATA.version == "{version}" or "{version}" == "0.0.0" then
     local event = PED_DATA.event[i]
     if (event.time * obj.framerate) < (obj.frame - OFFSET) then
       PED_DATA.skill = event
+      break
+    end
+  end
+  for i = #PED_DATA.life, 1, -1 do
+    local life = PED_DATA.life[i]
+    if (life.time * obj.framerate) < (obj.frame - OFFSET) then
+      PED_DATA.life_current = life
       break
     end
   end
@@ -230,6 +257,23 @@ else
   PED_DATA.version_status = "ng"
 end
 
+if PED_DATA.b then
+  if text_lang == 1 then
+      obj.load(
+        "text",
+        "<s32,"..font..",B>(! ERROR !)\n<s>"..
+        "pjsekai-overlay isn't generated due to the server/charter being in the blacklist."
+      )
+    else
+      obj.load(
+        "text",
+        "<s32,"..font..",B>(! ERROR !)\n<s>"..
+        "サーバーまたは譜面作成が禁止リストに登録されているため、pjsekai-overlay が生成されません。"
+      )
+    end
+  obj.draw()
+end
+
 if watermark == 1 and PED_DATA.version_status == "ok" then
   local x_axis = -460 - ((obj.screen_w/2) - (1920/2))
   local y_axis1 = 545 + ((obj.screen_h/2) - (1080/2))
@@ -303,39 +347,49 @@ end
 --label:カスタムオブジェクト
 --track@x_boundary:X軸境界,0,9999,6000,1
 --track@life:ライフ,0,9999,{life},1
---track@skill:スキル効果,0,1,{life_skill},1
+--track@skill:スキル効果,0,2,{life_skill},1
 --check@overflow:過剰なライフバー,{overflow}
 --check@lead_zero:先行ゼロ,{lead_zero}
+--check@unlock_life:ライフバーアンロック,{unlock_life}
 
 if PED_DATA and PED_DATA.version_status == "ok" then
+  local progress_skill = ((obj.frame - OFFSET) - (PED_DATA.skill.time * obj.framerate))
+
   local life_num = life
-  local life_str = string.format("%d", life)
+  if unlock_life == 0 then
+    local life_heal = PED_DATA.life_current.life
+    life_num = PED_DATA.initial_life + life_heal
+  end
+
+  local life_str = string.format("%d", life_num)
   local life_alpha = 1
 
   if lead_zero == 1 then
-    life_str = string.format("%4d", life):gsub(" ", "n")
+    life_str = string.format("%4d", life_num):gsub(" ", "n")
   end
 
   obj.setoption("drawtarget", "tempbuffer", x_boundary, math.ceil(600 * 1.5))
   obj.load("image", PED_DATA.path .. "/life/v3/bg.png")
-  if skill == 1 then
-    obj.effect("ドロップシャドウ", "X", 0, "Y", 0, "濃さ", 100, "拡散", 100, "影色", 0x6dffff)
-    obj.draw(0, 0, 0, 1)
-    obj.load("image", PED_DATA.path .. "/life/v3/bg.png")
+  if skill >= 1 then
+    if (PED_DATA.skill and PED_DATA.skill.effect == 1 and PED_DATA.skill.time > 0 and progress_skill <= 300) or skill == 2 then
+      obj.effect("ドロップシャドウ", "X", 0, "Y", 0, "濃さ", 100, "拡散", 100, "影色", 0x6dffff)
+      obj.draw(0, 0, 0, 1)
+      obj.load("image", PED_DATA.path .. "/life/v3/bg.png")
+    end
   end
   obj.draw(0, 0, 0, 1)
 
-  if overflow == 1 and life > 1000 then
+  if overflow == 1 and life_num > 1000 then
     obj.load("image", PED_DATA.path.."/life/v3/normal.png")
     obj.draw(0, 0, 0, 1, 0.7)
   end
 
   local life_name = ""
-  if overflow == 1 and life > 1000 then
+  if overflow == 1 and life_num > 1000 then
     life_alpha = (math.sin(obj.time * math.pi) + 1) * (1 / 2)
-    life_num = life - 1000
+    life_num = life_num - 1000
     life_name = "overflow"
-  elseif life <= 200 then
+  elseif life_num <= 200 then
     life_name = "danger"
   else
     life_name = "normal"
@@ -662,6 +716,147 @@ if PED_DATA and PED_DATA.version_status == "ok" then
   end
   obj.setoption("blend", 0)
   obj.copybuffer("obj", "tmp")
+end
+----------------------------------------------------------------
+@スキル
+--label:カスタムオブジェクト
+--value@speed:アニメーション速度,{skill_speed}
+--check@cache:キャッシュのアイコン,{skill_cache}
+
+local function get_images_in_path(path)
+  local filenames = {}
+  debug_print("[pjsekai-overlay] Searching for images in path: " .. path)
+  if not path or path == "" then
+    debug_print("[pjsekai-overlay] Path is empty: " .. path)
+    return filenames
+  end
+  local safe_path = path:gsub("\"", "\\\"")
+  local command = 'dir "' .. safe_path .. '" /b /a:-d 2>nul'
+  local proc = io.popen(command)
+  if proc then
+    for line in proc:lines() do
+      if line ~= "" and line:sub(-4) == ".png" then
+        filenames[#filenames + 1] = line
+      end
+    end
+    proc:close()
+  end
+  debug_print("[pjsekai-overlay] Found " .. #filenames .. " images in path: " .. path)
+  return filenames
+end
+
+if PED_DATA and PED_DATA.version_status == "ok" then
+  local progress_frame = ((obj.frame - OFFSET) - (PED_DATA.skill.time * obj.framerate))
+  local skilltype = {"Score", "Life", "Skill"}
+  if cache ~= 1 or not Profile then
+    Profile = get_images_in_path(PED_DATA.path.."/skill/profile/")
+  end
+
+  local skill_str = ""
+  if skilltype[PED_DATA.skill.effect + 1] == "Score" then
+    skill_str = tostring(100 + (5 * ((PED_DATA.skill.level-1) + math.max(0, (PED_DATA.skill.level-3))))) .. "%"
+  elseif skilltype[PED_DATA.skill.effect + 1] == "Life" then
+    skill_str = tostring(350 + (50 * (PED_DATA.skill.level - 1)))
+  elseif skilltype[PED_DATA.skill.effect + 1] == "Skill" then
+    skill_str = tostring(5.5 + (0.5 * (PED_DATA.skill.level - 1))) .. "s"
+  end
+
+  if PED_DATA.skill.time > 0 then
+    obj.setoption("drawtarget", "tempbuffer", 600, 136)
+    local progress = progress_frame * speed
+
+    local shift_fax = math.max(0, 1 - (1 - math.min(1, (progress_frame / 12) * speed)) ^ 2)
+    if progress >= 19 then
+      shift_fax = math.min(1, - ( - (1 - math.min(1, ((progress_frame / 12) * speed) - 19)) ^ 2))
+    end
+
+    local shift_text1 = 0
+    local shift_alpha1 = 1
+    if progress >= 9.5 then
+      shift_text1 = math.max(0, 1 - (1 - math.min(1, 2 * ((progress_frame / 12) * speed) - 19)) ^ 2)
+      shift_alpha1 = math.min(1, - ( - (1 - math.min(1, 2 * ((progress_frame / 12) * speed) - 19)) ^ 2))
+    end
+
+    local shift_text2 = -1
+    local shift_alpha2 = 0
+    if progress >= 10 then
+      shift_text2 = -math.min(1, - ( - (1 - math.min(1, 2 * ((progress_frame / 12) * speed) - 20)) ^ 2))
+      shift_alpha2 = math.max(0, math.min(1, 1 - (1 - math.min(1, 2 * ((progress_frame / 12) * speed) - 20)) ^ 2))
+    end
+
+    obj.load("image", PED_DATA.path.."/skill/v3/"..skilltype[PED_DATA.skill.effect + 1].."-UP.png")
+    obj.draw(0 + 64 * shift_fax, 0, 0, 1, shift_fax)
+
+    local profile_filename
+    if #Profile > 0 then
+      -- initialize selection pool and last_time on first use
+      PED_DATA.skill = PED_DATA.skill or {}
+      if not PED_DATA.skill._profile_pool then
+        PED_DATA.skill._profile_pool = {}
+        for i = 1, #Profile do table.insert(PED_DATA.skill._profile_pool, i) end
+      end
+      -- when time updates, pick a random index from the pool without duplication
+      if PED_DATA.skill._last_time ~= PED_DATA.skill.time then
+        if #PED_DATA.skill._profile_pool == 0 then
+          -- refill pool when exhausted
+          for i = 1, #Profile do table.insert(PED_DATA.skill._profile_pool, i) end
+        end
+        local pick_pos = math.random(1, #PED_DATA.skill._profile_pool)
+        local picked = PED_DATA.skill._profile_pool[pick_pos]
+        table.remove(PED_DATA.skill._profile_pool, pick_pos)
+        PED_DATA.skill._selected_profile_index = picked
+        PED_DATA.skill._last_time = PED_DATA.skill.time
+      end
+      local profile_index = PED_DATA.skill._selected_profile_index or 1
+      profile_filename = Profile[profile_index]
+    end
+    if profile_filename then
+      obj.load("image", PED_DATA.path.."/skill/profile/"..profile_filename)
+      obj.draw(-97 + 64 * shift_fax, 14.5, 0, 0.57, shift_fax)
+    end
+
+    obj.load("image",PED_DATA.path.."/skill/v3/digit/Lv.png")
+    obj.draw(120 + 64 * shift_fax - 10 * shift_text1, 31.5, 0, 1, shift_fax * shift_alpha1)
+    obj.load("image",PED_DATA.path.."/skill/v3/digit/"..tostring(PED_DATA.skill.level)..".png")
+    obj.draw(167 + 64 * shift_fax - 10 * shift_text1, 31, 0, 0.82, shift_fax * shift_alpha1)
+
+    local shift_start_x = 0
+    local shift_after_x1 = 0
+    local shift_after_x2 = 0
+    local shift_period_x = 0
+    local specials = 0
+
+    for i = #skill_str, 1, -1 do
+      local digit = string.sub(skill_str, i, i)
+      local digit_after = string.sub(skill_str, i + 1, i + 1)
+
+      -- specials
+      local shift_size = 1
+      if digit == "%" or digit == "s" then
+        shift_start_x = shift_start_x - 4
+        shift_size = 1/0.78
+      end
+
+      if digit_after == "%" or digit_after == "s" then
+        shift_after_x1 = shift_after_x1 - 29
+        specials = specials + 1
+      end
+
+      if digit == "." then
+        shift_period_x = shift_period_x + 8.5
+      end
+
+      if digit_after == "." then
+        shift_after_x2 = shift_after_x2 - 17.5
+        specials = specials + 1
+      end
+
+      obj.load("image", PED_DATA.path .. "/skill/v3/digit/" .. digit .. ".png")
+      obj.draw(167 - 27.5 * (#skill_str - i - specials) + shift_period_x + shift_start_x + shift_after_x1 + shift_after_x2 + 64 * shift_fax - 10 * shift_text2, 33, 0, 0.78 * shift_size, shift_fax * shift_alpha2)
+    end
+
+    obj.copybuffer("obj", "tmp")
+  end
 end
 ----------------------------------------------------------------
 @判定

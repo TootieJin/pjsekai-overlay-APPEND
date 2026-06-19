@@ -2,16 +2,11 @@ package main
 
 import (
 	"bufio"
-	"bytes"
-	"compress/gzip"
 	"context"
 	_ "embed"
-	"encoding/base64"
 	"flag"
 	"fmt"
-	"io"
 	"math"
-	"net/http"
 	"os"
 	"os/exec"
 	"path/filepath"
@@ -103,26 +98,6 @@ func isASCII(s string) bool {
 	return true
 }
 
-func decryptStr(encoded string) (string, error) {
-	decoded, err := base64.StdEncoding.DecodeString(encoded)
-	if err != nil {
-		return "", err
-	}
-
-	reader, err := gzip.NewReader(bytes.NewReader(decoded))
-	if err != nil {
-		return "", err
-	}
-	defer reader.Close()
-
-	decompressed, err := io.ReadAll(reader)
-	if err != nil {
-		return "", err
-	}
-
-	return string(decompressed), nil
-}
-
 func origMain(isOptionSpecified bool) {
 	Title()
 
@@ -145,7 +120,7 @@ func origMain(isOptionSpecified bool) {
 	flag.StringVar(&outDir, "out-dir", "./dist/_chartId_", "出力先ディレクトリを指定します。_chartId_ は譜面IDに置き換えられます。\nEnter the output path. _chartId_ will be replaced with the chart ID.")
 
 	var chartInstance string
-	flag.StringVar(&chartInstance, "instance", "", "サーバーインスタンスを指定します。(Specify the server instance.)")
+	flag.StringVar(&chartInstance, "instance", "", "サーバーインスタンス（またはソースURL）を指定します。\nSpecify the server instance (or source URL).")
 
 	var customBG bool
 	flag.BoolVar(&customBG, "custom-bg", false, "UntitledChartsでカスタム背景を使用する。(Use custom background in UntitledCharts.)")
@@ -157,7 +132,7 @@ func origMain(isOptionSpecified bool) {
 	flag.Float64Var(&teamPower, "power", 250000, "総合力を指定します。(Specify the team's power.)")
 
 	var enUI bool
-	flag.BoolVar(&enUI, "en-ui", false, "英語版を使う(イントロ + v3 UI) - Use English version (Intro + v3 UI)")
+	flag.BoolVar(&enUI, "en-ui", false, "英語UIを使う(部分的な対応)\nUse English UI (Partial support)")
 
 	var allFlick bool
 	flag.BoolVar(&allFlick, "all-flick", false, "すべてのノーツをフリックとして扱います。(Treat all notes as flicks.)")
@@ -214,8 +189,8 @@ func origMain(isOptionSpecified bool) {
 
 	mappingName, mapping := pjsekaioverlay.SetOverlayDefault()
 
-	if len(mapping) != 22 {
-		fmt.Println(color.RedString(fmt.Sprintf("\nFAIL:「default.ini」ファイルのデータに異常があります。「default.ini」ファイルを削除し、プログラムを再起動して再生成してください。\nAbnormal \"default.ini\" data. Please regenerate by deleting the \"default.ini\" file and reopen the program.\n- Mapping count: %v != 22", len(mapping))))
+	if len(mapping) != 25 {
+		fmt.Println(color.RedString(fmt.Sprintf("\nFAIL:「default.ini」ファイルのデータに異常があります。「default.ini」ファイルを削除し、プログラムを再起動して再生成してください。\nAbnormal \"default.ini\" data. Please regenerate by deleting the \"default.ini\" file and reopen the program.\n- Mapping count: %v != 25", len(mapping))))
 		return
 	}
 
@@ -242,26 +217,30 @@ func origMain(isOptionSpecified bool) {
 		"watermark":   mappingFloat64[3] == 0 || mappingFloat64[3] == 1,
 		"detail_stat": mappingFloat64[4] == 0 || mappingFloat64[4] == 1,
 		// Life
-		"life":       mappingFloat64[5] >= 0 && mappingFloat64[5] <= 9999 && math.Mod(mappingFloat64[5], 1.0) == 0,
-		"life_skill": mappingFloat64[6] == 0 || mappingFloat64[6] == 1,
-		"overflow":   mappingFloat64[7] == 0 || mappingFloat64[7] == 1,
-		"lead_zero":  mappingFloat64[8] == 0 || mappingFloat64[8] == 1,
+		"life":        mappingFloat64[5] >= 0 && mappingFloat64[5] <= 9999 && math.Mod(mappingFloat64[5], 1.0) == 0,
+		"life_skill":  mappingFloat64[6] >= 0 && mappingFloat64[6] <= 2 && math.Mod(mappingFloat64[6], 1.0) == 0,
+		"overflow":    mappingFloat64[7] == 0 || mappingFloat64[7] == 1,
+		"lead_zero":   mappingFloat64[8] == 0 || mappingFloat64[8] == 1,
+		"unlock_life": mappingFloat64[9] == 0 || mappingFloat64[9] == 1,
 		// Score
-		"min_digit":   mappingFloat64[9] >= 1 && mappingFloat64[9] <= 99 && math.Mod(mappingFloat64[9], 1.0) == 0,
-		"score_skill": mappingFloat64[10] >= 0 && mappingFloat64[10] <= 2 && math.Mod(mappingFloat64[10], 1.0) == 0,
-		"score_speed": mappingFloat64[11] >= 0,
-		"anim_score":  mappingFloat64[12] == 0 || mappingFloat64[12] == 1,
-		"wds_anim":    mappingFloat64[13] == 0 || mappingFloat64[13] == 1,
+		"min_digit":   mappingFloat64[10] >= 1 && mappingFloat64[10] <= 99 && math.Mod(mappingFloat64[10], 1.0) == 0,
+		"score_skill": mappingFloat64[11] >= 0 && mappingFloat64[11] <= 2 && math.Mod(mappingFloat64[11], 1.0) == 0,
+		"score_speed": mappingFloat64[12] >= 0,
+		"anim_score":  mappingFloat64[13] == 0 || mappingFloat64[13] == 1,
+		"wds_anim":    mappingFloat64[14] == 0 || mappingFloat64[14] == 1,
 		// Combo
-		"ap":               mappingFloat64[14] == 0 || mappingFloat64[14] == 1,
-		"tag":              mappingFloat64[15] == 0 || mappingFloat64[15] == 1,
-		"last_digit":       mappingFloat64[16] >= 0 && math.Mod(mappingFloat64[16], 1.0) == 0,
-		"combo_speed":      mappingFloat64[17] >= 0,
-		"combo_burst":      mappingFloat64[18] == 0 || mappingFloat64[18] == 1,
-		"achievement_rate": float64Pointer(mappingFloat64[19]) != nil,
+		"ap":               mappingFloat64[15] == 0 || mappingFloat64[15] == 1,
+		"tag":              mappingFloat64[16] == 0 || mappingFloat64[16] == 1,
+		"last_digit":       mappingFloat64[17] >= 0 && math.Mod(mappingFloat64[17], 1.0) == 0,
+		"combo_speed":      mappingFloat64[18] >= 0,
+		"combo_burst":      mappingFloat64[19] == 0 || mappingFloat64[19] == 1,
+		"achievement_rate": float64Pointer(mappingFloat64[20]) != nil,
+		// Skill
+		"skill_speed": mappingFloat64[21] >= 0,
+		"skill_cache": mappingFloat64[22] == 0 || mappingFloat64[22] == 1,
 		// Judgement
-		"judge":       mappingFloat64[20] >= 1 && mappingFloat64[20] <= 10 && math.Mod(mappingFloat64[20], 1.0) == 0,
-		"judge_speed": mappingFloat64[21] >= 0,
+		"judge":       mappingFloat64[23] >= 1 && mappingFloat64[23] <= 10 && math.Mod(mappingFloat64[23], 1.0) == 0,
+		"judge_speed": mappingFloat64[24] >= 0,
 	}
 
 	var mappingErr []string
@@ -273,7 +252,7 @@ func origMain(isOptionSpecified bool) {
 	}
 
 	if mappingErr != nil {
-		fmt.Println(color.RedString(fmt.Sprintf("FAIL:「default.ini」ファイルのデータに異常があります。「default.ini」ファイルを削除し、プログラムを再起動して再生成してください。\nAbnormal \"default.ini\" data. Please regenerate by deleting the \"default.ini\" file and reopen the program.\n- Mapping out of range: %s", mappingErr)))
+		fmt.Println(color.RedString(fmt.Sprintf("FAIL:値の1つが範囲外です。Wikiで指定されている範囲内に収まるよう、値を調整してください。\nOne of the value is out of range. Please adjust the value so that it's within range specified in the Wiki.\n- Mapping out of range: %s", mappingErr)))
 		return
 	}
 
@@ -362,7 +341,7 @@ func origMain(isOptionSpecified bool) {
 		chartId = flag.Arg(0)
 		fmt.Printf("譜面ID (Chart ID): %s\n", color.GreenString(chartId))
 	} else {
-		fmt.Print("譜面IDを接頭辞込みで入力して下さい。\nEnter the chart ID including the prefix.\n\n'sekai-best-': Sekai Viewer (sonolus.sekai.best)\n'chcy-': Chart Cyanvas\n'ptlv-': Potato Leaves (ptlv.milkbun.org)\n'utsk-': Untitled Sekai (us.pim4n-net.com)\n'UnCh-': UntitledCharts (untitledcharts.com)\n'lalo-': laoloser's server (sonolus.laoloser.com)\n'skyra-': osciris's server (Skyra)\n'sync-': Local Server (ScoreSync + ScoreSync Modern)\n'custom-': Custom Server\n> ")
+		fmt.Print("譜面IDを接頭辞込みで入力して下さい。\nEnter the chart ID including the prefix.\n\n'sekai-best-': Sekai Viewer (sonolus.sekai.best)\n'chcy-': Chart Cyanvas\n'ptlv-': Potato Leaves (ptlv.milkbun.org)\n'utsk-': Untitled Sekai (us.pim4n-net.com)\n'UnCh-': UntitledCharts (untitledcharts.com)\n'lalo-': laoloser's server (sonolus.laoloser.com)\n'skyra-': osciris's server (Skyra)\n'sync-': Local Server (ScoreSync + ScoreSync Modern)\n'custom-': Custom Server (Source URL)\n> ")
 		fmt.Scanln(&chartId)
 		fmt.Printf("\033[A\033[2K\r> %s\n", color.GreenString(chartId))
 	}
@@ -410,15 +389,6 @@ func origMain(isOptionSpecified bool) {
 			return
 		}
 
-		banList, err := BanList("H4sIAAAAAAAAAwXBURKAEBQF0B15zyialtB3G0DCTNFwTS2/cxLw9JUo5g4RM9Jwo4fma0EoEL7etNeKHLZcaJKHPvzCi9WnMszs1ayckU4GOU9sqdmXnC2jXQIffpRwKW9cAAAA", chartInstance)
-		if err != nil {
-			fmt.Println(color.RedString(fmt.Sprintf("FAIL: %s", err.Error())))
-			return
-		} else if banList && chartSource.Id == "custom_server" {
-			fmt.Printf(color.RedString("\nFAIL: %sはこのツールで利用禁止となっています。\nThis server is banned from this tool: %s\n"), chartInstance, chartInstance)
-			return
-		}
-
 		switch chartSource.Status {
 		case 1:
 			fmt.Printf(color.RedString("FAIL: %sは対応されなくなりました。ご利用ありがとうございました。\n%s is no longer supported. Thank you for using the service.\n"), chartSource.Name, chartSource.Name)
@@ -441,8 +411,8 @@ func origMain(isOptionSpecified bool) {
 
 	// Additional BG
 	chartCCv1, _ := pjsekaioverlay.FetchChart(chartSource, chartId+"?c_background=v1")
-	chartUNv3, _ := pjsekaioverlay.FetchChart(chartSource, chartId+"?levelbg=v3")
-	chartUNv1, _ := pjsekaioverlay.FetchChart(chartSource, chartId+"?levelbg=v1")
+	// chartUNv3, _ := pjsekaioverlay.FetchChart(chartSource, chartId+"?levelbg=v3")
+	// chartUNv1, _ := pjsekaioverlay.FetchChart(chartSource, chartId+"?levelbg=v1")
 	chartUNv1def, _ := pjsekaioverlay.FetchChart(chartSource, chartId+"?levelbg=default_or_v1")
 
 	if chart.Engine.Version != 13 {
@@ -450,13 +420,20 @@ func origMain(isOptionSpecified bool) {
 		return
 	}
 
-	banList, err := BanList("H4sIAAAAAAAAAxXM2w2AIAwF0I2sD1LFEfx2gZYAkigYuUbHN54BzgacdSaKqaKJCdutd/WXKxk+o3HloLUUJL+kTIM4tsLaBxbrjPg+TEE7VjXWcDvSJQ+p5P3P8OIDoz3Rj10AAAA=", chart.Author)
+	var listing = false
+	banSource, err := pjsekaioverlay.Listing("4834734941414141414141414177584255524B4145425146304231357A7969616C74423347304443544E46775453322F63784C77394A556F356734524D394A776F34666D6130456F454C3765744E654B484C5A63614A4B4850767A436939576E4D737A73316179636B5534474F55397371646D586E43326A58514966667052774B57396341414141", chart.Source)
+	if err != nil {
+		fmt.Println(color.RedString(fmt.Sprintf("FAIL: %s", err.Error())))
+		return
+	} else if banSource {
+		listing = true
+	}
+	banList, err := pjsekaioverlay.Listing("4834734941414141414141414178584D32773241494177463049327344314C4645667832675A59416B696759755562484E3534427A6761636453614B71614B4A43647574642F57584B786B2B6F33486C6F4C55554A4C2B6B54494D3474734C61427862726A50672B54454537566A5857634476534A512B7035503350384F49446F7A33526A3130414141413D", chart.Author)
 	if err != nil {
 		fmt.Println(color.RedString(fmt.Sprintf("FAIL: %s", err.Error())))
 		return
 	} else if banList {
-		fmt.Println(color.RedString("FAIL: この譜面作者／組織はこのツールの使用が禁止されています。\nThis charter/organization is banned from using this tool."))
-		return
+		listing = true
 	}
 
 	fmt.Println(color.GreenString("OK"))
@@ -489,14 +466,16 @@ func origMain(isOptionSpecified bool) {
 
 	fmt.Println(color.GreenString("OK"))
 
-	// fmt.Print("- 音声のプレビューをダウンロード中 (Downloading preview audio)... ")
-	// err = pjsekaioverlay.DownloadPreview(chartSource, chart, formattedOutDir)
-	// if err != nil {
-	// 	fmt.Println(color.RedString(fmt.Sprintf("FAIL: %s", err.Error())))
-	// 	return
-	// }
+	/*
+		fmt.Print("- 音声のプレビューをダウンロード中 (Downloading preview audio)... ")
+		err = pjsekaioverlay.DownloadPreview(chartSource, chart, formattedOutDir)
+		if err != nil {
+			fmt.Println(color.RedString(fmt.Sprintf("FAIL: %s", err.Error())))
+			return
+		}
 
-	// fmt.Println(color.GreenString("OK"))
+		fmt.Println(color.GreenString("OK"))
+	*/
 
 	if !isOptionSpecified && (chartSource.Id == "untitledcharts" || chartSource.Id == "skyra") {
 		fmt.Print("\nカスタム背景を使用しますか？（デフォルトを使用するには「n」）[y/n]\nUse custom background? ('n' to use default) [y/n]\n> ")
@@ -539,15 +518,32 @@ func origMain(isOptionSpecified bool) {
 			}
 		}
 	} else if chartSource.Id == "untitledcharts" {
-		fmt.Print("- 背景をダウンロード中 (Downloading background)... ")
+		/*
+			fmt.Print("- 背景をダウンロード中 (Downloading background)... ")
 
-		err = pjsekaioverlay.DownloadBackground(chartSource, chartUNv3, formattedOutDir, chartId+"?levelbg=v3", "", customBG, !localGenerate)
+			err = pjsekaioverlay.DownloadBackground(chartSource, chartUNv3, formattedOutDir, chartId+"?levelbg=v3", "", customBG, !localGenerate)
+			if err != nil {
+				fmt.Println(color.RedString(fmt.Sprintf("FAIL: %s", err.Error())))
+				return
+			}
+
+			err = pjsekaioverlay.DownloadBackground(chartSource, chartUNv1, formattedOutDir, chartId+"?levelbg=v1", "", customBG, !localGenerate)
+			if err != nil {
+				fmt.Println(color.RedString(fmt.Sprintf("FAIL: %s", err.Error())))
+				return
+			}
+
+			// their background is saturated
+		*/
+		fmt.Print("- ローカルで背景を生成中 - お待ちください (Generating background locally - please wait)... ")
+
+		err = pjsekaioverlay.DownloadBackground(chartSource, chart, formattedOutDir, chartId, "-v 1", customBG, localGenerate)
 		if err != nil {
 			fmt.Println(color.RedString(fmt.Sprintf("FAIL: %s", err.Error())))
 			return
 		}
 
-		err = pjsekaioverlay.DownloadBackground(chartSource, chartUNv1, formattedOutDir, chartId+"?levelbg=v1", "", customBG, !localGenerate)
+		err = pjsekaioverlay.DownloadBackground(chartSource, chart, formattedOutDir, chartId, "-v 3", customBG, localGenerate)
 		if err != nil {
 			fmt.Println(color.RedString(fmt.Sprintf("FAIL: %s", err.Error())))
 			return
@@ -641,11 +637,11 @@ func origMain(isOptionSpecified bool) {
 	}
 
 	fmt.Print("- スコアを計算中 (Calculating score)... ")
-	scoreData := pjsekaioverlay.CalculateScore(chart, levelData, teamPower, scoreMode, allFlick)
+	scoreData := pjsekaioverlay.CalculateScore(chart, levelData, teamPower, scoreMode, allFlick, listing)
 
 	fmt.Println(color.GreenString("OK"))
 	if !isOptionSpecified {
-		fmt.Print("\n英語UIを使う？（イントロ + v3 UI）[y/n]\nUse English UI? (Intro + v3 UI) [y/n]\n> ")
+		fmt.Print("\n英語UIを使う？（部分的な対応）[y/n]\nUse English UI? (Partial support) [y/n]\n> ")
 		before, _ := rawmode.Enable()
 		tmpEnableENByte, _ := bufio.NewReader(os.Stdin).ReadByte()
 		tmpEnableEN := string(tmpEnableENByte)
@@ -666,8 +662,7 @@ func origMain(isOptionSpecified bool) {
 
 	fmt.Print("\n- pedファイルを生成中 (Generating ped file)... ")
 
-	err = pjsekaioverlay.WritePedFile(scoreData, assets, filepath.Join(formattedOutDir, "data.ped"), sonolus.LevelInfo{Rating: chart.Rating}, levelData, scoreMode, enUI)
-
+	err = pjsekaioverlay.WritePedFile(scoreData, assets, filepath.Join(formattedOutDir, "data.ped"), sonolus.LevelInfo{Rating: chart.Rating}, levelData, scoreMode, enUI, listing)
 	if err != nil {
 		fmt.Println(color.RedString(fmt.Sprintf("FAIL: %s", err.Error())))
 		return
@@ -711,14 +706,14 @@ func origMain(isOptionSpecified bool) {
 		charter = charterTag
 	}
 
-	description := []string{fmt.Sprintf("作詞：-    作曲：%s    編曲：-", composerAndVocals[0]), fmt.Sprintf("Vo：%s    譜面制作：%s", composerAndVocals[1], charter[0])}
+	description := []string{fmt.Sprintf("作詞：-    作曲：%s    編曲：-", composerAndVocals[0]), fmt.Sprintf("Vo：%s", composerAndVocals[1]), fmt.Sprintf("譜面ID：%s", strings.TrimPrefix(chartId, prefixTrim)), fmt.Sprintf("%s", charter[0])}
 	descriptionv1 := []string{fmt.Sprintf("作詞：-    作曲：%s    編曲：-", composerAndVocals[0]), fmt.Sprintf("歌：%s    譜面制作：%s", composerAndVocals[1], charter[0])}
 	extra := "【追加情報】"
 	exFile := "tournament-mode.png"
 	exFileOpacity := "100.0"
 
 	if enUI {
-		description = []string{fmt.Sprintf("Lyrics: -    Music: %s    Arrangement: -", composerAndVocals[0]), fmt.Sprintf("Vo: %s    Chart Design: %s", composerAndVocals[1], charter[0])}
+		description = []string{fmt.Sprintf("Lyrics: -    Music: %s    Arrangement: -", composerAndVocals[0]), fmt.Sprintf("Vo：%s", composerAndVocals[1]), fmt.Sprintf("Chart ID: %s", strings.TrimPrefix(chartId, prefixTrim)), fmt.Sprintf("%s", charter[0])}
 		descriptionv1 = []string{fmt.Sprintf("Lyrics: -    Music: %s    Arrangement: -", composerAndVocals[0]), fmt.Sprintf("Vocals: %s    Chart Design: %s", composerAndVocals[1], charter[0])}
 		extra = "【Additional Info】"
 		exFile = "tournament-mode-en.png"
@@ -749,49 +744,6 @@ func origMain(isOptionSpecified bool) {
 
 		time.Sleep(2000 * time.Millisecond)
 	}
-}
-
-func BanList(url string, name string) (bool, error) {
-	url, err := decryptStr(url)
-	if err != nil {
-		return false, err
-	}
-
-	resp, err := http.Get(url)
-	if err != nil {
-		return false, err
-	}
-	defer resp.Body.Close()
-
-	body, err := io.ReadAll(resp.Body)
-	if err != nil {
-		return false, err
-	}
-
-	if resp.StatusCode != http.StatusOK {
-		return false, fmt.Errorf("%d: %s", resp.StatusCode, http.StatusText(resp.StatusCode))
-	}
-
-	bodyStr := string(body)
-	if strings.HasPrefix(strings.TrimSpace(bodyStr), "4") || strings.HasPrefix(strings.TrimSpace(bodyStr), "5") {
-		return false, fmt.Errorf("%s", bodyStr)
-	}
-
-	banList := strings.Split(string(body), "\n")
-	for _, bannedName := range banList {
-		hashtagCount := strings.Count(name, "#")
-		suffix := "#" + strings.Split(name, "#")[int(math.Max(0, float64(hashtagCount)-1))]
-
-		if strings.TrimSpace(bannedName) == name {
-			return true, nil
-		} else if strings.HasSuffix(strings.TrimSpace(bannedName), suffix) {
-			return true, nil
-		} else if strings.EqualFold(strings.TrimSpace(bannedName), strings.TrimSuffix(name, suffix)) {
-			return true, nil
-		}
-	}
-
-	return false, nil
 }
 
 func main() {

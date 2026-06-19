@@ -43,15 +43,15 @@ Follow the steps below:
 
 4. In your `pjsekai-overlay-APPEND.exe` command prompt, input the chart ID including the prefix.
 - **Official server(s):**
-   - <del>`sekai-rush-`: Proseka Rush ([sekairush.com](https://sekairush.com))</del>
+   - `sekai-best-`: Sekai Viewer ([sonolus.sekai.best](https://sonolus.sekai.best))
 - **Custom server(s):**
    - `chcy-`: Chart Cyanvas
       - `0`: Archive <del>([cc.sevenc7c.com](https://cc.sevenc7c.com))</del>([cc.milkbun.org](https://cc.milkbun.org))
       - `1`: Offshoot server ([chart-cyanvas.com](https://chart-cyanvas.com))
-      - `Others (URL domain)`: Different Cyanvas instance
-   - `ptlv-`: Potato Leaves ([ptlv.sevenc7c.com](https://ptlv.sevenc7c.com))
+   - `ptlv-`: Potato Leaves <del>([ptlv.sevenc7c.com](https://ptlv.sevenc7c.com))</del>([ptlv.milkbun.org](https://ptlv.milkbun.org))
    - <del>`utsk-`: Untitled Sekai ([us.pim4n-net.com](https://us.pim4n-net.com))</del>
    - `UnCh-`: UntitledCharts ([untitledcharts.com](https://untitledcharts.com))
+   - `custom-[Chart ID]`: Custom Server (Source URL)
 - **Independent server(s):**
    - <del>`lalo-`: [laoloser](https://www.youtube.com/@laoloserr)'s server ([sonolus.laoloser.com](https://laoloser.com/sonolus))</del>
    - <del>`skyra-`: [osciris](https://www.tiktok.com/@oscirissss)'s server ([Skyra](https://plumnet.live/))</del>
@@ -101,7 +101,7 @@ Follow the steps below:
 | **Name**      	| Description                                                                                                	| Default 	|        Range       	|
 |---------------	|------------------------------------------------------------------------------------------------------------	|:-------:	|:------------------:	|
 | **Offset**<br>`offset`    	| Number of frames to shift events<br>- Increase to shift timing later<br>- Decrease to shift timing earlier 	|  216.00  	| -99999.99 ~ 99999.99 	|
-| **Cache**<br>`cache`     	| When cache is set to 0, any change in the `data.ped` is applied immediately<br>(`0` - OFF, `1` - ON)                               	|    1    	|        0 or 1       	|
+| **Cache**<br>`cache`     	| Cache the data in the `data.ped`. When cache is set to 0, any change in the `data.ped` is applied immediately<br>(`0` - OFF, `1` - ON)                               	|    1    	|        0 or 1       	|
 | **Text Language**<br>`text_lang` 	| Set text language configuration for the error & detailed stats text<br>(`0` - 日本語, `1` - English)                 	|    0    	|        0 or 1       	|
 | **Watermark**<br>`watermark` 	| Enable watermark text at the bottom-left corner                                                            	|   1 (ON)  	|          0 or 1         	|
 | **Detailed Stats**<br>`detail_stat` 	| <img width="auto" height="auto" alt="image" src="https://github.com/user-attachments/assets/9e916e51-d888-497e-b649-b6e9b4a3b760" /><br>View detailed statistics (useful for measuring & analysing). _This text will not be shown when exporting_                 	|    0 (OFF)    	|        0 or 1       	|
@@ -111,10 +111,11 @@ Follow the steps below:
 
 | **Name** 	| Description                                                                         	| Default 	|   Range  	|
 |----------	|-------------------------------------------------------------------------------------	|:-------:	|:--------:	|
-| **LIFE**<br>`life` 	| LIFE value (self-explanatory)<br>- When value changes, the LIFE bar changes as well 	|   1000  	| 0 ~ 9999 (Integer) 	|
-| **Skill Effect**<br>`life_skill` 	| Toggle skill glow effect 	|  0 (OFF)  	|    0 or 1   	|
+| **LIFE**<br>`life` 	| LIFE value (self-explanatory)<br>- **(Locked)** The LIFE value is automatically adjusted based on Healer skill events<br>- **(Unlocked)** When value changes, the LIFE bar changes as well 	|   1000  	| 0 ~ 9999 (Integer) 	|
+| **Skill Effect**<br>`life_skill` 	| Toggle skill glow effect<br>`0`: OFF<br>`1`: AUTO - For each skill event, show skill glow effect for 5 seconds<br>`2`: ON   	|    1  	| 0 ~ 2 (Integer)	|
 | **Overflow LIFE Bar**<br>`overflow` 	| <img width=70% height=70% alt="life_overflow-v1" src="https://github.com/user-attachments/assets/2fd69cf1-a767-47e7-adc3-14ecd2d56ce6" /><br><img width=70% height=70% alt="life_overflow" src="https://github.com/user-attachments/assets/bbe6ea47-b8e8-498f-8e30-187ca8971c64" /> 	|  0 (OFF)  	|    0 or 1   	|
 | **Leading Zero**<br>`lead_zero` 	| Append the "0" digits for LIFE value below 1000 	|  0 (OFF)  	|    0 or 1   	|
+| **Unlock LIFE Bar**<br>`unlock_life` 	| Freely adjust LIFE value 	|  0 (OFF)  	|    0 or 1   	|
 
 ### Score@pjsekai-overlay-en
 <img width="125" height="125" alt="ScoreUP" src="https://github.com/user-attachments/assets/a5a8b0f0-035c-4951-8ae3-d2038945d86c" /> <img width=50% height=50% alt="bg" src="https://github.com/user-attachments/assets/3db93b3e-2280-46e1-a08f-00e50a5e5e8c" />
@@ -126,15 +127,6 @@ Follow the steps below:
 | **Animation Speed**<br>`score_speed`   | Adjust animation speed                       	   |   1.00     |    >= 0 	   |
 | **Animated Scoring**<br>`anim_score` 	| Increase incrementally rather than all at once 	|  0 (OFF)  	|    0 or 1   	|
 | **WDS animation**<br>`wds_anim` 	| Toggle World Dai Star's added score animation 	|  0 (OFF)  	|    0 or 1   	|
-
-> [!NOTE]
-> **About skill events: https://sekai-guide.tootiejin.com/charting-guide/adding-skill-and-fever-events**
-
-> [!TIP]
-> **You can add skill events to use the AUTO Skill Effect.** Go to your `data.ped` file and for each skill event you want to add, add the line `s|[timeframe (seconds)]`. You can add this as many as you want.
-> - **Example:**
-> 
-> <img width=50% height=50% alt="image" src="https://github.com/user-attachments/assets/44bb1ec6-5d42-467c-af1b-53b583d8ad44" />
 
 
 ### Combo@pjsekai-overlay-en
@@ -148,6 +140,15 @@ Follow the steps below:
 | **Animation Speed**<br>`combo_speed`   | Adjust animation speed                  |   1.00     |    >= 0 	   |
 | **n00 Combo Burst**<br>`combo_burst`        	| Toggle World Dai Star's combo burst effect |    0 (OFF)   	|   0 or 1   	|
 | **Achievement Rate**<br>`achievement_rate`        	| <img width="auto" height="auto" alt="image" src="https://github.com/user-attachments/assets/1e1cc392-fc5d-4c7d-b954-a6eba95d8839" /><br>Toggle Achievement Rate displayed on top of the combo counter **(Set to `0` or leave it blank to turn it OFF)** <br><br>**Extra features:**<br>`100.0000+`: Increase incrementally (like Animated Scoring) up to 100.0000%<br>`100.0000-`: Start at 100.0000%, then decrease for non-perfect judgements |    100.0000   	|   Valid floating number   	|
+
+### Skill@pjsekai-overlay-en
+
+<img width="30%" height="30%" alt="Score-UP" src="https://github.com/user-attachments/assets/4fe292a7-dac4-4499-9057-826711c3b598" /> <img width="30%" height="30%" alt="Life-UP" src="https://github.com/user-attachments/assets/e96135c7-49b9-4f24-9261-1476e89f57d8" /> <img width="30%" height="30%" alt="Skill-UP" src="https://github.com/user-attachments/assets/8d471e64-40bb-4dbe-90d8-0b2dcf2d67c1" />
+
+| **Name**                          	| Description                            	  | Default | Range 	|
+|-----------------------------------	|----------------------------------------	  |:-------:|:-----:	|
+| **Animation Speed**<br>`skill_speed`                      	| Adjust animation speed                       	   |   1.00     |    >= 0 	   |
+| **Cache Icon**<br>`skill_cache`                     	| **(Only in AviUtl ExEdit2)** Cache the card icon in the `\assets\skill\profile` folder             	  |    1   	| 0 or 1 	|
 
 ### Judgement@pjsekai-overlay-en
 <img width="125" height="125" alt="SkillUP" src="https://github.com/user-attachments/assets/e29f426d-71ae-4de5-912a-a5c7375f538d" />
@@ -185,10 +186,17 @@ You likely haven't selected a **`data.ped` file.**
 AviUtl for whatever reason stops loading when importing for the first time. If that is the case, **you may have to import it again.**
 
 ### The fonts look off/incorrect
-
 Project Sekai uses the **RodinNTLG DB + EB** font (described in [Requirements](#requirements)). These are paid fonts so we're not allowed to show you how to install it.
 
 <img width=50% height=50% alt="image" src="https://github.com/user-attachments/assets/9c125788-ab05-4fc0-8d2a-6f3e5d9c892a" />
+
+### Changing card icon in AviUtl
+To get new card icons, you can get the icon from the official game by following the README in the **`pjsekai-overlay-APPEND\assets\skill\profile`** directory. **This is where you will place your new icon.**
+**In AviUtl ExEdit2**, the icons list are updated when a new icon is placed, so you only need to place the icon in that folder and move on. In **AviUtl**, however, icons list are NOT updated, and you have to add it yourself. 
+
+- Navigate to `Skill@pjsekai-overlay-en > Setting > Icon Filename` and enter one or multiple filenames like so: `image1.png,image2.png,image3.png,...`.
+
+<img width="50%" height="auto" alt="image" src="https://github.com/user-attachments/assets/1fb3cadf-d512-4695-b9dd-f5f67b2da9d2" />
 
 ### Still have questions or encountering problems?
 **[Make a discussion thread.](https://github.com/TootieJin/pjsekai-overlay-APPEND/discussions)**

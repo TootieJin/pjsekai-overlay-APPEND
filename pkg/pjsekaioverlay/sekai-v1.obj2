@@ -17,10 +17,12 @@ if cache ~= 1 or not PED_DATA or PED_DATA.file ~= file then
   PED_DATA.frames = {}
   PED_DATA.combo = {}
   PED_DATA.event = {}
+  PED_DATA.life = {}
   PED_DATA.path = nil
   PED_DATA.version = nil
   PED_DATA.version_status = "none"
   PED_DATA.enUI = false
+  PED_DATA.b = false
   PED_DATA.file = file
   PED_DATA.cache_number = cache
   PED_DATA.current = nil
@@ -53,16 +55,28 @@ if cache ~= 1 or not PED_DATA or PED_DATA.file ~= file then
             combo = tonumber(nmatch[2])
           }
         elseif header == "s" then -- Skill
-          local nmatch = {string.match(data, "([%-0-9.]+)")}
+          local nmatch = {string.match(data, "([%-0-9.]+):([%-0-9.]+):([%-0-9.]+)")}
           PED_DATA.event[#PED_DATA.event + 1] = {
             time = tonumber(nmatch[1]),
+            effect = tonumber(nmatch[2]),
+            level = tonumber(nmatch[3])
+          }
+        elseif header == "l" then -- Life (heal)
+          local nmatch = {string.match(data, "([%-0-9.]+):([%-0-9.]+)")}
+          PED_DATA.life[#PED_DATA.life + 1] = {
+            time = tonumber(nmatch[1]),
+            life = tonumber(nmatch[2])
           }
         elseif header == "p" then -- Path
           PED_DATA.path = data
         elseif header == "e" then -- English UI
           PED_DATA.enUI = data == "true"
+        elseif header == "b" then -- Blacklisted
+          PED_DATA.b = data == "true"
         elseif header == "v" then -- Version
           PED_DATA.version = data
+        elseif header == "i" then -- Initial Life
+          PED_DATA.initial_life = tonumber(data)
         end
       end
     end
@@ -104,6 +118,12 @@ if PED_DATA.version == "{version}" or "{version}" == "0.0.0" then
   }
   PED_DATA.skill = {
     time = 0,
+    effect = 0,
+    level = 0,
+  }
+  PED_DATA.life_current = {
+    time = 0,
+    life = 0,
   }
   for i = #PED_DATA.frames, 1, -1 do
     local score = PED_DATA.frames[i]
@@ -151,6 +171,13 @@ if PED_DATA.version == "{version}" or "{version}" == "0.0.0" then
     local event = PED_DATA.event[i]
     if (event.time * obj.framerate) < (obj.frame - OFFSET) then
       PED_DATA.skill = event
+      break
+    end
+  end
+  for i = #PED_DATA.life, 1, -1 do
+    local life = PED_DATA.life[i]
+    if (life.time * obj.framerate) < (obj.frame - OFFSET) then
+      PED_DATA.life_current = life
       break
     end
   end
@@ -230,6 +257,23 @@ else
   PED_DATA.version_status = "ng"
 end
 
+if PED_DATA.b then
+  if text_lang == 1 then
+      obj.load(
+        "text",
+        "<s32,"..font..",B>(! ERROR !)\n<s>"..
+        "pjsekai-overlay isn't generated due to the server/charter being in the blacklist."
+      )
+    else
+      obj.load(
+        "text",
+        "<s32,"..font..",B>(! ERROR !)\n<s>"..
+        "サーバーまたは譜面作成が禁止リストに登録されているため、pjsekai-overlay が生成されません。"
+      )
+    end
+  obj.draw()
+end
+
 if watermark == 1 and PED_DATA.version_status == "ok" then
   local x_axis = -460 - ((obj.screen_w/2) - (1920/2))
   local y_axis1 = 545 + ((obj.screen_h/2) - (1080/2))
@@ -306,27 +350,37 @@ end
 --track@skill:スキル効果,0,1,{life_skill},1
 --check@overflow:過剰なライフバー,{overflow}
 --check@lead_zero:先行ゼロ,{lead_zero}
+--check@unlock_life:ライフバーアンロック,{unlock_life}
 
 if PED_DATA and PED_DATA.version_status == "ok" then
+  local progress_skill = ((obj.frame - OFFSET) - (PED_DATA.skill.time * obj.framerate))
+
   local life_num = life
-  local life_str = string.format("%d", life)
+  if unlock_life == 0 then
+    local life_heal = PED_DATA.life_current.life
+    life_num = PED_DATA.initial_life + life_heal
+  end
+
+  local life_str = string.format("%d", life_num)
   local life_alpha = 1
 
   if lead_zero == 1 then
-    life_str = string.format("%4d", life):gsub(" ", "n")
+    life_str = string.format("%4d", life_num):gsub(" ", "n")
   end
 
   obj.setoption("drawtarget", "tempbuffer", x_boundary, math.ceil(124 * 1.5))
   obj.load("image", PED_DATA.path .. "/life/v1/placeholder.png")
-  if skill == 1 then
-    obj.effect("ドロップシャドウ", "X", 0, "Y", 0, "濃さ", 100, "拡散", 50, "影色", 0x6dffff)
+  if skill >= 1 then
+    if (PED_DATA.skill and PED_DATA.skill.effect == 1 and PED_DATA.skill.time > 0 and progress_skill <= 300) or skill == 2 then
+      obj.effect("ドロップシャドウ", "X", 0, "Y", 0, "濃さ", 100, "拡散", 50, "影色", 0x6dffff)
+    end
   end
   obj.draw(0, 0, 0, 1)
 
-  if overflow == 1 and life > 1000 then
+  if overflow == 1 and life_num > 1000 then
     obj.load("image", PED_DATA.path.."/life/v1/normal.png")
     obj.draw(0, 0, 0, 1, 0.5)
-  elseif life <= 200 then
+  elseif life_num <= 200 then
     obj.load("image", PED_DATA.path.."/life/v1/danger_bg.png")
     obj.draw(0, 0, 0, 1)
   else
@@ -335,11 +389,11 @@ if PED_DATA and PED_DATA.version_status == "ok" then
   end
 
   local life_name = ""
-  if overflow == 1 and life > 1000 then
+  if overflow == 1 and life_num > 1000 then
     life_alpha = (math.sin(obj.time * math.pi) + 1) * (1 / 2)
-    life_num = life - 1000
+    life_num = life_num - 1000
     life_name = "overflow"
-  elseif life <= 200 then
+  elseif life_num <= 200 then
     life_name = "danger"
   else
     life_name = "normal"

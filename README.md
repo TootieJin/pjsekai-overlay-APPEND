@@ -41,7 +41,7 @@ This is a forked version of pjsekai-overlay with additional features originally 
   - Interchangable AP Combo
   - Interchangable judgement type (PERFECT/GREAT/GOOD/etc.)
   - Interchangable LIFE value
-  - Skill Effects (v1 + v3)
+  - Skill Effects (v1 & v3) + UI (v3)
   - Achievement Rate
 - **Additional support for more servers:**
   - **Official server(s):**
@@ -50,10 +50,10 @@ This is a forked version of pjsekai-overlay with additional features originally 
     - `chcy-`: Chart Cyanvas
       - `0`: Archive <del>([cc.sevenc7c.com](https://cc.sevenc7c.com))</del>([cc.milkbun.org](https://cc.milkbun.org))
       - `1`: Offshoot server ([chart-cyanvas.com](https://chart-cyanvas.com))
-      - `Others (URL domain)`: Different Cyanvas instance
-    - `ptlv-`: Potato Leaves ([ptlv.sevenc7c.com](https://ptlv.sevenc7c.com))
+    - `ptlv-`: Potato Leaves <del>([ptlv.sevenc7c.com](https://ptlv.sevenc7c.com))</del>([ptlv.milkbun.org](https://ptlv.milkbun.org))
     - <del>`utsk-`: Untitled Sekai ([us.pim4n-net.com](https://us.pim4n-net.com))</del>
     - `UnCh-`: UntitledCharts ([untitledcharts.com](https://untitledcharts.com))
+    - `custom-[Chart ID]`: Custom Server (Source URL)
   - **Independent server(s):**
     - <del>`lalo-`: [laoloser](https://www.youtube.com/@laoloserr)'s server ([sonolus.laoloser.com](https://laoloser.com/sonolus))</del>
     - <del>`skyra-`: [osciris](https://www.tiktok.com/@oscirissss)'s server ([Skyra](https://plumnet.live/))</del>
@@ -165,7 +165,7 @@ PJSekai-style video creation tool:
   - 交換可能なAPコンボ
   - 交換可能な判定タイプ（PERFECT/GREAT/GOODなど）
   - 交換可能なライフ値
-  - スキル効果（v1 + v3）
+  - スキル効果（v1とv3）＋UI（v3）
   - 達成率表示
 - **追加サーバーの対応：**
   - **公式サーバー：**
@@ -174,10 +174,10 @@ PJSekai-style video creation tool:
     - `chcy-`: Chart Cyanvas
       - `0`: アーカイブ<del>([cc.sevenc7c.com](https://cc.sevenc7c.com))</del>([cc.milkbun.org](https://cc.milkbun.org))
       - `1`: 分岐サーバー([chart-cyanvas.com](https://chart-cyanvas.com))
-      - `その他(URLドメイン)`: 異なるCyanvasインスタンス
-    - `ptlv-`: Potato Leaves ([ptlv.sevenc7c.com](https://ptlv.sevenc7c.com))
+    - `ptlv-`: Potato Leaves <del>([ptlv.sevenc7c.com](https://ptlv.sevenc7c.com))</del>([ptlv.milkbun.org](https://ptlv.milkbun.org))
     - <del>`utsk-`: Untitled Sekai ([us.pim4n-net.com](https://us.pim4n-net.com))</del>
     - `UnCh-`: UntitledCharts ([untitledcharts.com](https://untitledcharts.com))
+    - `custom-[譜面ID]`: カスタムサーバー（ソースURL）
   - **独立サーバー：**
     - <del>`lalo-`: [laoloser](https://www.youtube.com/@laoloserr)のサーバー ([sonolus.laoloser.com](https://laoloser.com/sonolus))</del>
     - <del>`skyra-`: [osciris](https://www.tiktok.com/@oscirissss)のサーバー ([Skyra](https://plumnet.live/))</del>

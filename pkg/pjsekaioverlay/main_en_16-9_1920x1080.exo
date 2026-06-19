@@ -21,7 +21,7 @@ X=0.0
 Y=0.0
 Z=0.0
 Zoom%=120.00
-Clearness=27.5
+Clearness=0.0
 Rotation=0.00
 blend=0
 [1]
@@ -64,7 +64,7 @@ Y-Spin=0.00
 Z-Spin=0.00
 Affected by the upper group control=0
 Apply to objects in the same group=0
-range=11
+range=12
 [2.1]
 _name=Clearness
 Clearness=100.0,0.0,1
@@ -121,7 +121,7 @@ Y-Spin=0.00
 Z-Spin=0.00
 Affected by the upper group control=0
 Apply to objects in the same group=0
-range=2
+range=3
 [6]
 start=271
 end=300
@@ -139,7 +139,7 @@ Y-Spin=0.00
 Z-Spin=0.00
 Affected by the upper group control=0
 Apply to objects in the same group=0
-range=10
+range=16
 [6.1]
 _name=Clearness
 Clearness=0.0,100.0,1
@@ -165,7 +165,7 @@ blend=0
 start=1
 end=300
 layer=5
-group=2
+group=1
 overlay=1
 camera=0
 [8.0]
@@ -184,7 +184,7 @@ blend=0
 start=301
 end=396
 layer=5
-group=1
+group=2
 overlay=1
 camera=0
 [9.0]
@@ -218,7 +218,7 @@ blend=0
 start=397
 end=3550
 layer=5
-group=1
+group=2
 overlay=1
 camera=0
 chain=1
@@ -247,7 +247,7 @@ Rotation=0.00
 start=3551
 end=4001
 layer=5
-group=1
+group=2
 overlay=1
 camera=0
 chain=1
@@ -302,7 +302,7 @@ font=FOT-ロダンNTLG Pro EB
 text={text:difficulty}
 [12.1]
 _name=Animation effect
-track0=390.00
+track0=350.00
 track1=1080.00
 track2=0.00
 track3=0.00
@@ -313,7 +313,7 @@ name=テキスト枠サイズ指定@テキスト自動リサイズ
 param=mode_enablex=1;mode_enabley=1;
 [12.2]
 _name=Standard drawing
-X=-855.0
+X=-811.0
 Y=486.0
 Z=0.0
 Zoom%=38.00
@@ -324,7 +324,7 @@ blend=0
 start=301
 end=4001
 layer=6
-group=1
+group=2
 overlay=1
 audio=1
 [13.0]
@@ -346,26 +346,13 @@ overlay=1
 camera=0
 [14.0]
 _name=Image file
-file={assets}\collab-tag.png
+file={assets}\music-sheet.png
 [14.1]
-_name=Zoom%
-Zoom%=100.00
-X=200.00
-Y=100.00
-[14.2]
-_name=Color compensation
-Lightness=100.0
-Contrast=150.0
-Hue=0.0
-Luminance=100.0
-Chroma=100.0
-Saturated=0
-[14.3]
 _name=Standard drawing
-X=-166.0
-Y=217.0
+X=-834.8
+Y=468.2
 Z=0.0
-Zoom%=100.00
+Zoom%=65.13
 Clearness=0.0
 Rotation=0.00
 blend=0
@@ -376,43 +363,27 @@ layer=8
 overlay=1
 camera=0
 [15.0]
-_name=Text
-Size=72
-vDisplay=0.0
-1char1obj=0
-Show on motion coordinate=0
-Automatic scrolling=0
-B=0
-I=0
-type=0
-autoadjust=0
-soft=1
-monospace=0
-align=0
-spacing_x=0
-spacing_y=8
-precision=1
-color=ffffff
-color2=000000
-font=FOT-ロダンNTLG Pro DB
-text={text:extra}
+_name=Image file
+file={assets}\collab-tag.png
 [15.1]
-_name=Animation effect
-track0=1300.00
-track1=1080.00
-track2=0.00
-track3=0.00
-check0=0
-type=0
-filter=0
-name=テキスト枠サイズ指定@テキスト自動リサイズ
-param=mode_enablex=1;mode_enabley=1;
+_name=Zoom%
+Zoom%=100.00
+X=200.00
+Y=100.00
 [15.2]
+_name=Color compensation
+Lightness=100.0
+Contrast=150.0
+Hue=0.0
+Luminance=100.0
+Chroma=100.0
+Saturated=0
+[15.3]
 _name=Standard drawing
-X=-380.0
-Y=200.0
+X=-166.0
+Y=108.0
 Z=0.0
-Zoom%=38.00
+Zoom%=100.00
 Clearness=0.0
 Rotation=0.00
 blend=0
@@ -420,7 +391,7 @@ blend=0
 start=301
 end=4001
 layer=8
-group=4
+group=7
 overlay=1
 camera=0
 [16.0]
@@ -451,7 +422,7 @@ overlay=1
 camera=0
 [17.0]
 _name=Text
-Size=96
+Size=72
 vDisplay=0.0
 1char1obj=0
 Show on motion coordinate=0
@@ -462,14 +433,14 @@ type=0
 autoadjust=0
 soft=1
 monospace=0
-align=6
-spacing_x=12
-spacing_y=0
+align=0
+spacing_x=0
+spacing_y=8
 precision=1
 color=ffffff
 color2=000000
-font=FOT-ロダンNTLG Pro EB
-text={text:title}
+font=FOT-ロダンNTLG Pro DB
+text={text:extra}
 [17.1]
 _name=Animation effect
 track0=1300.00
@@ -483,10 +454,10 @@ name=テキスト枠サイズ指定@テキスト自動リサイズ
 param=mode_enablex=1;mode_enabley=1;
 [17.2]
 _name=Standard drawing
-X=-378.5
-Y=324.0
+X=-380.0
+Y=91.0
 Z=0.0
-Zoom%=40.00
+Zoom%=38.00
 Clearness=0.0
 Rotation=0.00
 blend=0
@@ -494,7 +465,7 @@ blend=0
 start=301
 end=4001
 layer=9
-group=4
+group=7
 overlay=1
 camera=0
 [18.0]
@@ -507,7 +478,7 @@ check0=0
 type=0
 filter=0
 name=Life@pjsekai-overlay-en
-param=overflow={overflow};lead_zero={lead_zero}
+param=overflow={overflow};lead_zero={lead_zero};unlock_life={unlock_life}
 [18.1]
 _name=Standard drawing
 X=705.0
@@ -525,7 +496,7 @@ overlay=1
 camera=0
 [19.0]
 _name=Text
-Size=72
+Size=96
 vDisplay=0.0
 1char1obj=0
 Show on motion coordinate=0
@@ -537,13 +508,13 @@ autoadjust=0
 soft=1
 monospace=0
 align=0
-spacing_x=0
-spacing_y=40
+spacing_x=12
+spacing_y=8
 precision=1
 color=ffffff
 color2=000000
-font=FOT-ロダンNTLG Pro DB
-text={text:description-1}
+font=FOT-ロダンNTLG Pro EB
+text={text:title}
 [19.1]
 _name=Animation effect
 track0=1300.00
@@ -557,10 +528,10 @@ name=テキスト枠サイズ指定@テキスト自動リサイズ
 param=mode_enablex=1;mode_enabley=1;
 [19.2]
 _name=Standard drawing
-X=-380.0
-Y=364.5
+X=-377.5
+Y=165.0
 Z=0.0
-Zoom%=37.50
+Zoom%=40.00
 Clearness=0.0
 Rotation=0.00
 blend=0
@@ -568,7 +539,7 @@ blend=0
 start=301
 end=4001
 layer=10
-group=4
+group=7
 overlay=1
 camera=0
 [20.0]
@@ -617,7 +588,7 @@ precision=1
 color=ffffff
 color2=000000
 font=FOT-ロダンNTLG Pro DB
-text={text:description-2}
+text={text:description-1}
 [21.1]
 _name=Animation effect
 track0=1300.00
@@ -632,9 +603,9 @@ param=mode_enablex=1;mode_enabley=1;
 [21.2]
 _name=Standard drawing
 X=-380.0
-Y=413.0
+Y=254.5
 Z=0.0
-Zoom%=37.50
+Zoom%=38.00
 Clearness=0.0
 Rotation=0.00
 blend=0
@@ -642,7 +613,7 @@ blend=0
 start=301
 end=4001
 layer=11
-group=4
+group=7
 overlay=1
 camera=0
 [22.0]
@@ -672,14 +643,43 @@ layer=12
 overlay=1
 camera=0
 [23.0]
-_name=Image file
-file={dist}\cover.png
+_name=Text
+Size=72
+vDisplay=0.0
+1char1obj=0
+Show on motion coordinate=0
+Automatic scrolling=0
+B=0
+I=0
+type=0
+autoadjust=0
+soft=1
+monospace=0
+align=0
+spacing_x=0
+spacing_y=40
+precision=1
+color=ffffff
+color2=000000
+font=FOT-ロダンNTLG Pro DB
+text={text:description-2}
 [23.1]
+_name=Animation effect
+track0=1300.00
+track1=1080.00
+track2=0.00
+track3=0.00
+check0=0
+type=0
+filter=0
+name=テキスト枠サイズ指定@テキスト自動リサイズ
+param=mode_enablex=1;mode_enabley=1;
+[23.2]
 _name=Standard drawing
-X=-618.0
-Y=245.0
+X=-380.0
+Y=304.5
 Z=0.0
-Zoom%=78.75
+Zoom%=38.00
 Clearness=0.0
 Rotation=0.00
 blend=0
@@ -687,10 +687,68 @@ blend=0
 start=301
 end=4001
 layer=12
-group=4
+group=7
 overlay=1
 camera=0
 [24.0]
+_name=Custom object
+track0=0.00
+track1=0.00
+track2=0.00
+track3=0.00
+check0=0
+type=0
+filter=0
+name=Skill@pjsekai-overlay-en
+param=file="res021_no016_after_training.png,res021_no016_normal.png,res021_no028_normal.png,res021_no045_normal.png,res021_no052_after_training.png";speed={skill_speed};
+[24.1]
+_name=Standard drawing
+X=-819.5
+Y=-181.4
+Z=0.0
+Zoom%=107.50
+Clearness=0.0
+Rotation=0.00
+blend=0
+[25]
+start=1
+end=300
+layer=13
+overlay=1
+camera=0
+[25.0]
+_name=Image file
+file={assets}\collab-tag.png
+[25.1]
+_name=Zoom%
+Zoom%=100.00
+X=511.00
+Y=8.00
+[25.2]
+_name=Color compensation
+Lightness=150.0
+Contrast=150.0
+Hue=0.0
+Luminance=100.0
+Chroma=100.0
+Saturated=0
+[25.3]
+_name=Standard drawing
+X=260.0
+Y=364.0
+Z=0.0
+Zoom%=100.00
+Clearness=0.0
+Rotation=0.00
+blend=0
+[26]
+start=301
+end=4001
+layer=13
+group=7
+overlay=1
+camera=0
+[26.0]
 _name=Custom object
 track0={judge}
 track1=0.00
@@ -701,7 +759,7 @@ type=0
 filter=0
 name=Judgement@pjsekai-overlay-en
 param=speed={judge_speed}
-[24.1]
+[26.1]
 _name=Standard drawing
 X=0.0
 Y=127.5
@@ -710,35 +768,32 @@ Zoom%=150.00
 Clearness=0.0
 Rotation=0.00
 blend=0
-[25]
-start=61
-end=91
-layer=13
-overlay=1
-camera=1
-[25.0]
-_name=Group control
-X=0.0
-Y=0.0
-Z=0.0
-Zoom%=100.00
-X-Spin=0.00
-Y-Spin=0.00
-Z-Spin=0.00
-Affected by the upper group control=0
-Apply to objects in the same group=0
-range=1
-[25.1]
-_name=Clearness
-Clearness=100.0,0.0,1
-[26]
-start=301
-end=4001
-layer=13
-group=4
+[27]
+start=1
+end=300
+layer=14
 overlay=1
 camera=0
-[26.0]
+[27.0]
+_name=Image file
+file={assets}\music-sheet.png
+[27.1]
+_name=Standard drawing
+X=-354.7
+Y=411.0
+Z=0.0
+Zoom%=65.13
+Clearness=0.0
+Rotation=0.00
+blend=0
+[28]
+start=301
+end=4001
+layer=14
+group=7
+overlay=1
+camera=0
+[28.0]
 _name=Custom object
 track0=0.00
 track1=0.00
@@ -749,7 +804,7 @@ type=0
 filter=0
 name=Auto@pjsekai-overlay-en
 param=
-[26.1]
+[28.1]
 _name=Standard drawing
 X=744.5
 Y=456.0
@@ -758,70 +813,22 @@ Zoom%=100.00
 Clearness=0.0
 Rotation=0.00
 blend=0
-[27]
-start=1
-end=60
-layer=14
-group=5
-overlay=1
-camera=0
-[27.0]
-_name=Graphic
-Size=100
-rAspect=0.0
-Line width=4000
-type=0
-color=ffffff
-name=
-[27.1]
-_name=Standard drawing
-X=0.0
-Y=-2.0
-Z=0.0
-Zoom%=200.00
-Clearness=0.0,100.0,1
-Rotation=0.00
-blend=0
-[28]
-start=61
-end=300
-layer=14
-overlay=1
-camera=0
-[28.0]
-_name=Image file
-file={assets}\{image:tournament}
-[28.1]
-_name=Standard drawing
-X=-740.0
-Y=13.0
-Z=0.0
-Zoom%=70.00
-Clearness={opacity}
-Rotation=0.00
-blend=0
 [29]
-start=3621
-end=4001
-layer=14
-group=6
+start=1
+end=300
+layer=15
 overlay=1
 camera=0
 [29.0]
-_name=Graphic
-Size=100
-rAspect=0.0
-Line width=4000
-type=0
-color=000000
-name=
+_name=Image file
+file={assets}\person.png
 [29.1]
 _name=Standard drawing
-X=0.0
-Y=-2.0
+X=-354.7
+Y=470.0
 Z=0.0
-Zoom%=200.00
-Clearness=50.0,50.0,1
+Zoom%=120.00
+Clearness=0.0
 Rotation=0.00
 blend=0
 [30]
@@ -832,13 +839,84 @@ group=6
 overlay=1
 camera=0
 [30.0]
+_name=Graphic
+Size=100
+rAspect=0.0
+Line width=4000
+type=0
+color=000000
+name=
+[30.1]
+_name=Standard drawing
+X=0.0
+Y=-2.0
+Z=0.0
+Zoom%=200.00
+Clearness=50.0,50.0,1
+Rotation=0.00
+blend=0
+[31]
+start=1
+end=300
+layer=16
+overlay=1
+camera=0
+[31.0]
+_name=Text
+Size=72
+vDisplay=0.0
+1char1obj=0
+Show on motion coordinate=0
+Automatic scrolling=0
+B=0
+I=0
+type=0
+autoadjust=0
+soft=1
+monospace=0
+align=0
+spacing_x=0
+spacing_y=40
+precision=1
+color=ffffff
+color2=000000
+font=FOT-ロダンNTLG Pro DB
+text={text:description-3}
+[31.1]
+_name=Animation effect
+track0=1300.00
+track1=1080.00
+track2=0.00
+track3=0.00
+check0=0
+type=0
+filter=0
+name=テキスト枠サイズ指定@テキスト自動リサイズ
+param=mode_enablex=1;mode_enabley=1;
+[31.2]
+_name=Standard drawing
+X=-323.0
+Y=392.5
+Z=0.0
+Zoom%=38.00
+Clearness=0.0
+Rotation=0.00
+blend=0
+[32]
+start=3621
+end=4001
+layer=16
+group=6
+overlay=1
+camera=0
+[32.0]
 _name=Video file
 Playback position=1
 vPlay=100.0
 Loop playback=0
 Import alpha channel=0
 file={assets}\ap.mp4
-[30.1]
+[32.1]
 _name=Animation effect
 track0=0.00
 track1=0.00
@@ -849,7 +927,7 @@ type=0
 filter=0
 name=unmult
 param=
-[30.2]
+[32.2]
 _name=Standard drawing
 X=0.0
 Y=0.0
@@ -858,32 +936,97 @@ Zoom%=100.00
 Clearness=0.0
 Rotation=0.00
 blend=0
-[31]
+[33]
+start=1
+end=300
+layer=17
+overlay=1
+camera=0
+[33.0]
+_name=Text
+Size=72
+vDisplay=0.0
+1char1obj=0
+Show on motion coordinate=0
+Automatic scrolling=0
+B=0
+I=0
+type=0
+autoadjust=0
+soft=1
+monospace=0
+align=0
+spacing_x=0
+spacing_y=40
+precision=1
+color=ffffff
+color2=000000
+font=FOT-ロダンNTLG Pro DB
+text={text:description-4}
+[33.1]
+_name=Animation effect
+track0=1300.00
+track1=1080.00
+track2=0.00
+track3=0.00
+check0=0
+type=0
+filter=0
+name=テキスト枠サイズ指定@テキスト自動リサイズ
+param=mode_enablex=1;mode_enabley=1;
+[33.2]
+_name=Standard drawing
+X=-323.0
+Y=453.0
+Z=0.0
+Zoom%=38.00
+Clearness=0.0
+Rotation=0.00
+blend=0
+[34]
 start=3621
 end=4001
-layer=16
+layer=17
 group=6
 overlay=1
 audio=1
-[31.0]
+[34.0]
 _name=Audio file
 Playback position=0.00
 vPlay=100.0
 Loop playback=0
 Sync with video files=1
 file={assets}\ap.mp4
-[31.1]
+[34.1]
 _name=Standard playback
 Volume=100.0
 Left-Right=0.0
-[32]
+[35]
+start=1
+end=300
+layer=18
+overlay=1
+camera=0
+[35.0]
+_name=Image file
+file={dist}\cover.png
+[35.1]
+_name=Standard drawing
+X=-618.0
+Y=245.0
+Z=0.0
+Zoom%=78.75
+Clearness=0.0
+Rotation=0.00
+blend=0
+[36]
 start=3892
 end=3936
-layer=17
+layer=18
 group=6
 overlay=1
 camera=1
-[32.0]
+[36.0]
 _name=Group control
 X=0.0
 Y=0.0
@@ -895,17 +1038,38 @@ Z-Spin=0.00
 Affected by the upper group control=1
 Apply to objects in the same group=0
 range=1
-[32.1]
+[36.1]
 _name=Clearness
 Clearness=100.0,0.0,1
-[33]
+[37]
+start=61
+end=91
+layer=19
+overlay=1
+camera=1
+[37.0]
+_name=Group control
+X=0.0
+Y=0.0
+Z=0.0
+Zoom%=100.00
+X-Spin=0.00
+Y-Spin=0.00
+Z-Spin=0.00
+Affected by the upper group control=0
+Apply to objects in the same group=0
+range=1
+[37.1]
+_name=Clearness
+Clearness=100.0,0.0,1
+[38]
 start=3892
 end=4001
-layer=18
+layer=19
 group=6
 overlay=1
 camera=0
-[33.0]
+[38.0]
 _name=Graphic
 Size=100
 rAspect=0.0
@@ -913,12 +1077,54 @@ Line width=4000
 type=0
 color=000000
 name=
-[33.1]
+[38.1]
 _name=Standard drawing
 X=0.0
 Y=-2.0
 Z=0.0
 Zoom%=200.00
 Clearness=0.0
+Rotation=0.00
+blend=0
+[39]
+start=1
+end=60
+layer=20
+group=5
+overlay=1
+camera=0
+[39.0]
+_name=Graphic
+Size=100
+rAspect=0.0
+Line width=4000
+type=0
+color=ffffff
+name=
+[39.1]
+_name=Standard drawing
+X=0.0
+Y=-2.0
+Z=0.0
+Zoom%=200.00
+Clearness=0.0,100.0,1
+Rotation=0.00
+blend=0
+[40]
+start=61
+end=300
+layer=20
+overlay=1
+camera=0
+[40.0]
+_name=Image file
+file={assets}\{image:tournament}
+[40.1]
+_name=Standard drawing
+X=-740.0
+Y=13.0
+Z=0.0
+Zoom%=70.00
+Clearness={opacity}
 Rotation=0.00
 blend=0
