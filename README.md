@@ -45,7 +45,7 @@ This is a forked version of pjsekai-overlay with additional features originally 
   - Achievement Rate
 - **Additional support for more servers:**
   - **Official server(s):**
-    - <del>`sekai-rush-`: Proseka Rush ([sekairush.com](https://sekairush.com))</del>
+    - `sekai-best-`: Sekai Viewer ([sonolus.sekai.best](https://sonolus.sekai.best))
   - **Custom server(s):**
     - `chcy-`: Chart Cyanvas
       - `0`: Archive <del>([cc.sevenc7c.com](https://cc.sevenc7c.com))</del>([cc.milkbun.org](https://cc.milkbun.org))
@@ -169,7 +169,7 @@ PJSekai-style video creation tool:
   - 達成率表示
 - **追加サーバーの対応：**
   - **公式サーバー：**
-    - <del>`sekai-rush-`: Proseka Rush ([sekairush.com](https://sekairush.com))</del>
+    - `sekai-best-`: Sekai Viewer ([sonolus.sekai.best](https://sonolus.sekai.best))
   - **カスタムサーバー：**
     - `chcy-`: Chart Cyanvas
       - `0`: アーカイブ<del>([cc.sevenc7c.com](https://cc.sevenc7c.com))</del>([cc.milkbun.org](https://cc.milkbun.org))
