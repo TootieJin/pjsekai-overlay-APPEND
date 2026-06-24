@@ -97,7 +97,7 @@ Follow the steps below:
 | 16:9 	| - **EN ver:**<br>`main_en_16-9_1920x1080.exo`<br>`v1-skin_en_16-9_1920x1080.exo`<br>- **JP ver:**<br>`main_jp_16-9_1920x1080.exo`<br>`v1-skin_jp_16-9_1920x1080.exo` 	| `main2_16-9_1920x1080.object`<br>`v1-skin2_16-9_1920x1080.object` 	|
 | 4:3  	| - **EN ver:**<br>`main_en_4-3_1440x1080.exo`<br>`v1-skin_en_4-3_1440x1080.exo`<br>- **JP ver:**<br>`main_jp_4-3_1440x1080.exo`<br>`v1-skin_jp_4-3_1440x1080.exo`     	| `main2_4-3_1440x1080.object`<br>`v1-skin2_4-3_1440x1080.object`   	|
 
-7. **Select a video and audio file in the timeline** provided by the exo/alias(.object)
+7. **Select a video and audio file in the _timeline_** provided by the exo/alias(.object)
 
 > [!WARNING]
 > In this step, the video element in the _timeline_ uses [Unmult](https://github.com/mes51/AVIUtl2_Unmult), which converts all black pixels to transparent pixels for the accurate MV effect. **This is not the same as selecting "Blend Mode" as it does not produce the same effect!!**
