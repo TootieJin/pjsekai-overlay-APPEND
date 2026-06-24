@@ -20,6 +20,7 @@ You'll need **a clean recording that has BLACK background & ALL UI hidden (inclu
 <img width="128" height="128" alt="mmw_icon" src="https://github.com/user-attachments/assets/87d87e73-d810-4267-a0c1-4787416c8241" />
 
 0. Open MikuMikuWorld that supports Score Preview and import the chart file
+  - Example: [monti114514/MikuMikuWorld4UC-by-Monchi](https://github.com/monti114514/MikuMikuWorld4UC-by-Monchi) and [watagashi-uni/External-Unofficial-ChartMaker](https://github.com/watagashi-uni/External-Unofficial-ChartMaker)
 
 > [!NOTE]
 > If your chart is from the **Score Maker**, chart files will be generated and saved to `pjsekai-overlay-APPEND\dist\[Chart ID]` (`.pjsk.json` & `.usc`) for you to import to (except those that prohibits derivative use). Feel free to use it as you will.
