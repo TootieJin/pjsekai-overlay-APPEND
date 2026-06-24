@@ -140,11 +140,6 @@ PJSekai-style video creation tool:
 - [@sevenc-nanashi](https://github.com/sevenc-nanashi) for the [AviUtl2 Community Translation](https://github.com/aviutl2/aviutl2_community_translation) script!
 - [@MattMayuga](https://github.com/MattMayuga) for the [customized judgement fonts](https://github.com/Tiny-Foxes/JudgeFonts-by-MattMayuga)!
 - And everyone who used my tool, thank you all so much.
-
-## Acknowledgements
-The following projects have used and referenced this tool. Thank you so much!
-- [watagashi-uni/sekai-mmw-preview-web](https://github.com/watagashi-uni/sekai-mmw-preview-web)
-- [watagashi-uni/External-Unofficial-ChartMaker](https://github.com/watagashi-uni/External-Unofficial-ChartMaker)
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 # pjsekai-overlay-APPEND / フォークプロセカ風動画作成補助ツール
@@ -254,8 +249,3 @@ PJSekai-style video creation tool:
 - [@sevenc-nanashi](https://github.com/sevenc-nanashi)氏による[AviUtl2の非公式多言語翻訳](https://github.com/aviutl2/aviutl2_community_translation)スクリプト！
 - [@MattMayuga](https://github.com/MattMayuga)氏による[カスタマイズされた判定フォント](https://github.com/Tiny-Foxes/JudgeFonts-by-MattMayuga)！
 - そして私のツールを使ってくださった皆様、本当にありがとうございます。
-
-## 謝辞
-以下のプロジェクトで、このツールが使用され、参照されています。誠にありがとうございます！
-- [watagashi-uni/sekai-mmw-preview-web](https://github.com/watagashi-uni/sekai-mmw-preview-web)
-- [watagashi-uni/External-Unofficial-ChartMaker](https://github.com/watagashi-uni/External-Unofficial-ChartMaker)
