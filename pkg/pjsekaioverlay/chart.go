@@ -87,7 +87,15 @@ func FetchChart(source Source, chartId string) (sonolus.LevelInfo, error) {
 
 func DetectChartSource(chartId string, chartInstance string) (Source, error) {
 	var source Source
-	if strings.HasPrefix(chartId, "sekai-best-") {
+	if strings.HasPrefix(chartId, "sss-") {
+		source = Source{
+			Id:     "sbuga_sonolus",
+			Name:   "Sbuga's Sonolus Server",
+			Color:  0xe0f2fe,
+			Host:   "sonolus.sbuga.com",
+			Status: 0,
+		}
+	} else if strings.HasPrefix(chartId, "sekai-best-") {
 		source = Source{
 			Id:     "sekai_viewer",
 			Name:   "Sekai Viewer",

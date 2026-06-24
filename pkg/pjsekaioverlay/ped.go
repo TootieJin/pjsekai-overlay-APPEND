@@ -492,7 +492,6 @@ func WritePedFile(frames []PedFrame, assets string, path string, levelInfo sonol
 
 	lastScore := 0.0
 	rating := math.Max(5, math.Min(float64(levelInfo.Rating), 40))
-	procCount := 0
 	for i, frame := range frames {
 		score := frame.Score
 		frameScore := math.Trunc(score - lastScore)
@@ -572,14 +571,13 @@ func WritePedFile(frames []PedFrame, assets string, path string, levelInfo sonol
 			// only emit when this frame is the actual activation frame and avoid duplicates
 			if i == 0 || frames[i-1].SkillTime != skillTime {
 				writer.Write(fmt.Appendf(nil, "s|%f:%d:%d\n", skillTime, skillEffect, skillLevel))
-				procCount++
 			}
 			if skillEffect == 1 {
 				writer.Write(fmt.Appendf(nil, "l|%f:%d\n", skillTime, lifeHeal))
 			}
 		}
 
-		combo := i - procCount
+		combo := i
 
 		if combo%100 == 0 && combo > 0 {
 			writer.Write(fmt.Appendf(nil, "c|%f:%d\n", time, combo))

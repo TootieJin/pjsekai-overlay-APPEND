@@ -2,8 +2,10 @@ package main
 
 import (
 	"bufio"
+	"bytes"
 	"context"
 	_ "embed"
+	"encoding/json"
 	"flag"
 	"fmt"
 	"math"
@@ -14,11 +16,14 @@ import (
 	"strings"
 	"time"
 
+	guestauth "github.com/TootieJin/pjsekai-overlay-APPEND/pkg/auth"
 	"github.com/TootieJin/pjsekai-overlay-APPEND/pkg/pjsekaioverlay"
+	"github.com/TootieJin/pjsekai-overlay-APPEND/pkg/scoremaker"
 	"github.com/TootieJin/pjsekai-overlay-APPEND/pkg/sonolus"
 	"github.com/fatih/color"
 	"github.com/google/go-github/v57/github"
 	"github.com/srinathh/gokilo/rawmode"
+	"github.com/vmihailenco/msgpack/v5"
 	"golang.org/x/sys/windows"
 )
 
@@ -45,6 +50,294 @@ func checkSubstrings(str []string, subs ...string) string {
 		}
 	}
 	return ""
+}
+
+type rawDownloadOptions struct {
+	ScorePath         string
+	PublishedInfoPath string
+	PublishedScoreID  string
+	PublishedUserID   int
+	SessionToken      string
+	DataVersion       string
+	AssetVersion      string
+	AssetHash         string
+	Region            string
+	OutPath           string
+	SaveChartFiles    bool
+	GenerateRaw       bool
+	ForceDerivative   bool
+}
+
+type rawDownloadResult struct {
+	PublishedInfo     scoremaker.PublishedScoreInfo
+	PublishedInfoRaws [][]byte
+	USCRaw            []byte
+	LevelData         sonolus.LevelData
+	HasLevelData      bool
+	PJSKData          []byte
+	HasPJSKData       bool
+	SavedPath         string
+}
+
+type cachedCredential struct {
+	UserID       int
+	Credential   string
+	SessionToken string
+	Source       string
+}
+
+func runRawChartDownload(opts rawDownloadOptions) (rawDownloadResult, error) {
+	result := rawDownloadResult{}
+	scorePath := opts.ScorePath
+	region := opts.Region
+	outPath := opts.OutPath
+	rawArtifactBasePath := strings.TrimSuffix(outPath, filepath.Ext(outPath))
+	if strings.TrimSpace(opts.PublishedScoreID) != "" {
+		rawArtifactBasePath = filepath.Join(filepath.Dir(outPath), opts.PublishedScoreID+"_raw-data")
+	}
+	if strings.TrimSpace(outPath) == "" {
+		return result, fmt.Errorf("生出力パスの指定が必要です (Raw output path is required)")
+	}
+
+	var listing = false
+	derivativeRestricted := false
+	var publishedInfo scoremaker.PublishedScoreInfo
+	var publishedInfoRaws [][]byte
+	var err error
+	if strings.TrimSpace(opts.PublishedScoreID) != "" {
+		// Ensure a valid guest account + session, registering one on first run
+		appInfoEarly, earlyErr := scoremaker.FetchAppInfo(region, nil)
+		if earlyErr != nil {
+			return result, fmt.Errorf("アプリ情報の自動解決に失敗しました (Failed to auto-resolve app info) [%w]", earlyErr)
+		}
+
+		guestUserID, guestToken, guestAuthData, guestCF, guestErr := guestauth.EnsureGuest(region, appInfoEarly, "")
+		if guestErr != nil {
+			return result, fmt.Errorf("ゲストアカウントの確保に失敗しました (Failed to ensure guest account) [%w]", guestErr)
+		}
+
+		// Prefer explicit CLI flags over the guest account
+		hadExplicitUser := opts.PublishedUserID > 0
+		hadExplicitToken := strings.TrimSpace(opts.SessionToken) != ""
+		if opts.PublishedUserID <= 0 {
+			opts.PublishedUserID = guestUserID
+		}
+		if strings.TrimSpace(opts.SessionToken) == "" {
+			opts.SessionToken = guestToken
+		}
+		// Fill auth_data from guest account if not explicitly set
+		if strings.TrimSpace(opts.DataVersion) == "" {
+			opts.DataVersion = guestAuthData.DataVersion
+		}
+		if strings.TrimSpace(opts.AssetVersion) == "" {
+			opts.AssetVersion = guestAuthData.AssetVersion
+		}
+		if strings.TrimSpace(opts.AssetHash) == "" {
+			opts.AssetHash = guestAuthData.AssetHash
+		}
+		_ = hadExplicitToken
+		_ = guestCF
+		appInfo, appErr := scoremaker.FetchAppInfo(region, nil)
+		if appErr != nil {
+			return result, fmt.Errorf("アプリ情報の自動解決に失敗しました (Failed to auto-resolve app info) [%w]", appErr)
+		}
+		auth := scoremaker.AuthData{
+			DataVersion:  opts.DataVersion,
+			AssetVersion: opts.AssetVersion,
+			AssetHash:    opts.AssetHash,
+		}
+
+		// Build attempt list: explicit/guest first, plus credential-backed retry
+		var guestCred string
+		if entry := guestCF.FindForRegion(region); entry != nil && entry.UserID == opts.PublishedUserID {
+			guestCred = entry.Credential
+		}
+		attempts := []cachedCredential{
+			{
+				UserID:       opts.PublishedUserID,
+				SessionToken: opts.SessionToken,
+				Credential:   guestCred,
+				Source:       guestauth.DefaultCredentialFile,
+			},
+		}
+		allowRetry := !hadExplicitUser || !hadExplicitToken
+
+		var lastErr error
+		for _, attempt := range attempts {
+			publishedInfo, publishedInfoRaws, _, err = scoremaker.FetchPublishedScoreInfo(
+				opts.PublishedScoreID,
+				attempt.UserID,
+				attempt.SessionToken,
+				region,
+				auth,
+				appInfo,
+			)
+			if err != nil && strings.Contains(strings.ToLower(err.Error()), "session_error") {
+				// refresh via guestauth
+				refreshedUID, refreshedToken, refreshedAuth, refreshErr := guestauth.RefreshSession(region, appInfo, guestCF)
+				if refreshErr == nil && strings.TrimSpace(refreshedToken) != "" {
+					if refreshedAuth.DataVersion != "" {
+						auth = refreshedAuth
+					}
+					publishedInfo, publishedInfoRaws, _, err = scoremaker.FetchPublishedScoreInfo(
+						opts.PublishedScoreID,
+						refreshedUID,
+						refreshedToken,
+						region,
+						auth,
+						appInfo,
+					)
+					if err == nil {
+						attempt.SessionToken = refreshedToken
+					}
+				}
+			}
+			if err == nil {
+				opts.PublishedUserID = attempt.UserID
+				opts.SessionToken = attempt.SessionToken
+				lastErr = nil
+				break
+			}
+			lastErr = err
+		}
+		if lastErr != nil {
+			if allowRetry && len(attempts) > 1 {
+				return result, fmt.Errorf("%d回認証情報の入力を試みた後、公開された譜面情報の取得に失敗しました (Failed to fetch published chart info after %d credential attempts) [%w]", len(attempts), len(attempts), lastErr)
+			}
+			return result, fmt.Errorf("公開された譜面情報の取得に失敗しました (Failed to fetch published chart info [%w]", lastErr)
+		}
+		scorePath = publishedInfo.UserCustomMusicScorePath
+	} else if strings.TrimSpace(opts.PublishedInfoPath) != "" {
+		publishedInfo, err = scoremaker.LoadPublishedScoreInfoFile(opts.PublishedInfoPath)
+		if err != nil {
+			return result, fmt.Errorf("公開された譜面情報の読み込みに失敗しました (Failed to load published chart info) [%w]", err)
+		}
+		if strings.TrimSpace(scorePath) == "" {
+			scorePath = publishedInfo.UserCustomMusicScorePath
+		} else if scorePath != publishedInfo.UserCustomMusicScorePath {
+			return result, fmt.Errorf(".pjsk譜面のパスが、公開された譜面の情報パスと一致しません (.pjsk chart path does not match published chart info path)")
+		}
+	}
+	result.PublishedInfo = publishedInfo
+	result.PublishedInfoRaws = publishedInfoRaws
+	if !opts.ForceDerivative && strings.TrimSpace(result.PublishedInfo.UserCustomMusicScoreID) != "" && !result.PublishedInfo.IsDerivativeAllowed {
+		derivativeRestricted = true
+	}
+	if strings.TrimSpace(scorePath) == "" {
+		return result, fmt.Errorf(".pjsk譜面のパスは必須です (.pjsk chart path is required)")
+	}
+	appInfo, err := scoremaker.FetchAppInfo(region, nil)
+	if err != nil {
+		return result, fmt.Errorf("アプリ情報の自動解決に失敗しました (Failed to auto-resolve app info) [%w]", err)
+	}
+
+	banMaker, err := pjsekaioverlay.Listing("483473494141414141414141417733497751324149424145774934344A534C45456E7A6241434348784167476C6D6A354F733835674C737452444531694A6877644E6462714C356B68417A68793056624B556868545A6D4D6C2B79304735526D6C694E50307649346D316E7478763835474B72324957667A5A6339514256353863315541714634414141413D", strings.TrimSpace(fmt.Sprint(result.PublishedInfo.UserID)))
+	if err != nil {
+		fmt.Println(color.RedString(fmt.Sprintf("FAIL: %s", err.Error())))
+		return result, fmt.Errorf("failed to check listing: %w", err)
+	} else if banMaker {
+		listing = true
+	}
+
+	raw, err := scoremaker.DownloadRawChart(scorePath, scoremaker.DownloadConfig{
+		Region:       region,
+		AppVersion:   appInfo.AppVersion,
+		AppHash:      appInfo.AppHash,
+		IssueCookie:  "",
+		SessionToken: opts.SessionToken,
+	})
+	if err != nil {
+		return result, err
+	}
+
+	if err := os.MkdirAll(filepath.Dir(outPath), 0755); err != nil {
+		return result, err
+	}
+
+	uscRaw, err := scoremaker.ConvertPJSKToUSC(raw)
+	if err != nil {
+		return result, fmt.Errorf(".pjsk譜面を.uscに変換できませんでした (Failed to convert .pjsk chart to .usc) [%w]", err)
+	}
+	result.USCRaw = uscRaw
+	if opts.SaveChartFiles && !derivativeRestricted {
+		if err := os.MkdirAll(filepath.Dir(outPath), 0755); err != nil {
+			return result, err
+		}
+		if err := os.WriteFile(outPath, uscRaw, 0644); err != nil {
+			return result, err
+		}
+	}
+	result.SavedPath = outPath
+	result.PJSKData = nil
+	result.HasPJSKData = false
+
+	if opts.GenerateRaw && (strings.TrimSpace(opts.PublishedInfoPath) != "" || strings.TrimSpace(opts.PublishedScoreID) != "") {
+		sidecarPath := rawArtifactBasePath + ".published-score-info.json"
+		sidecarRaw, err := json.MarshalIndent(publishedInfo, "", "  ")
+		if err != nil {
+			return result, err
+		}
+		if err := os.WriteFile(sidecarPath, sidecarRaw, 0644); err != nil {
+			return result, err
+		}
+		for i, rawPayload := range publishedInfoRaws {
+			if len(rawPayload) == 0 {
+				continue
+			}
+			suffix := fmt.Sprintf(".published-score-api-response-%d.json", i)
+			rawResponsePath := rawArtifactBasePath + suffix
+			var responsePayload any
+			if err := msgpack.Unmarshal(rawPayload, &responsePayload); err == nil {
+				if normalized, err := json.Marshal(responsePayload); err == nil {
+					rawPayload = normalized
+				}
+			}
+			var pretty bytes.Buffer
+			if err := json.Indent(&pretty, rawPayload, "", "  "); err == nil {
+				_ = os.WriteFile(rawResponsePath, pretty.Bytes(), 0644)
+			} else {
+				_ = os.WriteFile(rawResponsePath, rawPayload, 0644)
+			}
+		}
+	}
+
+	levelData, err := scoremaker.ConvertPJSKToNextSekaiLevelData(raw)
+	if err != nil {
+		fmt.Printf("- WARN: NextSekai変換に失敗。usc譜面は保存済みです (Conversion failed. .usc chart has been saved) [%s]\n", err.Error())
+		return result, nil
+	}
+	if publishedInfo.MusicID > 0 {
+		if susLevelData, susErr := scoremaker.ConvertSUSMusicIDToNextSekaiLevelData(region, publishedInfo.MusicID); susErr == nil {
+			scoremaker.AppendEventArchetypesFromLevelData(&levelData, susLevelData)
+		}
+	}
+	result.LevelData = levelData
+	result.HasLevelData = true
+
+	pjskData, err := scoremaker.ConvertRawPJSKToReadablePJSK(raw)
+	if err != nil {
+		return result, fmt.Errorf("生のpjsk譜面を、読み取り可能なpjskに変換できませんでした (Failed to convert raw .pjsk chart to readable .pjsk) [%w]", err)
+	}
+	result.PJSKData = pjskData
+	result.HasPJSKData = true
+
+	if opts.GenerateRaw && !listing && !derivativeRestricted {
+		convertedPath := rawArtifactBasePath + ".next-sekai.json"
+		convertedRaw, err := json.MarshalIndent(levelData, "", "  ")
+		if err != nil {
+			return result, err
+		}
+		if err := os.WriteFile(convertedPath, convertedRaw, 0644); err != nil {
+			return result, err
+		}
+
+		convertedPath = rawArtifactBasePath + ".pjsk.json"
+		if err := os.WriteFile(convertedPath, pjskData, 0644); err != nil {
+			return result, err
+		}
+	}
+
+	return result, nil
 }
 
 func locale() (string, error) {
@@ -137,12 +430,96 @@ func origMain(isOptionSpecified bool) {
 	var allFlick bool
 	flag.BoolVar(&allFlick, "all-flick", false, "すべてのノーツをフリックとして扱います。(Treat all notes as flicks.)")
 
+	var pjskRegion string
+	flag.StringVar(&pjskRegion, "pjsk-region", "jp", "譜面メーカーの譜面を取得する地域を指定します。(Specify the region to fetch the Score Maker charts from.)")
+
+	var forceDerivative bool
+	flag.BoolVar(&forceDerivative, "force-derivative", false, "二次利用を禁止する譜面ファイルでも保存を強制します。(Force save Score Maker chart files that prohibits derivative use.)")
+
+	// advanced flags
+
+	var rawPublishedScoreID string
+	flag.StringVar(&rawPublishedScoreID, "pjsk-published-score-id", "", "公開譜面IDを指定してuscを直接出力します。(Download a published score ID directly as usc.)")
+
+	var rawOutPath string
+	flag.StringVar(&rawOutPath, "pjsk-out", "./dist/pjsk-_pjskId_/chart-_pjskId_.usc", "公開譜面ダウンロードの出力先を指定します。_pjskId_ は公開譜面IDに置き換えられます。\nSpecify the output path for published score downloads. _pjskId_ will be replaced with the published score ID.")
+
+	var generateRaw bool
+	flag.BoolVar(&generateRaw, "pjsk-generate-raw", false, "生データJSONを出力します。(Write raw metadata/leveldata JSON files.)")
+
 	flag.Usage = func() {
 		fmt.Println("Usage: pjsekai-overlay-APPEND [オプション (Options)] [譜面ID (Chart ID)]")
 		flag.PrintDefaults()
 	}
 
 	flag.Parse()
+
+	var listing = false
+
+	if strings.TrimSpace(rawPublishedScoreID) != "" || strings.TrimSpace(rawOutPath) != "./dist/pjsk-_pjskId_/chart-_pjskId_.usc" || generateRaw {
+		fmt.Println("- pjsk譜面ダウンロード中 を取得してuscに変換中 (Downloading chart and converting to .usc)... ")
+		rawOutPath = strings.ReplaceAll(rawOutPath, "_pjskId_", rawPublishedScoreID)
+		result, err := runRawChartDownload(rawDownloadOptions{
+			PublishedScoreID: rawPublishedScoreID,
+			Region:           pjskRegion,
+			OutPath:          rawOutPath,
+			GenerateRaw:      generateRaw,
+			SaveChartFiles:   false,
+			ForceDerivative:  forceDerivative,
+		})
+		if err != nil {
+			fmt.Println(color.RedString(fmt.Sprintf("FAIL: %s", err.Error())))
+			return
+		}
+		fmt.Println(color.GreenString("OK"))
+
+		banMaker, err := pjsekaioverlay.Listing("483473494141414141414141417733497751324149424145774934344A534C45456E7A6241434348784167476C6D6A354F733835674C737452444531694A6877644E6462714C356B68417A68793056624B556868545A6D4D6C2B79304735526D6C694E50307649346D316E7478763835474B72324957667A5A6339514256353863315541714634414141413D", strings.TrimSpace(fmt.Sprint(result.PublishedInfo.UserID)))
+		if err != nil {
+			fmt.Println(color.RedString(fmt.Sprintf("FAIL: %s", err.Error())))
+			return
+		} else if banMaker {
+			listing = true
+		}
+
+		derivativeRestricted := !forceDerivative && !result.PublishedInfo.IsDerivativeAllowed
+		if derivativeRestricted {
+			fmt.Println(color.HiYellowString("WARN: この譜面は二次利用を禁じています。譜面ファイルは保存できません。\nThis chart prohibits derivative use. Chart file cannot be saved."))
+		} else if !listing {
+			if err := os.MkdirAll(filepath.Dir(result.SavedPath), 0755); err != nil {
+				fmt.Println(color.RedString(fmt.Sprintf("FAIL: 出力ディレクトリの作成に失敗しました。(Failed to create output directory.) [%s]", err.Error())))
+				return
+			}
+			if err := os.WriteFile(result.SavedPath, result.USCRaw, 0644); err != nil {
+				fmt.Println(color.RedString(fmt.Sprintf("FAIL: .usc出力の書き込みに失敗しました。(Failed to write .usc output.) [%s]", err.Error())))
+				return
+			}
+			fmt.Printf("- 保存先 (Saved to): %s\n", color.CyanString(result.SavedPath))
+			if result.HasPJSKData {
+				readablePJSKPath := strings.TrimSuffix(result.SavedPath, filepath.Ext(result.SavedPath)) + ".pjsk.json"
+				if err := os.WriteFile(readablePJSKPath, result.PJSKData, 0644); err != nil {
+					fmt.Println(color.RedString(fmt.Sprintf("FAIL: failed to write readable pjsk output: %s", err.Error())))
+					return
+				}
+				fmt.Printf("- 読めるPJSKデータ (Readable PJSK Data): %s\n", color.CyanString(readablePJSKPath))
+			}
+		}
+		if generateRaw {
+			rawArtifactBasePath := filepath.Join(filepath.Dir(rawOutPath), rawPublishedScoreID+"_raw-data")
+			fmt.Printf("- 生データ情報 (Raw metadata): %s\n", color.CyanString(rawArtifactBasePath+".published-score-info.json"))
+			if result.HasLevelData && !listing && !derivativeRestricted {
+				fmt.Printf("- 生LevelData (Raw LevelData): %s\n", color.CyanString(rawArtifactBasePath+".next-sekai.json"))
+			}
+			if result.HasPJSKData && !listing && !derivativeRestricted {
+				fmt.Printf("- 生PJSKデータ (Raw PJSK Data): %s\n", color.CyanString(rawArtifactBasePath+".pjsk.json"))
+			}
+		}
+		if !noExplorerAutoOpen {
+			cmd := exec.Command(`explorer`, `/select,`, filepath.Dir(rawOutPath))
+			cmd.Run()
+			time.Sleep(2000 * time.Millisecond)
+		}
+		return
+	}
 
 	latestVer, releaseURL := checkUpdate()
 	if latestVer != "" {
@@ -341,9 +718,287 @@ func origMain(isOptionSpecified bool) {
 		chartId = flag.Arg(0)
 		fmt.Printf("譜面ID (Chart ID): %s\n", color.GreenString(chartId))
 	} else {
-		fmt.Print("譜面IDを接頭辞込みで入力して下さい。\nEnter the chart ID including the prefix.\n\n'sekai-best-': Sekai Viewer (sonolus.sekai.best)\n'chcy-': Chart Cyanvas\n'ptlv-': Potato Leaves (ptlv.milkbun.org)\n'utsk-': Untitled Sekai (us.pim4n-net.com)\n'UnCh-': UntitledCharts (untitledcharts.com)\n'lalo-': laoloser's server (sonolus.laoloser.com)\n'skyra-': osciris's server (Skyra)\n'sync-': Local Server (ScoreSync + ScoreSync Modern)\n'custom-': Custom Server (Source URL)\n> ")
+		fmt.Print("譜面IDを接頭辞込みで入力して下さい。\nEnter the chart ID including the prefix.\n\n'pjsk-': 譜面メーカー / Score Maker\n'sekai-best-': Sekai Viewer (sonolus.sekai.best)\n'sss-': Sbuga's Sonolus Server (sonolus.sbuga.com)\n'chcy-': Chart Cyanvas\n'ptlv-': Potato Leaves (ptlv.milkbun.org)\n'utsk-': Untitled Sekai (us.pim4n-net.com)\n'UnCh-': UntitledCharts (untitledcharts.com)\n'lalo-': laoloser's server (sonolus.laoloser.com)\n'skyra-': osciris's server (Skyra)\n'sync-': Local Server (ScoreSync + ScoreSync Modern)\n'custom-': Custom Server (Source URL)\n> ")
 		fmt.Scanln(&chartId)
 		fmt.Printf("\033[A\033[2K\r> %s\n", color.GreenString(chartId))
+	}
+
+	if after, ok := strings.CutPrefix(chartId, "pjsk-"); ok {
+		publishedScoreID := strings.TrimSpace(after)
+		if publishedScoreID == "" {
+			fmt.Println(color.RedString("FAIL: pjsk-の後に公開譜面IDを指定してください。(Please provide a published chart ID after pjsk-.)"))
+			return
+		}
+
+		fmt.Printf("- 譜面を取得中 (Getting chart): %s\n", color.CyanString(publishedScoreID))
+
+		formattedOutDir := filepath.Join(cwd, strings.ReplaceAll(outDir, "_chartId_", chartId))
+		resultDir := filepath.Dir(formattedOutDir) + "\\" + chartId
+		uscPath := filepath.Join(formattedOutDir, "chart-"+publishedScoreID+".usc")
+
+		fmt.Printf("- 出力先ディレクトリ (Output path): %s\n", color.CyanString(resultDir))
+		fmt.Print("- 譜面を取得してuscに変換中 (Downloading chart and converting to .usc)... ")
+		rawResult, err := runRawChartDownload(rawDownloadOptions{
+			PublishedScoreID: publishedScoreID,
+			Region:           pjskRegion,
+			OutPath:          uscPath,
+			GenerateRaw:      generateRaw,
+			SaveChartFiles:   false,
+			ForceDerivative:  forceDerivative,
+		})
+		if err != nil {
+			fmt.Println(color.RedString(fmt.Sprintf("FAIL: %s", err.Error())))
+			return
+		}
+		fmt.Println(color.GreenString("OK"))
+
+		publishedInfo := rawResult.PublishedInfo
+		if !rawResult.HasLevelData {
+			fmt.Println(color.RedString("FAIL: 譜面ファイルを変換できませんでした。(Unable to convert the chart file.)"))
+			return
+		}
+
+		banMaker, err := pjsekaioverlay.Listing("483473494141414141414141417733497751324149424145774934344A534C45456E7A6241434348784167476C6D6A354F733835674C737452444531694A6877644E6462714C356B68417A68793056624B556868545A6D4D6C2B79304735526D6C694E50307649346D316E7478763835474B72324957667A5A6339514256353863315541714634414141413D", strings.TrimSpace(fmt.Sprint(publishedInfo.UserID)))
+		if err != nil {
+			fmt.Println(color.RedString(fmt.Sprintf("FAIL: %s", err.Error())))
+			return
+		} else if banMaker {
+			listing = true
+		}
+
+		derivativeRestricted := !forceDerivative && !publishedInfo.IsDerivativeAllowed
+		if derivativeRestricted {
+			fmt.Println(color.HiYellowString("WARN: この譜面は二次利用を禁じています。譜面ファイルは保存できません。\nThis chart prohibits derivative use. Chart file cannot be saved."))
+		} else if !listing && rawResult.HasPJSKData {
+			if err := os.MkdirAll(filepath.Dir(rawResult.SavedPath), 0755); err != nil {
+				fmt.Println(color.RedString(fmt.Sprintf("FAIL: 出力ディレクトリの作成に失敗しました。(Failed to create output directory.) [%s]", err.Error())))
+				return
+			}
+			if err := os.WriteFile(rawResult.SavedPath, rawResult.USCRaw, 0644); err != nil {
+				fmt.Println(color.RedString(fmt.Sprintf("FAIL: .usc出力の書き込みに失敗しました。(Failed to write .usc output.) [%s]", err.Error())))
+				return
+			}
+			fmt.Printf("- 保存先 (Saved to): %s\n", color.CyanString(rawResult.SavedPath))
+			readablePJSKPath := strings.TrimSuffix(rawResult.SavedPath, filepath.Ext(rawResult.SavedPath)) + ".pjsk.json"
+			if err := os.WriteFile(readablePJSKPath, rawResult.PJSKData, 0644); err != nil {
+				fmt.Println(color.RedString(fmt.Sprintf("FAIL: 読み取り可能な.pjsk出力の書き込みに失敗しました。(Failed to write readable .pjsk output.) [%s]", err.Error())))
+				return
+			}
+			fmt.Printf("- 読めるPJSKデータ (Readable PJSK Data): %s\n", color.CyanString(readablePJSKPath))
+		}
+		levelData := rawResult.LevelData
+
+		meta, metaErr := scoremaker.FetchMusicMetadata(pjskRegion, publishedInfo.MusicID, nil)
+		if metaErr != nil {
+			fmt.Println(color.HiYellowString(fmt.Sprintf("WARN: 楽曲メタデータを取得できませんでした (Failed to fetch music metadata.) [%s]", metaErr.Error())))
+		}
+
+		title := strings.TrimSpace(meta.Title)
+		if title == "" {
+			title = strings.TrimSpace(publishedInfo.Title)
+		}
+		if title == "" {
+			title = publishedScoreID
+		}
+		publishedScoreTitle := strings.TrimSpace(publishedInfo.Title)
+		if publishedScoreTitle == "" {
+			publishedScoreTitle = title
+		}
+		publishedUserName := strings.TrimSpace(publishedInfo.UserName)
+		if publishedUserName == "" {
+			publishedUserName = "-"
+		}
+
+		titlev1 := strings.TrimSpace(publishedInfo.Title)
+		if titlev1 == "" {
+			titlev1 = publishedScoreID
+		}
+
+		lyricist := strings.TrimSpace(meta.Lyricist)
+		composer := strings.TrimSpace(meta.Composer)
+		arranger := strings.TrimSpace(meta.Arranger)
+		if lyricist == "" {
+			lyricist = "-"
+		}
+		if composer == "" {
+			composer = "-"
+		}
+		if arranger == "" {
+			arranger = "-"
+		}
+
+		extra := strings.TrimSpace(meta.Label)
+		if extra == "" {
+			if enUI {
+				extra = "【Additional Info】"
+			} else {
+				extra = "【追加情報】"
+			}
+		}
+
+		fmt.Printf("%s (%s) - %s (Lv. %s)\n",
+			color.CyanString(title),
+			color.CyanString(publishedInfo.Title),
+			color.CyanString(publishedUserName),
+			color.MagentaString(strconv.Itoa(publishedInfo.PlayLevel)),
+		)
+
+		fmt.Print("- ジャケットをダウンロード中 (Downloading jacket)... ")
+		jacketURL := fmt.Sprintf("https://storage.sekai.best/sekai-%s-assets/music/jacket/jacket_s_%03d/jacket_s_%03d.png", pjskRegion, publishedInfo.MusicID, publishedInfo.MusicID)
+		jacketSource := pjsekaioverlay.Source{Id: "pjsk", Name: "PJSK Published", Host: "storage.sekai.best"}
+		jacketLevel := sonolus.LevelInfo{Cover: sonolus.SRL{Url: jacketURL}}
+		err = pjsekaioverlay.DownloadJacket(jacketSource, jacketLevel, formattedOutDir)
+		if err != nil {
+			fmt.Println(color.RedString(fmt.Sprintf("FAIL: %s", err.Error())))
+			return
+		}
+		fmt.Println(color.GreenString("OK"))
+
+		fmt.Print("- ローカルで背景を生成中 - お待ちください (Generating background locally - please wait)... ")
+		err = pjsekaioverlay.DownloadBackground(jacketSource, jacketLevel, formattedOutDir, chartId, "-v 1", false, true)
+		if err != nil {
+			fmt.Println(color.RedString(fmt.Sprintf("FAIL: %s", err.Error())))
+			return
+		}
+		err = pjsekaioverlay.DownloadBackground(jacketSource, jacketLevel, formattedOutDir, chartId, "-v 3", false, true)
+		if err != nil {
+			fmt.Println(color.RedString(fmt.Sprintf("FAIL: %s", err.Error())))
+			return
+		}
+		fmt.Println(color.GreenString("OK"))
+
+		var scoreMode string
+		switch scoreModeInt {
+		default:
+			scoreMode = "default"
+		case 2:
+			scoreMode = "tournament"
+		}
+		if !isOptionSpecified {
+			fmt.Print("\n採点モードを選択してください。(Choose scoring mode.)\n'1': デフォルト/Default\n'2': 大会モード/Tournament Mode (PERFECT = +3)\n> ")
+			before, _ := rawmode.Enable()
+			tmpScoreModeByte, _ := bufio.NewReader(os.Stdin).ReadByte()
+			tmpScoreMode := string(tmpScoreModeByte)
+			rawmode.Restore(before)
+			switch tmpScoreMode {
+			default:
+				scoreMode = "default"
+				fmt.Printf("\n\033[A\033[2K\r> %s\n", color.GreenString(tmpScoreMode))
+				fmt.Println(color.GreenString("Score Mode: デフォルト/Default"))
+			case "2":
+				scoreMode = "tournament"
+				fmt.Printf("\n\033[A\033[2K\r> %s\n", color.GreenString(tmpScoreMode))
+				fmt.Println(color.GreenString("Score Mode: 大会/Tournament"))
+			}
+		}
+
+		if !isOptionSpecified && scoreMode == "default" {
+			fmt.Print("\n総合力を指定してください。 (Input your team power.)\n\n- 小数と科学的記数法が使える (Accepts decimals & scientific notation)\n- おすすめ (Recommended): 250000 - 300000\n- 例 (Example): 1234567; 1e+20; -300000\n> ")
+			var tmpTeamPower string
+			fmt.Scanln(&tmpTeamPower)
+			if tmpTeamPower == "" {
+				tmpTeamPower = "250000"
+			}
+			teamPower, err = strconv.ParseFloat(tmpTeamPower, 64)
+			if err != nil {
+				fmt.Println(color.RedString(fmt.Sprintf("FAIL: %s", err.Error())))
+				return
+			}
+		}
+
+		fmt.Print("- スコアを計算中 (Calculating score)... ")
+		rating := publishedInfo.PlayLevel
+		calcLevel := sonolus.LevelInfo{Rating: rating}
+		scoreData := pjsekaioverlay.CalculateScore(calcLevel, levelData, teamPower, scoreMode, allFlick, listing)
+		fmt.Println(color.GreenString("OK"))
+
+		if !isOptionSpecified {
+			fmt.Print("\n英語UIを使う？（部分的な対応）[y/n]\nUse English UI? (Partial support) [y/n]\n> ")
+			before, _ := rawmode.Enable()
+			tmpEnableENByte, _ := bufio.NewReader(os.Stdin).ReadByte()
+			tmpEnableEN := string(tmpEnableENByte)
+			rawmode.Restore(before)
+			if tmpEnableEN == "Y" || tmpEnableEN == "y" {
+				enUI = true
+				fmt.Printf("\n\033[A\033[2K\r> %s\n", color.GreenString(tmpEnableEN))
+				fmt.Println(color.GreenString("TOGGLE: ON"))
+			} else {
+				enUI = false
+				fmt.Printf("\n\033[A\033[2K\r> %s\n", color.RedString(tmpEnableEN))
+				fmt.Println(color.RedString("TOGGLE: OFF"))
+			}
+		}
+
+		assets := filepath.Join(cwd, "assets")
+
+		fmt.Print("- pedファイルを生成中 (Generating ped file)... ")
+		err = pjsekaioverlay.WritePedFile(scoreData, assets, filepath.Join(formattedOutDir, "data.ped"), calcLevel, levelData, scoreMode, enUI, listing)
+		if err != nil {
+			fmt.Println(color.RedString(fmt.Sprintf("FAIL: %s", err.Error())))
+			return
+		}
+		fmt.Println(color.GreenString("OK"))
+
+		var exoType = "exo"
+		if aviutlProcess == "aviutl2.exe" {
+			exoType = "alias(.object)"
+		}
+
+		fmt.Printf("- %sファイルを生成中 (Generating %s file)... ", exoType, exoType)
+		difficulty := strings.ToUpper(strings.TrimSpace(publishedInfo.MusicDifficultyType))
+		if difficulty == "" {
+			difficulty = "APPEND"
+		}
+
+		description := []string{
+			fmt.Sprintf("作詞：%s    作曲：%s    編曲：%s", lyricist, composer, arranger),
+			"Vo：-",
+			fmt.Sprintf("%s", publishedScoreTitle),
+			fmt.Sprintf("%s", publishedUserName),
+		}
+		descriptionv1 := []string{
+			fmt.Sprintf("作詞：%s    作曲：%s    編曲：%s", lyricist, composer, arranger),
+			fmt.Sprintf("歌：-    譜面制作：%s", publishedUserName),
+		}
+		exFile := "tournament-mode.png"
+		exFileOpacity := "100.0"
+		if enUI {
+			description = []string{
+				fmt.Sprintf("Lyrics: %s    Music: %s    Arrangement: %s", lyricist, composer, arranger),
+				"Vocals: -",
+				fmt.Sprintf("%s", publishedScoreTitle),
+				fmt.Sprintf("%s", publishedUserName),
+			}
+			descriptionv1 = []string{
+				fmt.Sprintf("Lyrics: %s    Music: %s    Arrangement: %s", lyricist, composer, arranger),
+				fmt.Sprintf("Vocals: -    Chart Design: %s", publishedUserName),
+			}
+			exFile = "tournament-mode-en.png"
+		}
+		if scoreMode == "tournament" {
+			exFileOpacity = "0.0"
+		}
+
+		if aviutlProcess == "aviutl.exe" {
+			err = pjsekaioverlay.WriteExoFiles(assets, formattedOutDir, title, titlev1, description, descriptionv1, difficulty, extra, exFile, exFileOpacity, mappingStr)
+		} else {
+			err = pjsekaioverlay.WriteAliasFiles(assets, formattedOutDir, title, titlev1, description, descriptionv1, difficulty, extra, exFile, exFileOpacity, mappingStr)
+		}
+		if err != nil {
+			fmt.Println(color.RedString(fmt.Sprintf("FAIL: %s", err.Error())))
+			return
+		}
+		fmt.Println(color.GreenString("OK"))
+
+		message := fmt.Sprintf("\n全ての処理が完了しました！READMEの規約を確認した上で、%sファイルを%sにインポートして下さい。\nExecution complete! Please import the %s file into %s after reviewing the README Terms of Use.", exoType, aviutlName, exoType, aviutlName)
+		fmt.Println(color.GreenString(message))
+
+		if !isOptionSpecified || !noExplorerAutoOpen {
+			cmd := exec.Command(`explorer`, `/select,`, resultDir)
+			cmd.Run()
+			time.Sleep(2000 * time.Millisecond)
+		}
+		return
 	}
 
 	// Instance section
@@ -420,7 +1075,6 @@ func origMain(isOptionSpecified bool) {
 		return
 	}
 
-	var listing = false
 	banSource, err := pjsekaioverlay.Listing("4834734941414141414141414177584255524B4145425146304231357A7969616C74423347304443544E46775453322F63784C77394A556F356734524D394A776F34666D6130456F454C3765744E654B484C5A63614A4B4850767A436939576E4D737A73316179636B5534474F55397371646D586E43326A58514966667052774B57396341414141", chart.Source)
 	if err != nil {
 		fmt.Println(color.RedString(fmt.Sprintf("FAIL: %s", err.Error())))
@@ -660,7 +1314,7 @@ func origMain(isOptionSpecified bool) {
 	executableDir := filepath.Dir(executablePath)
 	assets := filepath.Join(executableDir, "assets")
 
-	fmt.Print("\n- pedファイルを生成中 (Generating ped file)... ")
+	fmt.Print("- pedファイルを生成中 (Generating ped file)... ")
 
 	err = pjsekaioverlay.WritePedFile(scoreData, assets, filepath.Join(formattedOutDir, "data.ped"), sonolus.LevelInfo{Rating: chart.Rating}, levelData, scoreMode, enUI, listing)
 	if err != nil {
@@ -723,9 +1377,9 @@ func origMain(isOptionSpecified bool) {
 	}
 
 	if aviutlProcess == "aviutl.exe" {
-		err = pjsekaioverlay.WriteExoFiles(assets, formattedOutDir, chart.Title, description, descriptionv1, difficulty, extra, exFile, exFileOpacity, mappingStr)
+		err = pjsekaioverlay.WriteExoFiles(assets, formattedOutDir, chart.Title, chart.Title, description, descriptionv1, difficulty, extra, exFile, exFileOpacity, mappingStr)
 	} else {
-		err = pjsekaioverlay.WriteAliasFiles(assets, formattedOutDir, chart.Title, description, descriptionv1, difficulty, extra, exFile, exFileOpacity, mappingStr)
+		err = pjsekaioverlay.WriteAliasFiles(assets, formattedOutDir, chart.Title, chart.Title, description, descriptionv1, difficulty, extra, exFile, exFileOpacity, mappingStr)
 	}
 
 	if err != nil {

@@ -15,6 +15,28 @@ You'll need **a clean recording that has BLACK background & ALL UI hidden (inclu
 
 <img width=60% height="auto" alt="" src="https://github.com/user-attachments/assets/46578e52-a3e6-4248-9e2c-f61486cc6af6" />
 
+## MikuMikuWorld Score Preview
+
+<img width="128" height="128" alt="mmw_icon" src="https://github.com/user-attachments/assets/87d87e73-d810-4267-a0c1-4787416c8241" />
+
+0. Open MikuMikuWorld that supports Score Preview and import the chart file
+
+> [!NOTE]
+> If your chart is from the **Score Maker**, chart files will be generated and saved to `pjsekai-overlay-APPEND\dist\[Chart ID]` (`.pjsk.json` & `.usc`) for you to import to (except those that prohibits derivative use). Feel free to use it as you will.
+
+> [!WARNING]
+> You can use the `--force-derivative` flag to force save Score Maker chart files that prohibits derivative use. However, only use `--force-derivative` if you're using your own chart with derivative use permission toggled off. **Do not use this on other charters without explicit permission!!**
+
+1. **(IMPORTANT)** If your chart starts immediately, you'll have to shift all your notes, hi-speeds, BPM and time signatures by at least 1 ~ 3 seconds later (depending on the note speed you use)
+2. Go to `Settings (Ctrl + ,) → Preview` and turn off all visuals except the note (ex. `Draw Preview Toolbar`, `Stage Opacity`, `Draw Background Image` etc.)
+3. Press `F5` to toggle full screen on preview
+4. Screen record the video (Recommended: [OBS](https://obsproject.com/) or the `Win + Alt + R` keybind)
+5. Once done, refer to the usage guide below.
+
+## Sonolus
+
+<img width="128" height="128" alt="sonolus-icon" src="https://github.com/user-attachments/assets/84340484-7da4-4857-b96c-5b1ba325a9cf" />
+
 Follow the steps below:
 1. Go to [Sonolus](https://sonolus.com/) to find your chart.
 2. Screen record the video with **BLACK Background**, **`Stage` OFF**, **`Hide UI` ON or ALL**
@@ -42,8 +64,11 @@ Follow the steps below:
 | 1. **While `aviutl.exe` is open**, open `pjsekai-overlay-APPEND.exe`<br>2. **Restart AviUtl to apply changes.** 	| 1. Open `pjsekai-overlay-APPEND.exe`<br>2. Press `2` to choose the AviUtl ExEdit2 instance 	|
 
 4. In your `pjsekai-overlay-APPEND.exe` command prompt, input the chart ID including the prefix.
+- **Score Maker:**
+   - `pjsk-`: 譜面メーカー / Score Maker
 - **Official server(s):**
    - `sekai-best-`: Sekai Viewer ([sonolus.sekai.best](https://sonolus.sekai.best))
+   - `sss-`: Sbuga's Sonolus Server ([sonolus.sbuga.com](https://sonolus.sbuga.com))
 - **Custom server(s):**
    - `chcy-`: Chart Cyanvas
       - `0`: Archive <del>([cc.sevenc7c.com](https://cc.sevenc7c.com))</del>([cc.milkbun.org](https://cc.milkbun.org))
@@ -71,7 +96,10 @@ Follow the steps below:
 | 16:9 	| - **EN ver:**<br>`main_en_16-9_1920x1080.exo`<br>`v1-skin_en_16-9_1920x1080.exo`<br>- **JP ver:**<br>`main_jp_16-9_1920x1080.exo`<br>`v1-skin_jp_16-9_1920x1080.exo` 	| `main2_16-9_1920x1080.object`<br>`v1-skin2_16-9_1920x1080.object` 	|
 | 4:3  	| - **EN ver:**<br>`main_en_4-3_1440x1080.exo`<br>`v1-skin_en_4-3_1440x1080.exo`<br>- **JP ver:**<br>`main_jp_4-3_1440x1080.exo`<br>`v1-skin_jp_4-3_1440x1080.exo`     	| `main2_4-3_1440x1080.object`<br>`v1-skin2_4-3_1440x1080.object`   	|
 
-7. **Select a video file in the timeline** provided by the exo/alias(.object)
+7. **Select a video and audio file in the timeline** provided by the exo/alias(.object)
+
+> [!WARNING]
+> In this step, the video element in the _timeline_ uses [Unmult](https://github.com/mes51/AVIUtl2_Unmult), which converts all black pixels to transparent pixels for the accurate MV effect. **This is not the same as selecting "Blend Mode" as it does not produce the same effect!!**
 
 | AviUtl                                                                                                                                                                                                                                                                                                                           	| **AviUtl ExEdit2**                                                                      	|
 |----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------	|--------------------------------------------------------------------------------------------	|
@@ -157,6 +185,10 @@ Follow the steps below:
 |----------------	|-------------------------------------------------------------------------------	|:-------:	|:-----:	|
 | **Judge Type**<br>`judge` 	| `1`: <img width=25% height=25% alt="perfect" src="https://github.com/user-attachments/assets/28950e9e-0dac-49d9-81d3-70bdaa2d6f0c" /><br>`2`: <img width=25% height=25% alt="great" src="https://github.com/user-attachments/assets/ccf333a7-795d-43ad-8002-a9d2220e18a6" /><br>`3`: <img width=25% height=25% alt="good" src="https://github.com/user-attachments/assets/9d0a26bb-c8e7-47d0-9a3d-717b4ad0e0fa" /><br>`4`: <img width=25% height=25% alt="bad" src="https://github.com/user-attachments/assets/5b757195-8bd4-4beb-9f77-808000f1d865" /><br>`5`: <img width=25% height=25% alt="miss" src="https://github.com/user-attachments/assets/734ead15-491b-4bdb-9017-f2b30ab32223" /><br>`6`: <img width=25% height=25% alt="auto" src="https://github.com/user-attachments/assets/b9d674cf-1b69-478e-b2be-53691109b12d" /><br>`7 ~ 10`: Custom judgements 	|    1    	| 1 ~ 10 (Integer) 	|
 | **Animation Speed**<br>`judge_speed`                 	| Adjust animation speed               	  |   1.00   |   >= 0 	|
+
+# Command-line (Console) Usage
+
+Work in progress.
 
 # Common Problems
 ### Changing system locale

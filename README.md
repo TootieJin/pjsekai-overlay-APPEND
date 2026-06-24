@@ -18,7 +18,7 @@
 
 [![pjsekai-overlay-APPEND thumbnail](https://github.com/user-attachments/assets/dcc037f7-1c2b-4b83-b17b-b3c5155d670c)]()
 
-Fork of [pjsekai-overlay](https://github.com/sevenc-nanashi/pjsekai-overlay) by [TootieJin](https://tootiejin.com), an open-sourced tool to make Project Sekai Fanmade (custom chart) videos. This tool provides an identical look to how custom charts should look in the official game, while giving users the ability to 'manipulate' their UI using the video editor.
+Fork of [pjsekai-overlay](https://github.com/sevenc-nanashi/pjsekai-overlay) by [TootieJin](https://tootiejin.com), an open-sourced tool to make Project Sekai Fanmade (custom chart) videos. This tool provides an identical look to how custom charts should look like in the official game, while giving users the ability to 'manipulate' their UI using the video editor.
 
 > [!CAUTION]
 > **Before using pjsekai-overlay-APPEND:** This tool is primary only for people with **technical know-how and basic knowledge of AviUtl.** \
@@ -44,8 +44,11 @@ This is a forked version of pjsekai-overlay with additional features originally 
   - Skill Effects (v1 & v3) + UI (v3)
   - Achievement Rate
 - **Additional support for more servers:**
+  - **Score Maker:**
+    - `pjsk-`: 譜面メーカー / Score Maker
   - **Official server(s):**
     - `sekai-best-`: Sekai Viewer ([sonolus.sekai.best](https://sonolus.sekai.best))
+    - `sss-`: Sbuga's Sonolus Server ([sonolus.sbuga.com](https://sonolus.sbuga.com))
   - **Custom server(s):**
     - `chcy-`: Chart Cyanvas
       - `0`: Archive <del>([cc.sevenc7c.com](https://cc.sevenc7c.com))</del>([cc.milkbun.org](https://cc.milkbun.org))
@@ -62,15 +65,15 @@ This is a forked version of pjsekai-overlay with additional features originally 
 
 ### • 16:9
 
-https://github.com/user-attachments/assets/dda7225a-a7f3-41d4-bbf4-9cec9b03b840
+https://github.com/user-attachments/assets/4abf8d63-11cb-41c8-8982-b6187ec8f968
 
 ### • 4:3 (Tournament Mode ON)
 
-https://github.com/user-attachments/assets/ab4ee52c-2ffa-4941-b916-87e1f3559d72
+https://github.com/user-attachments/assets/bf671b95-7a60-43c3-91bf-6731ab89263b
 
 ### • v1 Skin (1e+30 power)
 
-https://github.com/user-attachments/assets/3efab743-246a-4da7-8d80-a02b2f09f5b3
+https://github.com/user-attachments/assets/dffc75ce-6db7-4baf-9eb9-e76e00275767
 
 ### • AviUtl ExEdit2 Preview
 
@@ -172,12 +175,15 @@ The following projects have used and referenced this tool. Thank you so much!
   - スキル効果（v1とv3）＋UI（v3）
   - 達成率表示
 - **追加サーバーの対応：**
+  - **譜面メーカー：**
+    - `pjsk-`: 譜面メーカー / Score Maker
   - **公式サーバー：**
     - `sekai-best-`: Sekai Viewer ([sonolus.sekai.best](https://sonolus.sekai.best))
+    - `sss-`: SbugaのSonolusサーバー ([sonolus.sbuga.com](https://sonolus.sbuga.com))
   - **カスタムサーバー：**
     - `chcy-`: Chart Cyanvas
-      - `0`: アーカイブ<del>([cc.sevenc7c.com](https://cc.sevenc7c.com))</del>([cc.milkbun.org](https://cc.milkbun.org))
-      - `1`: 分岐サーバー([chart-cyanvas.com](https://chart-cyanvas.com))
+      - `0`: アーカイブ <del>([cc.sevenc7c.com](https://cc.sevenc7c.com))</del>([cc.milkbun.org](https://cc.milkbun.org))
+      - `1`: 分岐サーバー ([chart-cyanvas.com](https://chart-cyanvas.com))
     - `ptlv-`: Potato Leaves <del>([ptlv.sevenc7c.com](https://ptlv.sevenc7c.com))</del>([ptlv.milkbun.org](https://ptlv.milkbun.org))
     - <del>`utsk-`: Untitled Sekai ([us.pim4n-net.com](https://us.pim4n-net.com))</del>
     - `UnCh-`: UntitledCharts ([untitledcharts.com](https://untitledcharts.com))

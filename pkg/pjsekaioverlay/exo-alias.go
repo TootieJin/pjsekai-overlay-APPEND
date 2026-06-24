@@ -69,7 +69,7 @@ var rawBaseAliasv1 []byte
 //go:embed v1-skin2_4-3_1440x1080.object
 var rawBaseAlias43v1 []byte
 
-func WriteExoFiles(assets string, destDir string, title string, description []string, descriptionv1 []string, difficulty string, extra string, exFile string, exFileOpacity string, mappingFile []string) error {
+func WriteExoFiles(assets string, destDir string, title string, titlev1 string, description []string, descriptionv1 []string, difficulty string, extra string, exFile string, exFileOpacity string, mappingFile []string) error {
 	baseExoJP := string(rawBaseExoJP)
 	baseExoJP43 := string(rawBaseExoJP43)
 	baseExoEN := string(rawBaseExoEN)
@@ -130,7 +130,7 @@ func WriteExoFiles(assets string, destDir string, title string, description []st
 		"{dist}", strings.ReplaceAll(destDir, "\\", "/"),
 		"{text:difficulty}", encodeString(difficulty),
 		"{text:extra}", encodeString(extra),
-		"{text:title}", encodeString(title),
+		"{text:title}", encodeString(titlev1),
 		"{text:description-1}", encodeString(descriptionv1[0]),
 		"{text:description-2}", encodeString(descriptionv1[1]),
 		// "{text:description-3}", encodeString(descriptionv1[2]),
@@ -297,7 +297,7 @@ func WriteExoFiles(assets string, destDir string, title string, description []st
 	return nil
 }
 
-func WriteAliasFiles(assets string, destDir string, title string, description []string, descriptionv1 []string, difficulty string, extra string, exFile string, exFileOpacity string, mappingFile []string) error {
+func WriteAliasFiles(assets string, destDir string, title string, titlev1 string, description []string, descriptionv1 []string, difficulty string, extra string, exFile string, exFileOpacity string, mappingFile []string) error {
 	baseAlias := string(rawBaseAlias)
 	baseAlias43 := string(rawBaseAlias43)
 	baseAliasv1 := string(rawBaseAliasv1)
@@ -361,7 +361,7 @@ func WriteAliasFiles(assets string, destDir string, title string, description []
 		"{dist}", strings.ReplaceAll(destDir, "\\", "/"),
 		"{text:difficulty}", difficulty,
 		"{text:extra}", extra,
-		"{text:title}", title,
+		"{text:title}", titlev1,
 		"{text:description-1}", descriptionv1[0],
 		"{text:description-2}", descriptionv1[1],
 		// "{text:description-3}", descriptionv1[2],
